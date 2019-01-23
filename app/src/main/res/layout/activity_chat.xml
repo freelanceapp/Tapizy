@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/blueB"
+        android:orientation="horizontal"
+        android:id="@+id/ll">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_left"
+            android:layout_gravity="center"
+            android:tint="@color/white"
+            android:layout_marginLeft="4sp"
+            android:id="@+id/backBtn"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:src="@drawable/profile_image"
+            android:layout_gravity="center"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="6sp"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Happy"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:padding="2dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="online"
+                android:textSize="10sp"
+                android:padding="2dp"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/msgListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/form"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:paddingBottom="10dp"
+        android:visibility="gone"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll"
+        android:layout_above="@id/form"
+        android:layout_alignParentBottom="true"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@id/form"
+        android:layout_marginBottom="50sp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_below="@+id/ll">
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_message_profile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/profile_image"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/text_message_name"
+                android:text="John Doe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_toRightOf="@id/text_message_body"
+                app:layout_constraintLeft_toRightOf="@+id/image_message_profile"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/text_message_body"
+                android:text="hi man, how are you?"
+                android:background="@drawable/rounded_rectangle_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="240dp"
+                android:layout_marginLeft="44dp"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="4dp"
+                android:layout_below="@id/text_message_name"
+                app:layout_constraintTop_toBottomOf="@+id/text_message_name"
+                app:layout_constraintLeft_toRightOf="@+id/image_message_profile" />
+
+            <TextView
+                android:id="@+id/text_message_time"
+                android:text="11:40"
+                android:layout_toRightOf="@id/text_message_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_below="@id/text_message_body"
+                app:layout_constraintLeft_toRightOf="@+id/text_message_body"
+                android:layout_marginLeft="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_message_body" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:layout_gravity="end">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_message_profile1"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_toRightOf="@id/text_message_body1"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/profile_image"
+                android:layout_centerInParent="true"
+                app:layout_constraintLeft_toRightOf="@+id/text_message_body1"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
+                android:id="@+id/text_message_name1"
+                android:text="John Doe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toRightOf="@+id/image_message_profile1"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/text_message_body1"
+                android:text="hi man, how are you?"
+                android:background="@drawable/rounded_rectangle_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="240dp"
+                android:padding="8dp"
+                android:textColor="#ffffff"
+                android:layout_marginTop="4dp"
+                android:layout_below="@id/text_message_name1"
+                app:layout_constraintTop_toBottomOf="@+id/text_message_name1"
+                app:layout_constraintLeft_toRightOf="@+id/image_message_profile1"
+                android:layout_marginLeft="8dp" />
+
+            <TextView
+                android:id="@+id/text_message_time1"
+                android:text="11:40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_below="@id/text_message_body1"
+                app:layout_constraintLeft_toRightOf="@+id/text_message_body1"
+                android:layout_marginLeft="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_message_body1" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_message_profile3"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/profile_image"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/text_message_name3"
+                android:text="John Doe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_toRightOf="@id/text_message_body3"
+                app:layout_constraintLeft_toRightOf="@+id/image_message_profile3"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/text_message_body3"
+                android:text="hi man, how are you?"
+                android:background="@drawable/rounded_rectangle_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="240dp"
+                android:layout_marginLeft="44dp"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="4dp"
+                android:layout_below="@id/text_message_name3"
+                app:layout_constraintTop_toBottomOf="@+id/text_message_name3"
+                app:layout_constraintLeft_toRightOf="@+id/image_message_profile3" />
+
+            <TextView
+                android:id="@+id/text_message_time3"
+                android:text="11:40"
+                android:layout_toRightOf="@id/text_message_body3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_below="@id/text_message_body3"
+                app:layout_constraintLeft_toRightOf="@+id/text_message_body3"
+                android:layout_marginLeft="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_message_body3" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:layout_gravity="end">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_message_profile11"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_toRightOf="@id/text_message_body11"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/profile_image"
+                android:layout_centerInParent="true"
+                app:layout_constraintLeft_toRightOf="@+id/text_message_body11"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
+                android:id="@+id/text_message_name11"
+                android:text="John Doe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toRightOf="@+id/image_message_profile11"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/text_message_body11"
+                android:text="hi man, how are you?"
+                android:background="@drawable/rounded_rectangle_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="240dp"
+                android:padding="8dp"
+                android:textColor="#ffffff"
+                android:layout_marginTop="4dp"
+                android:layout_below="@id/text_message_name11"
+                app:layout_constraintTop_toBottomOf="@+id/text_message_name11"
+                app:layout_constraintLeft_toRightOf="@+id/image_message_profile11"
+                android:layout_marginLeft="8dp" />
+
+            <TextView
+                android:id="@+id/text_message_time11"
+                android:text="11:40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_below="@id/text_message_body11"
+                app:layout_constraintLeft_toRightOf="@+id/text_message_body11"
+                android:layout_marginLeft="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_message_body11" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_message_profile4"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/profile_image"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/text_message_name4"
+                android:text="John Doe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_toRightOf="@id/text_message_body4"
+                app:layout_constraintLeft_toRightOf="@+id/image_message_profile4"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/text_message_body4"
+                android:text="hi man, how are you?"
+                android:background="@drawable/rounded_rectangle_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="240dp"
+                android:layout_marginLeft="44dp"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="4dp"
+                android:layout_below="@id/text_message_name4"
+                app:layout_constraintTop_toBottomOf="@+id/text_message_name4"
+                app:layout_constraintLeft_toRightOf="@+id/image_message_profile4" />
+
+            <TextView
+                android:id="@+id/text_message_time4"
+                android:text="11:40"
+                android:layout_toRightOf="@id/text_message_body4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_below="@id/text_message_body4"
+                app:layout_constraintLeft_toRightOf="@+id/text_message_body4"
+                android:layout_marginLeft="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_message_body4" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:layout_gravity="end">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_message_profile13"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_toRightOf="@id/text_message_body13"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/profile_image"
+                android:layout_centerInParent="true"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
+                android:id="@+id/text_message_name13"
+                android:text="John Doe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toRightOf="@+id/image_message_profile13"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/text_message_body13"
+                android:text="hi man, how are you?"
+                android:background="@drawable/rounded_rectangle_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="240dp"
+                android:padding="8dp"
+                android:textColor="#ffffff"
+                android:layout_marginTop="4dp"
+                android:layout_below="@id/text_message_name13"
+                app:layout_constraintTop_toBottomOf="@+id/text_message_name13"
+                app:layout_constraintLeft_toRightOf="@+id/image_message_profile13"
+                android:layout_marginLeft="8dp" />
+
+            <TextView
+                android:id="@+id/text_message_time13"
+                android:text="11:40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_below="@id/text_message_body13"
+                app:layout_constraintLeft_toRightOf="@+id/text_message_body13"
+                android:layout_marginLeft="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_message_body13" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/custom_product_detail"/>
+        <include layout="@layout/custom_product_detail"/>
+
+    </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/white1"
+        android:orientation="horizontal"
+        android:paddingBottom="2dp" >
+
+
+        <EditText
+            android:id="@+id/messageEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/button1"
+            android:layout_toLeftOf="@+id/sendMessageButton"
+            android:layout_weight="0.72"
+            android:ems="10"
+            android:maxHeight="80dp"
+            android:hint="Message..."
+            android:layout_marginLeft="6sp"
+            android:textColorHint="@color/gray"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/sendMessageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/send_button"
+            android:tint="@color/blueB"
+            android:backgroundTint="@color/blueB"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

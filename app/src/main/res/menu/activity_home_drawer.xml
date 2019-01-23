@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/icon1"
+            android:title="My Bot" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_order"
+            android:title="My Orders" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/recharge"
+            android:title="Account and Wallet" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/operator_avatar"
+            android:title="24*7 Help" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/credit_card"
+            android:title="Loyalty Credits" />
+        <item
+            android:id="@+id/nav_send"
+            android:icon="@drawable/ic_setting"
+            android:title="Settings" />
+    </group>
+
+
+</menu>
