@@ -1,4 +1,4 @@
-package infobite.com.heybyddy.Fragment;
+package infobite.com.tapizy.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import infobite.com.heybyddy.R;
+import infobite.com.tapizy.R;
 
 public class TapizyMessageFragment extends Fragment {
 

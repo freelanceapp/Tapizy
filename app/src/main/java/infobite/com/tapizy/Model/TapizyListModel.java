@@ -1,4 +1,4 @@
-package infobite.com.heybyddy.Model;
+package infobite.com.tapizy.Model;
 
 public class TapizyListModel {
     String tapizy_title;

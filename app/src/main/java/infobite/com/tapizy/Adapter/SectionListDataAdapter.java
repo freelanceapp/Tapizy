@@ -1,4 +1,4 @@
-package infobite.com.heybyddy.Adapter;
+package infobite.com.tapizy.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import infobite.com.heybyddy.Model.SingleItemModel;
-import infobite.com.heybyddy.R;
+import infobite.com.tapizy.Model.SingleItemModel;
+import infobite.com.tapizy.R;
 
 public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListDataAdapter.SingleItemRowHolder> {
 

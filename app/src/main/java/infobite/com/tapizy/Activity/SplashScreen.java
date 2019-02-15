@@ -1,11 +1,11 @@
-package infobite.com.heybyddy.Activity;
+package infobite.com.tapizy.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-import infobite.com.heybyddy.R;
+import infobite.com.tapizy.R;
 
 public class SplashScreen  extends AppCompatActivity {
 

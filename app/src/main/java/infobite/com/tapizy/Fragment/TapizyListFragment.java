@@ -1,7 +1,5 @@
-package infobite.com.heybyddy.Fragment;
+package infobite.com.tapizy.Fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,9 +14,9 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-import infobite.com.heybyddy.Adapter.TapizyListAdapter;
-import infobite.com.heybyddy.Model.TapizyListModel;
-import infobite.com.heybyddy.R;
+import infobite.com.tapizy.Adapter.TapizyListAdapter;
+import infobite.com.tapizy.Model.TapizyListModel;
+import infobite.com.tapizy.R;
 
 public class TapizyListFragment extends Fragment implements View.OnClickListener {
 

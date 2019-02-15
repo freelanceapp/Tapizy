@@ -1,4 +1,4 @@
-package infobite.com.heybyddy;
+package infobite.com.tapizy;
 
 import org.junit.Test;
 

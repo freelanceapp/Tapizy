@@ -1,4 +1,4 @@
-package infobite.com.heybyddy.Activity;
+package infobite.com.tapizy.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import infobite.com.heybyddy.R;
+import infobite.com.tapizy.R;
 
 public class LoginActivity extends AppCompatActivity {
 

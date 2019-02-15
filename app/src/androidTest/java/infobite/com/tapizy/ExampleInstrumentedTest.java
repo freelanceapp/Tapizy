@@ -1,4 +1,4 @@
-package infobite.com.heybyddy;
+package infobite.com.tapizy;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

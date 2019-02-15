@@ -1,11 +1,11 @@
-package infobite.com.heybyddy.Activity;
+package infobite.com.tapizy.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import infobite.com.heybyddy.R;
+import infobite.com.tapizy.R;
 
 public class ChatActivity extends AppCompatActivity {
 

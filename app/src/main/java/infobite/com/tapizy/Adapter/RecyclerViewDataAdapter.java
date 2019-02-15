@@ -1,4 +1,4 @@
-package infobite.com.heybyddy.Adapter;
+package infobite.com.tapizy.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -6,15 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import infobite.com.heybyddy.Model.SectionDataModel;
-import infobite.com.heybyddy.R;
+import infobite.com.tapizy.Model.SectionDataModel;
+import infobite.com.tapizy.R;
 
 public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDataAdapter.ItemRowHolder> {
 

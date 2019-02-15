@@ -1,4 +1,4 @@
-package infobite.com.heybyddy.Adapter;
+package infobite.com.tapizy.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +13,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import infobite.com.heybyddy.Activity.TapizyActivity;
-import infobite.com.heybyddy.Activity.TrandingActivity;
-import infobite.com.heybyddy.Model.TapizyListModel;
-import infobite.com.heybyddy.R;
+import infobite.com.tapizy.Activity.TrandingActivity;
+import infobite.com.tapizy.Model.TapizyListModel;
+import infobite.com.tapizy.R;
 
 public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.ViewHolder> {
 

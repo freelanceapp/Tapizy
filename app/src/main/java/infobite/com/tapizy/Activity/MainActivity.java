@@ -1,9 +1,9 @@
-package infobite.com.heybyddy.Activity;
+package infobite.com.tapizy.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import infobite.com.heybyddy.R;
+import infobite.com.tapizy.R;
 
 public class MainActivity extends AppCompatActivity {
 

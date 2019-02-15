@@ -1,11 +1,10 @@
-package infobite.com.heybyddy.Activity;
+package infobite.com.tapizy.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -24,10 +22,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import infobite.com.heybyddy.Fragment.TapizyListFragment;
-import infobite.com.heybyddy.Fragment.TapizyListFragment2;
-import infobite.com.heybyddy.Fragment.TapizyMessageFragment;
-import infobite.com.heybyddy.R;
+import infobite.com.tapizy.Fragment.TapizyListFragment;
+import infobite.com.tapizy.R;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Fragment fragment;

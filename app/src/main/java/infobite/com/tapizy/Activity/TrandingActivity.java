@@ -1,6 +1,5 @@
-package infobite.com.heybyddy.Activity;
+package infobite.com.tapizy.Activity;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,10 +12,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import infobite.com.heybyddy.Adapter.RecyclerViewDataAdapter;
-import infobite.com.heybyddy.Model.SectionDataModel;
-import infobite.com.heybyddy.Model.SingleItemModel;
-import infobite.com.heybyddy.R;
+import infobite.com.tapizy.Adapter.RecyclerViewDataAdapter;
+import infobite.com.tapizy.Model.SectionDataModel;
+import infobite.com.tapizy.Model.SingleItemModel;
+import infobite.com.tapizy.R;
 
 public class TrandingActivity extends AppCompatActivity implements View.OnClickListener {
     private Toolbar toolbar;
