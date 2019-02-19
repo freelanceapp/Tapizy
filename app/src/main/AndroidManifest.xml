@@ -3,6 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="infobite.com.tapizy">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,18 +20,18 @@
         android:theme="@style/AppTheme.Base"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="infobite.com.tapizy.Activity.TrandingActivity"
+            android:name=".ui.Activity.TrandingActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="infobite.com.tapizy.Activity.ChatActivity"
+            android:name=".ui.Activity.ChatActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="infobite.com.tapizy.Activity.HomeActivity"
+            android:name=".ui.Activity.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="infobite.com.tapizy.Activity.MainActivity" />
+        <activity android:name=".ui.Activity.MainActivity" />
         <activity
-            android:name="infobite.com.tapizy.Activity.SplashScreen"
+            android:name=".ui.Activity.SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,13 +40,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="infobite.com.tapizy.Activity.LoginActivity"
+            android:name=".ui.Activity.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="infobite.com.tapizy.Activity.OtpActivity"
+            android:name=".ui.Activity.OtpActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="infobite.com.tapizy.Activity.TapizyActivity"
+            android:name=".ui.Activity.TapizyActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
