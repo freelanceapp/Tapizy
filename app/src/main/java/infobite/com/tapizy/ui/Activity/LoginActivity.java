@@ -13,6 +13,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button loginBtn;
     private TextView signupBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +23,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void init ()
-    {
+    private void init() {
         loginBtn = (Button) findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,15 +32,5 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        signupBtn = (TextView) findViewById(R.id.signupBtn);
-        signupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 }

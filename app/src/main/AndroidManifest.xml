@@ -48,6 +48,8 @@
         <activity
             android:name=".ui.Activity.TapizyActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ui.Activity.CreateChatbotActivity" />
+        <activity android:name=".ui.Activity.CreateConversationActivity" />
     </application>
 
 </manifest>

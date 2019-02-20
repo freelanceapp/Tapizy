@@ -5,16 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,18 +21,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import infobite.com.tapizy.ui.Fragment.TapizyListFragment;
 import infobite.com.tapizy.R;
+import infobite.com.tapizy.ui.Fragment.TapizyListFragment;
+import infobite.com.tapizy.utils.BaseActivity;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    Fragment fragment;
-    LinearLayout menuLayout;
-    FloatingActionButton menu_btn;
-    boolean menuCondition = true;
-    RelativeLayout container;
-    TextView titleName;
-    ImageView searchBtn;
-    FrameLayout frame_container;
+public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private Fragment fragment;
+    private LinearLayout menuLayout;
+    private FloatingActionButton menu_btn;
+    private boolean menuCondition = true;
+    private RelativeLayout container;
+    private TextView titleName;
+    private ImageView searchBtn;
+    private FrameLayout frame_container;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +51,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomeActivity.this,"Search", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "Search", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(HomeActivity.this, TapizyActivity.class);
                 startActivity(intent);
             }
@@ -85,7 +87,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     menu_btn.setImageResource(R.drawable.ic_cancle);
                     container.setBackgroundResource(R.color.black_trans1);
                     frame_container.setVisibility(View.GONE);
-                }else {
+                } else {
                     menuLayout.setVisibility(View.GONE);
                     menuCondition = true;
                     menu_btn.setImageResource(R.drawable.ic_menu);
@@ -94,9 +96,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
-
     }
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -129,8 +129,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     menuCondition = true;
                     menu_btn.setImageResource(R.drawable.ic_menu);
                     container.setBackgroundResource(R.color.white);*/
-                  Intent intent = new Intent(HomeActivity.this, ChatActivity.class);
-                  startActivity(intent);
+                    /*Intent intent = new Intent(HomeActivity.this, ChatActivity.class);
+                    startActivity(intent);*/
                     return true;
             }
 
@@ -157,8 +157,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -166,7 +164,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+
+        } else if (id == R.id.create_bot) {
+            startActivity(new Intent(mContext, CreateChatbotActivity.class));
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

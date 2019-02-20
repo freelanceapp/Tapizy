@@ -10,21 +10,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import java.util.ArrayList;
 
-import infobite.com.tapizy.ui.Activity.TrandingActivity;
-import infobite.com.tapizy.model.TapizyListModel;
 import infobite.com.tapizy.R;
+import infobite.com.tapizy.model.TapizyListModel;
+import infobite.com.tapizy.ui.Activity.TrandingActivity;
 
 public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.ViewHolder> {
 
     ArrayList<TapizyListModel> tapizyListModels;
     Context context;
-
-
-    public TapizyListAdapter() {
-    }
 
     public TapizyListAdapter(Context context, ArrayList<TapizyListModel> tapizyListModels) {
 
@@ -37,11 +32,12 @@ public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.Vi
         public LinearLayout llayout;
         public ImageView iv_tapizy_logo;
         public TextView tv_tapizy_title;
+
         public ViewHolder(View v) {
             super(v);
-            tv_tapizy_title = (TextView)v.findViewById(R.id.tv_tapizy_title);
-            iv_tapizy_logo = (ImageView)v.findViewById(R.id.iv_tapizy_logo);
-            llayout = (LinearLayout)v.findViewById(R.id.llayout);
+            tv_tapizy_title = (TextView) v.findViewById(R.id.tv_tapizy_title);
+            iv_tapizy_logo = (ImageView) v.findViewById(R.id.iv_tapizy_logo);
+            llayout = (LinearLayout) v.findViewById(R.id.llayout);
 
         }
     }

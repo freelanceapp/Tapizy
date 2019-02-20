@@ -151,4 +151,16 @@
     <color name="black">#000000</color>
     <color name="black_trans">#0F2B2A2A</color>
     <color name="black_trans1">#D2332F2F</color>
+
+    <color name="transparent">#00332F2F</color>
+
+    <color name="gray_a">#585757</color>
+    <color name="gray_b">#696868</color>
+    <color name="gray_c">#7b7a7a</color>
+    <color name="gray_d">#919090</color>
+    <color name="gray_e">#aeadad</color>
+    <color name="gray_f">#cacaca</color>
+    <color name="gray_g">#dadada</color>
+    <color name="gray_h">#e6e5e5</color>
+    <color name="gray_i">#f2f0f0</color>
 </resources>
