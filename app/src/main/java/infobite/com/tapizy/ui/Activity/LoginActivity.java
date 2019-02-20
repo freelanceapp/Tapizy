@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import infobite.com.tapizy.R;
+import infobite.com.tapizy.otp_verification.OtpVerificationActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -28,19 +29,9 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, OtpActivity.class);
+                Intent intent = new Intent(LoginActivity.this, OtpVerificationActivity.class);
                 startActivity(intent);
             }
         });
-
-        signupBtn = (TextView) findViewById(R.id.signupBtn);
-        signupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 }

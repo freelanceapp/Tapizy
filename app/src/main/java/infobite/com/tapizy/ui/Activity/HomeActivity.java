@@ -1,5 +1,6 @@
 package infobite.com.tapizy.ui.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -69,8 +70,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+     /* BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);*/
         //toolbar.setTitle("Tapizy");
 
         menuLayout = (LinearLayout) findViewById(R.id.menuLayout);
@@ -98,7 +99,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+   /* private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -123,12 +124,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     return true;
                 case R.id.navigation_cart:
                     //  toolbar.setTitle("Cart");
-                  /*  fragment = new TapizyMessageFragment();
+                  *//*  fragment = new TapizyMessageFragment();
                     loadFragment(fragment);
                     menuLayout.setVisibility(View.GONE);
                     menuCondition = true;
                     menu_btn.setImageResource(R.drawable.ic_menu);
-                    container.setBackgroundResource(R.color.white);*/
+                    container.setBackgroundResource(R.color.white);*//*
                   Intent intent = new Intent(HomeActivity.this, ChatActivity.class);
                   startActivity(intent);
                     return true;
@@ -136,7 +137,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             return false;
         }
-    };
+    };*/
 
     private void loadFragment(Fragment fragment) {
         // load fragment
@@ -156,7 +157,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
+    private void logoutbutton(){
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -177,6 +182,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_send) {
 
+        } else if (id == R.id.logout_arrow){
+        logoutbutton();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

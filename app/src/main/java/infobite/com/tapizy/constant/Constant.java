@@ -9,4 +9,5 @@ public class Constant {
     public static final String UPDATE_PROFILE_API = "update_profile.php";
     public static final String SUBMIT_ANSWER_API = "insert_answer.php";
     public static final String SELECT_QUETION_API = "select_question.php";
+    public static final String CHANNEL_ID = "1234";
 }
