@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.model.TapizyListModel;
+import infobite.com.tapizy.ui.activity.ChatActivity;
 import infobite.com.tapizy.ui.activity.NewActivity;
 import infobite.com.tapizy.ui.activity.TrandingActivity;
 
@@ -62,7 +63,7 @@ public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.Vi
         Vholder.llayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, NewActivity.class);
+                Intent intent = new Intent(context, ChatActivity.class);
                 context.startActivity(intent);
             }
         });

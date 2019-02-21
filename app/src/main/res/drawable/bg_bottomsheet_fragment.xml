@@ -4,6 +4,5 @@
     <corners
         android:topLeftRadius="@dimen/bottom_sheet_cornor"
         android:topRightRadius="@dimen/bottom_sheet_cornor" />
-    <padding android:top="@dimen/padding_top_bottomsheet" />
     <solid android:color="@color/white" />
 </shape>

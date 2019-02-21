@@ -1,126 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/light_grey">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="400dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <RelativeLayout
-            android:id="@+id/tapizy_rl"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="290dp"
-            android:background="@color/blueB">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <TextView
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15sp"
-                android:text="Tapizy"
-                android:textColor="@color/white"
-                android:textSize="24dp" />
-            <!--        <ImageView
-                        android:id="@+id/send_activity"
-                        android:layout_marginRight="10dp"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/send"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />-->
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="70dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
-                android:src="@drawable/tapizy_final" />
-
-            <!--
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/cv_search"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="30dp"
-                            android:layout_marginBottom="50dp"
-                            app:cardBackgroundColor="@color/white"
-                            app:cardCornerRadius="6dp">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:id="@+id/imgSearch"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="8dp"
-                                    android:elevation="8dp"
-                                    android:src="@drawable/ic_search"
-                                    android:tint="@color/blueB" />
-
-                                <EditText
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="0dp"
-                                    android:layout_toRightOf="@+id/imgSearch"
-                                    android:backgroundTint="@color/white"
-                                    android:queryHint="Search"
-                                    android:textColor="@color/blueB"
-                                    android:textSize="14sp" />
-                            </RelativeLayout>
-                        </android.support.v7.widget.CardView>-->
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/tapizy_ll"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/blueB"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/backBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8sp"
-                android:src="@drawable/ic_back"
-                android:tint="@color/white" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="true"
-        android:minHeight="340dp"
-        app:behavior_hideable="false"
-        app:behavior_peekHeight="340dp"
-        app:layout_behavior="@string/bottom_sheet_behavior">
-
-        <LinearLayout
-            android:id="@+id/ll_bottom_sheet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@color/transparent"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
                 android:orientation="horizontal"
+                android:paddingTop="8dp"
                 android:weightSum="4">
 
                 <LinearLayout
@@ -211,6 +127,22 @@
                         android:src="@drawable/profile_image" />
                 </LinearLayout>
             </LinearLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/ll_bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"

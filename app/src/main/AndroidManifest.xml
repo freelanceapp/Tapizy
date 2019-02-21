@@ -21,8 +21,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.NewActivity"></activity>
+        <activity android:name=".ui.activity.NewActivity" />
         <activity
             android:name=".ui.activity.TrandingActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -31,18 +32,24 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ui.activity.HomeActivity"
-            android:label="@string/title_activity_home"
+            android:label=""
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".ui.activity.MainActivity" />
-        <activity
-            android:name=".ui.activity.SplashScreen"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.MainActivity" />
+        <activity
+            android:name=".ui.activity.SplashScreen"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".ui.activity.LoginActivity"

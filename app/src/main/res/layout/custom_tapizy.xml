@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:gravity="center_horizontal"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+
     <LinearLayout
-        android:layout_centerInParent="true"
-        android:layout_margin="6dp"
-        android:gravity="center"
-        android:background="@drawable/bg_bottomsheet"
+        android:id="@+id/llayout"
         android:layout_width="85dp"
         android:layout_height="85dp"
-        android:orientation="vertical"
-        android:id="@+id/llayout">
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_list"
-                android:tint="@color/blueB"
-                android:id="@+id/iv_tapizy_logo"/>
-            <TextView
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Daily Fun"
-                android:textSize="10sp"
-                android:textColor="@color/black"
-                android:textStyle="normal"
-                android:layout_margin="2sp"
-                android:id="@+id/tv_tapizy_title"/>
+        android:layout_centerInParent="true"
+        android:layout_margin="6dp"
+        android:background="@drawable/bg_bottomsheet"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_tapizy_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_list"
+            android:tint="@color/blueB" />
+
+        <TextView
+            android:id="@+id/tv_tapizy_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2sp"
+            android:text="Daily Fun"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:textStyle="normal" />
     </LinearLayout>
 </RelativeLayout>

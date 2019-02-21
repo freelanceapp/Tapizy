@@ -1,45 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/lllayout"
-    android:orientation="horizontal"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-        <ImageView
-            android:layout_gravity="center"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_list"
-            android:tint="@color/blueB"
-            android:id="@+id/logo"/>
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
     <LinearLayout
-        android:gravity="center_vertical"
+        android:id="@+id/lllayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="4sp"
-        android:layout_marginBottom="4sp">
-        <TextView
-            android:paddingTop="6dp"
-            android:textAlignment="center"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingTop="5dp"
+        android:paddingRight="16dp">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_list"
+            android:tint="@color/blueB" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Daily Fun"
-            android:textSize="14sp"
-            android:textColor="@color/black"
-            android:textStyle="normal"
-            android:layout_margin="2sp"
-            android:id="@+id/title"/>
-        <TextView
-            android:text="Daily Fun"
-            android:textSize="12sp"
-            android:textColor="@color/black"
-            android:textStyle="normal"
-            android:layout_margin="2sp"
-            android:id="@+id/subtitle"
-            android:paddingTop="6dp"
-            android:textAlignment="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_marginTop="4sp"
+            android:layout_marginBottom="4sp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2sp"
+                android:text="Daily Fun"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2sp"
+                android:text="Daily Fun"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/lllayout"
+        android:background="@color/gray_h"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp" />
+</RelativeLayout>
