@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.model.TapizyListModel;
+import infobite.com.tapizy.ui.activity.NewActivity;
 import infobite.com.tapizy.ui.activity.TrandingActivity;
 
 public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.ViewHolder> {
@@ -38,8 +39,8 @@ public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.Vi
             tv_tapizy_title = (TextView) v.findViewById(R.id.tv_tapizy_title);
             iv_tapizy_logo = (ImageView) v.findViewById(R.id.iv_tapizy_logo);
             llayout = (LinearLayout) v.findViewById(R.id.llayout);
-
         }
+
     }
 
     @Override
@@ -61,7 +62,7 @@ public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.Vi
         Vholder.llayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, TrandingActivity.class);
+                Intent intent = new Intent(context, NewActivity.class);
                 context.startActivity(intent);
             }
         });

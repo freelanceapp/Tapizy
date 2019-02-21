@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:gravity="center_horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="6dp"
+        android:gravity="center"
+        android:background="@drawable/bg_bottomsheet"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:orientation="vertical"
-        android:layout_marginTop="4sp"
-        android:layout_marginBottom="4sp"
         android:id="@+id/llayout">
             <ImageView
                 android:layout_gravity="center"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/ic_list"
                 android:tint="@color/blueB"
                 android:id="@+id/iv_tapizy_logo"/>
             <TextView
-                android:paddingTop="6dp"
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Daily Fun"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textColor="@color/black"
                 android:textStyle="normal"
                 android:layout_margin="2sp"

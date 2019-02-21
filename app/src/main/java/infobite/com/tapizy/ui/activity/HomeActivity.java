@@ -50,7 +50,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onClick(View view) {
                 Toast.makeText(HomeActivity.this, "Search", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(HomeActivity.this, TapizyActivity.class);
+                Intent intent = new Intent(HomeActivity.this,TapizyActivity.class);
                 startActivity(intent);
             }
         });

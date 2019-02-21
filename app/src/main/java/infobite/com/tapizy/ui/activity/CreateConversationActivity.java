@@ -65,7 +65,7 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
                 createChatbotDialog();
                 break;
             case R.id.btnChat:
-                Intent intent = new Intent(mContext, ChatActivity.class);
+                Intent intent = new Intent(mContext, infobite.com.tapizy.ui.activity.ChatActivity.class);
                 intent.putExtra("name", strChatbotName);
                 startActivity(intent);
                 break;
