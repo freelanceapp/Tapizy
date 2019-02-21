@@ -1,9 +1,7 @@
-package infobite.com.tapizy.ui.Activity;
+package infobite.com.tapizy.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -22,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import infobite.com.tapizy.R;
-import infobite.com.tapizy.ui.Fragment.TapizyListFragment;
+import infobite.com.tapizy.ui.fragment.TapizyListFragment;
 import infobite.com.tapizy.utils.BaseActivity;
 
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -71,10 +69,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        //toolbar.setTitle("Tapizy");
-
         menuLayout = (LinearLayout) findViewById(R.id.menuLayout);
         container = (RelativeLayout) findViewById(R.id.container);
         menu_btn = (FloatingActionButton) findViewById(R.id.menu_btn);
@@ -98,55 +92,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         });
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_shop:
-                    //toolbar.setTitle("Shop");
-                    fragment = new TapizyListFragment();
-                    loadFragment(fragment);
-                    menuLayout.setVisibility(View.GONE);
-                    menuCondition = true;
-                    menu_btn.setImageResource(R.drawable.ic_menu);
-                    container.setBackgroundResource(R.color.white);
-                    return true;
-                case R.id.navigation_gifts:
-                    // toolbar.setTitle("My Gifts");
-                    fragment = new TapizyListFragment();
-                    loadFragment(fragment);
-                    menuLayout.setVisibility(View.GONE);
-                    menuCondition = true;
-                    menu_btn.setImageResource(R.drawable.ic_menu);
-                    container.setBackgroundResource(R.color.white);
-                    return true;
-                case R.id.navigation_cart:
-                    //  toolbar.setTitle("Cart");
-                  /*  fragment = new TapizyMessageFragment();
-                    loadFragment(fragment);
-                    menuLayout.setVisibility(View.GONE);
-                    menuCondition = true;
-                    menu_btn.setImageResource(R.drawable.ic_menu);
-                    container.setBackgroundResource(R.color.white);*/
-                    /*Intent intent = new Intent(HomeActivity.this, ChatActivity.class);
-                    startActivity(intent);*/
-                    return true;
-            }
-
-            return false;
-        }
-    };
-
-    private void loadFragment(Fragment fragment) {
-        // load fragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -155,6 +100,12 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void logoutbutton() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -177,6 +128,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         } else if (id == R.id.nav_send) {
 
+        } else if (id == R.id.logout_arrow) {
+            logoutbutton();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

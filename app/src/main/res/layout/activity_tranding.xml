@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,259 +13,284 @@
         android:background="@color/blueB"
         android:elevation="8dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
-    </android.support.v7.widget.Toolbar>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <LinearLayout
+        android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:layout_below="@id/toolbar"
-        android:id="@+id/tab"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="horizontal">
+
         <TextView
+            android:id="@+id/trendingBtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/blueB"
+            android:gravity="center"
             android:text="Trending"
-            android:gravity="center"
-            android:textSize="18sp"
             android:textColor="@color/white"
-            android:layout_weight="1"
-            android:background="@color/blueB"
-            android:id="@+id/trendingBtn"/>
+            android:textSize="18sp" />
+
         <TextView
+            android:id="@+id/descoverBtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Discover Bot"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"
             android:layout_weight="1"
             android:background="@color/blueB"
-            android:id="@+id/descoverBtn"/>
+            android:gravity="center"
+            android:text="Discover Bot"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:layout_below="@id/tab"
         android:layout_above="@id/cv"
-        android:layout_marginTop="4sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_below="@id/tab"
         android:layout_marginTop="4sp"
-        android:visibility="gone"
+        android:scrollbars="none" />
+
+    <LinearLayout
         android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tab"
         android:layout_marginLeft="6sp"
-        android:layout_marginRight="6sp">
+        android:layout_marginTop="4sp"
+        android:layout_marginRight="6sp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="4sp">
+            android:layout_margin="4sp"
+            android:orientation="horizontal">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="50dp"
                 android:layout_height="50sp"
-                android:src="@drawable/profile_image"/>
+                android:src="@drawable/profile_image" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8sp"
                 android:text="Hello"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8sp"/>
+                android:textSize="18sp" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1sp"
             android:layout_marginTop="4sp"
             android:layout_marginBottom="6sp"
-            android:background="@color/gray"/>
+            android:background="@color/gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="4sp">
+            android:layout_margin="4sp"
+            android:orientation="horizontal">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="50dp"
                 android:layout_height="50sp"
-                android:src="@drawable/profile_image"/>
+                android:src="@drawable/profile_image" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8sp"
                 android:text="Hello"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8sp"/>
+                android:textSize="18sp" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1sp"
             android:layout_marginTop="4sp"
             android:layout_marginBottom="6sp"
-            android:background="@color/gray"/>
+            android:background="@color/gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="4sp">
+            android:layout_margin="4sp"
+            android:orientation="horizontal">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="50dp"
                 android:layout_height="50sp"
-                android:src="@drawable/profile_image"/>
+                android:src="@drawable/profile_image" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8sp"
                 android:text="Hello"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8sp"/>
+                android:textSize="18sp" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1sp"
             android:layout_marginTop="4sp"
             android:layout_marginBottom="6sp"
-            android:background="@color/gray"/>
+            android:background="@color/gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="4sp">
+            android:layout_margin="4sp"
+            android:orientation="horizontal">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="50dp"
                 android:layout_height="50sp"
-                android:src="@drawable/profile_image"/>
+                android:src="@drawable/profile_image" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8sp"
                 android:text="Hello"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8sp"/>
+                android:textSize="18sp" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1sp"
             android:layout_marginTop="4sp"
             android:layout_marginBottom="6sp"
-            android:background="@color/gray"/>
+            android:background="@color/gray" />
     </LinearLayout>
 
 
-
     <android.support.v7.widget.CardView
+        android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:cardElevation="6sp"
-        android:id="@+id/cv">
+        app:cardElevation="6sp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="2dp">
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="35sp"
-                    android:src="@drawable/cab"/>
+                    android:src="@drawable/cab" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="Cab"
-                    android:textSize="12sp"
                     android:textColor="@color/black"
-                    android:layout_gravity="center"/>
+                    android:textSize="12sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="35sp"
-                    android:src="@drawable/bus"/>
+                    android:src="@drawable/bus" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="Bus"
-                    android:textSize="12sp"
                     android:textColor="@color/black"
-                    android:layout_gravity="center"/>
+                    android:textSize="12sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="35sp"
-                    android:src="@drawable/plane"/>
+                    android:src="@drawable/plane" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="Flight"
-                    android:textSize="12sp"
                     android:textColor="@color/black"
-                    android:layout_gravity="center"/>
+                    android:textSize="12sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="35sp"
-                    android:src="@drawable/train"/>
+                    android:src="@drawable/train" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="Train"
-                    android:textSize="12sp"
                     android:textColor="@color/black"
-                    android:layout_gravity="center"/>
+                    android:textSize="12sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="35sp"
-                    android:src="@drawable/hotel"/>
+                    android:src="@drawable/hotel" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="Hotal"
-                    android:textSize="12sp"
                     android:textColor="@color/black"
-                    android:layout_gravity="center"/>
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

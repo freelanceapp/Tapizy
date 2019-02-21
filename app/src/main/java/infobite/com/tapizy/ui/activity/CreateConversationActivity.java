@@ -1,4 +1,4 @@
-package infobite.com.tapizy.ui.Activity;
+package infobite.com.tapizy.ui.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -101,17 +101,22 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
             @Override
             public void onClick(View v) {
                 String strName = ((EditText) dialogChatbot.findViewById(R.id.edtChatbotName)).getText().toString();
-                ConversationList conversationList = new ConversationList();
-                conversationList.setText(strName);
-                conversationList.setRelateId(String.valueOf(intRelateId));
-                conversationLists.add(conversationList);
+                if (strName.isEmpty()) {
+                    ((EditText) dialogChatbot.findViewById(R.id.edtChatbotName))
+                            .setError("Enter text for conversation " + ("\ud83d\ude05"));
+                } else {
+                    ConversationList conversationList = new ConversationList();
+                    conversationList.setText(strName);
+                    conversationList.setRelateId(String.valueOf(intRelateId));
+                    conversationLists.add(conversationList);
 
-                databaseHandler.addItemCart(conversationList);
-                conversationLists.clear();
-                conversationLists.addAll(databaseHandler.getAllUrlList());
-                conversationListAdapter.notifyDataSetChanged();
+                    databaseHandler.addItemCart(conversationList);
+                    conversationLists.clear();
+                    conversationLists.addAll(databaseHandler.getAllUrlList());
+                    conversationListAdapter.notifyDataSetChanged();
 
-                dialogChatbot.dismiss();
+                    dialogChatbot.dismiss();
+                }
             }
         });
 

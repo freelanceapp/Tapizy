@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".otp_verification.OtpVerificationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_gravity="center"
+            android:background="@color/blueC">
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvTitleA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Verify Your Mobile Number"
+                android:textColor="@color/black"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTitleB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvTitleA"
+                android:layout_alignLeft="@+id/tvTitleA"
+                android:layout_alignRight="@+id/tvTitleA"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:text="An OTP has been sent to you on your Mobile Number"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvTitleB"
+                android:layout_alignLeft="@+id/tvTitleB"
+                android:layout_alignRight="@+id/tvTitleB"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:text="Please Enter It Below"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/et_otp_a"
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/black"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/et_otp_b"
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:backgroundTint="@color/black"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/et_otp_c"
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:backgroundTint="@color/black"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/et_otp_d"
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:backgroundTint="@color/black"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/et_otp_e"
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:backgroundTint="@color/black"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/et_otp_f"
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:backgroundTint="@color/black"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/etOtp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:hint="ex-123456"
+            android:inputType="number"
+            android:maxLength="6"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/submit_otp"
+            android:layout_width="230dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/buttonborder"
+            android:text="submit"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Didn't get The OTP ?"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/tvResend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="RESEND"
+                android:textColor="@color/blueB"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="199dp"
+        android:layout_height="76dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20sp"
+        android:src="@drawable/tapizy_final"
+        android:tint="@color/white" />
+</RelativeLayout>

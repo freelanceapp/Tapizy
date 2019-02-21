@@ -1,4 +1,4 @@
-package infobite.com.tapizy.ui.Fragment;
+package infobite.com.tapizy.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

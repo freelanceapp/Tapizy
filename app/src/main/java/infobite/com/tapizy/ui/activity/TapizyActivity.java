@@ -1,4 +1,4 @@
-package infobite.com.tapizy.ui.Activity;
+package infobite.com.tapizy.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

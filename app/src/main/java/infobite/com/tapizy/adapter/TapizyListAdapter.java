@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.model.TapizyListModel;
-import infobite.com.tapizy.ui.Activity.TrandingActivity;
+import infobite.com.tapizy.ui.activity.TrandingActivity;
 
 public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.ViewHolder> {
 

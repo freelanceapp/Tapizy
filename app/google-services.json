@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "349710259108",
+    "firebase_url": "https://tapizy-7c981.firebaseio.com",
+    "project_id": "tapizy-7c981",
+    "storage_bucket": "tapizy-7c981.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349710259108:android:300f96db4b306919",
+        "android_client_info": {
+          "package_name": "infobite.com.tapizy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349710259108-6jecpki04niu7t7e282sscmjknbp1kpn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "infobite.com.tapizy",
+            "certificate_hash": "39420feba53d702105d9f4b7334d3e7702d93780"
+          }
+        },
+        {
+          "client_id": "349710259108-mgkkns6i9meonsrbdk59c9s3m2oc4g8g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKkn0FxcErG914ALAqzLxc1rTh6s6d5C8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349710259108-mgkkns6i9meonsrbdk59c9s3m2oc4g8g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

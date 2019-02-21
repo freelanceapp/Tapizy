@@ -4,8 +4,11 @@ import android.app.Dialog;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.Window;
+import android.widget.ProgressBar;
 
 import infobite.com.tapizy.R;
+import infobite.com.tapizy.loading_indicator.sprite.Sprite;
+import infobite.com.tapizy.loading_indicator.style.DoubleBounce;
 
 public class AppProgressDialog {
 
@@ -23,10 +26,13 @@ public class AppProgressDialog {
                 return;
             mProgressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             mProgressDialog.setContentView(R.layout.layout_progress_bar);
-            // ((TextView) mProgressDialog.findViewById(R.id.title)).setText(msg);
+
             mProgressDialog.setCancelable(false);
             mProgressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            // startAnim(mProgressDialog);
+
+            ProgressBar progressBar = mProgressDialog.findViewById(R.id.progresssBar);
+            Sprite doubleBounce = new DoubleBounce();
+            progressBar.setIndeterminateDrawable(doubleBounce);
             mProgressDialog.show();
 
         } catch (Exception e) {

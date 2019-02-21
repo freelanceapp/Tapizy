@@ -1,4 +1,4 @@
-package infobite.com.tapizy.ui.Activity;
+package infobite.com.tapizy.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -107,8 +107,11 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 questionArrayLists.add(question);
             }
         }
-
         questionListAdapter.notifyDataSetChanged();
         chatListAdapter.notifyDataSetChanged();
+
+        if (conversationLists.size() > 0) {
+            recyclerViewChatList.scrollToPosition(conversationLists.size() - 1);
+        }
     }
 }

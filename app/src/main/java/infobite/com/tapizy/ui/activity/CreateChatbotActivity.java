@@ -1,4 +1,4 @@
-package infobite.com.tapizy.ui.Activity;
+package infobite.com.tapizy.ui.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import infobite.com.tapizy.adapter.ChatbotListAdapter;
 import infobite.com.tapizy.constant.Constant;
 import infobite.com.tapizy.model.database_modal.ChatbotList;
 import infobite.com.tapizy.model.database_modal.ChatbotMainModal;
+import infobite.com.tapizy.utils.Alerts;
 import infobite.com.tapizy.utils.AppPreference;
 import infobite.com.tapizy.utils.BaseActivity;
 
@@ -66,7 +67,11 @@ public class CreateChatbotActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.floatingCreateChatbot:
-                createChatbotDialog();
+                if (chatbotLists.size() > 0) {
+                    Alerts.show(mContext, "You can register only one bot " + ("\ud83d\ude05"));
+                } else {
+                    createChatbotDialog();
+                }
                 break;
             case R.id.llChatbot:
                 int pos = Integer.parseInt(v.getTag().toString());
@@ -91,18 +96,22 @@ public class CreateChatbotActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 String strName = ((EditText) dialogChatbot.findViewById(R.id.edtChatbotName)).getText().toString();
-                ChatbotList chatbotList = new ChatbotList();
-                chatbotList.setName(strName);
-                chatbotLists.add(chatbotList);
+                if (strName.isEmpty()) {
+                    ((EditText) dialogChatbot.findViewById(R.id.edtChatbotName)).setError("Please enter chatbot name");
+                } else {
+                    ChatbotList chatbotList = new ChatbotList();
+                    chatbotList.setName(strName);
+                    chatbotLists.add(chatbotList);
 
-                ChatbotMainModal chatbotMainModal = new ChatbotMainModal();
-                chatbotMainModal.setChatbotList(chatbotLists);
+                    ChatbotMainModal chatbotMainModal = new ChatbotMainModal();
+                    chatbotMainModal.setChatbotList(chatbotLists);
 
-                Gson gson = new GsonBuilder().setLenient().create();
-                String data = gson.toJson(chatbotMainModal);
-                AppPreference.setStringPreference(mContext, Constant.CHATBOT_LIST, data);
-                getChatbotList();
-                dialogChatbot.dismiss();
+                    Gson gson = new GsonBuilder().setLenient().create();
+                    String data = gson.toJson(chatbotMainModal);
+                    AppPreference.setStringPreference(mContext, Constant.CHATBOT_LIST, data);
+                    getChatbotList();
+                    dialogChatbot.dismiss();
+                }
             }
         });
 

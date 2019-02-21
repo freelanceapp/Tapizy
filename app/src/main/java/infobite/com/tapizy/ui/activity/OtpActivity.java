@@ -1,4 +1,4 @@
-package infobite.com.tapizy.ui.Activity;
+package infobite.com.tapizy.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +32,7 @@ public class OtpActivity extends AppCompatActivity {
             }
         });
 
-        btnResend = findViewById(R.id.btnResend);
+        btnResend = findViewById(R.id.tvResend);
         btnResend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -32,38 +32,11 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
 
     @Override
     public void onBindViewHolder(ItemRowHolder itemRowHolder, int i) {
-
-        //final String sectionName = dataList.get(i).getHeaderTitle();
-
         ArrayList singleSectionItems = dataList.get(i).getAllItemsInSection();
-
-
         SectionListDataAdapter itemListDataAdapter = new SectionListDataAdapter(mContext, singleSectionItems);
-
         itemRowHolder.recycler_view_list.setHasFixedSize(true);
         itemRowHolder.recycler_view_list.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         itemRowHolder.recycler_view_list.setAdapter(itemListDataAdapter);
-
-/*
-        itemRowHolder.btnMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                Toast.makeText(v.getContext(), "click event on more, "+sectionName , Toast.LENGTH_SHORT).show();
-
-
-
-            }
-        });*/
-
-
-       /* Glide.with(mContext)
-                .load(feedItem.getImageURL())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .error(R.drawable.bg)
-                .into(feedListRowHolder.thumbView);*/
     }
 
     @Override
@@ -73,21 +46,13 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
 
     public class ItemRowHolder extends RecyclerView.ViewHolder {
 
-
         protected RecyclerView recycler_view_list;
-
         protected CircleImageView itemTitle;
-
 
         public ItemRowHolder(View view) {
             super(view);
-
             this.itemTitle = (CircleImageView) view.findViewById(R.id.itemTitle);
             this.recycler_view_list = (RecyclerView) view.findViewById(R.id.recycler_view_list);
-
-
         }
-
     }
-
 }

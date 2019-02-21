@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Activity.MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
 
-        <LinearLayout
+     <!--   <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -192,5 +192,5 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/tapizy_final"
         android:layout_marginTop="20sp"
-        android:tint="@color/white"/>
+        android:tint="@color/white"/>-->
 </RelativeLayout>

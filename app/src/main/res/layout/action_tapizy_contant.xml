@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
+
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/navigation"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/white"
-        android:foreground="?attr/selectableItemBackground"
-        app:itemIconTint="@color/blueB"
-        app:itemTextColor="@color/blueB"
-        app:menu="@menu/navigation"
-        app:elevation="6sp"
-        android:elevation="6sp"/>
+    <!--   <android.support.design.widget.BottomNavigationView
+           android:id="@+id/navigation"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_gravity="bottom"
+           android:layout_alignParentBottom="true"
+           android:background="?android:attr/windowBackground"
+           app:itemBackground="@color/white"
+           android:foreground="?attr/selectableItemBackground"
+           app:itemIconTint="@color/blueB"
+           app:itemTextColor="@color/blueB"
+           app:menu="@menu/navigation"
+           app:elevation="6sp"
+           android:elevation="6sp"/>-->
 </RelativeLayout>
