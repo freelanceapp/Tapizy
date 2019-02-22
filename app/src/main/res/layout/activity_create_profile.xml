@@ -204,6 +204,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <RadioButton
+                            android:id="@+id/rb_male"
                             android:textSize="12dp"
                             android:textColor="@color/black"
                             android:buttonTint="@color/blueB"
@@ -212,6 +213,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <RadioButton
+                            android:id="@+id/rb_female"
                             android:textSize="12dp"
                             android:buttonTint="@color/blueB"
                             android:textColor="@color/black"
@@ -220,10 +222,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <RadioButton
+                            android:id="@+id/rb_other"
                             android:textSize="12dp"
                             android:buttonTint="@color/blueB"
                             android:textColor="@color/black"
-                            android:text="Female"
+                            android:text="Other"
                             android:layout_weight="1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />

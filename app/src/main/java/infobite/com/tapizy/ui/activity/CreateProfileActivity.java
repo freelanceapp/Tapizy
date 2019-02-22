@@ -72,6 +72,9 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
         etCity = findViewById(R.id.user_city);
         radioGroup = findViewById(R.id.rg_select_gender);
     }
+     private void selectGender(){
+
+     }git
 
     private void selectImage() {
         try {
