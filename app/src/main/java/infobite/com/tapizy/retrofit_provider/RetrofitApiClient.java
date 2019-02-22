@@ -1,6 +1,7 @@
 package infobite.com.tapizy.retrofit_provider;
 
 import infobite.com.tapizy.constant.Constant;
+import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -15,7 +16,7 @@ public interface RetrofitApiClient {
 
     @FormUrlEncoded
     @POST(Constant.OTP_VERIFICATION)
-    Call<ResponseBody> otpVerification(@Field("u_contact") String u_contact, @Field("otp") String otp);
+    Call<UserDataMainModal> otpVerification(@Field("u_contact") String u_contact, @Field("otp") String otp);
 
     @FormUrlEncoded
     @POST(Constant.RESEND_OTP)
