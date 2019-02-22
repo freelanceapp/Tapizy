@@ -88,7 +88,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:layout_margin="10dp"
-                            android:src="@drawable/profile_image" />
+                            android:src="@drawable/ic_explore" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -109,7 +109,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:layout_margin="10dp"
-                            android:src="@drawable/profile_image" />
+                            android:src="@drawable/ic_community" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -130,7 +130,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:layout_margin="10dp"
-                            android:src="@drawable/profile_image" />
+                            android:src="@drawable/ic_trending" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -152,7 +152,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:layout_margin="10dp"
-                            android:src="@drawable/profile_image" />
+                            android:src="@drawable/ic_chat" />
                     </LinearLayout>
                 </LinearLayout>
 
