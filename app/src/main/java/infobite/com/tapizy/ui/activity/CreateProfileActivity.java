@@ -74,7 +74,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     }
      private void selectGender(){
 
-     }git
+     }
 
     private void selectImage() {
         try {
