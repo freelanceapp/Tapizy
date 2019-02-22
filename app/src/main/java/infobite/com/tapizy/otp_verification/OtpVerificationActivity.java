@@ -113,7 +113,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
             Alerts.show(mContext, "Enter otp " + getString(R.string.emoji));
         } else {
             if (cd.isNetworkAvailable()) {
-                RetrofitService.getloginData(new Dialog(mContext), retrofitApiClient.otpVerification(strPhone, strOtp), new WebResponse() {
+                RetrofitService.getOtpData(new Dialog(mContext), retrofitApiClient.otpVerification(strPhone, strOtp), new WebResponse() {
                     @Override
                     public void onResponseSuccess(Response<?> result) {
                         ResponseBody responseBody = (ResponseBody) result.body();
