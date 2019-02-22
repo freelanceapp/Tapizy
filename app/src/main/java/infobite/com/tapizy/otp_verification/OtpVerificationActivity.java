@@ -21,6 +21,7 @@ import java.util.List;
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.retrofit_provider.RetrofitService;
 import infobite.com.tapizy.retrofit_provider.WebResponse;
+import infobite.com.tapizy.ui.activity.CreateProfileActivity;
 import infobite.com.tapizy.ui.activity.HomeActivity;
 import infobite.com.tapizy.utils.Alerts;
 import infobite.com.tapizy.utils.BaseActivity;
@@ -120,7 +121,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
                             JSONObject jsonObject = new JSONObject(responseBody.string());
                             if (!jsonObject.getBoolean("error")) {
                                 Alerts.show(mContext, jsonObject.getString("message"));
-                                Intent intent = new Intent(mContext, HomeActivity.class);
+                                Intent intent = new Intent(mContext, CreateProfileActivity.class);
                                 startActivity(intent);
                                 finish();
                             } else {

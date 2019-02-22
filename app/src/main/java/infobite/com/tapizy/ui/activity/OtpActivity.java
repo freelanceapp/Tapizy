@@ -27,7 +27,7 @@ public class OtpActivity extends AppCompatActivity {
         submit_otp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(OtpActivity.this, HomeActivity.class);
+                Intent intent = new Intent(OtpActivity.this, CreateProfileActivity.class);
                 startActivity(intent);
             }
         });
