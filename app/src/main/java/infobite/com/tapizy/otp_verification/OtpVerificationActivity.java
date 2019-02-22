@@ -124,6 +124,8 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
                             if (mainModal.getUserType().equalsIgnoreCase("new user")) {
                                 Alerts.show(mContext, mainModal.getMessage());
                                 Intent intent = new Intent(mContext, CreateProfileActivity.class);
+                                intent.putExtra("phone", mainModal.getUser().getUContact());
+                                intent.putExtra("uid", mainModal.getUser().getUid());
                                 startActivity(intent);
                                 finish();
                             } else {
