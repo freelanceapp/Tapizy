@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -45,6 +47,8 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     private String imgPath = null;
     private EditText etName,etMail,etCity;
     private CheckBox cbChatbot;
+    private RadioGroup radioGroup;
+    private RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
         etName = findViewById(R.id.user_name);
         etMail = findViewById(R.id.user_email);
         etCity = findViewById(R.id.user_city);
+        radioGroup = findViewById(R.id.rg_select_gender);
     }
 
     private void selectImage() {
@@ -113,7 +118,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
             etMail.setError("Number Required");
         }
         else {
-            Toast.makeText(mContext,"Profile Created",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext,"Profile Created Successfully",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(mContext,HomeActivity.class);
             startActivity(intent);
         }
