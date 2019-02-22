@@ -71,7 +71,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_next" />
+                        android:src="@drawable/ic_arrow_forward" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -85,10 +85,11 @@
                             android:layout_height="wrap_content"
                             android:text="Name"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             android:textStyle="normal" />
 
                         <EditText
+                            android:id="@+id/user_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -112,7 +113,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_next" />
+                        android:src="@drawable/ic_arrow_forward" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -126,10 +127,11 @@
                             android:layout_height="wrap_content"
                             android:text="Email Address"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             android:textStyle="normal" />
 
                         <EditText
+                            android:id="@+id/user_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -152,7 +154,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_next" />
+                        android:src="@drawable/ic_arrow_forward" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -169,6 +171,7 @@
                             android:textSize="12sp" />
 
                         <EditText
+                            android:id="@+id/user_city"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -183,18 +186,20 @@
                 </LinearLayout>
 
                 <CheckBox
+                    android:id="@+id/cb_chatbox_confirm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="28dp"
                     android:layout_marginTop="6dp"
                     android:buttonTint="@color/blueB"
                     android:padding="4dp"
-                    android:text="You have a ChatBot or Not"
+                    android:text="You have a ChatBot or Not ?"
                     android:textColor="@color/black"
                     android:textSize="12dp"
                     android:textStyle="normal" />
 
                 <Button
+                    android:id="@+id/btn_create_profile"
                     android:layout_width="match_parent"
                     android:layout_height="34dp"
                     android:layout_marginLeft="80dp"
