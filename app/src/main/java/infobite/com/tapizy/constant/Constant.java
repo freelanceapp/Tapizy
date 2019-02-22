@@ -16,5 +16,7 @@ public class Constant {
     public static final String CHATBOT_LIST = "CHATBOT_LIST";
     public static final String CHATBOT_NAME = "CHATBOT_NAME";
 
-    public static final String CHANNEL_ID = "1234";
+    public static final String IS_LOGIN = "IS_LOGIN";
+    public static final String USER_ID = "USER_ID";
+    public static final String USER_NAME = "USER_NAME";
 }

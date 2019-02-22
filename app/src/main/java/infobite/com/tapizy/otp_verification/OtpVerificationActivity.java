@@ -19,11 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import infobite.com.tapizy.R;
+import infobite.com.tapizy.constant.Constant;
+import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.com.tapizy.retrofit_provider.RetrofitService;
 import infobite.com.tapizy.retrofit_provider.WebResponse;
 import infobite.com.tapizy.ui.activity.CreateProfileActivity;
 import infobite.com.tapizy.ui.activity.HomeActivity;
 import infobite.com.tapizy.utils.Alerts;
+import infobite.com.tapizy.utils.AppPreference;
 import infobite.com.tapizy.utils.BaseActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -116,21 +119,24 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
                 RetrofitService.getOtpData(new Dialog(mContext), retrofitApiClient.otpVerification(strPhone, strOtp), new WebResponse() {
                     @Override
                     public void onResponseSuccess(Response<?> result) {
-                        ResponseBody responseBody = (ResponseBody) result.body();
-                        try {
-                            JSONObject jsonObject = new JSONObject(responseBody.string());
-                            if (!jsonObject.getBoolean("error")) {
-                                Alerts.show(mContext, jsonObject.getString("message"));
+                        UserDataMainModal mainModal = (UserDataMainModal) result.body();
+                        if (!mainModal.getError()) {
+                            if (mainModal.getUserType().equalsIgnoreCase("new user")) {
+                                Alerts.show(mContext, mainModal.getMessage());
                                 Intent intent = new Intent(mContext, CreateProfileActivity.class);
                                 startActivity(intent);
                                 finish();
                             } else {
-                                Alerts.show(mContext, jsonObject.getString("message"));
+                                Alerts.show(mContext, mainModal.getMessage());
+                                AppPreference.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
+                                AppPreference.setStringPreference(mContext, Constant.USER_ID, mainModal.getUser().getUid());
+                                AppPreference.setStringPreference(mContext, Constant.USER_NAME, mainModal.getUser().getUName());
+                                Intent intent = new Intent(mContext, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        } else {
+                            Alerts.show(mContext, mainModal.getMessage());
                         }
                     }
 
