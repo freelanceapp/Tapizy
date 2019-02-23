@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.adapter.TapizyListAdapter;
 import infobite.com.tapizy.model.TapizyListModel;
+import infobite.com.tapizy.ui.activity.community_module.CommunityActivity;
+import infobite.com.tapizy.ui.activity.recent_chat.RecentChatActivity;
+import infobite.com.tapizy.ui.activity.trending_module.TrendingActivity;
 import infobite.com.tapizy.utils.BaseActivity;
 
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -49,16 +52,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*titleName = (TextView) findViewById(R.id.titleName);
-        titleName.setText("Tapizy");*/
-
         frame_container = (FrameLayout) findViewById(R.id.frame_container);
-
-       /* fragment = new HomeFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -70,25 +64,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         menuLayout = (LinearLayout) findViewById(R.id.menuLayout);
         container = (RelativeLayout) findViewById(R.id.container);
-       /* menu_btn = (FloatingActionButton) findViewById(R.id.menu_btn);
-        menu_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (menuCondition == true) {
-                    menuLayout.setVisibility(View.VISIBLE);
-                    menuCondition = false;
-                    menu_btn.setImageResource(R.drawable.ic_cancle);
-                    container.setBackgroundResource(R.color.black_trans1);
-                    frame_container.setVisibility(View.GONE);
-                } else {
-                    menuLayout.setVisibility(View.GONE);
-                    menuCondition = true;
-                    menu_btn.setImageResource(R.drawable.ic_menu);
-                    container.setBackgroundResource(R.color.white);
-                    frame_container.setVisibility(View.VISIBLE);
-                }
-            }
-        });*/
 
         addproduct();
         init();
@@ -96,6 +71,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void init() {
         findViewById(R.id.llexplore).setOnClickListener(this);
+        findViewById(R.id.llTrending).setOnClickListener(this);
+        findViewById(R.id.llCommunity).setOnClickListener(this);
+        findViewById(R.id.llchat).setOnClickListener(this);
 
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("");
@@ -158,11 +136,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-
-        } else if (id == R.id.create_bot) {
-            startActivity(new Intent(mContext, CreateChatbotActivity.class));
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.my_profile) {
+            startActivity(new Intent(mContext,MyProfileActivity.class));
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -185,7 +160,16 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.llexplore:
-                startActivity(new Intent(getApplicationContext(), NewActivity.class));
+                startActivity(new Intent(mContext, NewActivity.class));
+                break;
+            case R.id.llCommunity:
+                startActivity(new Intent(mContext, CommunityActivity.class));
+                break;
+            case R.id.llTrending:
+                startActivity(new Intent(mContext, TrendingActivity.class));
+                break;
+            case R.id.llchat:
+                startActivity(new Intent(mContext, RecentChatActivity.class));
                 break;
         }
     }

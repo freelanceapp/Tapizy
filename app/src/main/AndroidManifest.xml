@@ -24,10 +24,12 @@
         android:theme="@style/AppTheme.Base"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.RecentChatActivity"></activity>
+        <activity android:name=".ui.activity.SettingActivity"></activity>
+        <activity android:name=".ui.activity.MyProfileActivity" />
+        <activity android:name=".ui.activity.recent_chat.RecentChatActivity" />
         <activity
             android:name=".ui.activity.CreateProfileActivity"
-            android:windowSoftInputMode="stateVisible"></activity>
+            android:windowSoftInputMode="stateVisible" />
         <activity android:name=".ui.activity.NewActivity" />
         <activity
             android:name=".ui.activity.TrandingActivity"
@@ -75,6 +77,13 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".utils.BaseActivity" />
         <activity android:name=".ui.activity.CityListActivity" />
+        <activity android:name=".ui.activity.community_module.CommunityActivity" />
+        <activity android:name=".ui.activity.trending_module.TrendingActivity" />
+        <activity android:name=".ui.activity.trending_module.NewPostActivity" />
+        <activity android:name=".ui.activity.trending_module.VideoActivity" />
+        <activity android:name=".ui.activity.trending_module.VideoGalleryActivity" />
+        <activity android:name=".ui.activity.trending_module.VideoTrimerActivity" />
+        <activity android:name=".ui.activity.trending_module.PostDetailActivity" />
 
         <receiver android:name=".otp_verification.MySMSBroadCastReceiver">
             <intent-filter android:priority="999">

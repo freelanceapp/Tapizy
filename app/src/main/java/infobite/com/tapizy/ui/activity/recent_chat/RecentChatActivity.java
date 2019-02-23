@@ -1,4 +1,4 @@
-package infobite.com.tapizy.ui.activity;
+package infobite.com.tapizy.ui.activity.recent_chat;
 
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;

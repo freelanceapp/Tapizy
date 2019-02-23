@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.RecentChatActivity">
+    tools:context=".ui.activity.recent_chat.RecentChatActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -16,6 +16,7 @@
         android:paddingRight="16dp">
 
         <ImageView
+            android:padding="4dp"
             android:id="@+id/ic_back_recent_chat"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -26,11 +27,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="16dp"
             android:layout_toRightOf="@+id/ic_back_recent_chat"
             android:text="Recent Chat"
             android:textColor="@color/white"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="normal" />
     </RelativeLayout>
 

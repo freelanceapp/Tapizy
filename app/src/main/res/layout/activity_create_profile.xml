@@ -274,11 +274,10 @@
                     android:layout_marginTop="6dp"
                     android:buttonTint="@color/blueB"
                     android:padding="4dp"
-                    android:text="You have a ChatBot or Not ?"
+                    android:text="You have a Bot or User ?"
                     android:textColor="@color/black"
                     android:textSize="12dp"
                     android:textStyle="normal" />
-
                 <Button
                     android:id="@+id/btn_create_profile"
                     android:layout_width="match_parent"

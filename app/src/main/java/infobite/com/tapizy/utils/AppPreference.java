@@ -11,6 +11,13 @@ public class AppPreference {
 
     public static final String APP_PREFENCE = "Tapizy_preference";
 
+    public static void setUserDataPreferences(Context context, String key, String value){
+        SharedPreferences preferences = context.getSharedPreferences("Tapizy",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key,value);
+        editor.apply();
+    }
+
     public static void setTokenPreference(Context context, String key, String value) {
         SharedPreferences preferences = context.getSharedPreferences("Tapizy", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

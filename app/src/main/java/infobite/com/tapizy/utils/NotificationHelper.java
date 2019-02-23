@@ -33,7 +33,7 @@ public class NotificationHelper {
         /**Creates an explicit intent for an Activity in your app**/
         Intent resultIntent = null;
 
-        if (title.equalsIgnoreCase("Comment") || title.equalsIgnoreCase("Like")) {
+        if (title.equalsIgnoreCase("P_Comment") || title.equalsIgnoreCase("Like")) {
             //resultIntent = new Intent(mContext, PostDetailActivity.class);
             resultIntent.putExtra("get_from", strGetFrom);
             resultIntent.putExtra("post_id", strPostId);
@@ -77,7 +77,7 @@ public class NotificationHelper {
 
         Intent resultIntent = null;
 
-        if (title.equalsIgnoreCase("Comment") || title.equalsIgnoreCase("Like")) {
+        if (title.equalsIgnoreCase("P_Comment") || title.equalsIgnoreCase("Like")) {
             //resultIntent = new Intent(mContext, PostDetailActivity.class);
             resultIntent.putExtra("get_from", strGetFrom);
             resultIntent.putExtra("post_id", strPostId);
