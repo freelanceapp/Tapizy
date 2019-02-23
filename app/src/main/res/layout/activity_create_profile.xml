@@ -14,6 +14,7 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cv_create_profile1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -41,18 +42,21 @@
                     android:layout_height="120dp"
                     android:layout_gravity="center"
                     android:layout_margin="20dp"
-                    android:src="@drawable/ic_profile_img" />
+                    android:src="@drawable/ic_profile_img"
+                    app:civ_border_color="@color/gray_i"
+                    app:civ_border_width="1dp" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/cv_create_profile1"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="6dp"
-            app:cardElevation="8dp">
+            app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,7 +73,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_next" />
+                        android:src="@drawable/ic_arrow_forward" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -83,10 +87,11 @@
                             android:layout_height="wrap_content"
                             android:text="Name"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             android:textStyle="normal" />
 
                         <EditText
+                            android:id="@+id/user_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -110,7 +115,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_next" />
+                        android:src="@drawable/ic_arrow_forward" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -124,10 +129,11 @@
                             android:layout_height="wrap_content"
                             android:text="Email Address"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             android:textStyle="normal" />
 
                         <EditText
+                            android:id="@+id/user_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -150,7 +156,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_next" />
+                        android:src="@drawable/ic_arrow_forward" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -167,41 +173,93 @@
                             android:textSize="12sp" />
 
                         <EditText
+                            android:id="@+id/user_city"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:background="@drawable/bg_editext_profile"
                             android:hint="ex :Indore"
-                            android:inputType="number"
+                            android:inputType="text"
                             android:padding="6dp"
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray_c"
                             android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="12dp"
+                        android:textColor="@color/black"
+                        android:text="Select Gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <RadioGroup
+                        android:id="@+id/rg_select_gender"
+                        android:padding="5dp"
+                        android:weightSum="3"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RadioButton
+                            android:id="@+id/rb_male"
+                            android:textSize="12dp"
+                            android:textColor="@color/black"
+                            android:buttonTint="@color/blueB"
+                            android:layout_weight="1"
+                            android:text="Male"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <RadioButton
+                            android:id="@+id/rb_female"
+                            android:textSize="12dp"
+                            android:buttonTint="@color/blueB"
+                            android:textColor="@color/black"
+                            android:text="Female"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <RadioButton
+                            android:id="@+id/rb_other"
+                            android:textSize="12dp"
+                            android:buttonTint="@color/blueB"
+                            android:textColor="@color/black"
+                            android:text="Other"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
 
                 <CheckBox
+                    android:id="@+id/cb_chatbox_confirm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="28dp"
                     android:layout_marginTop="6dp"
                     android:buttonTint="@color/blueB"
                     android:padding="4dp"
-                    android:text="You have a ChatBot or Not"
+                    android:text="You have a ChatBot or Not ?"
                     android:textColor="@color/black"
                     android:textSize="12dp"
                     android:textStyle="normal" />
 
                 <Button
+                    android:id="@+id/btn_create_profile"
                     android:layout_width="match_parent"
                     android:layout_height="34dp"
                     android:layout_marginLeft="80dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginRight="80dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/rounded_rectangle_blue"
                     android:text="Submit Details"
                     android:textColor="@color/white" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>
+
 </LinearLayout>

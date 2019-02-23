@@ -14,7 +14,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -40,6 +45,10 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     private File destination = null;
     private InputStream inputStreamImg;
     private String imgPath = null;
+    private EditText etName,etMail,etCity;
+    private CheckBox cbChatbot;
+    private RadioGroup radioGroup;
+    private RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +65,16 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
 
     private void init() {
         ((ImageView) findViewById(R.id.user_profile)).setOnClickListener(this);
+        ((Button) findViewById(R.id.btn_create_profile)).setOnClickListener(this);
+
+        etName = findViewById(R.id.user_name);
+        etMail = findViewById(R.id.user_email);
+        etCity = findViewById(R.id.user_city);
+        radioGroup = findViewById(R.id.rg_select_gender);
     }
+     private void selectGender(){
+
+     }
 
     private void selectImage() {
         try {
@@ -93,6 +111,19 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
         } catch (Exception e) {
             Toast.makeText(this, "Camera Permission error", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
+        }
+    }
+
+    private void createProfile(){
+        if (etName.getText().toString().length() == 0){
+            etName.setError("Name Required");
+        }else if (etMail.getText().toString().length() == 0 ){
+            etMail.setError("Number Required");
+        }
+        else {
+            Toast.makeText(mContext,"Profile Created Successfully",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(mContext,HomeActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -151,6 +182,9 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.user_profile:
                 selectImage();
+                break;
+            case R.id.btn_create_profile:
+            createProfile();
                 break;
         }
     }
