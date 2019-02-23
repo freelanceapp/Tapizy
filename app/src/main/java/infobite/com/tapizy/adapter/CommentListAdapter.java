@@ -15,7 +15,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.constant.Constant;
-import infobite.com.tapizy.model.daily_news_feed.Comment;
+import infobite.com.tapizy.model.timeline_modal.Comment;
 import infobite.com.tapizy.utils.AppPreference;
 
 public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.ViewHolder> {

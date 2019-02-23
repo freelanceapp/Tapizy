@@ -54,6 +54,7 @@
                 android:inputType="textMultiLine"
                 android:lines="10"
                 android:padding="16dp"
+                android:textColor="@color/black"
                 android:textColorHint="@color/gray_d"
                 android:textStyle="normal" />
 
@@ -66,6 +67,7 @@
                 android:layout_marginRight="16dp"
                 android:background="@color/transparent"
                 android:gravity="top"
+                android:textColor="@color/black"
                 android:hint="Post description"
                 android:padding="16dp"
                 android:textColorHint="@color/gray_d"

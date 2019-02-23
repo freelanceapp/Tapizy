@@ -1,14 +1,16 @@
 package infobite.com.tapizy.retrofit_provider;
 
 import infobite.com.tapizy.constant.Constant;
-import infobite.com.tapizy.model.daily_news_feed.DailyNewsFeedMainModal;
+import infobite.com.tapizy.model.comment_list_modal.CommentMainModal;
 import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
+import infobite.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -36,13 +38,13 @@ public interface RetrofitApiClient {
 
     @Multipart
     @POST(Constant.NEWPOST_API)
-    Call<ResponseBody> newPostFeed(@Part("user_id") RequestBody user_id, @Part("headline") RequestBody headline,
-                                   @Part("post_description") RequestBody post_description, @Part MultipartBody.Part video,
+    Call<ResponseBody> newPostFeed(@Part("uid") RequestBody user_id, @Part("headline") RequestBody headline,
+                                   @Part("status") RequestBody post_description, @Part MultipartBody.Part video,
                                    @Part MultipartBody.Part aimage);
 
-    @FormUrlEncoded
-    @POST(Constant.TIMELINE_API)
-    Call<DailyNewsFeedMainModal> showPostTimeLine(@Field("user_id") String userId);
+
+    @GET(Constant.TIMELINE_API)
+    Call<DailyNewsFeedMainModal> showPostTimeLine();
 
     @FormUrlEncoded
     @POST(Constant.TIMELINE_API)
@@ -53,4 +55,8 @@ public interface RetrofitApiClient {
     @POST(Constant.TIMELINE_API)
     Call<DailyNewsFeedMainModal> postDetail(@Field("post_id") String post_id);
 
+    @FormUrlEncoded
+    @POST(Constant.COMMENT_API)
+    Call<CommentMainModal> newPostComment(@Field("post_id") String postId, @Field("uid") String useId,
+                                          @Field("comment") String comment);
 }

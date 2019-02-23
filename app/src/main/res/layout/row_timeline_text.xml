@@ -27,6 +27,8 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgUserProfile"
                 android:layout_width="44dp"
+                android:background="@drawable/circle_background_b"
+                android:padding="1dp"
                 android:layout_height="44dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/profile_image" />
@@ -91,7 +93,7 @@
                     android:id="@+id/imgLike"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_heart_icon" />
+                    android:src="@drawable/ic_like_icon" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -143,16 +145,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="4.261 likes"
-                android:textColor="@color/colorAccent"
-                android:textStyle="normal" />
-
-            <TextView
-                android:id="@+id/tvCommentCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="16dp"
-                android:text="5000 comments"
                 android:textColor="@color/colorAccent"
                 android:textStyle="normal" />
         </LinearLayout>

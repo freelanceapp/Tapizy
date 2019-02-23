@@ -1,5 +1,4 @@
-
-package infobite.com.tapizy.model.daily_news_feed;
+package infobite.com.tapizy.model.timeline_modal;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -13,22 +12,22 @@ import java.util.List;
 
 public class UserFeed implements Serializable, Parcelable {
 
-    @SerializedName("feed_id")
+    @SerializedName("post_id")
     @Expose
-    private String feedId;
-    @SerializedName("post_user_id")
+    private String postId;
+    @SerializedName("uid")
     @Expose
     private String postUserId;
-    @SerializedName("post_user_name")
+    @SerializedName("u_name")
     @Expose
     private String postUserName;
-    @SerializedName("post_user_image")
+    @SerializedName("u_profile")
     @Expose
     private String postUserImage;
-    @SerializedName("athlete_status")
+    @SerializedName("post_description")
     @Expose
     private String athleteStatus;
-    @SerializedName("athlete_video")
+    @SerializedName("video")
     @Expose
     private String athleteVideo;
     @SerializedName("video_thumbnail")
@@ -37,10 +36,10 @@ public class UserFeed implements Serializable, Parcelable {
     @SerializedName("athlete_artice_url")
     @Expose
     private String athleteArticeUrl;
-    @SerializedName("athlete_artice_headline")
+    @SerializedName("headline")
     @Expose
     private String athleteArticeHeadline;
-    @SerializedName("alhlete_images")
+    @SerializedName("image")
     @Expose
     private String alhleteImages;
     @SerializedName("entry_date")
@@ -49,9 +48,12 @@ public class UserFeed implements Serializable, Parcelable {
     @SerializedName("comment")
     @Expose
     private List<Comment> comment = new ArrayList<Comment>();
-    @SerializedName("likes")
+    @SerializedName("total_like")
     @Expose
     private String likes;
+    @SerializedName("total_unlike")
+    @Expose
+    private String totalUnlike;
     @SerializedName("is_like")
     @Expose
     private String isLike;
@@ -73,7 +75,7 @@ public class UserFeed implements Serializable, Parcelable {
     private final static long serialVersionUID = 5278743063907932546L;
 
     protected UserFeed(Parcel in) {
-        this.feedId = ((String) in.readValue((String.class.getClassLoader())));
+        this.postId = ((String) in.readValue((String.class.getClassLoader())));
         this.postUserId = ((String) in.readValue((String.class.getClassLoader())));
         this.postUserName = ((String) in.readValue((String.class.getClassLoader())));
         this.postUserImage = ((String) in.readValue((String.class.getClassLoader())));
@@ -86,18 +88,20 @@ public class UserFeed implements Serializable, Parcelable {
         this.entryDate = ((String) in.readValue((String.class.getClassLoader())));
         in.readList(this.comment, (Comment.class.getClassLoader()));
         this.likes = ((String) in.readValue((String.class.getClassLoader())));
+        this.totalUnlike = ((String) in.readValue((String.class.getClassLoader())));
         this.isLike = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public UserFeed() {
+
     }
 
     public String getFeedId() {
-        return feedId;
+        return postId;
     }
 
-    public void setFeedId(String feedId) {
-        this.feedId = feedId;
+    public void setFeedId(String postId) {
+        this.postId = postId;
     }
 
     public String getPostUserName() {
@@ -188,6 +192,14 @@ public class UserFeed implements Serializable, Parcelable {
         this.likes = likes;
     }
 
+    public String getTotalUnlike() {
+        return totalUnlike;
+    }
+
+    public void setTotalUnlike(String totalUnlike) {
+        this.totalUnlike = totalUnlike;
+    }
+
     public String getIsLike() {
         return isLike;
     }
@@ -205,7 +217,7 @@ public class UserFeed implements Serializable, Parcelable {
     }
 
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(feedId);
+        dest.writeValue(postId);
         dest.writeValue(athleteStatus);
         dest.writeValue(postUserId);
         dest.writeValue(postUserName);
@@ -218,6 +230,7 @@ public class UserFeed implements Serializable, Parcelable {
         dest.writeValue(entryDate);
         dest.writeList(comment);
         dest.writeValue(likes);
+        dest.writeValue(totalUnlike);
         dest.writeValue(isLike);
     }
 
