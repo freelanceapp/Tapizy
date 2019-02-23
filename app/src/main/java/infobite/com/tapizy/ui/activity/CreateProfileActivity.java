@@ -1,6 +1,8 @@
 package infobite.com.tapizy.ui.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,11 +18,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -33,8 +41,14 @@ import java.util.Date;
 import java.util.Locale;
 
 import infobite.com.tapizy.R;
+import infobite.com.tapizy.model.login_data_modal.UserData;
+import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
+import infobite.com.tapizy.retrofit_provider.RetrofitService;
+import infobite.com.tapizy.retrofit_provider.WebResponse;
 import infobite.com.tapizy.utils.Alerts;
 import infobite.com.tapizy.utils.BaseActivity;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 public class CreateProfileActivity extends BaseActivity implements View.OnClickListener {
 
@@ -45,10 +59,13 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     private File destination = null;
     private InputStream inputStreamImg;
     private String imgPath = null;
-    private EditText etName,etMail,etCity;
-    private CheckBox cbChatbot;
+    private EditText etName,etMail,username;
+    private CheckBox cbChatbot,cbBot;
     private RadioGroup radioGroup;
-    private RadioButton radioButton;
+    private RadioButton  radioButton;
+    private String strPhone,strUseId;
+    private String strgenderValue, strGender,strBot;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +86,27 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
 
         etName = findViewById(R.id.user_name);
         etMail = findViewById(R.id.user_email);
-        etCity = findViewById(R.id.user_city);
-        radioGroup = findViewById(R.id.rg_select_gender);
+        username = findViewById(R.id.user_username);
+        selectGender();
+        selectBot();
+        getIntentData();
     }
-     private void selectGender(){
-
-     }
-
+    private void getIntentData(){
+        Intent intent = getIntent();
+        strPhone = intent.getStringExtra("phone");
+         strUseId = intent.getStringExtra("uid");
+    }
+    private boolean checkPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            Alerts.show(mContext, "Permission not granted");
+            return false;
+        }
+        return true;
+    }
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+    }
     private void selectImage() {
         try {
             PackageManager pm = getPackageManager();
@@ -113,17 +144,72 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
             e.printStackTrace();
         }
     }
+    private void selectBot(){
+        cbBot = (CheckBox) findViewById(R.id.cb_chatbox_confirm);
+        cbBot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                strBot = "1";
+                }else {
+                    strBot = "0";
+                }
+            }
+        });
+    }
+    private void selectGender(){
+        radioGroup = findViewById(R.id.rg_select_gender);
+        radioGroup.setOnCheckedChangeListener((new RadioGroup.OnCheckedChangeListener() {
 
-    private void createProfile(){
+            @SuppressLint("ResourceType")
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb = (RadioButton) group.findViewById(checkedId);
+                if (null != rb && checkedId > -1) {
+                    strGender = rb.getText().toString();
+                }
+            }
+        }));
+    }
+    private void updateApi(){
+        String strName = etName.getText().toString();
+        String strUserName = username.getText().toString();
+        String strMail = etMail.getText().toString();
+        // String strCity = etCity.getText().toString();
+
         if (etName.getText().toString().length() == 0){
             etName.setError("Name Required");
         }else if (etMail.getText().toString().length() == 0 ){
             etMail.setError("Number Required");
-        }
-        else {
-            Toast.makeText(mContext,"Profile Created Successfully",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(mContext,HomeActivity.class);
-            startActivity(intent);
+        }else {
+            if (cd.isNetworkAvailable()){
+                RetrofitService.updateData(new Dialog(mContext), retrofitApiClient.updateProfile(strPhone, strUserName,strGender,
+                        "", "",strBot, strUseId, strName, strMail), new WebResponse() {
+                    @Override
+                    public void onResponseSuccess(Response<?> result) {
+                        ResponseBody responseBody = (ResponseBody) result.body();
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(responseBody.string());
+                            if (!jsonObject.getBoolean("error")) {
+                                Alerts.show(mContext, jsonObject.getString("message"));
+                                startActivity(new Intent(mContext,HomeActivity.class));
+                                 finish();
+                            }else {
+                                Alerts.show(mContext,jsonObject.getString("message"));
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onResponseFailed(String error) {
+                        Alerts.show(mContext,error);
+                    }
+                });
+            }
         }
     }
 
@@ -176,7 +262,6 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
             }
         }
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -184,21 +269,10 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                 selectImage();
                 break;
             case R.id.btn_create_profile:
-            createProfile();
+                selectGender();
+                updateApi();
+        //    createProfile();
                 break;
         }
-    }
-
-    private boolean checkPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            Alerts.show(mContext, "Permission not granted");
-            return false;
-        }
-        return true;
-    }
-
-    private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
     }
 }

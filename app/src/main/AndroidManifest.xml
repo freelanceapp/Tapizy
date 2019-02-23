@@ -24,15 +24,10 @@
         android:theme="@style/AppTheme.Base"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.activity.RecentChatActivity"></activity>
         <activity
             android:name=".ui.activity.CreateProfileActivity"
-            android:windowSoftInputMode="stateVisible">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="stateVisible"></activity>
         <activity android:name=".ui.activity.NewActivity" />
         <activity
             android:name=".ui.activity.TrandingActivity"
@@ -44,18 +39,25 @@
             android:name=".ui.activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
 
         </activity>
         <activity android:name=".ui.activity.MainActivity" />
         <activity
             android:name=".ui.activity.SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.LoginActivity"
@@ -72,6 +74,7 @@
             android:name=".otp_verification.OtpVerificationActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".utils.BaseActivity" />
+        <activity android:name=".ui.activity.CityListActivity" />
 
         <receiver android:name=".otp_verification.MySMSBroadCastReceiver">
             <intent-filter android:priority="999">

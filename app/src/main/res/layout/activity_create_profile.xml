@@ -7,7 +7,9 @@
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".ui.activity.CreateProfileActivity">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -105,6 +107,45 @@
                             android:textStyle="normal" />
                     </LinearLayout>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_arrow_forward" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="UserName"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                        <EditText
+                            android:id="@+id/user_username"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/bg_editext_profile"
+                            android:hint="ex :P123"
+                            android:inputType="text"
+                            android:padding="6dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray_c"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -147,7 +188,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
+              <!--  <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -185,7 +226,7 @@
                             android:textColorHint="@color/gray_c"
                             android:textSize="14sp" />
                     </LinearLayout>
-                </LinearLayout>
+                </LinearLayout>-->
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -199,7 +240,7 @@
                     <RadioGroup
                         android:id="@+id/rg_select_gender"
                         android:padding="5dp"
-                        android:weightSum="3"
+                        android:weightSum="2"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -218,15 +259,6 @@
                             android:buttonTint="@color/blueB"
                             android:textColor="@color/black"
                             android:text="Female"
-                            android:layout_weight="1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <RadioButton
-                            android:id="@+id/rb_other"
-                            android:textSize="12dp"
-                            android:buttonTint="@color/blueB"
-                            android:textColor="@color/black"
-                            android:text="Other"
                             android:layout_weight="1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -261,5 +293,5 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>
-
+    </ScrollView>
 </LinearLayout>

@@ -3,6 +3,7 @@ package infobite.com.tapizy.retrofit_provider;
 import android.app.Dialog;
 
 import infobite.com.tapizy.constant.Constant;
+import infobite.com.tapizy.model.login_data_modal.UserData;
 import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.com.tapizy.utils.AppProgressDialog;
 import okhttp3.ResponseBody;
@@ -78,6 +79,26 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<UserDataMainModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+    public static void updateData(final Dialog dialog, final Call<ResponseBody> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
                 if (dialog != null)
                     AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());

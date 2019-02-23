@@ -23,8 +23,10 @@ import infobite.com.tapizy.constant.Constant;
 import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.com.tapizy.retrofit_provider.RetrofitService;
 import infobite.com.tapizy.retrofit_provider.WebResponse;
+import infobite.com.tapizy.ui.activity.CityListActivity;
 import infobite.com.tapizy.ui.activity.CreateProfileActivity;
 import infobite.com.tapizy.ui.activity.HomeActivity;
+import infobite.com.tapizy.ui.activity.RecentChatActivity;
 import infobite.com.tapizy.utils.Alerts;
 import infobite.com.tapizy.utils.AppPreference;
 import infobite.com.tapizy.utils.BaseActivity;
@@ -123,7 +125,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
                         if (!mainModal.getError()) {
                             if (mainModal.getUserType().equalsIgnoreCase("new user")) {
                                 Alerts.show(mContext, mainModal.getMessage());
-                                Intent intent = new Intent(mContext, CreateProfileActivity.class);
+                                Intent intent = new Intent(mContext, RecentChatActivity.class);
                                 intent.putExtra("phone", mainModal.getUser().getUContact());
                                 intent.putExtra("uid", mainModal.getUser().getUid());
                                 startActivity(intent);
@@ -133,7 +135,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
                                 AppPreference.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
                                 AppPreference.setStringPreference(mContext, Constant.USER_ID, mainModal.getUser().getUid());
                                 AppPreference.setStringPreference(mContext, Constant.USER_NAME, mainModal.getUser().getUName());
-                                Intent intent = new Intent(mContext, HomeActivity.class);
+                                Intent intent = new Intent(mContext, CreateProfileActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
