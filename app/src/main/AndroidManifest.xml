@@ -26,7 +26,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".ui.activity.CreateProfileActivity"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".ui.activity.NewActivity" />
         <activity
             android:name=".ui.activity.TrandingActivity"
@@ -38,22 +38,22 @@
             android:name=".ui.activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
 
         </activity>
         <activity android:name=".ui.activity.MainActivity" />
         <activity
             android:name=".ui.activity.SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!-- <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>-->
         </activity>
         <activity
             android:name=".ui.activity.LoginActivity"
@@ -70,6 +70,13 @@
             android:name=".otp_verification.OtpVerificationActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".utils.BaseActivity" />
+        <activity android:name=".ui.activity.community_module.CommunityActivity" />
+        <activity android:name=".ui.activity.trending_module.TrendingActivity" />
+        <activity android:name=".ui.activity.trending_module.NewPostActivity" />
+        <activity android:name=".ui.activity.trending_module.VideoActivity" />
+        <activity android:name=".ui.activity.trending_module.VideoGalleryActivity" />
+        <activity android:name=".ui.activity.trending_module.VideoTrimerActivity" />
+        <activity android:name=".ui.activity.trending_module.PostDetailActivity" />
 
         <receiver android:name=".otp_verification.MySMSBroadCastReceiver">
             <intent-filter android:priority="999">
