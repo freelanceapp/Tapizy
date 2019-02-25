@@ -18,8 +18,8 @@ import java.util.List;
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.adapter.VideoRecyclerViewAdapter;
 import infobite.com.tapizy.constant.Constant;
-import infobite.com.tapizy.model.daily_news_feed.DailyNewsFeedMainModal;
-import infobite.com.tapizy.model.daily_news_feed.UserFeed;
+import infobite.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
+import infobite.com.tapizy.model.timeline_modal.UserFeed;
 import infobite.com.tapizy.retrofit_provider.RetrofitService;
 import infobite.com.tapizy.retrofit_provider.WebResponse;
 import infobite.com.tapizy.utils.Alerts;
@@ -40,12 +40,6 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
     private DailyNewsFeedMainModal dailyNewsFeedMainModal;
     private RecyclerView recyclerViewFeed;
     private String strId;
-    private String strUserId = "";
-
-    /***********************************************/
-    /*private SimpleExoPlayer player;
-    private PlayerView videoSurfaceView;*/
-    private Dialog dialogCustomerInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,15 +67,15 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //timelineApi();
-                swipeRefreshLayout.setRefreshing(false);
+                timelineApi();
             }
         });
+        timelineApi();
     }
 
     public void timelineApi() {
         if (cd.isNetworkAvailable()) {
-            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.showPostTimeLine(strId), new WebResponse() {
+            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.showPostTimeLine(), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
@@ -96,13 +90,16 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
                         if (dailyNewsFeedMainModal.getFeed().size() > 0) {
                             feedList.addAll(dailyNewsFeedMainModal.getFeed());
                         }
-                        init();
+                        //init();
                     }
+                    mAdapter.notifyDataSetChanged();
+                    swipeRefreshLayout.setRefreshing(false);
                 }
 
                 @Override
                 public void onResponseFailed(String error) {
                     Alerts.show(mContext, error);
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             });
         }

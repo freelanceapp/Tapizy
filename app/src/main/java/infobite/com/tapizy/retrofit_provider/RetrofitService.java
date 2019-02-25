@@ -4,8 +4,9 @@ import android.app.Dialog;
 
 import infobite.com.tapizy.constant.Constant;
 import infobite.com.tapizy.model.login_data_modal.UserData;
-import infobite.com.tapizy.model.daily_news_feed.DailyNewsFeedMainModal;
+import infobite.com.tapizy.model.comment_list_modal.CommentMainModal;
 import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
+import infobite.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import infobite.com.tapizy.utils.AppProgressDialog;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -172,6 +173,20 @@ public class RetrofitService {
             public void onFailure(Call<DailyNewsFeedMainModal> call, Throwable throwable) {
                 if (dialog != null)
                     AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void postCommentResponse(final Call<CommentMainModal> method, final WebResponse webResponse) {
+        method.enqueue(new Callback<CommentMainModal>() {
+            @Override
+            public void onResponse(Call<CommentMainModal> call, Response<CommentMainModal> response) {
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<CommentMainModal> call, Throwable throwable) {
                 webResponse.onResponseFailed(throwable.getMessage());
             }
         });

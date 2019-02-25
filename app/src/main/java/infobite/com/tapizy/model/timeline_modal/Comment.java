@@ -1,5 +1,5 @@
 
-package infobite.com.tapizy.model.daily_news_feed;
+package infobite.com.tapizy.model.timeline_modal;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -20,25 +20,25 @@ public class Comment implements Serializable, Parcelable {
         return error;
     }
 
-    @SerializedName("comment_id")
+    @SerializedName("tid")
     @Expose
     private String commentId;
     @SerializedName("post_id")
     @Expose
     private String postId;
-    @SerializedName("user_id")
+    @SerializedName("uid")
     @Expose
     private String userId;
-    @SerializedName("user_name")
+    @SerializedName("u_name")
     @Expose
     private String userName;
-    @SerializedName("user_image")
+    @SerializedName("u_profile")
     @Expose
     private String userImage;
     @SerializedName("comment")
     @Expose
     private String comment;
-    @SerializedName("date")
+    @SerializedName("entry_date")
     @Expose
     private String date;
     public final static Creator<Comment> CREATOR = new Creator<Comment>() {

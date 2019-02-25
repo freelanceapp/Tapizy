@@ -29,7 +29,7 @@
             android:icon="@drawable/credit_card"
             android:title="Loyalty Credits" />
         <item
-            android:id="@+id/nav_send"
+            android:id="@+id/nav_settng"
             android:icon="@drawable/ic_setting"
             android:title="Settings" />
         <item

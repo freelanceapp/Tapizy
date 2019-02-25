@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,9 +58,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.adapter.CommentListAdapter;
 import infobite.com.tapizy.constant.Constant;
-import infobite.com.tapizy.model.daily_news_feed.Comment;
-import infobite.com.tapizy.model.daily_news_feed.DailyNewsFeedMainModal;
-import infobite.com.tapizy.model.daily_news_feed.UserFeed;
+import infobite.com.tapizy.model.comment_list_modal.CommentMainModal;
+import infobite.com.tapizy.model.timeline_modal.Comment;
+import infobite.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
+import infobite.com.tapizy.model.timeline_modal.UserFeed;
 import infobite.com.tapizy.retrofit_provider.RetrofitService;
 import infobite.com.tapizy.retrofit_provider.WebResponse;
 import infobite.com.tapizy.utils.Alerts;
@@ -132,11 +134,16 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                postDetailApi();
+                //postDetailApi();
             }
         });
-        postDetailApi();
+        //postDetailApi();
         initPlayer();
+
+        Gson gson = new Gson();
+        String strPostDetail = AppPreference.getStringPreference(mContext, Constant.POST_DETAIL);
+        newPostModel = gson.fromJson(strPostDetail, UserFeed.class);
+        setDataInModal();
     }
 
     /*
@@ -195,9 +202,9 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         llPostComment.setOnClickListener(this);
 
         if (newPostModel.getIsLike().equals("unlike")) {
-            ((ImageView) findViewById(R.id.imgLike)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_heart_icon));
+            ((ImageView) findViewById(R.id.imgLike)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_icon));
         } else {
-            ((ImageView) findViewById(R.id.imgLike)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_heart_fill));
+            ((ImageView) findViewById(R.id.imgLike)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_fill));
         }
 
         setData();
@@ -368,7 +375,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                 ((CardView) findViewById(R.id.cardViewComment)).setVisibility(View.VISIBLE);
                 break;
             case R.id.post_comment_send:
-                //postCommentApi();
+                postCommentApi();
                 LinearLayout mainLayout = (LinearLayout) findViewById(R.id.myLinearLayout);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
@@ -376,9 +383,8 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-/*
     private void postCommentApi() {
-        String strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
+        String strUserId = "34";
         String strPostId = newPostModel.getFeedId();
         String strComments = ((EditText) findViewById(R.id.edit_post_comment)).getText().toString();
 
@@ -386,7 +392,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             RetrofitService.postCommentResponse(retrofitApiClient.newPostComment(strPostId, strUserId, strComments), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
-                    PostCommentResponseModal commentResponseModal = (PostCommentResponseModal) result.body();
+                    CommentMainModal commentResponseModal = (CommentMainModal) result.body();
                     commentList.clear();
                     if (strFrom.equals("user")) {
                         AppPreference.setBooleanPreference(mContext, Constant.IS_DATA_UPDATE, false);
@@ -411,12 +417,11 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             Alerts.show(mContext, "Enter some comments!!!");
         }
     }
-*/
 
     private void timelineApi() {
         String strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
         if (cd.isNetworkAvailable()) {
-            RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(strId), new WebResponse() {
+            RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     DailyNewsFeedMainModal dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
@@ -452,11 +457,11 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                         JSONObject jsonObject = new JSONObject(responseBody.string());
                         if (!jsonObject.getBoolean("error")) {
                             if (feed.getIsLike().equals("unlike")) {
-                                imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_heart_fill));
+                                imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_fill));
                             } else {
-                                imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_heart_icon));
+                                imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_icon));
                             }
-                            postDetailApi();
+                            //postDetailApi();
                             textView.setText(jsonObject.getString("total_fan") + " like");
                         } else {
                             Alerts.show(mContext, jsonObject.getString("message"));

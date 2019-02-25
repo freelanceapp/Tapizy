@@ -2,6 +2,8 @@ package infobite.com.tapizy.constant;
 
 public class Constant {
 
+    /*http://tapizy.infobitetechnology.in/app/insert_daily_post.php*/
+
     public static final String BASE_URL = "http://tapizy.infobitetechnology.in/";
     public static final String OTP_VERIFICATION = "app/otpmatch.php";
     public static final String RESEND_OTP = "app/resend-otp.php";
@@ -11,8 +13,11 @@ public class Constant {
     public static final String UPDATE_PROFILE_API = "app/update_profile.php";
     public static final String SUBMIT_ANSWER_API = "app/insert_answer.php";
     public static final String SELECT_QUETION_API = "app/select_question.php";
-    public static final String NEWPOST_API = "app/resend-otp.php";
-    public static final String TIMELINE_API = "app/resend-otp.php";
+  //  public static final String NEWPOST_API = "app/resend-otp.php";
+   // public static final String TIMELINE_API = "app/resend-otp.php";
+    public static final String NEWPOST_API = "app/insert_daily_post.php";
+    public static final String TIMELINE_API = "app/timeline.php";
+    public static final String COMMENT_API = "app/trending_comment.php";
 
     /*Preference*/
     public static final String CHATBOT_LIST = "CHATBOT_LIST";
@@ -36,8 +41,7 @@ public class Constant {
     public static final String VideoTrimmerFragment = "VideoTrimmerFragment";
 
     /**/
-    public static final String IMAGE_BASE_URL = "http://codeencrypt.in/sport/images/alhlete_images/";
-    public static final String VIDEO_URL = "https://videocdn.bodybuilding.com/video/mp4/62000/62792m.mp4";
-    public static final String VIDEO_BASE_URL = "http://codeencrypt.in/sport/images/alhlete_video/";
-    public static final String PROFILE_IMAGE_BASE_URL = "http://codeencrypt.in/sport/images/profile_img/";
+    public static final String IMAGE_BASE_URL = BASE_URL + "/image/trending/image/";
+    public static final String VIDEO_BASE_URL = BASE_URL + "/image/trending/video/";
+    public static final String PROFILE_IMAGE_BASE_URL = BASE_URL + "/image/user_profile/";
 }

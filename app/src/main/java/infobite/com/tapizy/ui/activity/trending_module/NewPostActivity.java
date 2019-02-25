@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import infobite.com.tapizy.R;
-import infobite.com.tapizy.constant.Constant;
 import infobite.com.tapizy.retrofit_provider.RetrofitService;
 import infobite.com.tapizy.retrofit_provider.WebResponse;
 import infobite.com.tapizy.upload_with_progress.ProgressRequestBody;
@@ -161,7 +160,7 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void newPostFeedApi() {
-        String strId = AppPreference.getStringPreference(getApplicationContext(), Constant.USER_ID);
+        String strId = "34";
         String strHeadline = ((EditText) findViewById(R.id.etHeadlines)).getText().toString();
         String strPostDescription = ((EditText) findViewById(R.id.edtPostDescription)).getText().toString();
 
@@ -175,11 +174,11 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
 
             if (strPostType.equals("image")) {
                 RequestBody imageBodyFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
-                fileToUpload = MultipartBody.Part.createFormData("alhlete_images", imageFile.getName(),
+                fileToUpload = MultipartBody.Part.createFormData("images", imageFile.getName(),
                         imageBodyFile);
             } else if (strPostType.equals("video")) {
                 ProgressRequestBody fileBody = new ProgressRequestBody(videoFile, "video/mp4", this);
-                videoFileUpload = MultipartBody.Part.createFormData("athlete_video", videoFile.getName(), fileBody);
+                videoFileUpload = MultipartBody.Part.createFormData("video", videoFile.getName(), fileBody);
             }
 
             RetrofitService.getNewPostData(new Dialog(mContext), retrofitApiClient.newPostFeed(_id, _Headline,

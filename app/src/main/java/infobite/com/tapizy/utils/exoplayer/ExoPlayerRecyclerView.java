@@ -47,7 +47,7 @@ import java.util.List;
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.adapter.VideoRecyclerViewAdapter;
 import infobite.com.tapizy.constant.Constant;
-import infobite.com.tapizy.model.daily_news_feed.UserFeed;
+import infobite.com.tapizy.model.timeline_modal.UserFeed;
 
 
 public class ExoPlayerRecyclerView extends RecyclerView {
