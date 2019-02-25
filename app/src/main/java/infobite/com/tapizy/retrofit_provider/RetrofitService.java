@@ -87,20 +87,21 @@ public class RetrofitService {
             }
         });
     }
-    public static void updateData(final Dialog dialog, final Call<ResponseBody> method, final WebResponse webResponse) {
+
+    public static void updateData(final Dialog dialog, final Call<UserDataMainModal> method, final WebResponse webResponse) {
         if (dialog != null)
             AppProgressDialog.show(dialog);
 
-        method.enqueue(new Callback<ResponseBody>() {
+        method.enqueue(new Callback<UserDataMainModal>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<UserDataMainModal> call, Response<UserDataMainModal> response) {
                 if (dialog != null)
                     AppProgressDialog.hide(dialog);
                 WebServiceResponse.handleResponse(response, webResponse);
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+            public void onFailure(Call<UserDataMainModal> call, Throwable throwable) {
                 if (dialog != null)
                     AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());

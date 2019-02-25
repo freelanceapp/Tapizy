@@ -13,8 +13,6 @@ public class Constant {
     public static final String UPDATE_PROFILE_API = "app/update_profile.php";
     public static final String SUBMIT_ANSWER_API = "app/insert_answer.php";
     public static final String SELECT_QUETION_API = "app/select_question.php";
-  //  public static final String NEWPOST_API = "app/resend-otp.php";
-   // public static final String TIMELINE_API = "app/resend-otp.php";
     public static final String NEWPOST_API = "app/insert_daily_post.php";
     public static final String TIMELINE_API = "app/timeline.php";
     public static final String COMMENT_API = "app/trending_comment.php";
@@ -23,6 +21,7 @@ public class Constant {
     public static final String CHATBOT_LIST = "CHATBOT_LIST";
     public static final String CHATBOT_NAME = "CHATBOT_NAME";
     public static final String IS_LOGIN = "IS_LOGIN";
+    public static final String USER_DATA = "USER_DATA";
     public static final String USER_ID = "USER_ID";
     public static final String USER_NAME = "USER_NAME";
     public static final String USER_IMAGE = "USER_IMAGE";

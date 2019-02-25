@@ -6,8 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserDataMainModal implements Parcelable
-{
+public class UserDataMainModal implements Parcelable {
 
     @SerializedName("error")
     @Expose
@@ -23,7 +22,6 @@ public class UserDataMainModal implements Parcelable
     private String userType;
     public final static Parcelable.Creator<UserDataMainModal> CREATOR = new Creator<UserDataMainModal>() {
 
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -35,8 +33,7 @@ public class UserDataMainModal implements Parcelable
             return (new UserDataMainModal[size]);
         }
 
-    }
-            ;
+    };
 
     protected UserDataMainModal(Parcel in) {
         this.error = ((Boolean) in.readValue((Boolean.class.getClassLoader())));

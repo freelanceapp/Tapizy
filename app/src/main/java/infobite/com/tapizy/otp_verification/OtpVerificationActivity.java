@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,6 +23,7 @@ import java.util.List;
 
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.constant.Constant;
+import infobite.com.tapizy.model.User;
 import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.com.tapizy.retrofit_provider.RetrofitService;
 import infobite.com.tapizy.retrofit_provider.WebResponse;
@@ -130,6 +134,11 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
                                 finish();
                             } else {
                                 Alerts.show(mContext, mainModal.getMessage());
+                                Gson gson = new GsonBuilder().setLenient().create();
+                                String data = gson.toJson(mainModal);
+                                AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);
+                                User.setUser(mainModal);
+
                                 AppPreference.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
                                 AppPreference.setStringPreference(mContext, Constant.USER_ID, mainModal.getUser().getUid());
                                 AppPreference.setStringPreference(mContext, Constant.USER_NAME, mainModal.getUser().getUName());
