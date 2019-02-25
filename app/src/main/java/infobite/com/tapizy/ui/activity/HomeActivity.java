@@ -147,9 +147,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         } else if (id == R.id.nav_settng) {
             startActivity(new Intent(mContext,SettingActivity.class));
-
-        } else if (id == R.id.logout_arrow) {
-            logoutbutton();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

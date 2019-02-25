@@ -32,9 +32,5 @@
             android:id="@+id/nav_settng"
             android:icon="@drawable/ic_setting"
             android:title="Settings" />
-        <item
-            android:id="@+id/logout_arrow"
-            android:icon="@drawable/ic_back"
-            android:title="Logout"/>
     </group>
 </menu>
