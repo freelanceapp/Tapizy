@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import infobite.com.tapizy.R;
-import infobite.com.tapizy.adapter.VideoRecyclerViewAdapter;
+import infobite.com.tapizy.adapter.TimelineListAdapter;
 import infobite.com.tapizy.constant.Constant;
 import infobite.com.tapizy.model.timeline_modal.UserFeed;
 
@@ -175,7 +175,7 @@ public class ExoPlayerRecyclerView extends RecyclerView {
             return;
         }
 
-        VideoRecyclerViewAdapter.ViewHolder holder = (VideoRecyclerViewAdapter.ViewHolder) child.getTag();
+        TimelineListAdapter.ViewHolder holder = (TimelineListAdapter.ViewHolder) child.getTag();
         if (holder == null) {
             playPosition = -1;
             return;

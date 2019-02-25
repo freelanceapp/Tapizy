@@ -83,7 +83,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private RelativeLayout rlVideoView;
     private ImageView imgPostImage;
     private CircleImageView imgUserProfile;
-    private TextView tvUserName, tvPostLikeCount, tvCommentCount, tvPostTime, tvPostDescription, tvHeadline;
+    private TextView tvUserName, tvPostLikeCount, tvUnlikeCount, tvPostTime, tvPostDescription, tvHeadline;
 
     private RecyclerView recyclerViewCommentList;
     private CommentListAdapter commentListAdapter;
@@ -121,29 +121,30 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
         llPostComment = findViewById(R.id.llPostComment);
         findViewById(R.id.llLikePost).setOnClickListener(this);
+        findViewById(R.id.llUnlikePost).setOnClickListener(this);
         rlVideoView = findViewById(R.id.rlVideoView);
         imgUserProfile = findViewById(R.id.imgUserProfile);
         tvUserName = findViewById(R.id.tvUserName);
         tvHeadline = findViewById(R.id.tvHeadline);
         imgPostImage = findViewById(R.id.imgPostImage);
         tvPostLikeCount = findViewById(R.id.tvPostLikeCount);
-        tvCommentCount = findViewById(R.id.tvCommentCount);
+        tvUnlikeCount = findViewById(R.id.tvUnlikeCount);
         tvPostTime = findViewById(R.id.tvPostTime);
         tvPostDescription = findViewById(R.id.tvPostDescription);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //postDetailApi();
+                postDetailApi();
             }
         });
-        //postDetailApi();
+        postDetailApi();
         initPlayer();
 
-        Gson gson = new Gson();
+        /*Gson gson = new Gson();
         String strPostDetail = AppPreference.getStringPreference(mContext, Constant.POST_DETAIL);
         newPostModel = gson.fromJson(strPostDetail, UserFeed.class);
-        setDataInModal();
+        setDataInModal();*/
     }
 
     /*
@@ -171,7 +172,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     /* Post detail api */
     private void postDetailApi() {
         if (cd.isNetworkAvailable()) {
-            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.postDetail(postId), new WebResponse() {
+            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.postDetail(postId, strId), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     DailyNewsFeedMainModal dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
@@ -191,7 +192,6 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         } else {
             cd.show(mContext);
         }
-
     }
 
     private void setDataInModal() {
@@ -201,10 +201,17 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         findViewById(R.id.post_comment_send).setOnClickListener(this);
         llPostComment.setOnClickListener(this);
 
-        if (newPostModel.getIsLike().equals("unlike")) {
-            ((ImageView) findViewById(R.id.imgLike)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_icon));
+        if (!newPostModel.getIsLike().isEmpty()) {
+            if (newPostModel.getIsLike().equals("like")) {
+                ((ImageView) findViewById(R.id.imgLike)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot));
+                ((ImageView) findViewById(R.id.imgUnlike)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
+            } else {
+                ((ImageView) findViewById(R.id.imgLike)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
+                ((ImageView) findViewById(R.id.imgUnlike)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold));
+            }
         } else {
-            ((ImageView) findViewById(R.id.imgLike)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_fill));
+            ((ImageView) findViewById(R.id.imgLike)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
+            ((ImageView) findViewById(R.id.imgUnlike)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
         }
 
         setData();
@@ -242,15 +249,17 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         }
 
         if (newPostModel.getLikes() == null || newPostModel.getLikes().isEmpty()) {
-            tvPostLikeCount.setText("0 like");
+            tvPostLikeCount.setText("0");
         } else {
-            tvPostLikeCount.setText(newPostModel.getLikes() + " like");
+            tvPostLikeCount.setText(newPostModel.getLikes());
         }
-        if (newPostModel.getComment() == null || newPostModel.getComment().isEmpty()) {
-            tvCommentCount.setText("0 comment");
+
+        if (newPostModel.getLikes() == null || newPostModel.getLikes().isEmpty()) {
+            tvUnlikeCount.setText("0");
         } else {
-            tvCommentCount.setText(newPostModel.getComment().size() + " comment");
+            tvUnlikeCount.setText(newPostModel.getTotalUnlike());
         }
+
         if (newPostModel.getEntryDate() == null || newPostModel.getEntryDate().isEmpty()) {
             tvPostTime.setText("");
         } else {
@@ -369,7 +378,10 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.llLikePost:
-                likeApi(newPostModel, ((ImageView) findViewById(R.id.imgLike)), ((TextView) findViewById(R.id.tvPostLikeCount)));
+                likeApi(newPostModel, ((TextView) findViewById(R.id.tvPostLikeCount)), "1", "0");
+                break;
+            case R.id.llUnlikePost:
+                likeApi(newPostModel, ((TextView) findViewById(R.id.tvPostLikeCount)), "0", "1");
                 break;
             case R.id.llPostComment:
                 ((CardView) findViewById(R.id.cardViewComment)).setVisibility(View.VISIBLE);
@@ -384,12 +396,11 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void postCommentApi() {
-        String strUserId = "34";
         String strPostId = newPostModel.getFeedId();
         String strComments = ((EditText) findViewById(R.id.edit_post_comment)).getText().toString();
 
         if (!strComments.isEmpty()) {
-            RetrofitService.postCommentResponse(retrofitApiClient.newPostComment(strPostId, strUserId, strComments), new WebResponse() {
+            RetrofitService.postCommentResponse(retrofitApiClient.newPostComment(strPostId, strId, strComments), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     CommentMainModal commentResponseModal = (CommentMainModal) result.body();
@@ -399,7 +410,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                     } else {
                         AppPreference.setBooleanPreference(mContext, Constant.IS_DATA_UPDATE, true);
                     }
-                    timelineApi();
+                    //timelineApi();
                     if (commentResponseModal == null)
                         return;
                     commentList.addAll(commentResponseModal.getComment());
@@ -420,7 +431,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
     private void timelineApi() {
         if (cd.isNetworkAvailable()) {
-            RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(), new WebResponse() {
+            RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(strId), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     DailyNewsFeedMainModal dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
@@ -445,23 +456,19 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     /*
      * Like/Unlike function
      * */
-    private void likeApi(final UserFeed feed, final ImageView imgLike, final TextView textView) {
+    private void likeApi(final UserFeed feed, final TextView textView, String strLike, String strUnlike) {
 
         if (cd.isNetworkAvailable()) {
-            RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getFeedId(), strId, "1"), new WebResponse() {
+            RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getFeedId(), strId, strLike, strUnlike), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     ResponseBody responseBody = (ResponseBody) result.body();
                     try {
                         JSONObject jsonObject = new JSONObject(responseBody.string());
                         if (!jsonObject.getBoolean("error")) {
-                            if (feed.getIsLike().equals("unlike")) {
-                                imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_fill));
-                            } else {
-                                imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_icon));
-                            }
-                            //postDetailApi();
-                            textView.setText(jsonObject.getString("total_fan") + " like");
+                            postDetailApi();
+                            textView.setText(jsonObject.getString("likes"));
+                            textView.setText(jsonObject.getString("likes"));
                         } else {
                             Alerts.show(mContext, jsonObject.getString("message"));
                         }

@@ -10,7 +10,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -44,17 +43,18 @@ public interface RetrofitApiClient {
                                    @Part MultipartBody.Part aimage);
 
 
-    @GET(Constant.TIMELINE_API)
-    Call<DailyNewsFeedMainModal> showPostTimeLine();
+    @FormUrlEncoded
+    @POST(Constant.TIMELINE_API)
+    Call<DailyNewsFeedMainModal> showPostTimeLine(@Field("uid") String useId);
+
+    @FormUrlEncoded
+    @POST(Constant.PostLike)
+    Call<ResponseBody> postLike(@Field("post_id") String postId, @Field("uid") String useId,
+                                @Field("like") String like, @Field("unlike") String unlike);
 
     @FormUrlEncoded
     @POST(Constant.TIMELINE_API)
-    Call<ResponseBody> postLike(@Field("post_id") String postId, @Field("user_id") String useId,
-                                @Field("status") String status);
-
-    @FormUrlEncoded
-    @POST(Constant.TIMELINE_API)
-    Call<DailyNewsFeedMainModal> postDetail(@Field("post_id") String post_id);
+    Call<DailyNewsFeedMainModal> postDetail(@Field("post_id") String post_id, @Field("uid") String uid);
 
     @FormUrlEncoded
     @POST(Constant.COMMENT_API)
