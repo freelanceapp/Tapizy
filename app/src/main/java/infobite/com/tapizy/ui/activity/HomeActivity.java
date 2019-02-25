@@ -21,11 +21,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.adapter.TapizyListAdapter;
+import infobite.com.tapizy.constant.Constant;
 import infobite.com.tapizy.model.TapizyListModel;
+import infobite.com.tapizy.model.User;
 import infobite.com.tapizy.ui.activity.community_module.CommunityActivity;
 import infobite.com.tapizy.ui.activity.recent_chat.RecentChatActivity;
 import infobite.com.tapizy.ui.activity.trending_module.TrendingActivity;
@@ -44,6 +49,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private ArrayList<TapizyListModel> tapizyListModels = new ArrayList<>();
     private TapizyListAdapter adapter;
     private RecyclerView rv_tapizy_list;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +65,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         menuLayout = (LinearLayout) findViewById(R.id.menuLayout);
@@ -67,6 +73,17 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         addproduct();
         init();
+        setUserData();
+    }
+
+    private void setUserData() {
+        View header = navigationView.getHeaderView(0);
+        Glide.with(mContext)
+                .load(Constant.PROFILE_IMAGE_BASE_URL + User.getUser().getUser().getUProfile())
+                .into(((CircleImageView) header.findViewById(R.id.profile_image)));
+
+        ((TextView) header.findViewById(R.id.tvUserName)).setText(User.getUser().getUser().getUName());
+        ((TextView) header.findViewById(R.id.tvEmail)).setText(User.getUser().getUser().getUEmail());
     }
 
     private void init() {
@@ -137,7 +154,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
 
         if (id == R.id.my_profile) {
-            startActivity(new Intent(mContext,MyProfileActivity.class));
+            startActivity(new Intent(mContext, MyProfileActivity.class));
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -148,7 +165,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         } else if (id == R.id.nav_settng) {
             startActivity(new Intent(mContext,SettingActivity.class));
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

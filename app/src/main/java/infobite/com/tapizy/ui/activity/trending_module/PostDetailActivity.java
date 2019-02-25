@@ -419,7 +419,6 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void timelineApi() {
-        String strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
         if (cd.isNetworkAvailable()) {
             RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(), new WebResponse() {
                 @Override

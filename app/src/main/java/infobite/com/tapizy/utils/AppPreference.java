@@ -3,6 +3,11 @@ package infobite.com.tapizy.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
+
 /**
  * Created by Natraj3 on 7/1/2017.
  */
@@ -11,10 +16,12 @@ public class AppPreference {
 
     public static final String APP_PREFENCE = "Tapizy_preference";
 
-    public static void setUserDataPreferences(Context context, String key, String value){
-        SharedPreferences preferences = context.getSharedPreferences("Tapizy",Context.MODE_PRIVATE);
+    public static void setUserDataPreferences(Context context, String key, UserDataMainModal responseBody) {
+        Gson gson = new GsonBuilder().setLenient().create();
+        String data = gson.toJson(responseBody);
+        SharedPreferences preferences = context.getSharedPreferences("Tapizy", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(key,value);
+        editor.putString(key, data);
         editor.apply();
     }
 
@@ -22,7 +29,7 @@ public class AppPreference {
         SharedPreferences preferences = context.getSharedPreferences("Tapizy", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(key, value);
-        editor.commit();
+        editor.apply();
     }
 
     public static String getTokenPreference(Context context, String key) {

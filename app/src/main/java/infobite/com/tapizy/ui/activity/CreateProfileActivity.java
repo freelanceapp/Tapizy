@@ -6,11 +6,13 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -23,9 +25,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,15 +45,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.constant.Constant;
-import infobite.com.tapizy.model.login_data_modal.UserData;
+import infobite.com.tapizy.model.User;
 import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.com.tapizy.retrofit_provider.RetrofitService;
 import infobite.com.tapizy.retrofit_provider.WebResponse;
 import infobite.com.tapizy.utils.Alerts;
 import infobite.com.tapizy.utils.AppPreference;
 import infobite.com.tapizy.utils.BaseActivity;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
@@ -57,16 +66,17 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     private static int LOAD_IMAGE_GALLERY = 123;
     private static int PICK_IMAGE_CAMERA = 124;
     private static int PERMISSION_REQUEST_CODE = 456;
-    private Bitmap bitmap;
+    private Bitmap bitmap,imageMap;
     private File destination = null;
     private InputStream inputStreamImg;
-    private String imgPath = null;
-    private EditText etName,etMail,username;
-    private CheckBox cbChatbot,cbBot;
+    private String imgPath = null,imgPath1,imagePath2;
+    private EditText etName, etMail, username;
+    private CheckBox cbChatbot, cbBot;
     private RadioGroup radioGroup;
-    private RadioButton  radioButton;
-    private String strPhone,strUseId;
-    private String strgenderValue, strGender,strBot;
+    private RadioButton radioButton;
+    private String strPhone, strUserId,strFrom;
+    private String  strGender, strBot;
+    private File imageFile;
 
 
     @Override
@@ -83,21 +93,45 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     }
 
     private void init() {
-        ((ImageView) findViewById(R.id.user_profile)).setOnClickListener(this);
+        ((CircleImageView) findViewById(R.id.iv_user_profile)).setOnClickListener(this);
         ((Button) findViewById(R.id.btn_create_profile)).setOnClickListener(this);
 
-        etName = findViewById(R.id.user_name);
-        etMail = findViewById(R.id.user_email);
-        username = findViewById(R.id.user_username);
+        etName = findViewById(R.id.tv_user_name);
+        etMail = findViewById(R.id.tv_user_email);
+        username = findViewById(R.id.tv_user_username);
+        getIntentData();
         selectGender();
         selectBot();
-        getIntentData();
+        setUserData();
     }
-    private void getIntentData(){
+
+    private void getIntentData() {
         Intent intent = getIntent();
+        strFrom = intent.getStringExtra("from");
+        strUserId = intent.getStringExtra("uid");
         strPhone = intent.getStringExtra("phone");
-         strUseId = intent.getStringExtra("uid");
     }
+
+    private void setUserData(){
+        if (strFrom.equalsIgnoreCase("myProfile")){
+
+            Glide.with(mContext)
+                    .load(Constant.PROFILE_IMAGE_BASE_URL + User.getUser().getUser().getUProfile())
+                    .into((CircleImageView)findViewById(R.id.iv_user_profile));
+            ((EditText)findViewById(R.id.tv_user_username)).setText(User.getUser().getUser().getUUsername());
+            ((TextView)findViewById(R.id.tv_user_name)).setText(User.getUser().getUser().getUName());
+            ((TextView)findViewById(R.id.tv_user_email)).setText(User.getUser().getUser().getUEmail());
+
+            if (User.getUser().getUser().getUGender().equalsIgnoreCase("male")){
+                ((RadioButton)findViewById(R.id.rb_male)).setChecked(true);
+                ((RadioButton)findViewById(R.id.rb_female)).setChecked(false);
+            }else {
+                ((RadioButton)findViewById(R.id.rb_male)).setChecked(false);
+                ((RadioButton)findViewById(R.id.rb_female)).setChecked(true);
+            }
+        }
+    }
+
     private boolean checkPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -106,9 +140,11 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
         }
         return true;
     }
+
     private void requestPermission() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
     }
+
     private void selectImage() {
         try {
             PackageManager pm = getPackageManager();
@@ -146,20 +182,22 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
             e.printStackTrace();
         }
     }
-    private void selectBot(){
+
+    private void selectBot() {
         cbBot = (CheckBox) findViewById(R.id.cb_chatbox_confirm);
         cbBot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                strBot = "1";
-                }else {
+                if (isChecked) {
+                    strBot = "1";
+                } else {
                     strBot = "0";
                 }
             }
         });
     }
-    private void selectGender(){
+
+    private void selectGender() {
         radioGroup = findViewById(R.id.rg_select_gender);
         radioGroup.setOnCheckedChangeListener((new RadioGroup.OnCheckedChangeListener() {
 
@@ -173,42 +211,72 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
             }
         }));
     }
-    private void updateApi(){
+
+    private void updateProfileImageApi() {
+        RequestBody _id = RequestBody.create(MediaType.parse("text/plain"), User.getUser().getUser().getUid());
+
+        RequestBody imageBodyFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("u_profile", imageFile.getName(), imageBodyFile);
+
+        RetrofitService.updateUserProfile(new Dialog(mContext), retrofitApiClient.updateProfileImage(_id, fileToUpload), new WebResponse() {
+            @Override
+            public void onResponseSuccess(Response<?> result) {
+                ResponseBody responseBody = (ResponseBody) result.body();
+                if (responseBody != null) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(responseBody.string());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Alerts.show(mContext, "Error in submit");
+                }
+            }
+
+            @Override
+            public void onResponseFailed(String error) {
+                Alerts.show(mContext, error);
+            }
+        });
+    }
+
+
+    private void updateApi() {
         String strName = etName.getText().toString();
         String strUserName = username.getText().toString();
         String strMail = etMail.getText().toString();
         // String strCity = etCity.getText().toString();
 
-        if (etName.getText().toString().length() == 0){
+        if (etName.getText().toString().length() == 0) {
             etName.setError("Name Required");
-        }else if (etMail.getText().toString().length() == 0 ){
+        } else if (etMail.getText().toString().length() == 0) {
             etMail.setError("Number Required");
-        }else {
-            if (cd.isNetworkAvailable()){
-                RetrofitService.updateData(new Dialog(mContext), retrofitApiClient.updateProfile(strPhone, strUserName,strGender,
-                        "", "",strBot, strUseId, strName, strMail), new WebResponse() {
+        } else {
+            if (cd.isNetworkAvailable()) {
+                RetrofitService.updateData(new Dialog(mContext), retrofitApiClient.updateProfile(strPhone, strUserName, strGender,
+                        "", "", strBot, strUserId, strName, strMail), new WebResponse() {
                     @Override
                     public void onResponseSuccess(Response<?> result) {
-                        ResponseBody responseBody = (ResponseBody) result.body();
+                        UserDataMainModal responseBody = (UserDataMainModal) result.body();
+                        if (!responseBody.getError()) {
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            String data = gson.toJson(responseBody);
+                            AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);
 
-                        try {
-                            JSONObject jsonObject = new JSONObject(responseBody.string());
-                            if (!jsonObject.getBoolean("error")) {
-                                Alerts.show(mContext, jsonObject.getString("message"));
-                                startActivity(new Intent(mContext,HomeActivity.class));
-                                 finish();
-                            }else {
-                                Alerts.show(mContext,jsonObject.getString("message"));
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            User.setUser(responseBody);
+                            Alerts.show(mContext, responseBody.getMessage());
+                            startActivity(new Intent(mContext, HomeActivity.class));
+                            finish();
+                        } else {
+                            Alerts.show(mContext, responseBody.getMessage());
                         }
                     }
+
                     @Override
                     public void onResponseFailed(String error) {
-                        Alerts.show(mContext,error);
+                        Alerts.show(mContext, error);
                     }
                 });
             }
@@ -243,9 +311,13 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                ((CircleImageView) findViewById(R.id.iv_user_profile)).setImageBitmap(bitmap);
 
-                imgPath = destination.getAbsolutePath();
-                ((ImageView) findViewById(R.id.user_profile)).setImageBitmap(bitmap);
+                imgPath1 = destination.getAbsolutePath();
+                imageFile =  new File(imgPath1);
+
+                //api hit
+                updateProfileImageApi();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -254,26 +326,43 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
             final Uri uriImage = data.getData();
             final InputStream inputStream;
             try {
-                inputStream = getContentResolver().openInputStream(uriImage);
+                inputStream = mContext.getContentResolver().openInputStream(uriImage);
                 final Bitmap imageMap = BitmapFactory.decodeStream(inputStream);
-                ((ImageView)findViewById(R.id.user_profile)).setImageBitmap(imageMap);
+                ((CircleImageView) findViewById(R.id.iv_user_profile)).setImageBitmap(imageMap);
 
+                imagePath2 = getPath(uriImage);
+                imageFile = new File(imagePath2);
+
+                //api hit
+                updateProfileImageApi();
             } catch (FileNotFoundException e) {
-                Toast.makeText(this, "Image not found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Image not found", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         }
+        else {
+            ((CircleImageView)findViewById(R.id.iv_user_profile)).setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_img));
+        }
+    }
+    public String getPath(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = mContext.getContentResolver().query(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String strPath = cursor.getString(column_index);
+        cursor.close();
+        return strPath;
     }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.user_profile:
+            case R.id.iv_user_profile:
                 selectImage();
                 break;
             case R.id.btn_create_profile:
                 selectGender();
                 updateApi();
-        //    createProfile();
+                //    createProfile();
                 break;
         }
     }

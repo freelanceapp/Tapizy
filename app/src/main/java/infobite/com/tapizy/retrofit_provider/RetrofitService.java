@@ -87,7 +87,29 @@ public class RetrofitService {
             }
         });
     }
-    public static void updateData(final Dialog dialog, final Call<ResponseBody> method, final WebResponse webResponse) {
+
+    public static void updateData(final Dialog dialog, final Call<UserDataMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<UserDataMainModal>() {
+            @Override
+            public void onResponse(Call<UserDataMainModal> call, Response<UserDataMainModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<UserDataMainModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+    //user profile image
+    public static void updateUserProfile(final Dialog dialog, final Call<ResponseBody> method, final WebResponse webResponse) {
         if (dialog != null)
             AppProgressDialog.show(dialog);
 
@@ -107,6 +129,7 @@ public class RetrofitService {
             }
         });
     }
+
 
     public static void getNewPostData(final Dialog dialog, final Call<ResponseBody> method, final WebResponse webResponse) {
         if (dialog != null)

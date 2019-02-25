@@ -50,7 +50,6 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void init() {
-        strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
 
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);

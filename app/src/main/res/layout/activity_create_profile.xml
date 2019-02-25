@@ -39,7 +39,7 @@
                     android:textStyle="bold" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/user_profile"
+                    android:id="@+id/iv_user_profile"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_gravity="center"
@@ -93,13 +93,13 @@
                             android:textStyle="normal" />
 
                         <EditText
-                            android:id="@+id/user_name"
+                            android:id="@+id/tv_user_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:background="@drawable/bg_editext_profile"
                             android:hint="ex : Ibt"
-                            android:inputType="textEmailAddress"
+                            android:inputType="text"
                             android:padding="6dp"
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray_c"
@@ -133,7 +133,7 @@
                             android:textSize="12sp" />
 
                         <EditText
-                            android:id="@+id/user_username"
+                            android:id="@+id/tv_user_username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -174,7 +174,7 @@
                             android:textStyle="normal" />
 
                         <EditText
-                            android:id="@+id/user_email"
+                            android:id="@+id/tv_user_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
