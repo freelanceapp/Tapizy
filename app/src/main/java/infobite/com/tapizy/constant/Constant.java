@@ -16,6 +16,7 @@ public class Constant {
     public static final String NEWPOST_API = "app/insert_daily_post.php";
     public static final String TIMELINE_API = "app/timeline.php";
     public static final String COMMENT_API = "app/trending_comment.php";
+    public static final String USER_DETAIL_API = "app/user_details.php";
 
     /*Preference*/
     public static final String CHATBOT_LIST = "CHATBOT_LIST";

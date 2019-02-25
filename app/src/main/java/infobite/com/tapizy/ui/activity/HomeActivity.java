@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -31,9 +32,11 @@ import infobite.com.tapizy.adapter.TapizyListAdapter;
 import infobite.com.tapizy.constant.Constant;
 import infobite.com.tapizy.model.TapizyListModel;
 import infobite.com.tapizy.model.User;
+import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.com.tapizy.ui.activity.community_module.CommunityActivity;
 import infobite.com.tapizy.ui.activity.recent_chat.RecentChatActivity;
 import infobite.com.tapizy.ui.activity.trending_module.TrendingActivity;
+import infobite.com.tapizy.utils.AppPreference;
 import infobite.com.tapizy.utils.BaseActivity;
 
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -163,7 +166,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_settng) {
-            startActivity(new Intent(mContext,SettingActivity.class));
+            startActivity(new Intent(mContext, SettingActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -186,5 +189,22 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(new Intent(mContext, RecentChatActivity.class));
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (AppPreference.getBooleanPreference(mContext, "update")) {
+            getPreferenceData();
+        }
+    }
+
+    private void getPreferenceData() {
+        Gson gson = new Gson();
+        String json = AppPreference.getStringPreference(mContext, Constant.USER_DATA);
+        UserDataMainModal loginUserModel = gson.fromJson(json, UserDataMainModal.class);
+        User.setUser(loginUserModel);
+        AppPreference.setBooleanPreference(mContext, "update", false);
+        setUserData();
     }
 }

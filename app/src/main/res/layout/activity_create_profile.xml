@@ -7,290 +7,277 @@
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".ui.activity.CreateProfileActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_create_profile1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="@color/blueB"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="8dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_create_profile1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="28dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Create Profile"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_user_profile"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="20dp"
-                    android:src="@drawable/ic_profile_img"
-                    app:civ_border_color="@color/gray_i"
-                    app:civ_border_width="1dp" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/cv_create_profile1"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/blueB"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_arrow_forward" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Name"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            android:textStyle="normal" />
-
-                        <EditText
-                            android:id="@+id/tv_user_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_editext_profile"
-                            android:hint="ex : Ibt"
-                            android:inputType="text"
-                            android:padding="6dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/gray_c"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_arrow_forward" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="UserName"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-
-                        <EditText
-                            android:id="@+id/tv_user_username"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_editext_profile"
-                            android:hint="ex :P123"
-                            android:inputType="text"
-                            android:padding="6dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/gray_c"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_arrow_forward" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Email Address"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            android:textStyle="normal" />
-
-                        <EditText
-                            android:id="@+id/tv_user_email"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_editext_profile"
-                            android:hint="ex : Ibt@gmail.com"
-                            android:inputType="textEmailAddress"
-                            android:padding="6dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/gray_c"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-              <!--  <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_arrow_forward" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="City"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-
-                        <EditText
-                            android:id="@+id/user_city"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_editext_profile"
-                            android:hint="ex :Indore"
-                            android:inputType="text"
-                            android:padding="6dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/gray_c"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </LinearLayout>-->
-                <LinearLayout
                     android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:padding="28dp">
+
                     <TextView
-                        android:textSize="12dp"
-                        android:textColor="@color/black"
-                        android:text="Select Gender"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                    <RadioGroup
-                        android:id="@+id/rg_select_gender"
-                        android:padding="5dp"
-                        android:weightSum="2"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <RadioButton
-                            android:id="@+id/rb_male"
-                            android:textSize="12dp"
-                            android:textColor="@color/black"
-                            android:buttonTint="@color/blueB"
-                            android:layout_weight="1"
-                            android:text="Male"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <RadioButton
-                            android:id="@+id/rb_female"
-                            android:textSize="12dp"
-                            android:buttonTint="@color/blueB"
-                            android:textColor="@color/black"
-                            android:text="Female"
-                            android:layout_weight="1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="Create Profile"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
-                    </RadioGroup>
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
 
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_user_profile"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="20dp"
+                            android:src="@drawable/ic_profile_img"
+                            app:civ_border_color="@color/gray_i"
+                            app:civ_border_width="1dp" />
+
+                        <ImageView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_add" />
+                    </RelativeLayout>
                 </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-                <CheckBox
-                    android:id="@+id/cb_chatbox_confirm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:buttonTint="@color/blueB"
-                    android:padding="4dp"
-                    android:text="You have a Bot or User ?"
-                    android:textColor="@color/black"
-                    android:textSize="12dp"
-                    android:textStyle="normal" />
-                <Button
-                    android:id="@+id/btn_create_profile"
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv_create_profile1"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="34dp"
-                    android:layout_marginLeft="80dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginRight="80dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/rounded_rectangle_blue"
-                    android:text="Submit Details"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_forward" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Name"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                android:textStyle="normal" />
+
+                            <EditText
+                                android:id="@+id/tv_user_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/bg_editext_profile"
+                                android:hint="ex : Ibt"
+                                android:inputType="text"
+                                android:padding="6dp"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/gray_c"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_forward" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="UserName"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/tv_user_username"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/bg_editext_profile"
+                                android:hint="ex :P123"
+                                android:inputType="text"
+                                android:padding="6dp"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/gray_c"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_forward" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Email Address"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                android:textStyle="normal" />
+
+                            <EditText
+                                android:id="@+id/tv_user_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/bg_editext_profile"
+                                android:hint="ex : Ibt@gmail.com"
+                                android:inputType="textEmailAddress"
+                                android:padding="6dp"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/gray_c"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Select Gender"
+                            android:textColor="@color/black"
+                            android:textSize="12dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rg_select_gender"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="5dp"
+                            android:weightSum="2">
+
+                            <RadioButton
+                                android:id="@+id/rb_male"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="@color/blueB"
+                                android:text="Male"
+                                android:textColor="@color/black"
+                                android:textSize="12dp" />
+
+                            <RadioButton
+                                android:id="@+id/rb_female"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="@color/blueB"
+                                android:text="Female"
+                                android:textColor="@color/black"
+                                android:textSize="12dp" />
+
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Check it if you register for Bot."
+                        android:textColor="@color/gray_a" />
+
+                    <CheckBox
+                        android:id="@+id/cb_chatbox_confirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/blueB"
+                        android:padding="4dp"
+                        android:text="Bot"
+                        android:textColor="@color/black"
+                        android:textStyle="normal" />
+
+                    <Button
+                        android:id="@+id/btn_create_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginRight="80dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/rounded_rectangle_blue"
+                        android:text="Submit Details"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

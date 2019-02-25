@@ -35,6 +35,7 @@ public interface RetrofitApiClient {
                                           @Field("u_bio") String user_bio, @Field("is_bot") String user_bot,
                                           @Field("uid") String uid, @Field("u_name") String u_name,
                                           @Field("u_email") String u_email);
+
     @Multipart
     @POST(Constant.UPDATE_PROFILE_IMAGE_API)
     Call<ResponseBody> updateProfileImage(@Part("uid") RequestBody user_id, @Part MultipartBody.Part aimage);
@@ -64,4 +65,8 @@ public interface RetrofitApiClient {
     @POST(Constant.COMMENT_API)
     Call<CommentMainModal> newPostComment(@Field("post_id") String postId, @Field("uid") String useId,
                                           @Field("comment") String comment);
+
+    @FormUrlEncoded
+    @POST(Constant.USER_DETAIL_API)
+    Call<UserDataMainModal> getUserDetail(@Field("uid") String useId);
 }
