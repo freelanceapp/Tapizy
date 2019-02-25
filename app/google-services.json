@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "349710259108-o7iht4n2ansggdb1mkn0daqn8vguvu8e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "infobite.com.tapizy",
+            "certificate_hash": "6d9b846d9ea1d7eb3bb83ed18d22ebcbb15f6d0f"
+          }
+        },
+        {
           "client_id": "349710259108-mgkkns6i9meonsrbdk59c9s3m2oc4g8g.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 
 import infobite.com.tapizy.R;
@@ -12,6 +14,7 @@ import infobite.com.tapizy.model.User;
 import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.com.tapizy.utils.AppPreference;
 import infobite.com.tapizy.utils.BaseActivity;
+import io.fabric.sdk.android.Fabric;
 
 public class SplashScreen extends BaseActivity {
 
@@ -20,6 +23,7 @@ public class SplashScreen extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        //firebaseAnalytics();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -42,5 +46,10 @@ public class SplashScreen extends BaseActivity {
         String json = AppPreference.getStringPreference(mContext, Constant.USER_DATA);
         UserDataMainModal loginUserModel = gson.fromJson(json, UserDataMainModal.class);
         User.setUser(loginUserModel);
+    }
+
+    private void firebaseAnalytics() {
+        Crashlytics.getInstance().crash();
+        Fabric.with(this, new Crashlytics());
     }
 }
