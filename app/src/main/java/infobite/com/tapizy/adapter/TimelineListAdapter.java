@@ -43,7 +43,7 @@ import infobite.com.tapizy.utils.AppPreference;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int VIEW_TYPE_TEXT = 0;
     private static final int VIEW_TYPE_IMAGE = 1;
@@ -55,8 +55,8 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     private View.OnClickListener onClickListener;
     private RetrofitApiClient retrofitApiClient;
 
-    public VideoRecyclerViewAdapter(Context mContext, List<UserFeed> infoList, View.OnClickListener onClickListener,
-                                    RetrofitApiClient retrofitApiClient) {
+    public TimelineListAdapter(Context mContext, List<UserFeed> infoList, View.OnClickListener onClickListener,
+                               RetrofitApiClient retrofitApiClient) {
         this.mContext = mContext;
         this.mInfoList = infoList;
         this.onClickListener = onClickListener;
@@ -109,8 +109,7 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
                 viewHolder.tvHeadline.setText(feed.getAthleteArticeHeadline());
                 viewHolder.llPostComment.setTag(position);
                 viewHolder.llPostComment.setOnClickListener(onClickListener);
-                viewHolder.tvTotalComment.setTag(position);
-                viewHolder.tvTotalComment.setOnClickListener(onClickListener);
+
                 viewHolder.rlPost.setTag(position);
                 viewHolder.rlPost.setOnClickListener(onClickListener);
                 viewHolder.llViewUserProfile.setTag(position);
@@ -119,23 +118,43 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
                 viewHolder.llLikePost.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        likeApi(feed, viewHolder.imgLike, viewHolder.tvPostLikeCount);
+                        likeApi(feed, viewHolder.tvPostLikeCount, "1", "0", viewHolder.tvUnlikeCount);
+                    }
+                });
+
+                viewHolder.llUnlikePost.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        likeApi(feed, viewHolder.tvUnlikeCount, "0", "1", viewHolder.tvUnlikeCount);
                     }
                 });
 
                 viewHolder.imgLike.setTag(position);
                 //viewHolder.viewData.setTag(position);
 
-                if (feed.getIsLike().equals("unlike")) {
-                    viewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_icon));
+                if (!feed.getIsLike().isEmpty()) {
+                    if (feed.getIsLike().equals("like")) {
+                        viewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot));
+                        viewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
+                    } else {
+                        viewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
+                        viewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold));
+                    }
                 } else {
-                    viewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_fill));
+                    viewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
+                    viewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
                 }
 
                 if (feed.getLikes() == null || feed.getLikes().isEmpty()) {
-                    viewHolder.tvPostLikeCount.setText("0 like");
+                    viewHolder.tvPostLikeCount.setText("0");
                 } else {
-                    viewHolder.tvPostLikeCount.setText(feed.getLikes() + " like");
+                    viewHolder.tvPostLikeCount.setText(feed.getLikes());
+                }
+
+                if (feed.getLikes() == null || feed.getLikes().isEmpty()) {
+                    viewHolder.tvUnlikeCount.setText("0");
+                } else {
+                    viewHolder.tvUnlikeCount.setText(feed.getTotalUnlike());
                 }
 
                 if (feed.getEntryDate() == null || feed.getEntryDate().isEmpty()) {
@@ -152,7 +171,6 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
                 break;
             case 1:
                 final UserFeed imageFeed;
-
                 if (AppPreference.getBooleanPreference(mContext, "likedPost")) {
                     String strTimelineData = AppPreference.getStringPreference(mContext, Constant.TIMELINE_DATA);
                     Gson getGson = new Gson();
@@ -175,8 +193,7 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
 
                 imageViewHolder.llPostComment.setTag(position);
                 imageViewHolder.llPostComment.setOnClickListener(onClickListener);
-                imageViewHolder.tvTotalComment.setTag(position);
-                imageViewHolder.tvTotalComment.setOnClickListener(onClickListener);
+
                 imageViewHolder.rlPost.setTag(position);
                 imageViewHolder.rlPost.setOnClickListener(onClickListener);
                 imageViewHolder.llViewUserProfile.setTag(position);
@@ -185,20 +202,40 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
                 imageViewHolder.llLikePost.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        likeApi(imageFeed, imageViewHolder.imgLike, imageViewHolder.tvPostLikeCount);
+                        likeApi(imageFeed, imageViewHolder.tvPostLikeCount, "1", "0", imageViewHolder.tvUnlikeCount);
                     }
                 });
 
-                if (imageFeed.getIsLike().equals("unlike")) {
-                    imageViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_icon));
+                imageViewHolder.llUnlikePost.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        likeApi(imageFeed, imageViewHolder.tvUnlikeCount, "0", "1", imageViewHolder.tvUnlikeCount);
+                    }
+                });
+
+                if (!imageFeed.getIsLike().isEmpty()) {
+                    if (imageFeed.getIsLike().equals("like")) {
+                        imageViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot));
+                        imageViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
+                    } else {
+                        imageViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
+                        imageViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold));
+                    }
                 } else {
-                    imageViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_fill));
+                    imageViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
+                    imageViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
                 }
 
                 if (imageFeed.getLikes() == null || imageFeed.getLikes().isEmpty()) {
-                    imageViewHolder.tvPostLikeCount.setText("0 like");
+                    imageViewHolder.tvPostLikeCount.setText("0");
                 } else {
-                    imageViewHolder.tvPostLikeCount.setText(imageFeed.getLikes() + " like");
+                    imageViewHolder.tvPostLikeCount.setText(imageFeed.getLikes());
+                }
+
+                if (imageFeed.getLikes() == null || imageFeed.getLikes().isEmpty()) {
+                    imageViewHolder.tvUnlikeCount.setText("0");
+                } else {
+                    imageViewHolder.tvUnlikeCount.setText(imageFeed.getTotalUnlike());
                 }
 
                 if (imageFeed.getEntryDate() == null || imageFeed.getEntryDate().isEmpty()) {
@@ -243,8 +280,6 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
                 videoViewHolder.llPostComment.setTag(position);
                 videoViewHolder.llPostComment.setOnClickListener(onClickListener);
 
-                videoViewHolder.tvTotalComment.setTag(position);
-                videoViewHolder.tvTotalComment.setOnClickListener(onClickListener);
                 videoViewHolder.rlPost.setTag(position);
                 videoViewHolder.rlPost.setOnClickListener(onClickListener);
                 videoViewHolder.llViewUserProfile.setTag(position);
@@ -253,20 +288,42 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
                 videoViewHolder.llLikePost.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        likeApi(videoFeed, videoViewHolder.imgLike, videoViewHolder.tvPostLikeCount);
+                        likeApi(videoFeed, videoViewHolder.tvPostLikeCount, "1", "0",
+                                videoViewHolder.tvUnlikeCount);
                     }
                 });
 
-                if (videoFeed.getIsLike().equals("unlike")) {
-                    videoViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_icon));
+                videoViewHolder.llUnlikePost.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        likeApi(videoFeed, videoViewHolder.tvUnlikeCount, "0", "1",
+                                videoViewHolder.tvUnlikeCount);
+                    }
+                });
+
+                if (!videoFeed.getIsLike().isEmpty()) {
+                    if (videoFeed.getIsLike().equals("like")) {
+                        videoViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot));
+                        videoViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
+                    } else {
+                        videoViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
+                        videoViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold));
+                    }
                 } else {
-                    videoViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_fill));
+                    videoViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
+                    videoViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
                 }
 
                 if (videoFeed.getLikes() == null || videoFeed.getLikes().isEmpty()) {
-                    videoViewHolder.tvPostLikeCount.setText("0 like");
+                    videoViewHolder.tvPostLikeCount.setText("0");
                 } else {
-                    videoViewHolder.tvPostLikeCount.setText(videoFeed.getLikes() + " like");
+                    videoViewHolder.tvPostLikeCount.setText(videoFeed.getLikes());
+                }
+
+                if (videoFeed.getLikes() == null || videoFeed.getLikes().isEmpty()) {
+                    videoViewHolder.tvUnlikeCount.setText("0");
+                } else {
+                    videoViewHolder.tvUnlikeCount.setText(videoFeed.getTotalUnlike());
                 }
 
                 if (videoFeed.getEntryDate() == null || videoFeed.getEntryDate().isEmpty()) {
@@ -309,22 +366,17 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     /*
      * Like/Unlike api
      * */
-    private void likeApi(final UserFeed feed, final ImageView imgLike, final TextView textView) {
+    private void likeApi(final UserFeed feed, final TextView textView, String strLike, String strUnlike, final TextView tvUnlike) {
         final String strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
-
-        RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getFeedId(), strId, "1"), new WebResponse() {
+        RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getFeedId(), strId, strLike, strUnlike), new WebResponse() {
             @Override
             public void onResponseSuccess(Response<?> result) {
                 ResponseBody responseBody = (ResponseBody) result.body();
                 try {
                     JSONObject jsonObject = new JSONObject(responseBody.string());
                     if (!jsonObject.getBoolean("error")) {
-                        if (feed.getIsLike().equals("unlike")) {
-                            imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_fill));
-                        } else {
-                            imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like_icon));
-                        }
-                        textView.setText(jsonObject.getString("total_fan") + " like");
+                        textView.setText(jsonObject.getString("likes"));
+                        tvUnlike.setText(jsonObject.getString("unlike"));
                         refreshTimelineApi(strId);
                     } else {
                         Alerts.show(mContext, jsonObject.getString("message"));
@@ -344,7 +396,7 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     private void refreshTimelineApi(String strId) {
-        RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(), new WebResponse() {
+        RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(strId), new WebResponse() {
             @Override
             public void onResponseSuccess(Response<?> result) {
                 DailyNewsFeedMainModal dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
@@ -390,21 +442,13 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
-    public void onRelease() {
-        if (mInfoList != null) {
-            mInfoList.clear();
-            mInfoList = null;
-        }
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private RelativeLayout rlPost, llViewUserProfile;
-        private LinearLayout llLikePost, llPostComment;
-        public ImageView mCover, imgLike;
+        private LinearLayout llLikePost, llUnlikePost, llPostComment;
+        public ImageView mCover, imgLike, imgUnlike;
         private CircleImageView imgUserProfile;
-        private TextView tvUserName, tvPostLikeCount, tvPostTime, tvTotalComment, tvPostDescription;
-        private CardView cardViewVideo;
+        private TextView tvUserName, tvPostLikeCount, tvUnlikeCount, tvPostTime, tvPostDescription;
 
         public ProgressBar progressBar;
         public final View parent;
@@ -414,8 +458,6 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
             super(itemView);
             parent = itemView;
             viewData = itemView;
-            parent.setTag(this);
-            cardViewVideo = itemView.findViewById(R.id.cardViewVideo);
             mCover = itemView.findViewById(R.id.cover);
             progressBar = itemView.findViewById(R.id.progressBar);
 
@@ -424,11 +466,13 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
             imgUserProfile = itemView.findViewById(R.id.imgUserProfile);
             tvUserName = itemView.findViewById(R.id.tvUserName);
             imgLike = itemView.findViewById(R.id.imgLike);
+            imgUnlike = itemView.findViewById(R.id.imgUnlike);
+            llUnlikePost = itemView.findViewById(R.id.llUnlikePost);
             llLikePost = itemView.findViewById(R.id.llLikePost);
             llPostComment = itemView.findViewById(R.id.llPostComment);
             tvPostLikeCount = itemView.findViewById(R.id.tvPostLikeCount);
+            tvUnlikeCount = itemView.findViewById(R.id.tvUnlikeCount);
             tvPostTime = itemView.findViewById(R.id.tvPostTime);
-            tvTotalComment = itemView.findViewById(R.id.tvTotalComment);
             tvPostDescription = itemView.findViewById(R.id.tvPostDescription);
         }
     }
@@ -436,11 +480,11 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     public class ImageViewHolder extends RecyclerView.ViewHolder {
 
         private RelativeLayout rlPost, llViewUserProfile;
-        private LinearLayout llLikePost, llPostComment;
-        private ImageView imgPostImage, imgLike;
+        private LinearLayout llLikePost, llUnlikePost, llPostComment;
+        private ImageView imgPostImage, imgLike, imgUnlike;
         private CircleImageView imgUserProfile;
         private CardView cardViewImage;
-        private TextView tvUserName, tvPostLikeCount, tvPostTime, tvTotalComment, tvPostDescription;
+        private TextView tvUserName, tvPostLikeCount, tvUnlikeCount, tvPostTime, tvPostDescription;
         public final View viewData;
 
         public ImageViewHolder(View itemView) {
@@ -453,11 +497,13 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
             tvUserName = itemView.findViewById(R.id.tvUserName);
             imgPostImage = itemView.findViewById(R.id.imgPostImage);
             imgLike = itemView.findViewById(R.id.imgLike);
+            imgUnlike = itemView.findViewById(R.id.imgUnlike);
             llLikePost = itemView.findViewById(R.id.llLikePost);
+            llUnlikePost = itemView.findViewById(R.id.llUnlikePost);
             llPostComment = itemView.findViewById(R.id.llPostComment);
             tvPostLikeCount = itemView.findViewById(R.id.tvPostLikeCount);
+            tvUnlikeCount = itemView.findViewById(R.id.tvUnlikeCount);
             tvPostTime = itemView.findViewById(R.id.tvPostTime);
-            tvTotalComment = itemView.findViewById(R.id.tvTotalComment);
             tvPostDescription = itemView.findViewById(R.id.tvPostDescription);
         }
     }
@@ -465,11 +511,11 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     public class HeadlineViewHolder extends RecyclerView.ViewHolder {
 
         private RelativeLayout rlPost, llViewUserProfile;
-        private LinearLayout llLikePost, llPostComment;
-        private ImageView imgLike;
+        private LinearLayout llLikePost, llUnlikePost, llPostComment;
+        private ImageView imgLike, imgUnlike;
         private CircleImageView imgUserProfile;
         private CardView cardViewHeadline;
-        private TextView tvHeadline, tvUserName, tvPostLikeCount, tvPostTime, tvTotalComment, tvPostDescription;
+        private TextView tvHeadline, tvUserName, tvPostLikeCount, tvUnlikeCount, tvPostTime, tvPostDescription;
         public final View viewData;
 
         public HeadlineViewHolder(View itemView) {
@@ -482,11 +528,13 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
             tvUserName = itemView.findViewById(R.id.tvUserName);
             tvHeadline = itemView.findViewById(R.id.tvHeadline);
             imgLike = itemView.findViewById(R.id.imgLike);
+            imgUnlike = itemView.findViewById(R.id.imgUnlike);
             llLikePost = itemView.findViewById(R.id.llLikePost);
+            llUnlikePost = itemView.findViewById(R.id.llUnlikePost);
             llPostComment = itemView.findViewById(R.id.llPostComment);
             tvPostLikeCount = itemView.findViewById(R.id.tvPostLikeCount);
+            tvUnlikeCount = itemView.findViewById(R.id.tvUnlikeCount);
             tvPostTime = itemView.findViewById(R.id.tvPostTime);
-            tvTotalComment = itemView.findViewById(R.id.tvTotalComment);
             tvPostDescription = itemView.findViewById(R.id.tvPostDescription);
         }
     }

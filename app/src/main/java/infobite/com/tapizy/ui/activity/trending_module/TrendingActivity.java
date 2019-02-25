@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import infobite.com.tapizy.R;
-import infobite.com.tapizy.adapter.VideoRecyclerViewAdapter;
+import infobite.com.tapizy.adapter.TimelineListAdapter;
 import infobite.com.tapizy.constant.Constant;
 import infobite.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import infobite.com.tapizy.model.timeline_modal.UserFeed;
@@ -31,7 +31,7 @@ import static android.widget.LinearLayout.VERTICAL;
 
 public class TrendingActivity extends BaseActivity implements View.OnClickListener {
 
-    private VideoRecyclerViewAdapter mAdapter;
+    private TimelineListAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     /***********************************************/
@@ -50,11 +50,11 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void init() {
-
+        strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
         recyclerViewFeed = findViewById(R.id.recyclerViewFeed);
-        mAdapter = new VideoRecyclerViewAdapter(mContext, feedList, this, retrofitApiClient);
+        mAdapter = new TimelineListAdapter(mContext, feedList, this, retrofitApiClient);
         recyclerViewFeed.setLayoutManager(new LinearLayoutManager(mContext, VERTICAL, false));
 
         recyclerViewFeed.setItemAnimator(new DefaultItemAnimator());
@@ -74,7 +74,7 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
 
     public void timelineApi() {
         if (cd.isNetworkAvailable()) {
-            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.showPostTimeLine(), new WebResponse() {
+            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.showPostTimeLine(strId), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
@@ -107,7 +107,6 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tvTotalComment:
             case R.id.rlPost:
             case R.id.llPostComment:
                 int position = Integer.parseInt(v.getTag().toString());
