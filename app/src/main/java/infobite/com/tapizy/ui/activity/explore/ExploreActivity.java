@@ -1,4 +1,4 @@
-package infobite.com.tapizy.ui.activity;
+package infobite.com.tapizy.ui.activity.explore;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +13,10 @@ import java.util.ArrayList;
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.adapter.TapiziLinearListAdapter;
 import infobite.com.tapizy.model.TapizyLinearListModel;
+import infobite.com.tapizy.ui.activity.HomeActivity;
 import infobite.com.tapizy.utils.BaseActivity;
 
-public class NewActivity extends BaseActivity implements View.OnClickListener {
+public class ExploreActivity extends BaseActivity implements View.OnClickListener {
 
     private TapiziLinearListAdapter adapter;
     private ArrayList<TapizyLinearListModel> tapizyListModels = new ArrayList<>();
@@ -24,21 +25,17 @@ public class NewActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new);
+        setContentView(R.layout.activity_explore);
 
         RecyclerView rclvll = findViewById(R.id.rv_lllayout);
         ivback = findViewById(R.id.ic_back_newactivity);
 
         ivback.setOnClickListener(this);
 
-        TapizyLinearListModel tapizyListModel1 = new TapizyLinearListModel(R.drawable.daily_fun, "Daily Fun", "Get daily jokes, Memes,Content & Videos");
-        tapizyListModels.add(tapizyListModel1);
-        TapizyLinearListModel tapizyListModel2 = new TapizyLinearListModel(R.drawable.indore_live, "Indore Live", "Get your local Queries answer");
-        tapizyListModels.add(tapizyListModel2);
-        TapizyLinearListModel tapizyListModel3 = new TapizyLinearListModel(R.drawable.daily_news, "Daily News", "Get Trending News");
-        tapizyListModels.add(tapizyListModel3);
         TapizyLinearListModel tapizyListModel4 = new TapizyLinearListModel(R.drawable.my_travel, "My Travel", "Best fight, Cab,Hotel guide");
         tapizyListModels.add(tapizyListModel4);
+        TapizyLinearListModel tapizyListModel3 = new TapizyLinearListModel(R.drawable.daily_news, "Daily News", "Get Trending News");
+        tapizyListModels.add(tapizyListModel3);
         TapizyLinearListModel tapizyListModel5 = new TapizyLinearListModel(R.drawable.my_money, "My Money", "Get Loans,Mutual Funds, Market Updates");
         tapizyListModels.add(tapizyListModel5);
         TapizyLinearListModel tapizyListModel6 = new TapizyLinearListModel(R.drawable.my_health, "My Health", "Get Fitness an Trainign Sessions");
@@ -52,8 +49,7 @@ public class NewActivity extends BaseActivity implements View.OnClickListener {
         TapizyLinearListModel tapizyListModel10 = new TapizyLinearListModel(R.drawable.ic_home_service, "My Property", "Buy, Sell and Rent Property");
         tapizyListModels.add(tapizyListModel10);
 
-
-        adapter = new TapiziLinearListAdapter(mContext, tapizyListModels);
+        adapter = new TapiziLinearListAdapter(mContext, tapizyListModels, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
         rclvll.setLayoutManager(mLayoutManager);
         rclvll.setItemAnimator(new DefaultItemAnimator());
@@ -67,7 +63,13 @@ public class NewActivity extends BaseActivity implements View.OnClickListener {
                 Intent intent = new Intent(this, HomeActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.lllayout:
+                int pos = Integer.parseInt(v.getTag().toString());
+                int CatId = pos + 1;
+                Intent intentA = new Intent(this, BotListActivity.class);
+                intentA.putExtra("cat_id", CatId + "");
+                startActivity(intentA);
+                break;
         }
-
     }
 }

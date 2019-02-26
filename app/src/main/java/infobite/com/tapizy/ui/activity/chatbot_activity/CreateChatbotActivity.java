@@ -18,6 +18,7 @@ import java.util.List;
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.adapter.ChatbotListAdapter;
 import infobite.com.tapizy.constant.Constant;
+import infobite.com.tapizy.model.api_bot_list.BotList;
 import infobite.com.tapizy.model.database_modal.ChatbotList;
 import infobite.com.tapizy.model.database_modal.ChatbotMainModal;
 import infobite.com.tapizy.utils.Alerts;
@@ -26,7 +27,7 @@ import infobite.com.tapizy.utils.BaseActivity;
 
 public class CreateChatbotActivity extends BaseActivity implements View.OnClickListener {
 
-    private List<ChatbotList> chatbotLists = new ArrayList<>();
+    private List<BotList> chatbotLists = new ArrayList<>();
     private RecyclerView recyclerViewChatbot;
     private ChatbotListAdapter chatbotListAdapter;
 
@@ -59,8 +60,8 @@ public class CreateChatbotActivity extends BaseActivity implements View.OnClickL
         Gson getGson = new Gson();
         ChatbotMainModal chatbotMainModal = getGson.fromJson(strChatbotListData, ChatbotMainModal.class);
         chatbotLists.clear();
-        chatbotLists.addAll(chatbotMainModal.getChatbotList());
-        chatbotListAdapter.notifyDataSetChanged();
+        /*chatbotLists.addAll(chatbotMainModal.getChatbotList());
+        chatbotListAdapter.notifyDataSetChanged();*/
     }
 
     @Override
@@ -76,8 +77,8 @@ public class CreateChatbotActivity extends BaseActivity implements View.OnClickL
             case R.id.llChatbot:
                 int pos = Integer.parseInt(v.getTag().toString());
                 Intent intent = new Intent(mContext, CreateConversationActivity.class);
-                intent.putExtra("name", pos + "" + chatbotLists.get(pos).getName());
-                startActivity(intent);
+                /*intent.putExtra("name", pos + "" + chatbotLists.get(pos).getName());
+                startActivity(intent);*/
                 break;
         }
     }
@@ -101,10 +102,10 @@ public class CreateChatbotActivity extends BaseActivity implements View.OnClickL
                 } else {
                     ChatbotList chatbotList = new ChatbotList();
                     chatbotList.setName(strName);
-                    chatbotLists.add(chatbotList);
+                    //chatbotLists.add(chatbotList);
 
                     ChatbotMainModal chatbotMainModal = new ChatbotMainModal();
-                    chatbotMainModal.setChatbotList(chatbotLists);
+                    // chatbotMainModal.setChatbotList(chatbotLists);
 
                     Gson gson = new GsonBuilder().setLenient().create();
                     String data = gson.toJson(chatbotMainModal);

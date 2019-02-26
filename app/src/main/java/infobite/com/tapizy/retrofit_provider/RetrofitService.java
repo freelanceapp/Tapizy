@@ -3,7 +3,8 @@ package infobite.com.tapizy.retrofit_provider;
 import android.app.Dialog;
 
 import infobite.com.tapizy.constant.Constant;
-import infobite.com.tapizy.model.login_data_modal.UserData;
+import infobite.com.tapizy.model.api_bot_list.BotListMainModal;
+import infobite.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
 import infobite.com.tapizy.model.comment_list_modal.CommentMainModal;
 import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
@@ -108,6 +109,7 @@ public class RetrofitService {
             }
         });
     }
+
     //user profile image
     public static void updateUserProfile(final Dialog dialog, final Call<ResponseBody> method, final WebResponse webResponse) {
         if (dialog != null)
@@ -214,4 +216,54 @@ public class RetrofitService {
             }
         });
     }
+
+    public static void conversationListResponse(final Call<ApiConversationMainModal> method, final WebResponse webResponse) {
+        method.enqueue(new Callback<ApiConversationMainModal>() {
+            @Override
+            public void onResponse(Call<ApiConversationMainModal> call, Response<ApiConversationMainModal> response) {
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<ApiConversationMainModal> call, Throwable throwable) {
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void createConversationResponse(final Call<ResponseBody> method, final WebResponse webResponse) {
+        method.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void botListResponse(final Dialog dialog, final Call<BotListMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<BotListMainModal>() {
+            @Override
+            public void onResponse(Call<BotListMainModal> call, Response<BotListMainModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<BotListMainModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
 }

@@ -135,7 +135,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                postDetailApi();
+                //postDetailApi();
             }
         });
         postDetailApi();
@@ -180,7 +180,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                         if (dailyNewsFeedMainModal.getFeed() != null)
                             newPostModel = dailyNewsFeedMainModal.getFeed().get(0);
                     setDataInModal();
-                    swipeRefreshLayout.setRefreshing(false);
+                    //swipeRefreshLayout.setRefreshing(false);
                 }
 
                 @Override
@@ -196,7 +196,9 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
     private void setDataInModal() {
         commentList.clear();
-        commentList.addAll(newPostModel.getComment());
+        if (newPostModel.getComment() != null) {
+            commentList.addAll(newPostModel.getComment());
+        }
 
         findViewById(R.id.post_comment_send).setOnClickListener(this);
         llPostComment.setOnClickListener(this);

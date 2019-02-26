@@ -94,8 +94,8 @@ public class ConversationList implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(id);
         dest.writeValue(relateId);
-        dest.writeValue(type);
         dest.writeValue(text);
+        dest.writeValue(type);
     }
 
     public int describeContents() {

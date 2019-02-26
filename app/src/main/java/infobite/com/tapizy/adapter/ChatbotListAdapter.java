@@ -5,21 +5,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import infobite.com.tapizy.R;
-import infobite.com.tapizy.model.database_modal.ChatbotList;
+import infobite.com.tapizy.constant.Constant;
+import infobite.com.tapizy.model.api_bot_list.BotList;
 
 public class ChatbotListAdapter extends RecyclerView.Adapter<ChatbotListAdapter.ViewHolder> {
 
-    private List<ChatbotList> chatbotLists;
+    private List<BotList> chatbotLists;
     private Context context;
     private View.OnClickListener onClickListener;
 
-    public ChatbotListAdapter(Context context, List<ChatbotList> chatbotLists, View.OnClickListener onClickListener) {
+    public ChatbotListAdapter(Context context, List<BotList> chatbotLists, View.OnClickListener onClickListener) {
         this.chatbotLists = chatbotLists;
         this.context = context;
         this.onClickListener = onClickListener;
@@ -34,9 +38,20 @@ public class ChatbotListAdapter extends RecyclerView.Adapter<ChatbotListAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.tvChatbotName.setText(chatbotLists.get(position).getName());
+        holder.tvChatbotName.setText(chatbotLists.get(position).getBotName());
+
+        if (chatbotLists.get(position).getAvtar() != null) {
+            Glide.with(context)
+                    .load(Constant.PROFILE_IMAGE_BASE_URL + chatbotLists.get(position).getAvtar())
+                    .into(holder.imgBot);
+        }
         holder.llChatbot.setTag(position);
         holder.llChatbot.setOnClickListener(onClickListener);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
@@ -46,13 +61,15 @@ public class ChatbotListAdapter extends RecyclerView.Adapter<ChatbotListAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public LinearLayout llChatbot;
-        public TextView tvChatbotName;
+        private LinearLayout llChatbot;
+        private TextView tvChatbotName;
+        private ImageView imgBot;
 
         public ViewHolder(View v) {
             super(v);
             tvChatbotName = v.findViewById(R.id.tvChatbotName);
             llChatbot = v.findViewById(R.id.llChatbot);
+            imgBot = v.findViewById(R.id.imgBot);
         }
     }
 }

@@ -1,6 +1,8 @@
 package infobite.com.tapizy.retrofit_provider;
 
 import infobite.com.tapizy.constant.Constant;
+import infobite.com.tapizy.model.api_bot_list.BotListMainModal;
+import infobite.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
 import infobite.com.tapizy.model.comment_list_modal.CommentMainModal;
 import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
@@ -58,7 +60,7 @@ public interface RetrofitApiClient {
                                 @Field("like") String like, @Field("unlike") String unlike);
 
     @FormUrlEncoded
-    @POST(Constant.TIMELINE_API)
+    @POST(Constant.POST_DETAIL_API)
     Call<DailyNewsFeedMainModal> postDetail(@Field("post_id") String post_id, @Field("uid") String uid);
 
     @FormUrlEncoded
@@ -69,4 +71,21 @@ public interface RetrofitApiClient {
     @FormUrlEncoded
     @POST(Constant.USER_DETAIL_API)
     Call<UserDataMainModal> getUserDetail(@Field("uid") String useId);
+
+    @FormUrlEncoded
+    @POST(Constant.CREATE_CONVERSATION_API)
+    Call<ResponseBody> createConversation(@Field("uid") String userId, @Field("main_bot") String main_bot,
+                                          @Field("relate_id") String relate_id, @Field("text") String text);
+
+    @FormUrlEncoded
+    @POST(Constant.SELECT_CONVERSATION_API)
+    Call<ApiConversationMainModal> selectConversation(@Field("uid") String userId);
+
+    @FormUrlEncoded
+    @POST(Constant.BOT_LIST_API)
+    Call<BotListMainModal> botList(@Field("main_bot") String main_bot, @Field("uid") String uid);
+
+    @FormUrlEncoded
+    @POST(Constant.COMMUNICATION_API)
+    Call<BotListMainModal> communicationApi(@Field("main_bot") String main_bot, @Field("uid") String uid);
 }

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import infobite.com.tapizy.R;
@@ -18,14 +17,15 @@ import infobite.com.tapizy.model.conversation_modal.ConversationList;
 public class ConversationListAdapter extends RecyclerView.Adapter<ConversationListAdapter.ViewHolder> {
 
     private List<ConversationList> chatbotLists;
-    private List<ConversationList> updateList = new ArrayList<>();
+    private List<ConversationList> updateList;
     private Context context;
     private View.OnClickListener onClickListener;
     private DatabaseHandler databaseHandler;
 
-    public ConversationListAdapter(Context context, List<ConversationList> chatbotLists, View.OnClickListener onClickListener,
-                                   DatabaseHandler databaseHandler) {
+    public ConversationListAdapter(Context context, List<ConversationList> chatbotLists, List<ConversationList> updateList,
+                                   View.OnClickListener onClickListener, DatabaseHandler databaseHandler) {
         this.chatbotLists = chatbotLists;
+        this.updateList = updateList;
         this.context = context;
         this.onClickListener = onClickListener;
         this.databaseHandler = databaseHandler;
@@ -41,20 +41,18 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationLi
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        if (databaseHandler.getContactsCount()) {
-            updateList.clear();
-            updateList.addAll(databaseHandler.getAllUrlList());
-            for (int i = 0; i < updateList.size(); i++) {
-                String strRelateId = chatbotLists.get(position).getRelateId();
-                String strId = String.valueOf(updateList.get(i).getId());
-                if (strRelateId.equalsIgnoreCase(strId)) {
-                    String strText = updateList.get(i).getType();
-                    holder.tvQuestion.setText(strText);
-                }
+        //updateList.clear();
+        //updateList.addAll(databaseHandler.getAllUrlList());
+        for (int i = 0; i < updateList.size(); i++) {
+            String strRelateId = chatbotLists.get(position).getRelateId();
+            String strId = String.valueOf(updateList.get(i).getId());
+            if (strRelateId.equalsIgnoreCase(strId)) {
+                String strText = updateList.get(i).getText();
+                holder.tvQuestion.setText(strText);
             }
         }
 
-        String strQ = chatbotLists.get(position).getType();
+        String strQ = chatbotLists.get(position).getText();
         holder.tvAnswer.setText(strQ);
         holder.llChatbot.setTag(position);
         holder.llChatbot.setOnClickListener(onClickListener);

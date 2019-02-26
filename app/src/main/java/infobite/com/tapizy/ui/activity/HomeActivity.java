@@ -39,6 +39,7 @@ import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.com.tapizy.model.navigation_item_modal.NavItemList;
 import infobite.com.tapizy.ui.activity.chatbot_activity.CreateConversationActivity;
 import infobite.com.tapizy.ui.activity.community_module.CommunityActivity;
+import infobite.com.tapizy.ui.activity.explore.ExploreActivity;
 import infobite.com.tapizy.ui.activity.recent_chat.RecentChatActivity;
 import infobite.com.tapizy.ui.activity.trending_module.TrendingActivity;
 import infobite.com.tapizy.utils.Alerts;
@@ -219,7 +220,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.llexplore:
-                startActivity(new Intent(mContext, NewActivity.class));
+                startActivity(new Intent(mContext, ExploreActivity.class));
                 break;
             case R.id.llCommunity:
                 startActivity(new Intent(mContext, CommunityActivity.class));

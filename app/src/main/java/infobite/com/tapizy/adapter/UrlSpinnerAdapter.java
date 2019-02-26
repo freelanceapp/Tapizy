@@ -47,7 +47,7 @@ public class UrlSpinnerAdapter extends ArrayAdapter<ConversationList> {
         TextView txtMchId = (TextView) view.findViewById(R.id.tvText);
 
         ConversationList urlModal = items.get(position);
-        txtMchId.setText(urlModal.getType());
+        txtMchId.setText(urlModal.getText());
         return view;
     }
 }
