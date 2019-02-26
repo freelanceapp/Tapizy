@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Locale;
 
 import infobite.com.tapizy.R;
-import infobite.com.tapizy.adapter.CustomerListAdapter;
+import infobite.com.tapizy.adapter.CityListAdapter;
 import infobite.com.tapizy.model.city_list_modal.CityList;
 import infobite.com.tapizy.model.city_list_modal.CityListMainModal;
 import infobite.com.tapizy.model.database_modal.ChatbotList;
@@ -40,7 +40,7 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
 
     private List<ChatbotList> chatbotLists = new ArrayList<>();
 
-    private CustomerListAdapter cityListAdapter;
+    private CityListAdapter cityListAdapter;
     private CityListMainModal loginModal;
     private List<CityList> cityList = new ArrayList<>();
     private Dialog dialogCityList, dialog;
@@ -141,7 +141,7 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
         cityList.clear();
         cityList.addAll(loginModal.getUser());
 
-        cityListAdapter = new CustomerListAdapter(mContext, R.layout.row_city_list, cityList);
+        cityListAdapter = new CityListAdapter(mContext, R.layout.row_city_list, cityList);
         ListView listViewCustomer = (ListView) dialogCityList.findViewById(R.id.listViewCustomer);
         listViewCustomer.setAdapter(cityListAdapter);
         cityListAdapter.notifyDataSetChanged();

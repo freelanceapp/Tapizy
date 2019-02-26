@@ -53,7 +53,6 @@
               </intent-filter>-->
 
         </activity>
-        <activity android:name=".ui.activity.MainActivity" />
         <activity
             android:name=".ui.activity.SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -75,7 +74,6 @@
             android:name=".otp_verification.OtpVerificationActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".utils.BaseActivity" />
-        <activity android:name=".ui.activity.CityListActivity" />
         <activity android:name=".ui.activity.community_module.CommunityActivity" />
         <activity android:name=".ui.activity.trending_module.TrendingActivity" />
         <activity android:name=".ui.activity.trending_module.NewPostActivity" />

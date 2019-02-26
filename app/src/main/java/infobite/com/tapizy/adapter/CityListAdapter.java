@@ -1,59 +1,111 @@
 package infobite.com.tapizy.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import infobite.com.tapizy.R;
+import infobite.com.tapizy.model.city_list_modal.CityList;
 
-public class CityListAdapter extends  RecyclerView.Adapter<CityListAdapter.ViewHolder> {
+public class CityListAdapter extends ArrayAdapter<CityList> {
 
-    private List<String> cityList;
+    private List<CityList> originalList;
+    private List<CityList> DatumList;
+    private DatumFilter filter;
     private Context context;
 
-    public CityListAdapter(Context context, List<String> cityList) {
-        this.cityList = cityList;
+    public CityListAdapter(Context context, int textViewResourceId, List<CityList> DatumList) {
+        super(context, textViewResourceId, DatumList);
+        this.DatumList = new ArrayList<>();
+        this.DatumList.addAll(DatumList);
+        this.originalList = new ArrayList<>();
+        this.originalList.addAll(DatumList);
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public CityListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_custom_city_list, parent, false);
-        CityListAdapter.ViewHolder viewHolder1 = new CityListAdapter.ViewHolder(view);
-        return viewHolder1;
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new DatumFilter();
+        }
+        return filter;
     }
 
+    @NonNull
     @Override
-    public void onBindViewHolder(final CityListAdapter.ViewHolder holder, final int position) {
-        holder.tvCity.setText(cityList.get(position));
-        
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+
+        ViewHolder holder = null;
+        Log.v("ConvertView", String.valueOf(position));
+        if (convertView == null) {
+
+            LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if (vi != null) {
+                convertView = vi.inflate(R.layout.row_city_list, null);
+            }
+            holder = new ViewHolder();
+            if (convertView != null) {
+                holder.txtCityList = (TextView) convertView.findViewById(R.id.txtCustomerName);
+            }
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        CityList Datum = DatumList.get(position);
+        holder.txtCityList.setText(Datum.getNamePostcode());
+        return convertView;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return position;
+    private class ViewHolder {
+        TextView txtCityList;
     }
 
-    @Override
-    public int getItemCount() {
-        return cityList.size();
-    }
+    private class DatumFilter extends Filter {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
 
-        private RelativeLayout rlMainView;
-        public TextView tvCity;
+            constraint = constraint.toString().toLowerCase();
+            FilterResults result = new FilterResults();
+            if (constraint != null && constraint.toString().length() > 0) {
+                ArrayList<CityList> filteredItems = new ArrayList<>();
 
-        public ViewHolder(View v) {
-            super(v);
-            tvCity = v.findViewById(R.id.tv_city_name);
+                for (int i = 0, l = originalList.size(); i < l; i++) {
+                    CityList Datum = originalList.get(i);
+                    if (Datum.getNamePostcode().toLowerCase().contains(constraint))
+                        filteredItems.add(Datum);
+                }
+                result.count = filteredItems.size();
+                result.values = filteredItems;
+            } else {
+                synchronized (this) {
+                    result.values = originalList;
+                    result.count = originalList.size();
+                }
+            }
+            return result;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint,
+                                      FilterResults results) {
+            DatumList = (ArrayList<CityList>) results.values;
+            notifyDataSetChanged();
+            clear();
+            for (int i = 0, l = DatumList.size(); i < l; i++)
+                add(DatumList.get(i));
+            notifyDataSetInvalidated();
         }
     }
 }
