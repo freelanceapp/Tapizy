@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -25,17 +26,22 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import infobite.com.tapizy.R;
+import infobite.com.tapizy.adapter.NavigationItemListAdapter;
 import infobite.com.tapizy.adapter.TapizyListAdapter;
 import infobite.com.tapizy.constant.Constant;
 import infobite.com.tapizy.model.TapizyListModel;
 import infobite.com.tapizy.model.User;
 import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
+import infobite.com.tapizy.model.navigation_item_modal.NavItemList;
+import infobite.com.tapizy.ui.activity.chatbot_activity.CreateConversationActivity;
 import infobite.com.tapizy.ui.activity.community_module.CommunityActivity;
 import infobite.com.tapizy.ui.activity.recent_chat.RecentChatActivity;
 import infobite.com.tapizy.ui.activity.trending_module.TrendingActivity;
+import infobite.com.tapizy.utils.Alerts;
 import infobite.com.tapizy.utils.AppPreference;
 import infobite.com.tapizy.utils.BaseActivity;
 
@@ -53,6 +59,12 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private TapizyListAdapter adapter;
     private RecyclerView rv_tapizy_list;
     private NavigationView navigationView;
+    private List<NavItemList> navItemLists = new ArrayList<>();
+    private String strUserId;
+
+    private String[] strItems = {"Profile", "Create conversation", "24 * 7", "Rewards", "Settings"};
+    private Integer[] strImages = {R.drawable.profile_image, R.drawable.profile_image, R.drawable.profile_image,
+            R.drawable.profile_image, R.drawable.profile_image};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,16 +89,46 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         addproduct();
         init();
         setUserData();
+        //addNavItem();
+    }
+
+    private void addNavItem() {
+        strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
+
+        for (int i = 0; i < strItems.length; i++) {
+            NavItemList itemList = new NavItemList();
+            itemList.setName(strItems[i]);
+            itemList.setImage(strImages[i]);
+            navItemLists.add(itemList);
+        }
+        setRecyclerViewNavigationItem();
+    }
+
+    private void setRecyclerViewNavigationItem() {
+
+        RecyclerView recyclerViewNavigationItem = findViewById(R.id.recyclerViewNavigationItem);
+
+        NavigationItemListAdapter itemListAdapter = new NavigationItemListAdapter(mContext, navItemLists, this);
+
+        recyclerViewNavigationItem.setHasFixedSize(true);
+        recyclerViewNavigationItem.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewNavigationItem.setAdapter(itemListAdapter);
+        itemListAdapter.notifyDataSetChanged();
     }
 
     private void setUserData() {
-        View header = navigationView.getHeaderView(0);
+        //View header = navigationView.getHeaderView(0);
+        findViewById(R.id.llProfile).setOnClickListener(this);
+        findViewById(R.id.llCreateConversation).setOnClickListener(this);
+        findViewById(R.id.ll24_7).setOnClickListener(this);
+        findViewById(R.id.llRewards).setOnClickListener(this);
+        findViewById(R.id.llSettings).setOnClickListener(this);
         Glide.with(mContext)
                 .load(Constant.PROFILE_IMAGE_BASE_URL + User.getUser().getUser().getUProfile())
-                .into(((CircleImageView) header.findViewById(R.id.profile_image)));
+                .into(((CircleImageView) findViewById(R.id.profile_image)));
 
-        ((TextView) header.findViewById(R.id.tvUserName)).setText(User.getUser().getUser().getUName());
-        ((TextView) header.findViewById(R.id.tvEmail)).setText(User.getUser().getUser().getUEmail());
+        ((TextView) findViewById(R.id.tvUserName)).setText(User.getUser().getUser().getUName());
+        ((TextView) findViewById(R.id.tvEmail)).setText(User.getUser().getUser().getUEmail());
     }
 
     private void init() {
@@ -187,6 +229,23 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.llchat:
                 startActivity(new Intent(mContext, RecentChatActivity.class));
+                break;
+            case R.id.llProfile:
+                startActivity(new Intent(mContext, MyProfileActivity.class));
+                break;
+            case R.id.llCreateConversation:
+                Intent intent = new Intent(mContext, CreateConversationActivity.class);
+                intent.putExtra("name", strUserId + "chatbot");
+                startActivity(intent);
+                break;
+            case R.id.ll24_7:
+                Alerts.show(mContext, "Under development !!!");
+                break;
+            case R.id.llRewards:
+                Alerts.show(mContext, "Under development !!!");
+                break;
+            case R.id.llSettings:
+                startActivity(new Intent(mContext, SettingActivity.class));
                 break;
         }
     }

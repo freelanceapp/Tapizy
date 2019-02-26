@@ -5,21 +5,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import infobite.com.tapizy.R;
-import infobite.com.tapizy.model.database_modal.ChatbotList;
+import infobite.com.tapizy.model.navigation_item_modal.NavItemList;
 
 public class NavigationItemListAdapter extends RecyclerView.Adapter<NavigationItemListAdapter.ViewHolder> {
 
-    private List<ChatbotList> chatbotLists;
+    private List<NavItemList> chatbotLists;
     private Context context;
     private View.OnClickListener onClickListener;
 
-    public NavigationItemListAdapter(Context context, List<ChatbotList> chatbotLists, View.OnClickListener onClickListener) {
+    public NavigationItemListAdapter(Context context, List<NavItemList> chatbotLists, View.OnClickListener onClickListener) {
         this.chatbotLists = chatbotLists;
         this.context = context;
         this.onClickListener = onClickListener;
@@ -34,9 +35,11 @@ public class NavigationItemListAdapter extends RecyclerView.Adapter<NavigationIt
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.tvChatbotName.setText(chatbotLists.get(position).getName());
-        holder.llChatbot.setTag(position);
-        holder.llChatbot.setOnClickListener(onClickListener);
+        holder.tvItemName.setText(chatbotLists.get(position).getName());
+        holder.imgItem.setImageResource(chatbotLists.get(position).getImage());
+
+        holder.llItem.setTag(position);
+        holder.llItem.setOnClickListener(onClickListener);
     }
 
     @Override
@@ -46,13 +49,15 @@ public class NavigationItemListAdapter extends RecyclerView.Adapter<NavigationIt
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public LinearLayout llChatbot;
-        public TextView tvChatbotName;
+        public LinearLayout llItem;
+        private ImageView imgItem;
+        public TextView tvItemName;
 
         public ViewHolder(View v) {
             super(v);
-            tvChatbotName = v.findViewById(R.id.tvChatbotName);
-            llChatbot = v.findViewById(R.id.llChatbot);
+            imgItem = v.findViewById(R.id.imgItem);
+            tvItemName = v.findViewById(R.id.tvItemName);
+            llItem = v.findViewById(R.id.llItem);
         }
     }
 }
