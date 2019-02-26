@@ -1,4 +1,4 @@
-package infobite.com.tapizy.ui.activity;
+package infobite.com.tapizy.ui.activity.chatbot_activity;
 
 import android.app.Dialog;
 import android.content.Intent;

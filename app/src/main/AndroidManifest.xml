@@ -14,6 +14,10 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
         android:allowBackup="true"
@@ -35,18 +39,18 @@
             android:name=".ui.activity.TrandingActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".ui.activity.ChatActivity"
+            android:name=".ui.activity.chatbot_activity.ChatActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ui.activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing">
 
-          <!--  <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--  <intent-filter>
+                  <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+                  <category android:name="android.intent.category.LAUNCHER" />
+              </intent-filter>-->
 
         </activity>
         <activity android:name=".ui.activity.MainActivity" />
@@ -65,8 +69,8 @@
         <activity
             android:name=".ui.activity.TapizyActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ui.activity.CreateChatbotActivity" />
-        <activity android:name=".ui.activity.CreateConversationActivity" />
+        <activity android:name=".ui.activity.chatbot_activity.CreateChatbotActivity" />
+        <activity android:name=".ui.activity.chatbot_activity.CreateConversationActivity" />
         <activity
             android:name=".otp_verification.OtpVerificationActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -85,5 +89,6 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
     </application>
 </manifest>

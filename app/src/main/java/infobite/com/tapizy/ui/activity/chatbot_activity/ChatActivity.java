@@ -1,4 +1,4 @@
-package infobite.com.tapizy.ui.activity;
+package infobite.com.tapizy.ui.activity.chatbot_activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
