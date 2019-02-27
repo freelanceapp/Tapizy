@@ -80,6 +80,18 @@ public class AppPreference {
         editor.apply();
     }
 
+    public static void setFirstBooleanPref(Context context, String key, boolean value) {
+        SharedPreferences preferences = context.getSharedPreferences(APP_PREFENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    public static boolean getFirstBooleanPref(Context context, String key) {
+        SharedPreferences preferences = context.getSharedPreferences(APP_PREFENCE, Context.MODE_PRIVATE);
+        return preferences.getBoolean(key, true);
+    }
+
     public static boolean getBooleanPreference(Context context, String key) {
         SharedPreferences preferences = context.getSharedPreferences(APP_PREFENCE, Context.MODE_PRIVATE);
         return preferences.getBoolean(key, false);

@@ -23,7 +23,7 @@ public class Constant {
     public static final String BOT_LIST_API = "app/bot_list.php";
     public static final String COMMUNICATION_API = "app/communition.php";
     public static final String BOT_DETAIL_ENTRY = "app/bot_details.php";
-    public static final String BOT_CATEGORY_TYPE= "app/bot_type.php";
+    public static final String BOT_CATEGORY_TYPE = "app/bot_type.php";
 
     /*Preference*/
     public static final String CHATBOT_LIST = "CHATBOT_LIST";
@@ -38,6 +38,8 @@ public class Constant {
     public static final String USER_TIMELINE_DATA = "USER_TIMELINE_DATA";
     public static final String IS_DATA_UPDATE = "IS_DATA_UPDATE";
     public static final String TOKEN = "TOKEN";
+
+    public static final String FIRST_CONVERSATION = "FIRST_CONVERSATION";
 
     /* Fragment tag */
     public static final String TimelineFragment = "TimelineFragment";

@@ -1,24 +1,23 @@
 package infobite.com.tapizy.ui.activity.chatbot_activity;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.Spinner;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import infobite.com.tapizy.R;
-import infobite.com.tapizy.adapter.ConversationListAdapter;
-import infobite.com.tapizy.adapter.UrlSpinnerAdapter;
+import infobite.com.tapizy.adapter.SubQuestionListAdapter;
 import infobite.com.tapizy.constant.Constant;
-import infobite.com.tapizy.database.DatabaseHandler;
 import infobite.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
 import infobite.com.tapizy.model.conversation_modal.ConversationList;
 import infobite.com.tapizy.retrofit_provider.RetrofitService;
@@ -34,10 +33,8 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
     private List<ConversationList> conversationLists = new ArrayList<>();
     private List<ConversationList> spinnerConversationLists = new ArrayList<>();
     private RecyclerView recyclerViewChatbot;
-    private ConversationListAdapter conversationListAdapter;
     private String strChatbotName;
 
-    private DatabaseHandler databaseHandler;
     private int intRelateId = 0;
     private String strUserId;
     private String strText;
@@ -45,80 +42,81 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_chatbot);
+        setContentView(R.layout.activity_create_conversation);
 
         init();
     }
 
     private void init() {
         strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
-        strChatbotName = getIntent().getStringExtra("name");
-        databaseHandler = new DatabaseHandler(mContext, strChatbotName);
-        /*if (databaseHandler.getContactsCount()) {
-            conversationLists.clear();
-            conversationLists.addAll(databaseHandler.getAllUrlList());
-        }*/
+        //strChatbotName = getIntent().getStringExtra("name");
 
         (findViewById(R.id.floatingCreateChatbot)).setOnClickListener(this);
-        (findViewById(R.id.btnChat)).setOnClickListener(this);
 
-        conversationListAdapter = new ConversationListAdapter(mContext, conversationLists, conversationLists, this, databaseHandler);
         recyclerViewChatbot = findViewById(R.id.recyclerViewChatbot);
         recyclerViewChatbot.setHasFixedSize(true);
         recyclerViewChatbot.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        recyclerViewChatbot.setAdapter(conversationListAdapter);
+        //recyclerViewChatbot.setAdapter(conversationListAdapter);
 
-        getConversationList();
-    }
+        findViewById(R.id.btnWelcomeText).setOnClickListener(this);
 
-    private void getConversationList() {
-        if (cd.isNetworkAvailable()) {
-            RetrofitService.conversationListResponse(retrofitApiClient.selectConversation(strUserId), new WebResponse() {
-                @Override
-                public void onResponseSuccess(Response<?> result) {
-                    ApiConversationMainModal apiConversationMainModal = (ApiConversationMainModal) result.body();
-                    conversationLists.clear();
-                    if (apiConversationMainModal != null) {
-                        if (apiConversationMainModal.getConversation().size() > 0) {
-                            for (int i = 0; i < apiConversationMainModal.getConversation().size(); i++) {
-                                ConversationList conversationList = new ConversationList();
-                                conversationList.setText(apiConversationMainModal.getConversation().get(i).getText());
-                                conversationList.setRelateId(apiConversationMainModal.getConversation().get(i).getRelateId());
-                                conversationList.setId(Integer.valueOf(apiConversationMainModal.getConversation().get(i).getId()));
-                                conversationLists.add(conversationList);
-                            }
-                        }
-                    }
-
-                    conversationListAdapter.notifyDataSetChanged();
-                    int size = conversationLists.size();
-                    if (size > 0) {
-                        int scrollAt = size - 1;
-                        recyclerViewChatbot.scrollToPosition(scrollAt);
-                    }
-                }
-
-                @Override
-                public void onResponseFailed(String error) {
-
-                }
-            });
+        if (AppPreference.getFirstBooleanPref(mContext, Constant.FIRST_CONVERSATION)) {
+            findViewById(R.id.llWelcome).setVisibility(View.VISIBLE);
         } else {
-            cd.show(mContext);
+            findViewById(R.id.llWelcome).setVisibility(View.GONE);
         }
+
+        //getConversationList();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btnWelcomeText:
+                String strWelcomeText = ((EditText) findViewById(R.id.edtWelcomeText)).getText().toString();
+                if (strWelcomeText.isEmpty()) {
+                    Alerts.show(mContext, "Please enter welcome text");
+                } else {
+                    AppPreference.setFirstBooleanPref(mContext, Constant.FIRST_CONVERSATION, false);
+                    findViewById(R.id.llWelcome).setVisibility(View.GONE);
+                    createConversationApi("", strWelcomeText, "welcome", "");
+                }
+                break;
             case R.id.floatingCreateChatbot:
-                createChatbotDialog();
+                if (AppPreference.getFirstBooleanPref(mContext, Constant.FIRST_CONVERSATION)) {
+                    Alerts.show(mContext, "Please add first welcome message");
+                } else {
+                    createChatbotDialog();
+                }
                 break;
-            case R.id.btnChat:
-                Intent intent = new Intent(mContext, ChatActivity.class);
-                intent.putExtra("name", strChatbotName);
-                startActivity(intent);
-                break;
+        }
+    }
+
+    private void createConversationApi(String strRelateId, String strText, String strType, String strResponseRelateId) {
+        if (cd.isNetworkAvailable()) {
+            RetrofitService.createConversationResponse(retrofitApiClient.createConversation
+                    (strUserId, "1", strRelateId, strText, strType, strResponseRelateId), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    ResponseBody responseBody = (ResponseBody) result.body();
+                    try {
+                        JSONObject jsonObject = new JSONObject(responseBody.string());
+                        Alerts.show(mContext, jsonObject + "");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    //getConversationList();
+                }
+
+                @Override
+                public void onResponseFailed(String error) {
+                    Alerts.show(mContext, error);
+                }
+            });
+        } else {
+            cd.show(mContext);
         }
     }
 
@@ -132,53 +130,39 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
        /* if (dialogChatbot.getWindow() != null)
             dialogChatbot.getWindow().setBackgroundDrawableResource(android.R.color.transparent);*/
 
-        spinnerConversationLists.clear();
-        spinnerConversationLists.addAll(conversationLists);
+        final List<String> subQuestionList = new ArrayList<>();
+        dialogChatbot.findViewById(R.id.tvEmpty).setVisibility(View.VISIBLE);
 
-        ConversationList conversationList = new ConversationList();
-        conversationList.setText("Select question");
-        conversationList.setId(0);
-        conversationList.setRelateId("-1");
-        spinnerConversationLists.add(0, conversationList);
-
-        UrlSpinnerAdapter adapter = new UrlSpinnerAdapter(mContext, R.layout.spinner_url_layout, spinnerConversationLists);
-        Spinner spinnerList = dialogChatbot.findViewById(R.id.spinnerList);
-        spinnerList.setAdapter(adapter);
-        spinnerList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                strText = spinnerConversationLists.get(position).getText();
-                intRelateId = spinnerConversationLists.get(position).getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        final SubQuestionListAdapter subQuestionListAdapter = new SubQuestionListAdapter(mContext, subQuestionList);
+        final RecyclerView recyclerViewSubQuestion = dialogChatbot.findViewById(R.id.recyclerViewSubQuestion);
+        recyclerViewSubQuestion.setHasFixedSize(true);
+        recyclerViewSubQuestion.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+        recyclerViewSubQuestion.setAdapter(subQuestionListAdapter);
 
         dialogChatbot.findViewById(R.id.btnCreate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String strName = ((EditText) dialogChatbot.findViewById(R.id.edtChatbotName)).getText().toString();
-                if (strName.isEmpty()) {
-                    ((EditText) dialogChatbot.findViewById(R.id.edtChatbotName))
-                            .setError("Enter text for conversation " + ("\ud83d\ude05"));
+                dialogChatbot.dismiss();
+            }
+        });
+
+        dialogChatbot.findViewById(R.id.btnAdd).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String strSubQuestion = ((EditText) dialogChatbot.findViewById(R.id.edtSubQuestion)).getText().toString();
+                if (strSubQuestion.isEmpty()) {
+                    Alerts.show(mContext, "Please enter sub text");
                 } else {
-                    /*ConversationList conversationList = new ConversationList();
-                    conversationList.setText(strName);
-                    conversationList.setRelateId(String.valueOf(intRelateId));
-                    conversationLists.add(conversationList);*/
+                    subQuestionList.add(strSubQuestion);
+                    subQuestionListAdapter.notifyDataSetChanged();
+                    ((EditText) dialogChatbot.findViewById(R.id.edtSubQuestion)).setText("");
+                    dialogChatbot.findViewById(R.id.tvEmpty).setVisibility(View.GONE);
 
-                    /*databaseHandler.addItemCart(conversationList);
-                    conversationLists.clear();
-                    conversationLists.addAll(databaseHandler.getAllUrlList());*/
-
-                    if (strText.equalsIgnoreCase("Select question")) {
-                        intRelateId = 0;
+                    if (subQuestionList.size() > 0) {
+                        int size = subQuestionList.size();
+                        int scrollTo = size - 1;
+                        recyclerViewSubQuestion.scrollToPosition(scrollTo);
                     }
-                    createConversationApi(String.valueOf(intRelateId), strName);
-                    dialogChatbot.dismiss();
                 }
             }
         });
@@ -188,20 +172,18 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
         dialogChatbot.show();
     }
 
-    private void createConversationApi(String strRelateId, String strText) {
+    private void getConversationList() {
         if (cd.isNetworkAvailable()) {
-            RetrofitService.createConversationResponse(retrofitApiClient.createConversation
-                    (strUserId, "1", strRelateId, strText), new WebResponse() {
+            RetrofitService.conversationListResponse(retrofitApiClient.selectConversation(strUserId), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
-                    ResponseBody responseBody = (ResponseBody) result.body();
-
-                    getConversationList();
+                    ApiConversationMainModal apiConversationMainModal = (ApiConversationMainModal) result.body();
+                    conversationLists.clear();
                 }
 
                 @Override
                 public void onResponseFailed(String error) {
-                    Alerts.show(mContext, error);
+
                 }
             });
         } else {

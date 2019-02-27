@@ -73,10 +73,12 @@ public interface RetrofitApiClient {
     @POST(Constant.USER_DETAIL_API)
     Call<UserDataMainModal> getUserDetail(@Field("uid") String useId);
 
+    /*uid, main_bot, relate_id,text, type, response_related_id*/
     @FormUrlEncoded
     @POST(Constant.CREATE_CONVERSATION_API)
     Call<ResponseBody> createConversation(@Field("uid") String userId, @Field("main_bot") String main_bot,
-                                          @Field("relate_id") String relate_id, @Field("text") String text);
+                                          @Field("relate_id") String relate_id, @Field("text") String text,
+                                          @Field("type") String type, @Field("response_related_id") String response_related_id);
 
     @FormUrlEncoded
     @POST(Constant.SELECT_CONVERSATION_API)
