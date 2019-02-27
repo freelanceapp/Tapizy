@@ -36,7 +36,8 @@ public interface RetrofitApiClient {
                                           @Field("u_gender") String user_gender, @Field("u_website") String user_website,
                                           @Field("u_bio") String user_bio, @Field("is_bot") String user_bot,
                                           @Field("uid") String uid, @Field("u_name") String u_name,
-                                          @Field("u_email") String u_email);
+                                          @Field("u_email") String u_email, @Field("bot_color") String bot_color,
+                                          @Field("bot_type") String bot_type, @Field("bot_sub_type") String bot_sub_type);
 
     @Multipart
     @POST(Constant.UPDATE_PROFILE_IMAGE_API)
@@ -88,4 +89,13 @@ public interface RetrofitApiClient {
     @FormUrlEncoded
     @POST(Constant.COMMUNICATION_API)
     Call<BotListMainModal> communicationApi(@Field("main_bot") String main_bot, @Field("uid") String uid);
+
+    @FormUrlEncoded
+    @POST(Constant.BOT_DETAIL_ENTRY)
+    Call<ResponseBody> botDetailInsert(@Field("uid") String uid, @Field("bot_color") String bot_color,
+                                       @Field("bot_type") String bot_type, @Field("bot_sub_type") String bot_sub_type);
+
+    @FormUrlEncoded
+    @POST(Constant.BOT_CATEGORY_TYPE)
+    Call<ResponseBody> subCategory(@Field("bot_type") String bot_type);
 }

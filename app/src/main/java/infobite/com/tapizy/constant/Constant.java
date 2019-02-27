@@ -22,6 +22,8 @@ public class Constant {
     public static final String SELECT_CONVERSATION_API = "app/select_conversation_list.php";
     public static final String BOT_LIST_API = "app/bot_list.php";
     public static final String COMMUNICATION_API = "app/communition.php";
+    public static final String BOT_DETAIL_ENTRY = "app/bot_details.php";
+    public static final String BOT_CATEGORY_TYPE= "app/bot_type.php";
 
     /*Preference*/
     public static final String CHATBOT_LIST = "CHATBOT_LIST";
@@ -49,4 +51,7 @@ public class Constant {
     public static final String IMAGE_BASE_URL = BASE_URL + "/image/trending/image/";
     public static final String VIDEO_BASE_URL = BASE_URL + "/image/trending/video/";
     public static final String PROFILE_IMAGE_BASE_URL = BASE_URL + "/image/user_profile/";
+
+    public static final String[] CATEGORY_LIST = {"Select Category", "My Travel", "Daily News", "My Money", "My Health", "My Shopping",
+            "Near By Plans", "A to Z Home Services", "My Property"};
 }
