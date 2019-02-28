@@ -57,6 +57,7 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
         //strChatbotName = getIntent().getStringExtra("name");
 
         (findViewById(R.id.floatingCreateChatbot)).setOnClickListener(this);
+        (findViewById(R.id.imgBack)).setOnClickListener(this);
 
         conversationListAdapter = new ConversationListAdapter(mContext, conversationLists, this);
         recyclerViewChatbot = findViewById(R.id.recyclerViewChatbot);
@@ -91,6 +92,9 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
                         createChatbotDialog("", "", "");
                     }
                 }
+                break;
+            case R.id.imgBack:
+               finish();
                 break;
         }
     }

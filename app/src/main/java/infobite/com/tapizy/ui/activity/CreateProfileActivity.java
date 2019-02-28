@@ -1,7 +1,6 @@
 package infobite.com.tapizy.ui.activity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,7 +18,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -72,9 +70,9 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     private String imgPath = null, imgPath1, imagePath2;
     private EditText etName, etMail, username;
     private CheckBox cbChatbot, cbBot;
-    private RadioGroup radioGroup;
+    private RadioGroup radioGroupGender;
     private RadioButton radioButton;
-    private String strPhone, strUserId, strFrom, strGender, strBot, strBotCategory = "", strBotCategoryId = "", strBotSubCategoryId = "0";
+    private String strPhone, strUserId, strFrom, strGender, strBot, strBotCategory = "", strBotCategoryId = "", strBotSubCategoryId = "0", strIsBot = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +88,9 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     }
 
     private void init() {
-        ((CircleImageView) findViewById(R.id.iv_user_profile)).setOnClickListener(this);
-        ((Button) findViewById(R.id.btn_create_profile)).setOnClickListener(this);
-
+        findViewById(R.id.iv_user_profile).setOnClickListener(this);
+        findViewById(R.id.btn_create_profile).setOnClickListener(this);
+        radioGroupGender = findViewById(R.id.radioGroupGender);
         etName = findViewById(R.id.tv_user_name);
         etMail = findViewById(R.id.tv_user_email);
         username = findViewById(R.id.tv_user_username);
@@ -102,7 +100,10 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
         strUserId = intent.getStringExtra("uid");
         strPhone = intent.getStringExtra("phone");
         username.setText(strPhone);
-        cbBot = (CheckBox) findViewById(R.id.cb_chatbox_confirm);
+        cbBot = findViewById(R.id.cb_chatbox_confirm);
+
+        strBot = User.getUser().getUser().getIsBot();
+        strIsBot = User.getUser().getUser().getIsBot();
         cbBot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -198,18 +199,9 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     }
 
     private void selectGender() {
-        radioGroup = findViewById(R.id.rg_select_gender);
-        radioGroup.setOnCheckedChangeListener((new RadioGroup.OnCheckedChangeListener() {
-
-            @SuppressLint("ResourceType")
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton rb = (RadioButton) group.findViewById(checkedId);
-                if (null != rb && checkedId > -1) {
-                    strGender = rb.getText().toString();
-                }
-            }
-        }));
+        int selectedId = radioGroupGender.getCheckedRadioButtonId();
+        radioButton = findViewById(selectedId);
+        strGender = String.valueOf(radioButton.getText());
     }
 
     private void updateProfileImageApi(File imageFile) {
@@ -249,7 +241,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                     public void onResponseSuccess(Response<?> result) {
                         UserDataMainModal responseBody = (UserDataMainModal) result.body();
                         if (!responseBody.getError()) {
-                            Alerts.show(mContext, responseBody.getMessage());
+                            Alerts.show(mContext, "Update success!!!");
                             if (strFrom.equalsIgnoreCase("otp")) {
                                 Gson gson = new GsonBuilder().setLenient().create();
                                 String data = gson.toJson(responseBody);
@@ -375,20 +367,23 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.btn_create_profile:
-                if (strBot.equalsIgnoreCase("1")) {
-                    if (strBotCategoryId.equalsIgnoreCase("0")) {
-                        Alerts.show(mContext, "Please select category");
-                    } else if (strBotSubCategoryId.equalsIgnoreCase("0")) {
-                        Alerts.show(mContext, "Please select sub category");
+                if (strIsBot.equalsIgnoreCase("1")) {
+                    selectGender();
+                    updateApi();
+                } else {
+                    if (strBot.equalsIgnoreCase("1")) {
+                        if (strBotCategoryId.equalsIgnoreCase("0")) {
+                            Alerts.show(mContext, "Please select category");
+                        } else if (strBotSubCategoryId.equalsIgnoreCase("0")) {
+                            Alerts.show(mContext, "Please select sub category");
+                        } else {
+                            selectGender();
+                            updateApi();
+                        }
                     } else {
                         selectGender();
                         updateApi();
-                        checkIsChecked();
                     }
-                } else {
-                    selectGender();
-                    updateApi();
-                    checkIsChecked();
                 }
                 break;
         }
@@ -512,44 +507,5 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
 
             }
         });
-    }
-
-    private void checkIsChecked() {
-        if (strBot.equalsIgnoreCase("1")) {
-            //botDetailApi();
-        }
-    }
-
-    private void botDetailApi() {
-        if (strBotCategoryId.equalsIgnoreCase("0")) {
-            Alerts.show(mContext, "Please select category");
-        } else if (strBotSubCategoryId.equalsIgnoreCase("0")) {
-            Alerts.show(mContext, "Please select sub category");
-        } else {
-            if (cd.isNetworkAvailable()) {
-                RetrofitService.botDetail(retrofitApiClient.botDetailInsert(strUserId, "red",
-                        strBotCategoryId, strBotSubCategoryId), new WebResponse() {
-                    @Override
-                    public void onResponseSuccess(Response<?> result) {
-                        ResponseBody responseBody = (ResponseBody) result.body();
-                        try {
-                            JSONObject jsonObject = new JSONObject(responseBody.string());
-                            Alerts.show(mContext, jsonObject + "");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onResponseFailed(String error) {
-                        Alerts.show(mContext, error);
-                    }
-                });
-            } else {
-                cd.show(mContext);
-            }
-        }
     }
 }

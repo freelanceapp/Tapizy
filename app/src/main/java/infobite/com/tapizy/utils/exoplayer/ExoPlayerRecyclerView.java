@@ -197,7 +197,7 @@ public class ExoPlayerRecyclerView extends RecyclerView {
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(appContext,
                 Util.getUserAgent(appContext, "android_wave_list"), defaultBandwidthMeter);
         // This is the MediaSource representing the media to be played.
-        String uriString = Constant.VIDEO_BASE_URL + videoInfoList.get(targetPosition).getAthleteVideo();
+        String uriString = Constant.VIDEO_BASE_URL + videoInfoList.get(targetPosition).getVideo();
         if (uriString != null) {
             MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(Uri.parse(uriString));

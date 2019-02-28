@@ -94,7 +94,7 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     String strTimelineData = AppPreference.getStringPreference(mContext, Constant.TIMELINE_DATA);
                     Gson getGson = new Gson();
                     DailyNewsFeedMainModal dailyNewsFeedMainModal = getGson.fromJson(strTimelineData, DailyNewsFeedMainModal.class);
-                    feed = dailyNewsFeedMainModal.getFeed().get(position);
+                    feed = dailyNewsFeedMainModal.getUserFeed().get(position);
                     int pos = position + 1;
                     if (mInfoList.size() == pos) {
                         AppPreference.setBooleanPreference(mContext, "likedPost", false);
@@ -104,9 +104,9 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
 
                 final HeadlineViewHolder viewHolder = (HeadlineViewHolder) holder;
-                viewHolder.tvUserName.setText(feed.getPostUserName());
-                viewHolder.tvPostDescription.setText(feed.getAthleteStatus());
-                viewHolder.tvHeadline.setText(feed.getAthleteArticeHeadline());
+                viewHolder.tvUserName.setText(feed.getUName());
+                viewHolder.tvPostDescription.setText(feed.getPostDescription());
+                viewHolder.tvHeadline.setText(feed.getHeadline());
                 viewHolder.llPostComment.setTag(position);
                 viewHolder.llPostComment.setOnClickListener(onClickListener);
 
@@ -145,17 +145,8 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     viewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
                 }
 
-                if (feed.getLikes() == null || feed.getLikes().isEmpty()) {
-                    viewHolder.tvPostLikeCount.setText("0");
-                } else {
-                    viewHolder.tvPostLikeCount.setText(feed.getLikes());
-                }
-
-                if (feed.getLikes() == null || feed.getLikes().isEmpty()) {
-                    viewHolder.tvUnlikeCount.setText("0");
-                } else {
-                    viewHolder.tvUnlikeCount.setText(feed.getTotalUnlike());
-                }
+                viewHolder.tvPostLikeCount.setText(feed.getTotalLike());
+                viewHolder.tvUnlikeCount.setText(feed.getTotalUnlike());
 
                 if (feed.getEntryDate() == null || feed.getEntryDate().isEmpty()) {
                     viewHolder.tvPostTime.setVisibility(View.GONE);
@@ -165,7 +156,7 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
 
                 Glide.with(viewHolder.itemView.getContext())
-                        .load(Constant.PROFILE_IMAGE_BASE_URL + feed.getPostUserImage())
+                        .load(Constant.PROFILE_IMAGE_BASE_URL + feed.getUProfile())
                         .apply(new RequestOptions().optionalCenterCrop())
                         .into(viewHolder.imgUserProfile);
                 break;
@@ -175,7 +166,7 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     String strTimelineData = AppPreference.getStringPreference(mContext, Constant.TIMELINE_DATA);
                     Gson getGson = new Gson();
                     DailyNewsFeedMainModal dailyNewsFeedMainModal = getGson.fromJson(strTimelineData, DailyNewsFeedMainModal.class);
-                    imageFeed = dailyNewsFeedMainModal.getFeed().get(position);
+                    imageFeed = dailyNewsFeedMainModal.getUserFeed().get(position);
                     int pos = position + 1;
                     if (mInfoList.size() == pos) {
                         AppPreference.setBooleanPreference(mContext, "likedPost", false);
@@ -185,8 +176,8 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
 
                 final ImageViewHolder imageViewHolder = (ImageViewHolder) holder;
-                imageViewHolder.tvUserName.setText(imageFeed.getPostUserName());
-                imageViewHolder.tvPostDescription.setText(imageFeed.getAthleteStatus());
+                imageViewHolder.tvUserName.setText(imageFeed.getUName());
+                imageViewHolder.tvPostDescription.setText(imageFeed.getPostDescription());
 
                 imageViewHolder.imgLike.setTag(position);
                 //imageViewHolder.viewData.setTag(position);
@@ -226,17 +217,8 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     imageViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
                 }
 
-                if (imageFeed.getLikes() == null || imageFeed.getLikes().isEmpty()) {
-                    imageViewHolder.tvPostLikeCount.setText("0");
-                } else {
-                    imageViewHolder.tvPostLikeCount.setText(imageFeed.getLikes());
-                }
-
-                if (imageFeed.getLikes() == null || imageFeed.getLikes().isEmpty()) {
-                    imageViewHolder.tvUnlikeCount.setText("0");
-                } else {
-                    imageViewHolder.tvUnlikeCount.setText(imageFeed.getTotalUnlike());
-                }
+                imageViewHolder.tvPostLikeCount.setText(imageFeed.getTotalLike());
+                imageViewHolder.tvUnlikeCount.setText(imageFeed.getTotalUnlike());
 
                 if (imageFeed.getEntryDate() == null || imageFeed.getEntryDate().isEmpty()) {
                     imageViewHolder.tvPostTime.setVisibility(View.GONE);
@@ -245,23 +227,22 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     imageViewHolder.tvPostTime.setText(imageFeed.getEntryDate());
                 }
                 Glide.with(imageViewHolder.itemView.getContext())
-                        .load(Constant.IMAGE_BASE_URL + imageFeed.getAlhleteImages())
+                        .load(Constant.IMAGE_BASE_URL + imageFeed.getImage())
                         .apply(new RequestOptions().optionalCenterCrop())
                         .into(imageViewHolder.imgPostImage);
 
                 Glide.with(imageViewHolder.itemView.getContext())
-                        .load(Constant.PROFILE_IMAGE_BASE_URL + imageFeed.getPostUserImage())
+                        .load(Constant.PROFILE_IMAGE_BASE_URL + imageFeed.getUProfile())
                         .apply(new RequestOptions().optionalCenterCrop())
                         .into(imageViewHolder.imgUserProfile);
                 break;
             case 2:
                 final UserFeed videoFeed;
-
                 if (AppPreference.getBooleanPreference(mContext, "likedPost")) {
                     String strTimelineData = AppPreference.getStringPreference(mContext, Constant.TIMELINE_DATA);
                     Gson getGson = new Gson();
                     DailyNewsFeedMainModal dailyNewsFeedMainModal = getGson.fromJson(strTimelineData, DailyNewsFeedMainModal.class);
-                    videoFeed = dailyNewsFeedMainModal.getFeed().get(position);
+                    videoFeed = dailyNewsFeedMainModal.getUserFeed().get(position);
                     int pos = position + 1;
                     if (mInfoList.size() == pos) {
                         AppPreference.setBooleanPreference(mContext, "likedPost", false);
@@ -271,8 +252,8 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
 
                 final ViewHolder videoViewHolder = (ViewHolder) holder;
-                videoViewHolder.tvUserName.setText(videoFeed.getPostUserName());
-                videoViewHolder.tvPostDescription.setText(videoFeed.getAthleteStatus());
+                videoViewHolder.tvUserName.setText(videoFeed.getUName());
+                videoViewHolder.tvPostDescription.setText(videoFeed.getPostDescription());
 
                 videoViewHolder.imgLike.setTag(position);
                 //videoViewHolder.viewData.setTag(position);
@@ -314,17 +295,8 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     videoViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
                 }
 
-                if (videoFeed.getLikes() == null || videoFeed.getLikes().isEmpty()) {
-                    videoViewHolder.tvPostLikeCount.setText("0");
-                } else {
-                    videoViewHolder.tvPostLikeCount.setText(videoFeed.getLikes());
-                }
-
-                if (videoFeed.getLikes() == null || videoFeed.getLikes().isEmpty()) {
-                    videoViewHolder.tvUnlikeCount.setText("0");
-                } else {
-                    videoViewHolder.tvUnlikeCount.setText(videoFeed.getTotalUnlike());
-                }
+                videoViewHolder.tvPostLikeCount.setText(videoFeed.getTotalLike());
+                videoViewHolder.tvUnlikeCount.setText(videoFeed.getTotalUnlike());
 
                 if (videoFeed.getEntryDate() == null || videoFeed.getEntryDate().isEmpty()) {
                     videoViewHolder.tvPostTime.setText("");
@@ -335,13 +307,13 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
 
                 Glide.with(videoViewHolder.itemView.getContext())
-                        .load(Constant.PROFILE_IMAGE_BASE_URL + videoFeed.getPostUserImage())
+                        .load(Constant.PROFILE_IMAGE_BASE_URL + videoFeed.getUProfile())
                         .apply(new RequestOptions().optionalCenterCrop())
                         .into(videoViewHolder.imgUserProfile);
 
                 videoViewHolder.progressBar.setVisibility(View.VISIBLE);
                 Glide.with(videoViewHolder.itemView.getContext())
-                        .load(Constant.VIDEO_BASE_URL + videoFeed.getAthleteVideo())
+                        .load(Constant.VIDEO_BASE_URL + videoFeed.getVideo())
                         .apply(new RequestOptions().optionalCenterCrop())
                         .listener(new RequestListener<Drawable>() {
                             @Override
@@ -368,7 +340,7 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      * */
     private void likeApi(final UserFeed feed, final TextView textView, String strLike, String strUnlike, final TextView tvUnlike) {
         final String strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
-        RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getFeedId(), strId, strLike, strUnlike), new WebResponse() {
+        RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getPostId(), strId, strLike, strUnlike), new WebResponse() {
             @Override
             public void onResponseSuccess(Response<?> result) {
                 ResponseBody responseBody = (ResponseBody) result.body();
@@ -408,7 +380,7 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     String data = gson.toJson(dailyNewsFeedMainModal);
                     AppPreference.setStringPreference(mContext, Constant.TIMELINE_DATA, data);
                     AppPreference.setBooleanPreference(mContext, "likedPost", true);
-                    mInfoList.addAll(dailyNewsFeedMainModal.getFeed());
+                    mInfoList.addAll(dailyNewsFeedMainModal.getUserFeed());
                     notifyDataSetChanged();
                 }
             }
@@ -424,9 +396,9 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public int getItemViewType(int position) {
         if (mInfoList.size() == 0) {
             return VIEW_TYPE_EMPTY;
-        } else if (!mInfoList.get(position).getAthleteVideo().isEmpty()) {
+        } else if (!mInfoList.get(position).getVideo().isEmpty()) {
             return VIEW_TYPE_VIDEO;
-        } else if (!mInfoList.get(position).getAlhleteImages().isEmpty()) {
+        } else if (!mInfoList.get(position).getImage().isEmpty()) {
             return VIEW_TYPE_IMAGE;
         } else {
             return VIEW_TYPE_TEXT;

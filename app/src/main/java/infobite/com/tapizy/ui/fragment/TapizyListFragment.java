@@ -1,6 +1,5 @@
 package infobite.com.tapizy.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.widget.NestedScrollView;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.adapter.TapizyListAdapter;
 import infobite.com.tapizy.model.TapizyListModel;
-import infobite.com.tapizy.ui.activity.TrandingActivity;
 import infobite.com.tapizy.utils.BaseFragment;
 
 public class TapizyListFragment extends BaseFragment implements View.OnClickListener {
@@ -107,8 +105,7 @@ public class TapizyListFragment extends BaseFragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llexplore:
-                Intent intent = new Intent(mContext, TrandingActivity.class);
-                startActivity(intent);
+
             case R.id.backBtn:
                 tapizy_ll.setVisibility(View.GONE);
                 tapizy_rl.setVisibility(View.VISIBLE);

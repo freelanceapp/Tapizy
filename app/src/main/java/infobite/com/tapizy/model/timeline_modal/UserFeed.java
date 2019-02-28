@@ -1,63 +1,56 @@
 package infobite.com.tapizy.model.timeline_modal;
 
+import java.util.ArrayList;
+import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
-
+import android.os.Parcelable.Creator;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-public class UserFeed implements Serializable, Parcelable {
+public class UserFeed implements Parcelable
+{
 
     @SerializedName("post_id")
     @Expose
     private String postId;
     @SerializedName("uid")
     @Expose
-    private String postUserId;
+    private String uid;
     @SerializedName("u_name")
     @Expose
-    private String postUserName;
+    private String uName;
     @SerializedName("u_profile")
     @Expose
-    private String postUserImage;
-    @SerializedName("post_description")
-    @Expose
-    private String athleteStatus;
-    @SerializedName("video")
-    @Expose
-    private String athleteVideo;
-    @SerializedName("video_thumbnail")
-    @Expose
-    private String videoThumbnail;
-    @SerializedName("athlete_artice_url")
-    @Expose
-    private String athleteArticeUrl;
+    private String uProfile;
     @SerializedName("headline")
     @Expose
-    private String athleteArticeHeadline;
+    private String headline;
+    @SerializedName("video")
+    @Expose
+    private String video;
     @SerializedName("image")
     @Expose
-    private String alhleteImages;
-    @SerializedName("entry_date")
+    private String image;
+    @SerializedName("post_description")
     @Expose
-    private String entryDate;
-    @SerializedName("comment")
-    @Expose
-    private List<Comment> comment = new ArrayList<Comment>();
+    private String postDescription;
     @SerializedName("total_like")
     @Expose
-    private String likes;
+    private String totalLike;
     @SerializedName("total_unlike")
     @Expose
     private String totalUnlike;
     @SerializedName("is_like")
     @Expose
     private String isLike;
-    public final static Creator<UserFeed> CREATOR = new Creator<UserFeed>() {
+    @SerializedName("entry_date")
+    @Expose
+    private String entryDate;
+    @SerializedName("comment")
+    @Expose
+    private List<Comment> comment = new ArrayList<Comment>();
+    public final static Parcelable.Creator<UserFeed> CREATOR = new Creator<UserFeed>() {
 
 
         @SuppressWarnings({
@@ -71,125 +64,98 @@ public class UserFeed implements Serializable, Parcelable {
             return (new UserFeed[size]);
         }
 
-    };
-    private final static long serialVersionUID = 5278743063907932546L;
+    }
+            ;
 
     protected UserFeed(Parcel in) {
         this.postId = ((String) in.readValue((String.class.getClassLoader())));
-        this.postUserId = ((String) in.readValue((String.class.getClassLoader())));
-        this.postUserName = ((String) in.readValue((String.class.getClassLoader())));
-        this.postUserImage = ((String) in.readValue((String.class.getClassLoader())));
-        this.athleteStatus = ((String) in.readValue((String.class.getClassLoader())));
-        this.videoThumbnail = ((String) in.readValue((String.class.getClassLoader())));
-        this.athleteVideo = ((String) in.readValue((String.class.getClassLoader())));
-        this.athleteArticeUrl = ((String) in.readValue((String.class.getClassLoader())));
-        this.athleteArticeHeadline = ((String) in.readValue((String.class.getClassLoader())));
-        this.alhleteImages = ((String) in.readValue((String.class.getClassLoader())));
-        this.entryDate = ((String) in.readValue((String.class.getClassLoader())));
-        in.readList(this.comment, (Comment.class.getClassLoader()));
-        this.likes = ((String) in.readValue((String.class.getClassLoader())));
+        this.uid = ((String) in.readValue((String.class.getClassLoader())));
+        this.uName = ((String) in.readValue((String.class.getClassLoader())));
+        this.uProfile = ((String) in.readValue((String.class.getClassLoader())));
+        this.headline = ((String) in.readValue((String.class.getClassLoader())));
+        this.video = ((String) in.readValue((String.class.getClassLoader())));
+        this.image = ((String) in.readValue((String.class.getClassLoader())));
+        this.postDescription = ((String) in.readValue((String.class.getClassLoader())));
+        this.totalLike = ((String) in.readValue((String.class.getClassLoader())));
         this.totalUnlike = ((String) in.readValue((String.class.getClassLoader())));
         this.isLike = ((String) in.readValue((String.class.getClassLoader())));
+        this.entryDate = ((String) in.readValue((String.class.getClassLoader())));
+        in.readList(this.comment, (infobite.com.tapizy.model.timeline_modal.Comment.class.getClassLoader()));
     }
 
     public UserFeed() {
-
     }
 
-    public String getFeedId() {
+    public String getPostId() {
         return postId;
     }
 
-    public void setFeedId(String postId) {
+    public void setPostId(String postId) {
         this.postId = postId;
     }
 
-    public String getPostUserName() {
-        return postUserName;
+    public String getUid() {
+        return uid;
     }
 
-    public void setPostUserName(String postUserName) {
-        this.postUserName = postUserName;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public String getPostUserImage() {
-        return postUserImage;
+    public String getUName() {
+        return uName;
     }
 
-    public void setPostUserImage(String postUserImage) {
-        this.postUserImage = postUserImage;
+    public void setUName(String uName) {
+        this.uName = uName;
     }
 
-    public String getAthleteStatus() {
-        return athleteStatus;
+    public String getUProfile() {
+        return uProfile;
     }
 
-    public void setAthleteStatus(String athleteStatus) {
-        this.athleteStatus = athleteStatus;
+    public void setUProfile(String uProfile) {
+        this.uProfile = uProfile;
     }
 
-    public String getVideoThumbnail() {
-        return videoThumbnail;
+    public String getHeadline() {
+        return headline;
     }
 
-    public void setVideoThumbnail(String videoThumbnail) {
-        this.videoThumbnail = videoThumbnail;
+    public void setHeadline(String headline) {
+        this.headline = headline;
     }
 
-    public String getAthleteVideo() {
-        return athleteVideo;
+    public String getVideo() {
+        return video;
     }
 
-    public void setAthleteVideo(String athleteVideo) {
-        this.athleteVideo = athleteVideo;
+    public void setVideo(String video) {
+        this.video = video;
     }
 
-    public String getAthleteArticeUrl() {
-        return athleteArticeUrl;
+    public String getImage() {
+        return image;
     }
 
-    public void setAthleteArticeUrl(String athleteArticeUrl) {
-        this.athleteArticeUrl = athleteArticeUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getAthleteArticeHeadline() {
-        return athleteArticeHeadline;
+    public String getPostDescription() {
+        return postDescription;
     }
 
-    public void setAthleteArticeHeadline(String athleteArticeHeadline) {
-        this.athleteArticeHeadline = athleteArticeHeadline;
+    public void setPostDescription(String postDescription) {
+        this.postDescription = postDescription;
     }
 
-    public String getAlhleteImages() {
-        return alhleteImages;
+    public String getTotalLike() {
+        return totalLike;
     }
 
-    public void setAlhleteImages(String alhleteImages) {
-        this.alhleteImages = alhleteImages;
-    }
-
-    public String getEntryDate() {
-        return entryDate;
-    }
-
-    public void setEntryDate(String entryDate) {
-        this.entryDate = entryDate;
-    }
-
-    public List<Comment> getComment() {
-        return comment;
-    }
-
-    public void setComment(List<Comment> comment) {
-        this.comment = comment;
-    }
-
-    public String getLikes() {
-        return likes;
-    }
-
-    public void setLikes(String likes) {
-        this.likes = likes;
+    public void setTotalLike(String totalLike) {
+        this.totalLike = totalLike;
     }
 
     public String getTotalUnlike() {
@@ -208,30 +174,36 @@ public class UserFeed implements Serializable, Parcelable {
         this.isLike = isLike;
     }
 
-    public String getPostUserId() {
-        return postUserId;
+    public String getEntryDate() {
+        return entryDate;
     }
 
-    public void setPostUserId(String postUserId) {
-        this.postUserId = postUserId;
+    public void setEntryDate(String entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    public List<Comment> getComment() {
+        return comment;
+    }
+
+    public void setComment(List<Comment> comment) {
+        this.comment = comment;
     }
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(postId);
-        dest.writeValue(athleteStatus);
-        dest.writeValue(postUserId);
-        dest.writeValue(postUserName);
-        dest.writeValue(postUserImage);
-        dest.writeValue(videoThumbnail);
-        dest.writeValue(athleteVideo);
-        dest.writeValue(athleteArticeUrl);
-        dest.writeValue(athleteArticeHeadline);
-        dest.writeValue(alhleteImages);
-        dest.writeValue(entryDate);
-        dest.writeList(comment);
-        dest.writeValue(likes);
+        dest.writeValue(uid);
+        dest.writeValue(uName);
+        dest.writeValue(uProfile);
+        dest.writeValue(headline);
+        dest.writeValue(video);
+        dest.writeValue(image);
+        dest.writeValue(postDescription);
+        dest.writeValue(totalLike);
         dest.writeValue(totalUnlike);
         dest.writeValue(isLike);
+        dest.writeValue(entryDate);
+        dest.writeList(comment);
     }
 
     public int describeContents() {

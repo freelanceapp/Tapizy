@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blueB"
     android:orientation="vertical"
     tools:context=".ui.activity.SettingActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -15,55 +15,58 @@
         android:paddingRight="16dp">
 
         <ImageView
-            android:padding="4dp"
-            android:id="@+id/ic_back_setting"
+            android:id="@+id/imgBack"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
+            android:padding="4dp"
             android:src="@drawable/ic_back" />
-        <TextView
-            android:layout_marginLeft="16dp"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/ic_back_setting"
-            android:text="Setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-    <LinearLayout
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/ll_switch_account"
-        android:paddingBottom="20dp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_switch_account"
-            android:tint="@color/white" />
 
         <TextView
-            android:textSize="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Switch Account"
-            android:textColor="@color/white" />
-    </LinearLayout>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/imgBack"
+            android:text="Setting"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_switch_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_switch_account"
+                android:tint="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Switch Account"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_logout"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
@@ -73,12 +76,12 @@
                 android:tint="@color/white" />
 
             <TextView
-                android:textSize="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="Logout"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="16dp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

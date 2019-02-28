@@ -45,10 +45,6 @@
             android:name=".ui.activity.explore.ExploreActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.TrandingActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
             android:name=".ui.activity.chatbot_activity.ChatActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

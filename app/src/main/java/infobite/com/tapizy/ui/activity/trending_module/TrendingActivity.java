@@ -62,6 +62,7 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
         mAdapter.notifyDataSetChanged();
 
         findViewById(R.id.fabNewPost).setOnClickListener(this);
+        findViewById(R.id.imgBack).setOnClickListener(this);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -78,21 +79,25 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
-                    feedList.clear();
-                    if (dailyNewsFeedMainModal.getError()) {
-                        Alerts.show(mContext, dailyNewsFeedMainModal.getMessage());
-                    } else {
-                        Gson gson = new GsonBuilder().setLenient().create();
-                        String data = gson.toJson(dailyNewsFeedMainModal);
-                        AppPreference.setStringPreference(mContext, Constant.TIMELINE_DATA, data);
+                    if (dailyNewsFeedMainModal != null) {
+                        feedList.clear();
+                        if (dailyNewsFeedMainModal.getError()) {
+                            Alerts.show(mContext, dailyNewsFeedMainModal.getMessage());
+                        } else {
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            String data = gson.toJson(dailyNewsFeedMainModal);
+                            AppPreference.setStringPreference(mContext, Constant.TIMELINE_DATA, data);
 
-                        if (dailyNewsFeedMainModal.getFeed().size() > 0) {
-                            feedList.addAll(dailyNewsFeedMainModal.getFeed());
+                            if (dailyNewsFeedMainModal.getUserFeed() != null) {
+                                if (dailyNewsFeedMainModal.getUserFeed().size() > 0) {
+                                    feedList.addAll(dailyNewsFeedMainModal.getUserFeed());
+                                }
+                            }
+                            //init();
                         }
-                        //init();
+                        mAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
-                    mAdapter.notifyDataSetChanged();
-                    swipeRefreshLayout.setRefreshing(false);
                 }
 
                 @Override
@@ -115,11 +120,14 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
                 AppPreference.setStringPreference(mContext, Constant.POST_DETAIL, data);
                 Intent intent = new Intent(mContext, PostDetailActivity.class);
                 intent.putExtra("get_from", "timeline");
-                intent.putExtra("post_id", feedList.get(position).getFeedId());
+                intent.putExtra("post_id", feedList.get(position).getPostId());
                 startActivity(intent);
                 break;
             case R.id.fabNewPost:
                 startActivity(new Intent(mContext, NewPostActivity.class));
+                break;
+            case R.id.imgBack:
+                finish();
                 break;
         }
     }

@@ -14,7 +14,7 @@
         android:paddingRight="16dp">
 
         <ImageView
-            android:id="@+id/ic_back_newactivity"
+            android:id="@+id/imgBack"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:padding="4dp"

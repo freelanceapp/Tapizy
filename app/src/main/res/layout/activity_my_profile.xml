@@ -7,6 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".ui.activity.MyProfileActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -15,20 +16,20 @@
         android:paddingRight="16dp">
 
         <ImageView
-            android:padding="4dp"
-            android:id="@+id/ic_back_recent_chat"
+            android:id="@+id/imgBack"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_centerVertical="true"
+            android:padding="4dp"
             android:src="@drawable/ic_back" />
+
         <ImageView
             android:id="@+id/ic_edit_profile"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:tint="@color/white"
-            android:src="@drawable/ic_edit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_edit"
+            android:tint="@color/white" />
     </RelativeLayout>
 
     <ScrollView
@@ -72,33 +73,35 @@
                         app:civ_border_width="1dp" />
 
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
-                            <TextView
-                                android:gravity="center_vertical"
-                                android:layout_gravity="center_vertical"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Username : "
-                                android:textColor="@color/white"
-                                android:textSize="14sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:text="Username : "
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:visibility="gone" />
 
-                            <TextView
-                                android:gravity="center_vertical"
-                                android:layout_gravity="center_vertical"
-                                android:id="@+id/tv_username"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:inputType="text"
-                                android:text="bhati Pushpendra"
-                                android:paddingLeft="2dp"
-                                android:textColor="@color/white"
-                                android:textColorHint="@color/gray_c"
-                                android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tv_username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:inputType="text"
+                            android:paddingLeft="2dp"
+                            android:text="bhati Pushpendra"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/gray_c"
+                            android:textSize="14sp"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -191,7 +194,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:background="@drawable/bg_editext_profile" android:inputType="textEmailAddress"
+                                android:background="@drawable/bg_editext_profile"
+                                android:inputType="textEmailAddress"
                                 android:padding="6dp"
                                 android:textColor="@color/black"
                                 android:textColorHint="@color/gray_c"
@@ -200,9 +204,9 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginBottom="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -236,44 +240,44 @@
                         </LinearLayout>
                     </LinearLayout>
 
-<!--
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="20dp">
+                    <!--
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:paddingBottom="20dp">
 
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_arrow_forward" />
+                                            <ImageView
+                                                android:layout_width="20dp"
+                                                android:layout_height="24dp"
+                                                android:src="@drawable/ic_arrow_forward" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="16dp"
-                            android:orientation="vertical">
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginLeft="16dp"
+                                                android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Is Bot"
-                                android:textColor="@color/black"
-                                android:textSize="12dp" />
+                                                <TextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Is Bot"
+                                                    android:textColor="@color/black"
+                                                    android:textSize="12dp" />
 
-                            <TextView
-                                android:id="@+id/tv_bot"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:background="@drawable/bg_editext_profile"
-                                android:padding="6dp"
-                                android:textColor="@color/black"
-                                android:textColorHint="@color/gray_c"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-                    </LinearLayout>
--->
+                                                <TextView
+                                                    android:id="@+id/tv_bot"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="8dp"
+                                                    android:background="@drawable/bg_editext_profile"
+                                                    android:padding="6dp"
+                                                    android:textColor="@color/black"
+                                                    android:textColorHint="@color/gray_c"
+                                                    android:textSize="14sp" />
+                                            </LinearLayout>
+                                        </LinearLayout>
+                    -->
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import infobite.com.tapizy.R;
+import infobite.com.tapizy.model.User;
 import infobite.com.tapizy.retrofit_provider.RetrofitService;
 import infobite.com.tapizy.retrofit_provider.WebResponse;
 import infobite.com.tapizy.upload_with_progress.ProgressRequestBody;
@@ -160,7 +161,7 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void newPostFeedApi() {
-        String strId = "34";
+        String strId = User.getUser().getUser().getUid();
         String strHeadline = ((EditText) findViewById(R.id.etHeadlines)).getText().toString();
         String strPostDescription = ((EditText) findViewById(R.id.edtPostDescription)).getText().toString();
 

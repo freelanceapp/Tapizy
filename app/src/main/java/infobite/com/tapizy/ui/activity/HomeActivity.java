@@ -249,6 +249,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(new Intent(mContext, SettingActivity.class));
                 break;
         }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
     }
 
     @Override

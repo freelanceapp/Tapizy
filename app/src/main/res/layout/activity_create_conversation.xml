@@ -18,7 +18,7 @@
             android:paddingRight="16dp">
 
             <ImageView
-                android:id="@+id/ic_back_setting"
+                android:id="@+id/imgBack"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:layout_toRightOf="@id/ic_back_setting"
+                android:layout_toRightOf="@id/imgBack"
                 android:text="Create conversation"
                 android:textColor="@color/white"
                 android:textSize="20dp" />

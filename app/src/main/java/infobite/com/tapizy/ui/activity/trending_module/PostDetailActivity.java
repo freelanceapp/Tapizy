@@ -177,16 +177,14 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                 public void onResponseSuccess(Response<?> result) {
                     DailyNewsFeedMainModal dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
                     if (dailyNewsFeedMainModal != null)
-                        if (dailyNewsFeedMainModal.getFeed() != null)
-                            newPostModel = dailyNewsFeedMainModal.getFeed().get(0);
+                        if (dailyNewsFeedMainModal.getUserFeed() != null)
+                            newPostModel = dailyNewsFeedMainModal.getUserFeed().get(0);
                     setDataInModal();
-                    //swipeRefreshLayout.setRefreshing(false);
                 }
 
                 @Override
                 public void onResponseFailed(String error) {
                     Alerts.show(mContext, error);
-                    swipeRefreshLayout.setRefreshing(false);
                 }
             });
         } else {
@@ -221,46 +219,37 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void setData() {
-        tvUserName.setText(newPostModel.getPostUserName());
-        tvPostDescription.setText(newPostModel.getAthleteStatus());
+        tvUserName.setText(newPostModel.getUName());
+        tvPostDescription.setText(newPostModel.getPostDescription());
 
         Glide.with(mContext)
                 .load(R.drawable.app_icon)
-                .load(Constant.PROFILE_IMAGE_BASE_URL + newPostModel.getPostUserImage())
+                .load(Constant.PROFILE_IMAGE_BASE_URL + newPostModel.getUProfile())
                 .into(imgUserProfile);
 
-        if (!newPostModel.getAthleteArticeHeadline().isEmpty()) {
+        if (!newPostModel.getHeadline().isEmpty()) {
             tvHeadline.setVisibility(View.VISIBLE);
             imgPostImage.setVisibility(View.GONE);
             rlVideoView.setVisibility(View.GONE);
-            tvHeadline.setText(newPostModel.getAthleteArticeHeadline());
-        } else if (!newPostModel.getAlhleteImages().isEmpty()) {
+            tvHeadline.setText(newPostModel.getHeadline());
+        } else if (!newPostModel.getImage().isEmpty()) {
             imgPostImage.setVisibility(View.VISIBLE);
             tvHeadline.setVisibility(View.GONE);
             rlVideoView.setVisibility(View.GONE);
             Glide.with(mContext)
                     .load(R.drawable.app_icon)
-                    .load(Constant.IMAGE_BASE_URL + newPostModel.getAlhleteImages())
+                    .load(Constant.IMAGE_BASE_URL + newPostModel.getImage())
                     .into(imgPostImage);
-        } else if (!newPostModel.getAthleteVideo().isEmpty()) {
+        } else if (!newPostModel.getVideo().isEmpty()) {
             rlVideoView.setVisibility(View.VISIBLE);
             tvHeadline.setVisibility(View.GONE);
             imgPostImage.setVisibility(View.GONE);
-            String strVideoUrl = newPostModel.getAthleteVideo();
+            String strVideoUrl = newPostModel.getVideo();
             initVideoView(strVideoUrl);
         }
 
-        if (newPostModel.getLikes() == null || newPostModel.getLikes().isEmpty()) {
-            tvPostLikeCount.setText("0");
-        } else {
-            tvPostLikeCount.setText(newPostModel.getLikes());
-        }
-
-        if (newPostModel.getLikes() == null || newPostModel.getLikes().isEmpty()) {
-            tvUnlikeCount.setText("0");
-        } else {
-            tvUnlikeCount.setText(newPostModel.getTotalUnlike());
-        }
+        tvPostLikeCount.setText(newPostModel.getTotalLike());
+        tvUnlikeCount.setText(newPostModel.getTotalUnlike());
 
         if (newPostModel.getEntryDate() == null || newPostModel.getEntryDate().isEmpty()) {
             tvPostTime.setText("");
@@ -398,7 +387,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void postCommentApi() {
-        String strPostId = newPostModel.getFeedId();
+        String strPostId = newPostModel.getPostId();
         String strComments = ((EditText) findViewById(R.id.edit_post_comment)).getText().toString();
 
         if (!strComments.isEmpty()) {
@@ -461,7 +450,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private void likeApi(final UserFeed feed, final TextView textView, String strLike, String strUnlike) {
 
         if (cd.isNetworkAvailable()) {
-            RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getFeedId(), strId, strLike, strUnlike), new WebResponse() {
+            RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getPostId(), strId, strLike, strUnlike), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     ResponseBody responseBody = (ResponseBody) result.body();

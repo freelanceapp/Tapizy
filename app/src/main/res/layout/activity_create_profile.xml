@@ -223,7 +223,7 @@
                                 android:textSize="12dp" />
 
                             <RadioGroup
-                                android:id="@+id/rg_select_gender"
+                                android:id="@+id/radioGroupGender"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
@@ -236,6 +236,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:buttonTint="@color/blueB"
+                                    android:checked="true"
                                     android:text="Male"
                                     android:textColor="@color/black"
                                     android:textSize="12dp" />

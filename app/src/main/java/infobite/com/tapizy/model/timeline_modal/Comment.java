@@ -1,47 +1,36 @@
-
 package infobite.com.tapizy.model.timeline_modal;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
+import android.os.Parcelable.Creator;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class Comment implements Serializable, Parcelable {
-    private String error;
-
-    public Comment(String error) {
-        this.error = error;
-    }
-
-    public String getError() {
-        return error;
-    }
+public class Comment implements Parcelable
+{
 
     @SerializedName("tid")
     @Expose
-    private String commentId;
+    private String tid;
     @SerializedName("post_id")
     @Expose
     private String postId;
     @SerializedName("uid")
     @Expose
-    private String userId;
+    private String uid;
     @SerializedName("u_name")
     @Expose
-    private String userName;
+    private String uName;
     @SerializedName("u_profile")
     @Expose
-    private String userImage;
+    private String uProfile;
     @SerializedName("comment")
     @Expose
     private String comment;
     @SerializedName("entry_date")
     @Expose
-    private String date;
-    public final static Creator<Comment> CREATOR = new Creator<Comment>() {
+    private String entryDate;
+    public final static Parcelable.Creator<Comment> CREATOR = new Creator<Comment>() {
 
 
         @SuppressWarnings({
@@ -55,28 +44,28 @@ public class Comment implements Serializable, Parcelable {
             return (new Comment[size]);
         }
 
-    };
-    private final static long serialVersionUID = 2307327212151113562L;
+    }
+            ;
 
     protected Comment(Parcel in) {
-        this.commentId = ((String) in.readValue((String.class.getClassLoader())));
+        this.tid = ((String) in.readValue((String.class.getClassLoader())));
         this.postId = ((String) in.readValue((String.class.getClassLoader())));
-        this.userId = ((String) in.readValue((String.class.getClassLoader())));
-        this.userName = ((String) in.readValue((String.class.getClassLoader())));
-        this.userImage = ((String) in.readValue((String.class.getClassLoader())));
+        this.uid = ((String) in.readValue((String.class.getClassLoader())));
+        this.uName = ((String) in.readValue((String.class.getClassLoader())));
+        this.uProfile = ((String) in.readValue((String.class.getClassLoader())));
         this.comment = ((String) in.readValue((String.class.getClassLoader())));
-        this.date = ((String) in.readValue((String.class.getClassLoader())));
+        this.entryDate = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public Comment() {
     }
 
-    public String getCommentId() {
-        return commentId;
+    public String getTid() {
+        return tid;
     }
 
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
+    public void setTid(String tid) {
+        this.tid = tid;
     }
 
     public String getPostId() {
@@ -87,54 +76,54 @@ public class Comment implements Serializable, Parcelable {
         this.postId = postId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUid() {
+        return uid;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUName() {
+        return uName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUName(String uName) {
+        this.uName = uName;
+    }
+
+    public String getUProfile() {
+        return uProfile;
+    }
+
+    public void setUProfile(String uProfile) {
+        this.uProfile = uProfile;
     }
 
     public String getComment() {
         return comment;
     }
 
-    public String getUserImage() {
-        return userImage;
-    }
-
-    public void setUserImage(String userImage) {
-        this.userImage = userImage;
-    }
-
     public void setComment(String comment) {
         this.comment = comment;
     }
 
-    public String getDate() {
-        return date;
+    public String getEntryDate() {
+        return entryDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setEntryDate(String entryDate) {
+        this.entryDate = entryDate;
     }
 
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(commentId);
+        dest.writeValue(tid);
         dest.writeValue(postId);
-        dest.writeValue(userId);
-        dest.writeValue(userName);
-        dest.writeValue(userImage);
+        dest.writeValue(uid);
+        dest.writeValue(uName);
+        dest.writeValue(uProfile);
         dest.writeValue(comment);
-        dest.writeValue(date);
+        dest.writeValue(entryDate);
     }
 
     public int describeContents() {

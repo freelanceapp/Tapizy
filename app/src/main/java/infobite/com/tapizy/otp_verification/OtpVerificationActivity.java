@@ -126,6 +126,10 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
                         UserDataMainModal mainModal = (UserDataMainModal) result.body();
                         if (!mainModal.getError()) {
                             if (mainModal.getUserType().equalsIgnoreCase("new user")) {
+                                Gson gson = new GsonBuilder().setLenient().create();
+                                String data = gson.toJson(mainModal);
+                                AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);
+                                User.setUser(mainModal);
                                 Alerts.show(mContext, mainModal.getMessage());
                                 Intent intent = new Intent(mContext, CreateProfileActivity.class);
                                 intent.putExtra("phone", mainModal.getUser().getUContact());

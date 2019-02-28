@@ -47,7 +47,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_setting" />
+                        android:src="@drawable/ic_nav_user" />
 
                     <TextView
                         android:id="@+id/tvItemName"
@@ -79,7 +79,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_setting" />
+                        android:src="@drawable/ic_nav_conversation" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -110,7 +110,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_setting" />
+                        android:src="@drawable/ic_nav_24" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -141,7 +141,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_setting" />
+                        android:src="@drawable/ic_nav_reward" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -172,7 +172,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_setting" />
+                        android:src="@drawable/ic_nav_settings" />
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -44,16 +44,16 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
 
         String strUserImage = AppPreference.getStringPreference(context, Constant.USER_IMAGE);
 
-        if (notificationmodel.getUserImage() == null || notificationmodel.getUserImage().isEmpty()) {
+        if (notificationmodel.getUProfile() == null || notificationmodel.getUProfile().isEmpty()) {
             Glide.with(context).load(Constant.PROFILE_IMAGE_BASE_URL + strUserImage)
                     .into(viewHolder.imgUserProfile);
         } else {
-            Glide.with(context).load(Constant.PROFILE_IMAGE_BASE_URL + notificationmodel.getUserImage())
+            Glide.with(context).load(Constant.PROFILE_IMAGE_BASE_URL + notificationmodel.getUProfile())
                     .into(viewHolder.imgUserProfile);
         }
 
-        viewHolder.tvUserName.setText(notificationmodel.getUserName());
-        viewHolder.tvCommentTime.setText(notificationmodel.getDate());
+        viewHolder.tvUserName.setText(notificationmodel.getUName());
+        viewHolder.tvCommentTime.setText(notificationmodel.getEntryDate());
         viewHolder.tvComment.setText(notificationmodel.getComment());
     }
 

@@ -57,7 +57,7 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
 
     private void init() {
         dialog = new Dialog(mContext);
-
+        findViewById(R.id.imgBack).setOnClickListener(this);
         locationPermission();
     }
 
@@ -179,6 +179,10 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.imgBack:
+                finish();
+                break;
+        }
     }
 }
