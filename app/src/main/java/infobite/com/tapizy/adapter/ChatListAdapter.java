@@ -9,9 +9,13 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.eyalbira.loadingdots.LoadingDots;
+
 import java.util.List;
 
 import infobite.com.tapizy.R;
+import infobite.com.tapizy.constant.Constant;
+import infobite.com.tapizy.utils.AppPreference;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
 
@@ -36,10 +40,17 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.tvQuestion.setText(chatList.get(position));
 
-        if (position % 2 == 0) {
-            holder.rlMainView.setGravity(Gravity.LEFT);
-        } else {
-            holder.rlMainView.setGravity(Gravity.RIGHT);
+        String strUserType = AppPreference.getStringPreference(context, Constant.TOKEN);
+
+        if (chatList.size() > 0) {
+            int pos = chatList.size() - 1;
+            if (position == pos) {
+                if (strUserType.equalsIgnoreCase("bot")) {
+                    holder.rlMainView.setGravity(Gravity.LEFT);
+                } else {
+                    holder.rlMainView.setGravity(Gravity.RIGHT);
+                }
+            }
         }
     }
 
@@ -55,11 +66,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        public static LoadingDots loadingDots;
         private RelativeLayout rlMainView;
         public TextView tvQuestion;
 
         public ViewHolder(View v) {
             super(v);
+            loadingDots = v.findViewById(R.id.loadingDots);
             rlMainView = v.findViewById(R.id.rlMainView);
             tvQuestion = v.findViewById(R.id.tvQuestion);
         }

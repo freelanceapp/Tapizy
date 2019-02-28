@@ -1,4 +1,4 @@
-package infobite.com.tapizy.model.api_conversation_modal;
+package infobite.com.tapizy.model.communication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ApiConversationList implements Parcelable
+public class ConversationData implements Parcelable
 {
 
     @SerializedName("id")
@@ -28,34 +28,34 @@ public class ApiConversationList implements Parcelable
     private String responseRelatedId;
     @SerializedName("response_data")
     @Expose
-    private List<ApiSubResponseList> responseData = new ArrayList<ApiSubResponseList>();
-    public final static Parcelable.Creator<ApiConversationList> CREATOR = new Creator<ApiConversationList>() {
+    private List<CommunicationResponseData> responseData = new ArrayList<CommunicationResponseData>();
+    public final static Parcelable.Creator<ConversationData> CREATOR = new Creator<ConversationData>() {
 
 
         @SuppressWarnings({
                 "unchecked"
         })
-        public ApiConversationList createFromParcel(Parcel in) {
-            return new ApiConversationList(in);
+        public ConversationData createFromParcel(Parcel in) {
+            return new ConversationData(in);
         }
 
-        public ApiConversationList[] newArray(int size) {
-            return (new ApiConversationList[size]);
+        public ConversationData[] newArray(int size) {
+            return (new ConversationData[size]);
         }
 
     }
             ;
 
-    protected ApiConversationList(Parcel in) {
+    protected ConversationData(Parcel in) {
         this.id = ((String) in.readValue((String.class.getClassLoader())));
         this.relateId = ((String) in.readValue((String.class.getClassLoader())));
         this.text = ((String) in.readValue((String.class.getClassLoader())));
         this.type = ((String) in.readValue((String.class.getClassLoader())));
         this.responseRelatedId = ((String) in.readValue((String.class.getClassLoader())));
-        in.readList(this.responseData, (ApiSubResponseList.class.getClassLoader()));
+        in.readList(this.responseData, (CommunicationResponseData.class.getClassLoader()));
     }
 
-    public ApiConversationList() {
+    public ConversationData() {
     }
 
     public String getId() {
@@ -98,11 +98,11 @@ public class ApiConversationList implements Parcelable
         this.responseRelatedId = responseRelatedId;
     }
 
-    public List<ApiSubResponseList> getResponseData() {
+    public List<CommunicationResponseData> getResponseData() {
         return responseData;
     }
 
-    public void setResponseData(List<ApiSubResponseList> responseData) {
+    public void setResponseData(List<CommunicationResponseData> responseData) {
         this.responseData = responseData;
     }
 

@@ -4,34 +4,39 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import infobite.com.tapizy.R;
+import infobite.com.tapizy.adapter.ConversationListAdapter;
 import infobite.com.tapizy.adapter.SubQuestionListAdapter;
 import infobite.com.tapizy.constant.Constant;
+import infobite.com.tapizy.model.api_conversation_modal.ApiConversationList;
 import infobite.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
-import infobite.com.tapizy.model.conversation_modal.ConversationList;
+import infobite.com.tapizy.model.api_conversation_modal.ApiSubResponseList;
+import infobite.com.tapizy.model.local_sub_question_modal.SubQuesList;
 import infobite.com.tapizy.retrofit_provider.RetrofitService;
 import infobite.com.tapizy.retrofit_provider.WebResponse;
 import infobite.com.tapizy.utils.Alerts;
 import infobite.com.tapizy.utils.AppPreference;
+import infobite.com.tapizy.utils.AppProgressDialog;
 import infobite.com.tapizy.utils.BaseActivity;
-import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 public class CreateConversationActivity extends BaseActivity implements View.OnClickListener {
 
-    private List<ConversationList> conversationLists = new ArrayList<>();
-    private List<ConversationList> spinnerConversationLists = new ArrayList<>();
+    public static CreateConversationActivity createConversationActivity;
+    private ConversationListAdapter conversationListAdapter;
+    private List<ApiConversationList> conversationLists = new ArrayList<>();
     private RecyclerView recyclerViewChatbot;
     private String strChatbotName;
 
@@ -43,7 +48,7 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_conversation);
-
+        createConversationActivity = this;
         init();
     }
 
@@ -53,20 +58,14 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
 
         (findViewById(R.id.floatingCreateChatbot)).setOnClickListener(this);
 
+        conversationListAdapter = new ConversationListAdapter(mContext, conversationLists, this);
         recyclerViewChatbot = findViewById(R.id.recyclerViewChatbot);
         recyclerViewChatbot.setHasFixedSize(true);
         recyclerViewChatbot.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        //recyclerViewChatbot.setAdapter(conversationListAdapter);
+        recyclerViewChatbot.setAdapter(conversationListAdapter);
 
         findViewById(R.id.btnWelcomeText).setOnClickListener(this);
-
-        if (AppPreference.getFirstBooleanPref(mContext, Constant.FIRST_CONVERSATION)) {
-            findViewById(R.id.llWelcome).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.llWelcome).setVisibility(View.GONE);
-        }
-
-        //getConversationList();
+        getConversationList();
     }
 
     @Override
@@ -79,39 +78,51 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
                 } else {
                     AppPreference.setFirstBooleanPref(mContext, Constant.FIRST_CONVERSATION, false);
                     findViewById(R.id.llWelcome).setVisibility(View.GONE);
-                    createConversationApi("", strWelcomeText, "welcome", "");
+                    createConversationApi("", strWelcomeText, "welcome", "", "");
                 }
                 break;
             case R.id.floatingCreateChatbot:
-                if (AppPreference.getFirstBooleanPref(mContext, Constant.FIRST_CONVERSATION)) {
-                    Alerts.show(mContext, "Please add first welcome message");
+                if (conversationLists.size() > 0) {
+                    createChatbotDialog("", "", "");
                 } else {
-                    createChatbotDialog();
+                    if (AppPreference.getFirstBooleanPref(mContext, Constant.FIRST_CONVERSATION)) {
+                        Alerts.show(mContext, "Please add first welcome message");
+                    } else {
+                        createChatbotDialog("", "", "");
+                    }
                 }
                 break;
         }
     }
 
-    private void createConversationApi(String strRelateId, String strText, String strType, String strResponseRelateId) {
+    public void createConversationApi(String strRelateId, String strText, String strType, String strResponseRelateId,
+                                      String strSubQuestion) {
+        final Dialog dialog = new Dialog(mContext);
+        AppProgressDialog.show(dialog);
         if (cd.isNetworkAvailable()) {
             RetrofitService.createConversationResponse(retrofitApiClient.createConversation
-                    (strUserId, "1", strRelateId, strText, strType, strResponseRelateId), new WebResponse() {
+                    (strUserId, "1", strRelateId, strText, strType, strResponseRelateId, strSubQuestion), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
-                    ResponseBody responseBody = (ResponseBody) result.body();
-                    try {
-                        JSONObject jsonObject = new JSONObject(responseBody.string());
-                        Alerts.show(mContext, jsonObject + "");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    AppProgressDialog.hide(dialog);
+                    ApiConversationMainModal apiConversationMainModal = (ApiConversationMainModal) result.body();
+                    conversationLists.clear();
+                    if (apiConversationMainModal.getConversation() != null) {
+                        conversationLists.addAll(apiConversationMainModal.getConversation());
+                    }
+                    conversationListAdapter.notifyDataSetChanged();
+
+                    int size = conversationLists.size();
+                    if (size > 0) {
+                        int scrollTo = size - 1;
+                        recyclerViewChatbot.scrollToPosition(scrollTo);
                     }
                     //getConversationList();
                 }
 
                 @Override
                 public void onResponseFailed(String error) {
+                    AppProgressDialog.hide(dialog);
                     Alerts.show(mContext, error);
                 }
             });
@@ -120,7 +131,7 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
         }
     }
 
-    private void createChatbotDialog() {
+    public void createChatbotDialog(final String strRelateId, String strM_Question, final String strResponseRelateId) {
         final Dialog dialogChatbot = new Dialog(mContext);
         dialogChatbot.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogChatbot.setContentView(R.layout.dialog_conversation);
@@ -130,10 +141,14 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
        /* if (dialogChatbot.getWindow() != null)
             dialogChatbot.getWindow().setBackgroundDrawableResource(android.R.color.transparent);*/
 
-        final List<String> subQuestionList = new ArrayList<>();
+        final List<ApiSubResponseList> subQuestionList = new ArrayList<>();
         dialogChatbot.findViewById(R.id.tvEmpty).setVisibility(View.VISIBLE);
 
-        final SubQuestionListAdapter subQuestionListAdapter = new SubQuestionListAdapter(mContext, subQuestionList);
+        if (!strM_Question.isEmpty()) {
+            ((TextView) dialogChatbot.findViewById(R.id.tvMainQ)).setText(strM_Question);
+        }
+
+        final SubQuestionListAdapter subQuestionListAdapter = new SubQuestionListAdapter(mContext, subQuestionList, null);
         final RecyclerView recyclerViewSubQuestion = dialogChatbot.findViewById(R.id.recyclerViewSubQuestion);
         recyclerViewSubQuestion.setHasFixedSize(true);
         recyclerViewSubQuestion.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
@@ -142,6 +157,28 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
         dialogChatbot.findViewById(R.id.btnCreate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String strMainQuestion = ((EditText) dialogChatbot.findViewById(R.id.edtQuestion)).getText().toString();
+
+                List<SubQuesList> subQuesLists = new ArrayList<>();
+                for (int i = 0; i < subQuestionList.size(); i++) {
+                    SubQuesList ques = new SubQuesList();
+                    ques.setSubText(subQuestionList.get(i).getResponseText());
+                    subQuesLists.add(ques);
+                }
+
+                Gson gson = new GsonBuilder().setLenient().create();
+                String data = gson.toJson(subQuesLists);
+
+                Log.e("sub_list - ", data);
+                if (strMainQuestion.isEmpty()) {
+                    Alerts.show(mContext, "Please enter initial question");
+                } else {
+                    if (subQuestionList.size() > 0) {
+                        createConversationApi(strRelateId, strMainQuestion, "multichoice", strResponseRelateId, data);
+                    } else {
+                        createConversationApi(strRelateId, strMainQuestion, "statement", strResponseRelateId, data);
+                    }
+                }
                 dialogChatbot.dismiss();
             }
         });
@@ -153,9 +190,12 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
                 if (strSubQuestion.isEmpty()) {
                     Alerts.show(mContext, "Please enter sub text");
                 } else {
-                    subQuestionList.add(strSubQuestion);
+                    ApiSubResponseList subQuesList = new ApiSubResponseList();
+                    subQuesList.setResponseText(strSubQuestion);
+                    subQuestionList.add(subQuesList);
                     subQuestionListAdapter.notifyDataSetChanged();
                     ((EditText) dialogChatbot.findViewById(R.id.edtSubQuestion)).setText("");
+                    ((EditText) dialogChatbot.findViewById(R.id.edtSubQuestion)).setHint("Enter another question");
                     dialogChatbot.findViewById(R.id.tvEmpty).setVisibility(View.GONE);
 
                     if (subQuestionList.size() > 0) {
@@ -173,17 +213,35 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
     }
 
     private void getConversationList() {
+        final Dialog dialog = new Dialog(mContext);
+        AppProgressDialog.show(dialog);
         if (cd.isNetworkAvailable()) {
             RetrofitService.conversationListResponse(retrofitApiClient.selectConversation(strUserId), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
+                    AppProgressDialog.hide(dialog);
                     ApiConversationMainModal apiConversationMainModal = (ApiConversationMainModal) result.body();
                     conversationLists.clear();
+                    if (apiConversationMainModal.getConversation() != null) {
+                        conversationLists.addAll(apiConversationMainModal.getConversation());
+                    }
+                    conversationListAdapter.notifyDataSetChanged();
+
+                    if (conversationLists.size() > 0) {
+                        findViewById(R.id.llWelcome).setVisibility(View.GONE);
+                    } else {
+                        if (AppPreference.getFirstBooleanPref(mContext, Constant.FIRST_CONVERSATION)) {
+                            findViewById(R.id.llWelcome).setVisibility(View.VISIBLE);
+                        } else {
+                            findViewById(R.id.llWelcome).setVisibility(View.GONE);
+                        }
+                    }
                 }
 
                 @Override
                 public void onResponseFailed(String error) {
-
+                    AppProgressDialog.hide(dialog);
+                    Alerts.show(mContext, error);
                 }
             });
         } else {

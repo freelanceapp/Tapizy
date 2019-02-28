@@ -1,15 +1,15 @@
 package infobite.com.tapizy.model.api_conversation_modal;
 
-import java.util.ArrayList;
-import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ApiConversationMainModal implements Parcelable
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class ApiConversationMainModal implements Parcelable {
 
     @SerializedName("error")
     @Expose
@@ -22,7 +22,6 @@ public class ApiConversationMainModal implements Parcelable
     private List<ApiConversationList> conversation = new ArrayList<ApiConversationList>();
     public final static Parcelable.Creator<ApiConversationMainModal> CREATOR = new Creator<ApiConversationMainModal>() {
 
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -34,8 +33,7 @@ public class ApiConversationMainModal implements Parcelable
             return (new ApiConversationMainModal[size]);
         }
 
-    }
-            ;
+    };
 
     protected ApiConversationMainModal(Parcel in) {
         this.error = ((Boolean) in.readValue((Boolean.class.getClassLoader())));

@@ -3,6 +3,7 @@ package infobite.com.tapizy.ui.activity.explore;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -63,6 +64,7 @@ public class BotListActivity extends BaseActivity implements View.OnClickListene
             case R.id.llChatbot:
                 int pos = Integer.parseInt(v.getTag().toString());
                 Intent intentA = new Intent(mContext, ChatActivity.class);
+                intentA.putExtra("bot_data", (Parcelable) chatbotLists.get(pos));
                 startActivity(intentA);
                 break;
         }
@@ -76,7 +78,12 @@ public class BotListActivity extends BaseActivity implements View.OnClickListene
                     BotListMainModal botListMainModal = (BotListMainModal) result.body();
                     chatbotLists.clear();
                     if (botListMainModal != null) {
-                        chatbotLists.addAll(botListMainModal.getBotList());
+                        if (botListMainModal.getBotList() != null) {
+                            findViewById(R.id.tvEmpty).setVisibility(View.GONE);
+                            chatbotLists.addAll(botListMainModal.getBotList());
+                        } else {
+                            findViewById(R.id.tvEmpty).setVisibility(View.VISIBLE);
+                        }
                     }
                     chatbotListAdapter.notifyDataSetChanged();
                 }

@@ -53,8 +53,9 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-core:16.0.7'
     //implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
-    implementation'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.1.0'
 
     implementation 'com.android.support:multidex:1.0.3'
-
+    /*Loading dots*/
+    implementation 'com.eyalbira.loadingdots:loading-dots:1.0.2'
 }

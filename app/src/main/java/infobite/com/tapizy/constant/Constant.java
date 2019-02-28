@@ -22,6 +22,7 @@ public class Constant {
     public static final String SELECT_CONVERSATION_API = "app/select_conversation_list.php";
     public static final String BOT_LIST_API = "app/bot_list.php";
     public static final String COMMUNICATION_API = "app/communition.php";
+    public static final String SEND_MSG = "app/send_msg.php";
     public static final String BOT_DETAIL_ENTRY = "app/bot_details.php";
     public static final String BOT_CATEGORY_TYPE = "app/bot_type.php";
 

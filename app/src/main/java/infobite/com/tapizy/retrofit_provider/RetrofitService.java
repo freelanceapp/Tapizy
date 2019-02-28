@@ -6,6 +6,7 @@ import infobite.com.tapizy.constant.Constant;
 import infobite.com.tapizy.model.api_bot_list.BotListMainModal;
 import infobite.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
 import infobite.com.tapizy.model.comment_list_modal.CommentMainModal;
+import infobite.com.tapizy.model.communication.CommunicationMainModal;
 import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import infobite.com.tapizy.utils.AppProgressDialog;
@@ -231,15 +232,15 @@ public class RetrofitService {
         });
     }
 
-    public static void createConversationResponse(final Call<ResponseBody> method, final WebResponse webResponse) {
-        method.enqueue(new Callback<ResponseBody>() {
+    public static void createConversationResponse(final Call<ApiConversationMainModal> method, final WebResponse webResponse) {
+        method.enqueue(new Callback<ApiConversationMainModal>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<ApiConversationMainModal> call, Response<ApiConversationMainModal> response) {
                 WebServiceResponse.handleResponse(response, webResponse);
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+            public void onFailure(Call<ApiConversationMainModal> call, Throwable throwable) {
                 webResponse.onResponseFailed(throwable.getMessage());
             }
         });
@@ -284,7 +285,7 @@ public class RetrofitService {
         if (dialog != null)
             AppProgressDialog.show(dialog);
 
-            method.enqueue(new Callback<ResponseBody>() {
+        method.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (dialog != null)
@@ -294,6 +295,27 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getCommunicationWelcomeData(final Dialog dialog, final Call<CommunicationMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<CommunicationMainModal>() {
+            @Override
+            public void onResponse(Call<CommunicationMainModal> call, Response<CommunicationMainModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<CommunicationMainModal> call, Throwable throwable) {
                 if (dialog != null)
                     AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());

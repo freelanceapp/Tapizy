@@ -1,7 +1,6 @@
 package infobite.com.tapizy.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.model.TapizyListModel;
-import infobite.com.tapizy.ui.activity.chatbot_activity.ChatActivity;
 
 public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.ViewHolder> {
 
@@ -47,9 +45,7 @@ public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.Vi
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_tapizy, parent, false);
 
-        ViewHolder viewHolder1 = new ViewHolder(view);
-
-        return viewHolder1;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -61,8 +57,8 @@ public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.Vi
         Vholder.llayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ChatActivity.class);
-                context.startActivity(intent);
+                /*Intent intent = new Intent(context, ChatActivity.class);
+                context.startActivity(intent);*/
             }
         });
 

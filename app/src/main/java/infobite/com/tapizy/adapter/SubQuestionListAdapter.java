@@ -5,20 +5,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import infobite.com.tapizy.R;
+import infobite.com.tapizy.model.api_conversation_modal.ApiSubResponseList;
 
 public class SubQuestionListAdapter extends RecyclerView.Adapter<SubQuestionListAdapter.ViewHolder> {
 
-    private List<String> subQuestionList;
+    private List<ApiSubResponseList> subQuestionList;
     private Context context;
+    private View.OnClickListener onClickListener;
 
-    public SubQuestionListAdapter(Context context, List<String> subQuestionList) {
+    public SubQuestionListAdapter(Context context, List<ApiSubResponseList> subQuestionList, View.OnClickListener onClickListener) {
         this.subQuestionList = subQuestionList;
         this.context = context;
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -30,7 +35,24 @@ public class SubQuestionListAdapter extends RecyclerView.Adapter<SubQuestionList
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.txtQuestion.setText(subQuestionList.get(position));
+        holder.txtQuestion.setText(subQuestionList.get(position).getResponseText());
+        holder.rlSubQuestion.setTag(position);
+        holder.rlSubQuestion.setOnClickListener(onClickListener);
+
+        if (onClickListener == null) {
+            holder.imgDelete.setVisibility(View.VISIBLE);
+            holder.imgClick.setVisibility(View.GONE);
+        } else {
+            holder.imgDelete.setVisibility(View.GONE);
+            holder.imgClick.setVisibility(View.VISIBLE);
+        }
+        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                subQuestionList.remove(position);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -45,10 +67,15 @@ public class SubQuestionListAdapter extends RecyclerView.Adapter<SubQuestionList
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        private RelativeLayout rlSubQuestion;
         public TextView txtQuestion;
+        private ImageView imgClick, imgDelete;
 
         public ViewHolder(View v) {
             super(v);
+            imgDelete = v.findViewById(R.id.imgDelete);
+            imgClick = v.findViewById(R.id.imgClick);
+            rlSubQuestion = v.findViewById(R.id.rlSubQuestion);
             txtQuestion = v.findViewById(R.id.txtQuestion);
         }
     }

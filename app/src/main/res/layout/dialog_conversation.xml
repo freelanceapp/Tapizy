@@ -14,13 +14,23 @@
         android:textColor="@color/colorPrimary"
         android:textSize="20sp" />
 
+    <TextView
+        android:id="@+id/tvMainQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="16dp"
+        android:textColor="@color/gray_b" />
+
     <EditText
         android:id="@+id/edtQuestion"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="6dp"
         android:background="@drawable/edittext_back_a"
         android:hint="Enter main question"
+        android:imeOptions="actionNext"
+        android:inputType="text"
         android:paddingLeft="16dp"
         android:textColor="@color/black"
         android:textColorHint="@color/gray_c"
@@ -28,12 +38,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewSubQuestion"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp" />
 
         <TextView
@@ -42,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="No sub category list( You can add )"
+            android:text="No sub category list (You can add)"
             android:textColor="@color/red"
             android:visibility="gone" />
     </RelativeLayout>

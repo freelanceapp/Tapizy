@@ -4,6 +4,7 @@ import infobite.com.tapizy.constant.Constant;
 import infobite.com.tapizy.model.api_bot_list.BotListMainModal;
 import infobite.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
 import infobite.com.tapizy.model.comment_list_modal.CommentMainModal;
+import infobite.com.tapizy.model.communication.CommunicationMainModal;
 import infobite.com.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import okhttp3.MultipartBody;
@@ -76,9 +77,11 @@ public interface RetrofitApiClient {
     /*uid, main_bot, relate_id,text, type, response_related_id*/
     @FormUrlEncoded
     @POST(Constant.CREATE_CONVERSATION_API)
-    Call<ResponseBody> createConversation(@Field("uid") String userId, @Field("main_bot") String main_bot,
-                                          @Field("relate_id") String relate_id, @Field("text") String text,
-                                          @Field("type") String type, @Field("response_related_id") String response_related_id);
+    Call<ApiConversationMainModal> createConversation(@Field("uid") String userId, @Field("main_bot") String main_bot,
+                                                      @Field("relate_id") String relate_id, @Field("text") String text,
+                                                      @Field("type") String type,
+                                                      @Field("response_related_id") String response_related_id,
+                                                      @Field("sub_question") String sub_question);
 
     @FormUrlEncoded
     @POST(Constant.SELECT_CONVERSATION_API)
@@ -90,7 +93,12 @@ public interface RetrofitApiClient {
 
     @FormUrlEncoded
     @POST(Constant.COMMUNICATION_API)
-    Call<BotListMainModal> communicationApi(@Field("main_bot") String main_bot, @Field("uid") String uid);
+    Call<CommunicationMainModal> communicationWelcomeData(@Field("user_bot_id") String user_bot_id, @Field("uid") String uid);
+
+    @FormUrlEncoded
+    @POST(Constant.SEND_MSG)
+    Call<CommunicationMainModal> sendMsg(@Field("user_bot_id") String user_bot_id, @Field("uid") String uid,
+                                         @Field("relate_id") String relate_id, @Field("response_relate_id") String response_relate_id);
 
     @FormUrlEncoded
     @POST(Constant.BOT_DETAIL_ENTRY)

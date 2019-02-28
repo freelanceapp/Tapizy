@@ -13,13 +13,36 @@
         android:layout_marginLeft="8dp"
         android:background="@drawable/circle_background" />
 
-    <TextView
-        android:id="@+id/txtQuestion"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/rlSubQuestion"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="8dp"
-        android:padding="8dp"
-        android:textColor="@color/black" />
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true">
 
+        <TextView
+            android:id="@+id/txtQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:padding="8dp"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/imgClick"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_chevron_right" />
+
+        <ImageView
+            android:id="@+id/imgDelete"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_delete" />
+    </RelativeLayout>
 </LinearLayout>

@@ -1,61 +1,78 @@
 package infobite.com.tapizy.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import infobite.com.tapizy.R;
-import infobite.com.tapizy.database.DatabaseHandler;
-import infobite.com.tapizy.model.conversation_modal.ConversationList;
+import infobite.com.tapizy.model.api_conversation_modal.ApiConversationList;
+
+import static infobite.com.tapizy.ui.activity.chatbot_activity.CreateConversationActivity.createConversationActivity;
 
 public class ConversationListAdapter extends RecyclerView.Adapter<ConversationListAdapter.ViewHolder> {
 
-    private List<ConversationList> chatbotLists;
-    private List<ConversationList> updateList;
     private Context context;
+    private List<ApiConversationList> conversationLists;
     private View.OnClickListener onClickListener;
-    private DatabaseHandler databaseHandler;
 
-    public ConversationListAdapter(Context context, List<ConversationList> chatbotLists, List<ConversationList> updateList,
-                                   View.OnClickListener onClickListener, DatabaseHandler databaseHandler) {
-        this.chatbotLists = chatbotLists;
-        this.updateList = updateList;
+    public ConversationListAdapter(Context context, List<ApiConversationList> conversationLists, View.OnClickListener onClickListener) {
         this.context = context;
+        this.conversationLists = conversationLists;
         this.onClickListener = onClickListener;
-        this.databaseHandler = databaseHandler;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_conversation_list, parent, false);
-        ViewHolder viewHolder1 = new ViewHolder(view);
-        return viewHolder1;
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        //updateList.clear();
-        //updateList.addAll(databaseHandler.getAllUrlList());
-        for (int i = 0; i < updateList.size(); i++) {
-            String strRelateId = chatbotLists.get(position).getRelateId();
-            String strId = String.valueOf(updateList.get(i).getId());
-            if (strRelateId.equalsIgnoreCase(strId)) {
-                String strText = updateList.get(i).getText();
-                holder.tvQuestion.setText(strText);
+        final ApiConversationList apiConversationList = conversationLists.get(position);
+        holder.tvQuestion.setText(apiConversationList.getText());
+
+        String strRelateId = apiConversationList.getRelateId();
+        String strResponseRelateId = apiConversationList.getResponseRelatedId();
+
+        if (!strRelateId.equalsIgnoreCase("0")) {
+            for (int i = 0; i < conversationLists.size(); i++) {
+                if (strRelateId.equalsIgnoreCase(conversationLists.get(i).getId())) {
+                    for (int j = 0; j < conversationLists.get(i).getResponseData().size(); j++) {
+                        if (strResponseRelateId.equalsIgnoreCase(conversationLists.get(i).getResponseData().get(j).getSubConId())) {
+                            holder.tvTitle.setText(conversationLists.get(i).getResponseData().get(j).getResponseText());
+                        }
+                    }
+                }
             }
         }
 
-        String strQ = chatbotLists.get(position).getText();
-        holder.tvAnswer.setText(strQ);
-        holder.llChatbot.setTag(position);
-        holder.llChatbot.setOnClickListener(onClickListener);
+        SubQuestionListAdapter subQuestionListAdapter = new SubQuestionListAdapter(context, conversationLists.get(position).getResponseData(),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.rlSubQuestion:
+                                int pos = Integer.parseInt(v.getTag().toString());
+                                createConversationActivity.createChatbotDialog(apiConversationList.getId(),
+                                        apiConversationList.getResponseData().get(pos).getResponseText(),
+                                        apiConversationList.getResponseData().get(pos).getSubConId());
+                                break;
+                        }
+                    }
+                });
+        holder.recyclerViewSubQuestion.setHasFixedSize(true);
+        holder.recyclerViewSubQuestion.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        holder.recyclerViewSubQuestion.setAdapter(subQuestionListAdapter);
+        subQuestionListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -65,19 +82,19 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationLi
 
     @Override
     public int getItemCount() {
-        return chatbotLists.size();
+        return conversationLists.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public LinearLayout llChatbot;
-        public TextView tvQuestion, tvAnswer;
+        private RecyclerView recyclerViewSubQuestion;
+        public TextView tvQuestion, tvTitle;
 
         public ViewHolder(View v) {
             super(v);
+            tvTitle = v.findViewById(R.id.tvTitle);
             tvQuestion = v.findViewById(R.id.tvQuestion);
-            tvAnswer = v.findViewById(R.id.tvAnswer);
-            llChatbot = v.findViewById(R.id.llChatbot);
+            recyclerViewSubQuestion = v.findViewById(R.id.recyclerViewSubQuestion);
         }
     }
 }

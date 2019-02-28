@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import infobite.com.tapizy.R;
 import infobite.com.tapizy.adapter.TapizyListAdapter;
 import infobite.com.tapizy.model.TapizyListModel;
-import infobite.com.tapizy.ui.activity.chatbot_activity.ChatActivity;
 import infobite.com.tapizy.ui.activity.TrandingActivity;
 import infobite.com.tapizy.utils.BaseFragment;
 
@@ -110,10 +109,6 @@ public class TapizyListFragment extends BaseFragment implements View.OnClickList
             case R.id.llexplore:
                 Intent intent = new Intent(mContext, TrandingActivity.class);
                 startActivity(intent);
-            case R.id.llchat:
-                Intent intent1 = new Intent(mContext, ChatActivity.class);
-                startActivity(intent1);
-                break;
             case R.id.backBtn:
                 tapizy_ll.setVisibility(View.GONE);
                 tapizy_rl.setVisibility(View.VISIBLE);
