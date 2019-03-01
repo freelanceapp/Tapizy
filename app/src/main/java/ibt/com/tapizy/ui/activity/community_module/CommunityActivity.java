@@ -1,177 +1,84 @@
 package ibt.com.tapizy.ui.activity.community_module;
 
 import android.app.Dialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Spinner;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import ibt.com.tapizy.R;
-import ibt.com.tapizy.adapter.CityListAdapter;
+import ibt.com.tapizy.adapter.SpinnerCityListAdapter;
+import ibt.com.tapizy.constant.Constant;
+import ibt.com.tapizy.model.city_list_modal.ApiCityListMainModal;
 import ibt.com.tapizy.model.city_list_modal.CityList;
-import ibt.com.tapizy.model.city_list_modal.CityListMainModal;
+import ibt.com.tapizy.model.community_post_modal.QuestionAnswerListMainModal;
+import ibt.com.tapizy.model.community_post_modal.QuestionList;
+import ibt.com.tapizy.retrofit_provider.RetrofitService;
+import ibt.com.tapizy.retrofit_provider.WebResponse;
+import ibt.com.tapizy.ui.fragment.PostAnswerFragment;
 import ibt.com.tapizy.utils.Alerts;
-import ibt.com.tapizy.utils.AppProgressDialog;
+import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
-import ibt.com.tapizy.utils.GpsTracker;
+import retrofit2.Response;
 
 public class CommunityActivity extends BaseActivity implements View.OnClickListener {
 
-    private CityListAdapter cityListAdapter;
-    private CityListMainModal loginModal;
+    public static int CITY_REQUEST_CODE = 898;
+    public static FragmentManager fragmentManager;
+
+    private ApiCityListMainModal cityListMainModal;
     private List<CityList> cityList = new ArrayList<>();
-    private Dialog dialogCityList, dialog;
-    double latitude; // latitude
-    double longitude; // longitude
+
+    public static CommunityActivity communityActivity;
+    private String strCityId = "", strCityName = "";
+    private Spinner spinnerCity;
+    private SpinnerCityListAdapter cityListAdapter;
+    private PostAnswerFragment postAnswerFragment;
+    private ArrayList<QuestionList> questionList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community);
-
-        init();
+        communityActivity = this;
+        initFragment();
     }
 
-    private void init() {
-        dialog = new Dialog(mContext);
+    private void initFragment() {
+        spinnerCity = findViewById(R.id.spinnerCity);
         findViewById(R.id.imgBack).setOnClickListener(this);
-        locationPermission();
-    }
-
-    private void locationPermission() {
-        try {
-            if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-                    PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
-            } else {
-                turnGPSOn();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        fragmentManager = getSupportFragmentManager();
+        postAnswerFragment = new PostAnswerFragment();
+        fragmentManager.beginTransaction()
+                .replace(R.id.my_frame_container, postAnswerFragment, Constant.PostAnswerFragment)
+                .commit();
+        initCitySpinner();
+        cityListApi();
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 101) {
-            turnGPSOn();
+    public void onBackPressed() {
+        Fragment PostAnswerFragment = fragmentManager.findFragmentByTag(Constant.PostAnswerFragment);
+        Fragment PostQuestionFragment = fragmentManager.findFragmentByTag(Constant.PostQuestionFragment);
+        if (PostAnswerFragment != null) {
+            super.onBackPressed();
+        } else if (PostQuestionFragment != null) {
+            replaceMainFragment();
         } else {
-            Alerts.show(mContext, "Select manual");
+            super.onBackPressed();
         }
     }
 
-    public void turnGPSOn() {
-        String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
-        if (!provider.contains("gps")) { //if gps is disabled
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
-        } else {
-            GpsTracker gpsTracker = new GpsTracker(mContext);
-            getAddressList();
-        }
-    }
-
-    private void getAddressList() {
-        GpsTracker gpsTracker = new GpsTracker(mContext);
-        latitude = gpsTracker.getLatitude();
-        longitude = gpsTracker.getLongitude();
-
-        AppProgressDialog.show(dialog);
-        Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            if (addresses.size() > 0) {
-                AppProgressDialog.hide(dialog);
-                String strAddress = (addresses.get(0).getAddressLine(0));
-                String strCity = (addresses.get(0).getLocality());
-                String strState = (addresses.get(0).getAdminArea());
-                String strCountry = (addresses.get(0).getCountryName());
-                String strZipCode = (addresses.get(0).getPostalCode());
-
-                ((TextView) findViewById(R.id.tvSelectCity)).setText(strCity);
-            } else {
-                AppProgressDialog.show(dialog);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getAddressList();
-                    }
-                }, 3000);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private void cityListDialog() {
-        dialogCityList = new Dialog(mContext);
-        dialogCityList.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialogCityList.setContentView(R.layout.dialog_city_list);
-
-        dialogCityList.setCanceledOnTouchOutside(true);
-        dialogCityList.setCancelable(true);
-        if (dialogCityList.getWindow() != null)
-            dialogCityList.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-        cityList.clear();
-        cityList.addAll(loginModal.getUser());
-
-        cityListAdapter = new CityListAdapter(mContext, R.layout.row_city_list, cityList);
-        ListView listViewCustomer = (ListView) dialogCityList.findViewById(R.id.listViewCustomer);
-        listViewCustomer.setAdapter(cityListAdapter);
-        cityListAdapter.notifyDataSetChanged();
-
-        listViewCustomer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //((TextView) findViewById(R.id.tvSelectCustomer)).setText(location);
-                dialogCityList.dismiss();
-            }
-        });
-
-        ((EditText) dialogCityList.findViewById(R.id.edtSearchCity))
-                .addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence cs, int start, int before, int count) {
-                        cityListAdapter.getFilter().filter(cs);
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-
-        Window window = dialogCityList.getWindow();
-        window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        dialogCityList.show();
+    private void replaceMainFragment() {
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.my_frame_container, new PostAnswerFragment(),
+                        Constant.PostAnswerFragment).commit();
     }
 
     @Override
@@ -180,6 +87,81 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
             case R.id.imgBack:
                 finish();
                 break;
+        }
+    }
+
+    private void initCitySpinner() {
+        cityListAdapter = new SpinnerCityListAdapter(mContext, R.layout.spinner_city_name, cityList);
+        spinnerCity.setAdapter(cityListAdapter);
+        spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!cityList.get(position).getCityId().equalsIgnoreCase("0")) {
+                    strCityId = cityList.get(position).getCityId();
+                    strCityName = cityList.get(position).getCityname();
+                    AppPreference.setStringPreference(mContext,Constant.CITY_ID,strCityId);
+                    selectQuestionApi(strCityId);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void cityListApi() {
+        if (cd.isNetworkAvailable()) {
+            RetrofitService.getCityList(new Dialog(mContext), retrofitApiClient.cityList(), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    cityListMainModal = (ApiCityListMainModal) result.body();
+                    cityList.clear();
+                    if (cityListMainModal != null) {
+                        cityList.addAll(cityListMainModal.getCityList());
+                        Alerts.show(mContext, cityListMainModal.getMessage());
+                    }
+                    Alerts.show(mContext, cityListMainModal.getMessage());
+
+                    CityList cityData = new CityList();
+                    cityData.setCityId("0");
+                    cityData.setCityname("Select city");
+                    cityList.add(0, cityData);
+                    cityListAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onResponseFailed(String error) {
+                    Alerts.show(mContext, error);
+                }
+            });
+        }
+    }
+
+    public void selectQuestionApi(String strCityId) {
+        if (cd.isNetworkAvailable()) {
+            RetrofitService.getQuestionListData(new Dialog(mContext), retrofitApiClient.questionListData(strCityId), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    QuestionAnswerListMainModal mainModal = (QuestionAnswerListMainModal) result.body();
+                    questionList.clear();
+                    if (mainModal != null) {
+                        if (mainModal.getQuestionList() != null) {
+                            questionList.addAll(mainModal.getQuestionList());
+                            postAnswerFragment.selectQuestionApi(questionList);
+                            Alerts.show(mContext, mainModal.getMessage());
+                        } else {
+                            Alerts.show(mContext, mainModal.getMessage());
+                        }
+                    }
+                }
+
+                @Override
+                public void onResponseFailed(String error) {
+                    Alerts.show(mContext, error);
+                }
+            });
         }
     }
 }

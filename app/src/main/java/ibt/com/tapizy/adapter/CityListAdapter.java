@@ -62,7 +62,7 @@ public class CityListAdapter extends ArrayAdapter<CityList> {
             holder = (ViewHolder) convertView.getTag();
         }
         CityList Datum = DatumList.get(position);
-        holder.txtCityList.setText(Datum.getNamePostcode());
+        //holder.txtCityList.setText(Datum.getNamePostcode());
         return convertView;
     }
 
@@ -80,11 +80,11 @@ public class CityListAdapter extends ArrayAdapter<CityList> {
             if (constraint != null && constraint.toString().length() > 0) {
                 ArrayList<CityList> filteredItems = new ArrayList<>();
 
-                for (int i = 0, l = originalList.size(); i < l; i++) {
+              /*  for (int i = 0, l = originalList.size(); i < l; i++) {
                     CityList Datum = originalList.get(i);
                     if (Datum.getNamePostcode().toLowerCase().contains(constraint))
                         filteredItems.add(Datum);
-                }
+                }*/
                 result.count = filteredItems.size();
                 result.values = filteredItems;
             } else {

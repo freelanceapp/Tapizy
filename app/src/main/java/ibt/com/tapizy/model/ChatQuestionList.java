@@ -2,12 +2,12 @@ package ibt.com.tapizy.model;
 
 import android.os.Parcel;
 
-public class QuestionList {
+public class ChatQuestionList {
 
     private String name;
     private String id;
 
-    public QuestionList() {
+    public ChatQuestionList() {
 
     }
 

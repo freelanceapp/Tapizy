@@ -22,6 +22,7 @@
             android:src="@drawable/ic_back" />
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -40,15 +41,31 @@
             android:layout_centerVertical="true"
             android:text="Select city"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/tvTitle"
+            android:background="@drawable/layout_bg3"
+            android:padding="2dp">
+
+            <Spinner
+                android:id="@+id/spinnerCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:popupBackground="@color/blueB" />
+        </RelativeLayout>
     </RelativeLayout>
 
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/my_frame_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false"
-        android:clipToPadding="false">
-
-    </RelativeLayout>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

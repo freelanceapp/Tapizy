@@ -25,9 +25,13 @@ public class Constant {
     public static final String SEND_MSG = "app/send_msg.php";
     public static final String BOT_DETAIL_ENTRY = "app/bot_details.php";
     public static final String BOT_CATEGORY_TYPE = "app/bot_type.php";
+    public static final String QUESTION_LIST_API = "app/select_question.php";
+    public static final String CITY_LIST_API = "app/city_list.php";
+    public static final String INSERT_ANSWER_API = "app/insert_answer.php";
+    public static final String INSERT_QUESTION_API = "app/insert_question.php";
 
     /*Preference*/
-    public static final String CHATBOT_LIST = "CHATBOT_LIST";
+    public static final String CITY_ID = "CITY_ID";
     public static final String CHATBOT_NAME = "CHATBOT_NAME";
     public static final String IS_LOGIN = "IS_LOGIN";
     public static final String USER_DATA = "USER_DATA";
@@ -43,8 +47,8 @@ public class Constant {
     public static final String FIRST_CONVERSATION = "FIRST_CONVERSATION";
 
     /* Fragment tag */
-    public static final String TimelineFragment = "TimelineFragment";
-    public static final String ProfileFragment = "ProfileFragment";
+    public static final String PostAnswerFragment = "PostAnswerFragment";
+    public static final String PostQuestionFragment = "PostQuestionFragment";
     public static final String NotificationFragment = "NotificationFragment";
     public static final String SettingFragment = "SettingFragment";
     public static final String VideoGalleryFragment = "VideoGalleryFragment";

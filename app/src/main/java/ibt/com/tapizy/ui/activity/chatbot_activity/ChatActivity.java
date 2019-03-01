@@ -13,7 +13,7 @@ import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.ChatListAdapter;
 import ibt.com.tapizy.adapter.QuestionListAdapter;
 import ibt.com.tapizy.constant.Constant;
-import ibt.com.tapizy.model.QuestionList;
+import ibt.com.tapizy.model.ChatQuestionList;
 import ibt.com.tapizy.model.api_bot_list.BotList;
 import ibt.com.tapizy.model.communication.CommunicationMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
@@ -32,7 +32,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
     private ChatListAdapter chatListAdapter;
 
-    private List<QuestionList> questionArrayLists = new ArrayList<>();
+    private List<ChatQuestionList> questionArrayLists = new ArrayList<>();
     private List<String> chatList = new ArrayList<>();
 
     private BotList botData;
@@ -88,7 +88,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
                         if (mainModal.getConversation().getResponseData() != null) {
                             for (int i = 0; i < mainModal.getConversation().getResponseData().size(); i++) {
-                                QuestionList subQues = new QuestionList();
+                                ChatQuestionList subQues = new ChatQuestionList();
                                 subQues.setId(mainModal.getConversation().getResponseData().get(i).getResponseOptionId());
                                 subQues.setName(mainModal.getConversation().getResponseData().get(i).getResponseOptionMsg());
                                 questionArrayLists.add(subQues);
@@ -152,7 +152,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
                         if (mainModal.getConversation().getResponseData() != null) {
                             for (int i = 0; i < mainModal.getConversation().getResponseData().size(); i++) {
-                                QuestionList subQues = new QuestionList();
+                                ChatQuestionList subQues = new ChatQuestionList();
                                 subQues.setId(mainModal.getConversation().getResponseData().get(i).getResponseOptionId());
                                 subQues.setName(mainModal.getConversation().getResponseData().get(i).getResponseOptionMsg());
                                 questionArrayLists.add(subQues);

@@ -5,8 +5,10 @@ import android.app.Dialog;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.api_bot_list.BotListMainModal;
 import ibt.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
+import ibt.com.tapizy.model.city_list_modal.ApiCityListMainModal;
 import ibt.com.tapizy.model.comment_list_modal.CommentMainModal;
 import ibt.com.tapizy.model.communication.CommunicationMainModal;
+import ibt.com.tapizy.model.community_post_modal.QuestionAnswerListMainModal;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 import ibt.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import ibt.com.tapizy.utils.AppProgressDialog;
@@ -132,7 +134,6 @@ public class RetrofitService {
             }
         });
     }
-
 
     public static void getNewPostData(final Dialog dialog, final Call<ResponseBody> method, final WebResponse webResponse) {
         if (dialog != null)
@@ -267,20 +268,6 @@ public class RetrofitService {
         });
     }
 
-    public static void botDetail(final Call<ResponseBody> method, final WebResponse webResponse) {
-        method.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                WebServiceResponse.handleResponse(response, webResponse);
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                webResponse.onResponseFailed(throwable.getMessage());
-            }
-        });
-    }
-
     public static void subCatList(final Dialog dialog, final Call<ResponseBody> method, final WebResponse webResponse) {
         if (dialog != null)
             AppProgressDialog.show(dialog);
@@ -316,6 +303,48 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<CommunicationMainModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getQuestionListData(final Dialog dialog, final Call<QuestionAnswerListMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<QuestionAnswerListMainModal>() {
+            @Override
+            public void onResponse(Call<QuestionAnswerListMainModal> call, Response<QuestionAnswerListMainModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<QuestionAnswerListMainModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getCityList(final Dialog dialog, final Call<ApiCityListMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<ApiCityListMainModal>() {
+            @Override
+            public void onResponse(Call<ApiCityListMainModal> call, Response<ApiCityListMainModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<ApiCityListMainModal> call, Throwable throwable) {
                 if (dialog != null)
                     AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());

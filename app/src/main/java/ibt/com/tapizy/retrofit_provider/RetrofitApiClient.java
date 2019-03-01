@@ -3,8 +3,10 @@ package ibt.com.tapizy.retrofit_provider;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.api_bot_list.BotListMainModal;
 import ibt.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
+import ibt.com.tapizy.model.city_list_modal.ApiCityListMainModal;
 import ibt.com.tapizy.model.comment_list_modal.CommentMainModal;
 import ibt.com.tapizy.model.communication.CommunicationMainModal;
+import ibt.com.tapizy.model.community_post_modal.QuestionAnswerListMainModal;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 import ibt.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import okhttp3.MultipartBody;
@@ -13,6 +15,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -108,4 +111,21 @@ public interface RetrofitApiClient {
     @FormUrlEncoded
     @POST(Constant.BOT_CATEGORY_TYPE)
     Call<ResponseBody> subCategory(@Field("bot_type") String bot_type);
+
+    @FormUrlEncoded
+    @POST(Constant.QUESTION_LIST_API)
+    Call<QuestionAnswerListMainModal> questionListData(@Field("city_bot_id") String city_bot_id);
+
+    @FormUrlEncoded
+    @POST(Constant.INSERT_ANSWER_API)
+    Call<ResponseBody> insertAnswerApi(@Field("uid") String uid, @Field("question_id") String question_id,
+                                       @Field("answer") String answer);
+
+    @FormUrlEncoded
+    @POST(Constant.INSERT_QUESTION_API)
+    Call<ResponseBody> insertQuestionApi(@Field("uid") String uid, @Field("city_bot_id") String city_bot_id,
+                                         @Field("question") String question);
+
+    @GET(Constant.CITY_LIST_API)
+    Call<ApiCityListMainModal> cityList();
 }

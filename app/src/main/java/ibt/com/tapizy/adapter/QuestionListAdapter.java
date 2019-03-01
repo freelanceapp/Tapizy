@@ -10,15 +10,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import ibt.com.tapizy.R;
-import ibt.com.tapizy.model.QuestionList;
+import ibt.com.tapizy.model.ChatQuestionList;
 
 public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapter.ViewHolder> {
 
-    private List<QuestionList> chatbotLists;
+    private List<ChatQuestionList> chatbotLists;
     private Context context;
     private View.OnClickListener onClickListener;
 
-    public QuestionListAdapter(Context context, List<QuestionList> chatbotLists, View.OnClickListener onClickListener) {
+    public QuestionListAdapter(Context context, List<ChatQuestionList> chatbotLists, View.OnClickListener onClickListener) {
         this.chatbotLists = chatbotLists;
         this.context = context;
         this.onClickListener = onClickListener;

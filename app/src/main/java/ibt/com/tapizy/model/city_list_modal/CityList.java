@@ -10,20 +10,17 @@ import com.google.gson.annotations.SerializedName;
 public class CityList implements Parcelable
 {
 
-    @SerializedName("id")
+    @SerializedName("city_id")
     @Expose
-    private String id;
-    @SerializedName("name")
+    private String cityId;
+    @SerializedName("cityname")
     @Expose
-    private String name;
-    @SerializedName("name_postcode")
-    @Expose
-    private String namePostcode;
-    public final static Creator<CityList> CREATOR = new Creator<CityList>() {
+    private String cityname;
+    public final static Parcelable.Creator<CityList> CREATOR = new Creator<CityList>() {
 
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public CityList createFromParcel(Parcel in) {
             return new CityList(in);
@@ -34,54 +31,39 @@ public class CityList implements Parcelable
         }
 
     }
-    ;
+            ;
 
     protected CityList(Parcel in) {
-        this.id = ((String) in.readValue((String.class.getClassLoader())));
-        this.name = ((String) in.readValue((String.class.getClassLoader())));
-        this.namePostcode = ((String) in.readValue((String.class.getClassLoader())));
+        this.cityId = ((String) in.readValue((String.class.getClassLoader())));
+        this.cityname = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public CityList() {
     }
 
-    public String getName() {
-        return name;
+    public String getCityId() {
+        return cityId;
     }
 
-    public String getNamePostcode() {
-        return namePostcode;
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
     }
 
-    public void setNamePostcode(String namePostcode) {
-        this.namePostcode = namePostcode;
+    public String getCityname() {
+        return cityname;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public CityList withName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setCityname(String cityname) {
+        this.cityname = cityname;
     }
 
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(id);
-        dest.writeValue(name);
-        dest.writeValue(namePostcode);
+        dest.writeValue(cityId);
+        dest.writeValue(cityname);
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }
