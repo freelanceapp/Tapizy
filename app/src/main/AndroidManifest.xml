@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="infobite.com.tapizy">
+    package="ibt.com.tapizy">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -11,9 +11,7 @@
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -29,27 +27,27 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.activity.SettingActivity"
+            android:name="ibt.com.tapizy.ui.activity.SettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.MyProfileActivity"
+            android:name="ibt.com.tapizy.ui.activity.MyProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.recent_chat.RecentChatActivity"
+            android:name="ibt.com.tapizy.ui.activity.recent_chat.RecentChatActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.CreateProfileActivity"
+            android:name="ibt.com.tapizy.ui.activity.CreateProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".ui.activity.explore.ExploreActivity"
+            android:name="ibt.com.tapizy.ui.activity.explore.ExploreActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.chatbot_activity.ChatActivity"
+            android:name="ibt.com.tapizy.ui.activity.chatbot_activity.ChatActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".ui.activity.HomeActivity"
+            android:name="ibt.com.tapizy.ui.activity.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing">
@@ -62,7 +60,7 @@
 
         </activity>
         <activity
-            android:name=".ui.activity.SplashScreen"
+            android:name="ibt.com.tapizy.ui.activity.SplashScreen"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
@@ -72,49 +70,49 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name="ibt.com.tapizy.ui.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".ui.activity.TapizyActivity"
+            android:name="ibt.com.tapizy.ui.activity.TapizyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".ui.activity.chatbot_activity.CreateConversationActivity"
+            android:name="ibt.com.tapizy.ui.activity.chatbot_activity.CreateConversationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".otp_verification.OtpVerificationActivity"
+            android:name="ibt.com.tapizy.otp_verification.OtpVerificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".utils.BaseActivity"
+            android:name="ibt.com.tapizy.utils.BaseActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.community_module.CommunityActivity"
+            android:name="ibt.com.tapizy.ui.activity.community_module.CommunityActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.trending_module.TrendingActivity"
+            android:name="ibt.com.tapizy.ui.activity.trending_module.TrendingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.trending_module.NewPostActivity"
+            android:name="ibt.com.tapizy.ui.activity.trending_module.NewPostActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.trending_module.VideoActivity"
+            android:name="ibt.com.tapizy.ui.activity.trending_module.VideoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.trending_module.VideoGalleryActivity"
+            android:name="ibt.com.tapizy.ui.activity.trending_module.VideoGalleryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.trending_module.VideoTrimerActivity"
+            android:name="ibt.com.tapizy.ui.activity.trending_module.VideoTrimerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.trending_module.PostDetailActivity"
+            android:name="ibt.com.tapizy.ui.activity.trending_module.PostDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.explore.BotListActivity"
+            android:name="ibt.com.tapizy.ui.activity.explore.BotListActivity"
             android:screenOrientation="portrait" />
 
-        <receiver android:name=".otp_verification.MySMSBroadCastReceiver">
+        <receiver android:name="ibt.com.tapizy.otp_verification.MySMSBroadCastReceiver">
             <intent-filter android:priority="999">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>

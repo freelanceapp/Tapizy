@@ -8,6 +8,50 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:349710259108:android:c554aa9c0ca85c7f",
+        "android_client_info": {
+          "package_name": "ibt.com.tapizy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349710259108-hg82j1ma1nd6pglmrdo7c90j0uhdlt9f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ibt.com.tapizy",
+            "certificate_hash": "6d9b846d9ea1d7eb3bb83ed18d22ebcbb15f6d0f"
+          }
+        },
+        {
+          "client_id": "349710259108-mgkkns6i9meonsrbdk59c9s3m2oc4g8g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKkn0FxcErG914ALAqzLxc1rTh6s6d5C8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349710259108-mgkkns6i9meonsrbdk59c9s3m2oc4g8g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:349710259108:android:300f96db4b306919",
         "android_client_info": {
           "package_name": "infobite.com.tapizy"
