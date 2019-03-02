@@ -14,19 +14,20 @@ import com.eyalbira.loadingdots.LoadingDots;
 import java.util.List;
 
 import ibt.com.tapizy.R;
-import ibt.com.tapizy.constant.Constant;
-import ibt.com.tapizy.utils.AppPreference;
+import ibt.com.tapizy.model.ChatSubItems;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
 
-    private List<String> chatList;
+    private List<ChatSubItems> chatList;
     private Context context;
     private View.OnClickListener onClickListener;
+    private String strFrom;
 
-    public ChatListAdapter(Context context, List<String> chatList, View.OnClickListener onClickListener) {
+    public ChatListAdapter(Context context, List<ChatSubItems> chatList, View.OnClickListener onClickListener, String strFrom) {
         this.chatList = chatList;
         this.context = context;
         this.onClickListener = onClickListener;
+        this.strFrom = strFrom;
     }
 
     @Override
@@ -38,11 +39,21 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.tvQuestion.setText(chatList.get(position));
+        String strText = chatList.get(position).getMsg();
+        if (strText.isEmpty()) {
+            holder.tvQuestion.setText("Our executive will call you later.");
+        } else {
+            holder.tvQuestion.setText(chatList.get(position).getMsg());
+        }
 
-        String strUserType = AppPreference.getStringPreference(context, Constant.TOKEN);
-
-        if (chatList.size() > 0) {
+        //String strUserType = AppPreference.getStringPreference(context, Constant.TOKEN);
+        String strUserType = chatList.get(position).getFrom();
+        if (strUserType.equalsIgnoreCase("bot")) {
+            holder.rlMainView.setGravity(Gravity.LEFT);
+        } else {
+            holder.rlMainView.setGravity(Gravity.RIGHT);
+        }
+        /*if (chatList.size() > 0) {
             int pos = chatList.size() - 1;
             if (position == pos) {
                 if (strUserType.equalsIgnoreCase("bot")) {
@@ -51,7 +62,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                     holder.rlMainView.setGravity(Gravity.RIGHT);
                 }
             }
-        }
+        }*/
     }
 
     @Override

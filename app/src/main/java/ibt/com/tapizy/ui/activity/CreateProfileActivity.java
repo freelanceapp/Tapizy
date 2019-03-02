@@ -243,6 +243,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                         if (!responseBody.getError()) {
                             Alerts.show(mContext, "Update success!!!");
                             if (strFrom.equalsIgnoreCase("otp")) {
+                                AppPreference.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
                                 Gson gson = new GsonBuilder().setLenient().create();
                                 String data = gson.toJson(responseBody);
                                 AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);

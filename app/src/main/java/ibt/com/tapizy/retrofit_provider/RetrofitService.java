@@ -4,11 +4,14 @@ import android.app.Dialog;
 
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.api_bot_list.BotListMainModal;
+import ibt.com.tapizy.model.api_chat_list.ChatListMainModal;
 import ibt.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
+import ibt.com.tapizy.model.chat_history.ChatHistoryMainModal;
 import ibt.com.tapizy.model.city_list_modal.ApiCityListMainModal;
 import ibt.com.tapizy.model.comment_list_modal.CommentMainModal;
 import ibt.com.tapizy.model.communication.CommunicationMainModal;
 import ibt.com.tapizy.model.community_post_modal.QuestionAnswerListMainModal;
+import ibt.com.tapizy.model.favourite_bot.FavouriteBotMainModal;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 import ibt.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import ibt.com.tapizy.utils.AppProgressDialog;
@@ -19,8 +22,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-//import technology.infobite.com.sportsforsports.modal.post_feed.PostFeedMainModal;
 
 public class RetrofitService {
 
@@ -345,6 +346,69 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<ApiCityListMainModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getChatListData(final Dialog dialog, final Call<ChatListMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<ChatListMainModal>() {
+            @Override
+            public void onResponse(Call<ChatListMainModal> call, Response<ChatListMainModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<ChatListMainModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getChatHistoryData(final Dialog dialog, final Call<ChatHistoryMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<ChatHistoryMainModal>() {
+            @Override
+            public void onResponse(Call<ChatHistoryMainModal> call, Response<ChatHistoryMainModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<ChatHistoryMainModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getFavBotList(final Dialog dialog, final Call<FavouriteBotMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<FavouriteBotMainModal>() {
+            @Override
+            public void onResponse(Call<FavouriteBotMainModal> call, Response<FavouriteBotMainModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<FavouriteBotMainModal> call, Throwable throwable) {
                 if (dialog != null)
                     AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());

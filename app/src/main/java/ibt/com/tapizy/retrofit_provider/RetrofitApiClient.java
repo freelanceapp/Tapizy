@@ -2,11 +2,14 @@ package ibt.com.tapizy.retrofit_provider;
 
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.api_bot_list.BotListMainModal;
+import ibt.com.tapizy.model.api_chat_list.ChatListMainModal;
 import ibt.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
+import ibt.com.tapizy.model.chat_history.ChatHistoryMainModal;
 import ibt.com.tapizy.model.city_list_modal.ApiCityListMainModal;
 import ibt.com.tapizy.model.comment_list_modal.CommentMainModal;
 import ibt.com.tapizy.model.communication.CommunicationMainModal;
 import ibt.com.tapizy.model.community_post_modal.QuestionAnswerListMainModal;
+import ibt.com.tapizy.model.favourite_bot.FavouriteBotMainModal;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 import ibt.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import okhttp3.MultipartBody;
@@ -125,6 +128,23 @@ public interface RetrofitApiClient {
     @POST(Constant.INSERT_QUESTION_API)
     Call<ResponseBody> insertQuestionApi(@Field("uid") String uid, @Field("city_bot_id") String city_bot_id,
                                          @Field("question") String question);
+
+    @FormUrlEncoded
+    @POST(Constant.CHAT_LIST)
+    Call<ChatListMainModal> chatList(@Field("uid") String uid);
+
+    @FormUrlEncoded
+    @POST(Constant.CHAT_HISTORY)
+    Call<ChatHistoryMainModal> chatHistory(@Field("uid") String uid, @Field("user_bot_id") String user_bot_id);
+
+    @FormUrlEncoded
+    @POST(Constant.FAV_BOT_LIST)
+    Call<FavouriteBotMainModal> favBotList(@Field("uid") String uid);
+
+    @FormUrlEncoded
+    @POST(Constant.ADD_TO_FAV)
+    Call<ResponseBody> addToFav(@Field("uid") String uid, @Field("user_bot_id") String user_bot_id,
+                                @Field("status") String status);
 
     @GET(Constant.CITY_LIST_API)
     Call<ApiCityListMainModal> cityList();

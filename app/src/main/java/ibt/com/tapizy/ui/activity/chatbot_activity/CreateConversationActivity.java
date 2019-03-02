@@ -54,7 +54,6 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
 
     private void init() {
         strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
-        //strChatbotName = getIntent().getStringExtra("name");
 
         (findViewById(R.id.floatingCreateChatbot)).setOnClickListener(this);
         (findViewById(R.id.imgBack)).setOnClickListener(this);

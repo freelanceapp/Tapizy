@@ -14,11 +14,13 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_tapizy_logo"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
+            android:background="@drawable/circle_background_b"
+            android:padding="1dp"
             android:src="@drawable/ic_list"
             android:tint="@color/blueB" />
 

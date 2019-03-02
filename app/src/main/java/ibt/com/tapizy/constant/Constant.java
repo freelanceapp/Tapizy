@@ -29,6 +29,10 @@ public class Constant {
     public static final String CITY_LIST_API = "app/city_list.php";
     public static final String INSERT_ANSWER_API = "app/insert_answer.php";
     public static final String INSERT_QUESTION_API = "app/insert_question.php";
+    public static final String CHAT_LIST = "app/conversation_bot_list.php";
+    public static final String CHAT_HISTORY = "app/my_chat_history.php";
+    public static final String FAV_BOT_LIST = "app/my_favorite_bot_list.php";
+    public static final String ADD_TO_FAV = "app/favorite.php";
 
     /*Preference*/
     public static final String CITY_ID = "CITY_ID";

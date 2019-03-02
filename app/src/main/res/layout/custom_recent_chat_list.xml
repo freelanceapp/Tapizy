@@ -3,35 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:background="@color/white">
+
     <LinearLayout
-        android:padding="8dp"
+        android:id="@+id/llBot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_recent_profile_img"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/profile_image" />
+        android:padding="8dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_recent_profile_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
         <TextView
-            android:layout_centerInParent="true"
             android:id="@+id/tv_chat_person_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
             android:gravity="center_vertical"
-            android:text="Abcd"
             android:textColor="@color/black"
             android:textSize="16dp" />
     </LinearLayout>
-        <View
-            android:layout_marginLeft="60dp"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:background="@color/gray_h"
-            android:layout_width="fill_parent"
-            android:layout_height="0.5dp"/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="60dp"
+        android:background="@color/gray_h" />
 </RelativeLayout>
