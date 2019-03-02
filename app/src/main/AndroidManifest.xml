@@ -112,6 +112,7 @@
             android:name="ibt.com.tapizy.ui.activity.explore.BotListActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.community_module.CityListActivity" />
+        <activity android:name=".ui.activity.community_module.PostQuestionActivity" />
 
         <receiver android:name="ibt.com.tapizy.otp_verification.MySMSBroadCastReceiver">
             <intent-filter android:priority="999">

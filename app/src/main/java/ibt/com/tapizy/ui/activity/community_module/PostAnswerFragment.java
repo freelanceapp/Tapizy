@@ -1,5 +1,6 @@
-package ibt.com.tapizy.ui.fragment;
+package ibt.com.tapizy.ui.activity.community_module;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,10 +18,12 @@ import ibt.com.tapizy.adapter.PostQuestionAdapter;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.community_post_modal.QuestionList;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
+import ibt.com.tapizy.ui.activity.community_module.PostQuestionActivity;
+import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseFragment;
 import ibt.com.tapizy.utils.ConnectionDetector;
 
-import static ibt.com.tapizy.ui.activity.community_module.CommunityActivity.fragmentManager;
+import static ibt.com.tapizy.ui.activity.community_module.CommunityActivity.communityActivity;
 
 public class PostAnswerFragment extends BaseFragment implements View.OnClickListener {
 
@@ -45,8 +48,8 @@ public class PostAnswerFragment extends BaseFragment implements View.OnClickList
         rvQuestionPost = rootView.findViewById(R.id.rvQuestionPost);
         rootView.findViewById(R.id.btn_question).setOnClickListener(this);
 
-        rootView.findViewById(R.id.tvEmpty).setVisibility(View.VISIBLE);
-        ((TextView) rootView.findViewById(R.id.tvEmpty)).setText("Select city");
+        rootView.findViewById(R.id.tvEmpty).setVisibility(View.GONE);
+        //((TextView) rootView.findViewById(R.id.tvEmpty)).setText("Select city");
 
         rvQuestionPost.setHasFixedSize(true);
         rvQuestionPost.setLayoutManager(new LinearLayoutManager(mContext));
@@ -55,20 +58,19 @@ public class PostAnswerFragment extends BaseFragment implements View.OnClickList
         rvQuestionPost.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rvQuestionPost.setItemAnimator(new DefaultItemAnimator());
         rvQuestionPost.setAdapter(postQuestionAdapter);
-    }
 
-    private void replaceFragment() {
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.my_frame_container, new PostQuestionFragment(),
-                        Constant.PostQuestionFragment).commit();
+        String strCityId = AppPreference.getStringPreference(mContext, Constant.CITY_ID);
+        if (!strCityId.isEmpty()) {
+            communityActivity.selectQuestionApi(strCityId);
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_question:
-                replaceFragment();
+                Intent intent = new Intent(mContext, PostQuestionActivity.class);
+                startActivityForResult(intent, 998);
                 break;
         }
     }

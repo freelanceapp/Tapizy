@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.ChatListAdapter;
 import ibt.com.tapizy.adapter.QuestionListAdapter;
@@ -25,17 +29,13 @@ import retrofit2.Response;
 
 public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
-    private RecyclerView recyclerViewQuestion, recyclerViewChatList;
     private QuestionListAdapter questionListAdapter;
-    private String strChatbotName, strBotId, strBotAvtar, strUserId;
-    private String strMainQuesId, strSubQuesId, strUserType = "";
+    private String strBotId, strUserId, strMainQuesId, strSubQuesId;
 
     private ChatListAdapter chatListAdapter;
 
     private List<ChatQuestionList> questionArrayLists = new ArrayList<>();
     private List<String> chatList = new ArrayList<>();
-
-    private BotList botData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +47,27 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
     private void init() {
         strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
-        botData = getIntent().getParcelableExtra("bot_data");
-        strChatbotName = botData.getBotName();
+        BotList botData = getIntent().getParcelableExtra("bot_data");
         strBotId = botData.getUid();
-        strBotAvtar = botData.getAvtar();
 
+        if (botData.getAvtar() != null) {
+            Glide.with(mContext)
+                    .load(Constant.PROFILE_IMAGE_BASE_URL + botData.getAvtar())
+                    .into((CircleImageView) findViewById(R.id.imgBot));
+        }
+
+        ((TextView) findViewById(R.id.tvChatbotName)).setText(botData.getBotName());
         findViewById(R.id.ivBack).setOnClickListener(this);
 
         questionListAdapter = new QuestionListAdapter(mContext, questionArrayLists, this);
         chatListAdapter = new ChatListAdapter(mContext, chatList, this);
 
-        recyclerViewQuestion = findViewById(R.id.recyclerViewQuestion);
+        RecyclerView recyclerViewQuestion = findViewById(R.id.recyclerViewQuestion);
         recyclerViewQuestion.setHasFixedSize(true);
         recyclerViewQuestion.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewQuestion.setAdapter(questionListAdapter);
 
-        recyclerViewChatList = findViewById(R.id.recyclerViewChatList);
+        RecyclerView recyclerViewChatList = findViewById(R.id.recyclerViewChatList);
         recyclerViewChatList.setHasFixedSize(true);
         recyclerViewChatList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         recyclerViewChatList.setAdapter(chatListAdapter);

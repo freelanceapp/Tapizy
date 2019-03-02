@@ -1,7 +1,9 @@
 package ibt.com.tapizy.ui.activity.community_module;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -20,7 +22,6 @@ import ibt.com.tapizy.model.community_post_modal.QuestionAnswerListMainModal;
 import ibt.com.tapizy.model.community_post_modal.QuestionList;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
-import ibt.com.tapizy.ui.fragment.PostAnswerFragment;
 import ibt.com.tapizy.utils.Alerts;
 import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
@@ -91,6 +92,7 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initCitySpinner() {
+
         cityListAdapter = new SpinnerCityListAdapter(mContext, R.layout.spinner_city_name, cityList);
         spinnerCity.setAdapter(cityListAdapter);
         spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -99,7 +101,7 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
                 if (!cityList.get(position).getCityId().equalsIgnoreCase("0")) {
                     strCityId = cityList.get(position).getCityId();
                     strCityName = cityList.get(position).getCityname();
-                    AppPreference.setStringPreference(mContext,Constant.CITY_ID,strCityId);
+                    AppPreference.setStringPreference(mContext, Constant.CITY_ID, strCityId);
                     selectQuestionApi(strCityId);
                 }
             }
@@ -129,6 +131,21 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
                     cityData.setCityname("Select city");
                     cityList.add(0, cityData);
                     cityListAdapter.notifyDataSetChanged();
+
+                    String cityId = AppPreference.getStringPreference(mContext, Constant.CITY_ID);
+                    if (!cityId.isEmpty()) {
+                        if (cityList.size() > 0) {
+                            for (int i = 0; i < cityList.size(); i++) {
+                                if (cityId.equalsIgnoreCase(cityList.get(i).getCityId())) {
+                                    spinnerCity.setSelection(i);
+                                }
+                            }
+                        } else {
+                            Alerts.show(mContext, "City list not found");
+                        }
+                    } else {
+                        Alerts.show(mContext, "Select city");
+                    }
                 }
 
                 @Override
@@ -162,6 +179,16 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
                     Alerts.show(mContext, error);
                 }
             });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == 998) {
+            String strCityId = AppPreference.getStringPreference(mContext, Constant.CITY_ID);
+            if (!strCityId.isEmpty()) {
+                selectQuestionApi(strCityId);
+            }
         }
     }
 }

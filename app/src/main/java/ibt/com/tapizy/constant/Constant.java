@@ -40,15 +40,15 @@ public class Constant {
     public static final String USER_IMAGE = "USER_IMAGE";
     public static final String POST_DETAIL = "POST_DETAIL";
     public static final String TIMELINE_DATA = "TIMELINE_DATA";
-    public static final String USER_TIMELINE_DATA = "USER_TIMELINE_DATA";
     public static final String IS_DATA_UPDATE = "IS_DATA_UPDATE";
     public static final String TOKEN = "TOKEN";
+    public static final String QUESTIONlIST = "QUESTIONlIST";
 
     public static final String FIRST_CONVERSATION = "FIRST_CONVERSATION";
 
     /* Fragment tag */
     public static final String PostAnswerFragment = "PostAnswerFragment";
-    public static final String PostQuestionFragment = "PostQuestionFragment";
+    public static final String PostQuestionFragment = "PostQuestionActivity";
     public static final String NotificationFragment = "NotificationFragment";
     public static final String SettingFragment = "SettingFragment";
     public static final String VideoGalleryFragment = "VideoGalleryFragment";

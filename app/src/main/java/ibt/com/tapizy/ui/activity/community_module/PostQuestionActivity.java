@@ -1,12 +1,9 @@
-package ibt.com.tapizy.ui.fragment;
+package ibt.com.tapizy.ui.activity.community_module;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.CardView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -18,57 +15,46 @@ import java.io.IOException;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.User;
-import ibt.com.tapizy.model.community_post_modal.QuestionList;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
 import ibt.com.tapizy.utils.Alerts;
 import ibt.com.tapizy.utils.AppPreference;
-import ibt.com.tapizy.utils.BaseFragment;
+import ibt.com.tapizy.utils.BaseActivity;
+import ibt.com.tapizy.utils.ConnectionDetector;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-import static ibt.com.tapizy.ui.activity.community_module.CommunityActivity.fragmentManager;
+public class PostQuestionActivity extends BaseActivity implements View.OnClickListener {
 
-public class PostQuestionFragment extends BaseFragment implements View.OnClickListener {
-
-    private QuestionList questionListModal;
-    private View rootView;
-    private CardView cvPostQuestion;
-    private Button submitQuestion;
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_post_question, container, false);
-        activity = getActivity();
-        mContext = getActivity();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_post_question);
+        mContext = this;
+        cd = new ConnectionDetector(mContext);
+        retrofitApiClient = RetrofitService.getRetrofit();
         init();
-        return rootView;
     }
 
     private void init() {
-        cvPostQuestion = rootView.findViewById(R.id.cv_post_question);
-        submitQuestion = rootView.findViewById(R.id.post_submit_question);
+        Button submitQuestion = findViewById(R.id.post_submit_question);
         submitQuestion.setOnClickListener(this);
-    }
-
-    private void replaceFragment() {
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.my_frame_container, new PostAnswerFragment(),
-                        Constant.PostAnswerFragment).commit();
+        findViewById(R.id.imgBack).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.post_submit_question:
-                String strQuestion = ((EditText) rootView.findViewById(R.id.etQuestion)).getText().toString();
+                String strQuestion = ((EditText) findViewById(R.id.etQuestion)).getText().toString();
                 if (strQuestion.isEmpty()) {
                     Alerts.show(mContext, "Please enter your question");
                 } else {
                     postAnswerApi(strQuestion);
                 }
+                break;
+            case R.id.imgBack:
+                finish();
                 break;
         }
     }
@@ -84,7 +70,10 @@ public class PostQuestionFragment extends BaseFragment implements View.OnClickLi
                 try {
                     JSONObject jsonObject = new JSONObject(responseBody.string());
                     Alerts.show(mContext, jsonObject + "");
-                    replaceFragment();
+                    Intent returnIntent = new Intent();
+                    setResult(998, returnIntent);
+                    finish();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

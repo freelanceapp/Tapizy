@@ -6,25 +6,47 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/blueB">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/blueB"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:padding="4dp"
+            android:src="@drawable/ic_back" />
 
-            <ImageView
-                android:id="@+id/ivBack"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:background="@drawable/background_ripple"
-                android:clickable="true"
-                android:padding="8dp"
-                android:src="@drawable/ic_back" />
-        </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
+        <LinearLayout
+            android:id="@+id/llChatbot"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/ivBack"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgBot"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_background_c"
+                android:padding="1dp" />
+
+            <TextView
+                android:id="@+id/tvChatbotName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
