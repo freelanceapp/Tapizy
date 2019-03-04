@@ -59,13 +59,66 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:popupBackground="@color/blueB" />
+                android:popupBackground="@color/white" />
+
+            <TextView
+                android:id="@+id/tvWait"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Please wait..."
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_arrow_drop_down" />
         </RelativeLayout>
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/my_frame_container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvQuestionPost"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/fabQuestion" />
+
+        <TextView
+            android:id="@+id/tvEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="No data"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/fabQuestion"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="Post your question : Click on button"
+            android:textColor="@color/gray_f"
+            android:textSize="12sp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="8dp"
+            android:background="@drawable/ripple_oval"
+            android:src="@drawable/ic_add" />
+    </RelativeLayout>
 
 </LinearLayout>

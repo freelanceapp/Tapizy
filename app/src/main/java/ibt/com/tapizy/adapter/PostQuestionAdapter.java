@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -69,6 +70,7 @@ public class PostQuestionAdapter extends RecyclerView.Adapter<PostQuestionAdapte
         viewHolder.rclvAnswer.setLayoutManager(new LinearLayoutManager(mContext));
         postAnswerList = new ArrayList<>();
         postAnswerList.addAll(questionList1.getAnswerList());
+
         postAnswerAdapter = new PostAnswerAdapter(mContext, postAnswerList);
         viewHolder.rclvAnswer.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         viewHolder.rclvAnswer.setItemAnimator(new DefaultItemAnimator());
@@ -85,6 +87,12 @@ public class PostQuestionAdapter extends RecyclerView.Adapter<PostQuestionAdapte
                 }
             }
         });
+
+        if (postAnswerList.size() > 0) {
+            viewHolder.tvEmpty.setVisibility(View.GONE);
+        } else {
+            viewHolder.tvEmpty.setVisibility(View.VISIBLE);
+        }
     }
 
     private void postAnswerApi(String strQuesId, String strAnswer) {
@@ -126,14 +134,15 @@ public class PostQuestionAdapter extends RecyclerView.Adapter<PostQuestionAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private RecyclerView rclvAnswer;
-        private TextView tvQuestion;
-        private CircleImageView imgSend;
+        private TextView tvQuestion, tvEmpty;
+        private ImageView imgSend;
         private EditText et_enter_answer;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             et_enter_answer = itemView.findViewById(R.id.et_enter_answer);
             tvQuestion = itemView.findViewById(R.id.tv_question);
+            tvEmpty = itemView.findViewById(R.id.tvEmpty);
             imgSend = itemView.findViewById(R.id.imgSend);
             rclvAnswer = itemView.findViewById(R.id.rclv_answers);
         }

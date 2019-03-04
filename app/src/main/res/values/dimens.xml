@@ -7,4 +7,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="bottom_sheet_cornor">16dp</dimen>
     <dimen name="padding_top_bottomsheet">8dp</dimen>
+
+    <dimen name="image_width">120dp</dimen>
+    <dimen name="image_final_width">32dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
 </resources>

@@ -4,16 +4,20 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ibt.com.tapizy.R;
+import ibt.com.tapizy.adapter.PostQuestionAdapter;
 import ibt.com.tapizy.adapter.SpinnerCityListAdapter;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.city_list_modal.ApiCityListMainModal;
@@ -29,18 +33,20 @@ import retrofit2.Response;
 
 public class CommunityActivity extends BaseActivity implements View.OnClickListener {
 
-    public static int CITY_REQUEST_CODE = 898;
+    private PostQuestionAdapter postQuestionAdapter;
+    private ArrayList<QuestionList> questionList = new ArrayList<>();
+    private RecyclerView rvQuestionPost;
+
+    /************************************************/
     public static FragmentManager fragmentManager;
 
     private ApiCityListMainModal cityListMainModal;
     private List<CityList> cityList = new ArrayList<>();
 
     public static CommunityActivity communityActivity;
-    private String strCityId = "", strCityName = "";
+    private String strCityId = "";
     private Spinner spinnerCity;
     private SpinnerCityListAdapter cityListAdapter;
-    private PostAnswerFragment postAnswerFragment;
-    private ArrayList<QuestionList> questionList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,32 +60,25 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
         spinnerCity = findViewById(R.id.spinnerCity);
         findViewById(R.id.imgBack).setOnClickListener(this);
         fragmentManager = getSupportFragmentManager();
-        postAnswerFragment = new PostAnswerFragment();
-        fragmentManager.beginTransaction()
-                .replace(R.id.my_frame_container, postAnswerFragment, Constant.PostAnswerFragment)
-                .commit();
+
+        rvQuestionPost = findViewById(R.id.rvQuestionPost);
+        findViewById(R.id.fabQuestion).setOnClickListener(this);
+
+        rvQuestionPost.setHasFixedSize(true);
+        rvQuestionPost.setLayoutManager(new LinearLayoutManager(mContext));
+
+        postQuestionAdapter = new PostQuestionAdapter(questionList, mContext, retrofitApiClient);
+        rvQuestionPost.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        rvQuestionPost.setItemAnimator(new DefaultItemAnimator());
+        rvQuestionPost.setAdapter(postQuestionAdapter);
+
+        String strCityId = AppPreference.getStringPreference(mContext, Constant.CITY_ID);
+        if (!strCityId.isEmpty()) {
+            communityActivity.selectQuestionApi(strCityId);
+        }
+
         initCitySpinner();
         cityListApi();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Fragment PostAnswerFragment = fragmentManager.findFragmentByTag(Constant.PostAnswerFragment);
-        Fragment PostQuestionFragment = fragmentManager.findFragmentByTag(Constant.PostQuestionFragment);
-        if (PostAnswerFragment != null) {
-            super.onBackPressed();
-        } else if (PostQuestionFragment != null) {
-            replaceMainFragment();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    private void replaceMainFragment() {
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.my_frame_container, new PostAnswerFragment(),
-                        Constant.PostAnswerFragment).commit();
     }
 
     @Override
@@ -88,11 +87,14 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
             case R.id.imgBack:
                 finish();
                 break;
+            case R.id.fabQuestion:
+                Intent intent = new Intent(mContext, PostQuestionActivity.class);
+                startActivityForResult(intent, 998);
+                break;
         }
     }
 
     private void initCitySpinner() {
-
         cityListAdapter = new SpinnerCityListAdapter(mContext, R.layout.spinner_city_name, cityList);
         spinnerCity.setAdapter(cityListAdapter);
         spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -100,7 +102,6 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (!cityList.get(position).getCityId().equalsIgnoreCase("0")) {
                     strCityId = cityList.get(position).getCityId();
-                    strCityName = cityList.get(position).getCityname();
                     AppPreference.setStringPreference(mContext, Constant.CITY_ID, strCityId);
                     selectQuestionApi(strCityId);
                 }
@@ -126,12 +127,20 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
                     }
                     Alerts.show(mContext, cityListMainModal.getMessage());
 
-                    CityList cityData = new CityList();
-                    cityData.setCityId("0");
-                    cityData.setCityname("Select city");
-                    cityList.add(0, cityData);
-                    cityListAdapter.notifyDataSetChanged();
+                    if (cityList.size() > 0) {
+                        findViewById(R.id.tvWait).setVisibility(View.GONE);
+                        CityList cityData = new CityList();
+                        cityData.setCityId("0");
+                        cityData.setCityname("Select city");
+                        cityList.add(0, cityData);
+                    } else {
+                        CityList cityData = new CityList();
+                        cityData.setCityId("0");
+                        cityData.setCityname("No city list");
+                        cityList.add(0, cityData);
+                    }
 
+                    cityListAdapter.notifyDataSetChanged();
                     String cityId = AppPreference.getStringPreference(mContext, Constant.CITY_ID);
                     if (!cityId.isEmpty()) {
                         if (cityList.size() > 0) {
@@ -166,12 +175,22 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
                     if (mainModal != null) {
                         if (mainModal.getQuestionList() != null) {
                             questionList.addAll(mainModal.getQuestionList());
-                            postAnswerFragment.selectQuestionApi(questionList);
                             Alerts.show(mContext, mainModal.getMessage());
+
+                            if (questionList.size() > 0) {
+                                //findViewById(R.id.fabQuestion).setVisibility(View.VISIBLE);
+                                findViewById(R.id.tvEmpty).setVisibility(View.GONE);
+                                ((TextView) findViewById(R.id.tvEmpty)).setText("");
+                            } else {
+                                //findViewById(R.id.fabQuestion).setVisibility(View.GONE);
+                                findViewById(R.id.tvEmpty).setVisibility(View.VISIBLE);
+                                ((TextView) findViewById(R.id.tvEmpty)).setText("No data");
+                            }
                         } else {
                             Alerts.show(mContext, mainModal.getMessage());
                         }
                     }
+                    postQuestionAdapter.notifyDataSetChanged();
                 }
 
                 @Override

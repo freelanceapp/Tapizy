@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/llTop"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -36,11 +36,31 @@
                     android:textSize="32sp"
                     android:textStyle="normal" />
 
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/tv_question"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/gray_i" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rclv_answers"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view" />
+
+                <TextView
+                    android:id="@+id/tvEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="No opinion"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rlBottom"
@@ -66,15 +86,16 @@
                     android:textColorHint="@color/gray_c"
                     android:textSize="14sp" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/imgSend"
                     android:layout_width="34dp"
                     android:layout_height="34dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginBottom="16dp"
+                    android:adjustViewBounds="true"
                     android:background="@drawable/circle_background_b"
-                    android:padding="4dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_send_b" />
             </RelativeLayout>
         </RelativeLayout>

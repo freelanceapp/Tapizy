@@ -22,15 +22,6 @@
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
-                android:id="@+id/backdrop"
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                android:src="@drawable/tapizy_final"
-                app:layout_collapseMode="parallax" />
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -54,6 +45,16 @@
 
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
+
+            <ImageView
+                android:id="@+id/backdrop"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="124dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/tapizy_final"
+                app:layout_collapseMode="parallax" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -173,5 +174,5 @@
         android:background="@drawable/bg_bottomsheet_fragment"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_scrollFlags="scroll|enterAlways" />
-    
+
 </android.support.design.widget.CoordinatorLayout>

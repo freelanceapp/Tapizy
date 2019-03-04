@@ -50,15 +50,7 @@
             android:name="ibt.com.tapizy.ui.activity.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustNothing">
-
-            <!--  <intent-filter>
-                  <action android:name="android.intent.action.MAIN" />
-
-                  <category android:name="android.intent.category.LAUNCHER" />
-              </intent-filter>-->
-
-        </activity>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.SplashScreen"
             android:screenOrientation="portrait"
@@ -76,7 +68,13 @@
         <activity
             android:name="ibt.com.tapizy.ui.activity.TapizyActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <!--<intent-filter>
+               <action android:name="android.intent.action.MAIN" />
+
+               <category android:name="android.intent.category.LAUNCHER" />
+           </intent-filter>-->
+        </activity>
         <activity
             android:name="ibt.com.tapizy.ui.activity.chatbot_activity.CreateConversationActivity"
             android:screenOrientation="portrait" />

@@ -96,12 +96,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    findViewById(R.id.imgAppLogo).setVisibility(View.VISIBLE);
-                    findViewById(R.id.backdrop).setVisibility(View.GONE);
+                    //findViewById(R.id.imgAppLogo).setVisibility(View.VISIBLE);
+                    //findViewById(R.id.backdrop).setVisibility(View.GONE);
                     isShow = true;
                 } else if (isShow) {
-                    findViewById(R.id.imgAppLogo).setVisibility(View.GONE);
-                    findViewById(R.id.backdrop).setVisibility(View.VISIBLE);
+                    //findViewById(R.id.imgAppLogo).setVisibility(View.GONE);
+                    //findViewById(R.id.backdrop).setVisibility(View.VISIBLE);
                     isShow = false;
                 }
             }

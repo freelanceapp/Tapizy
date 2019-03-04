@@ -2,12 +2,11 @@ package ibt.com.tapizy.model.favourite_bot;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class FavoriteBot implements Parcelable
-{
+public class FavoriteBot implements Parcelable {
 
     @SerializedName("favorite_id")
     @Expose
@@ -23,7 +22,6 @@ public class FavoriteBot implements Parcelable
     private String avtar;
     public final static Parcelable.Creator<FavoriteBot> CREATOR = new Creator<FavoriteBot>() {
 
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -34,9 +32,7 @@ public class FavoriteBot implements Parcelable
         public FavoriteBot[] newArray(int size) {
             return (new FavoriteBot[size]);
         }
-
-    }
-            ;
+    };
 
     protected FavoriteBot(Parcel in) {
         this.favoriteId = ((String) in.readValue((String.class.getClassLoader())));
@@ -46,6 +42,7 @@ public class FavoriteBot implements Parcelable
     }
 
     public FavoriteBot() {
+
     }
 
     public String getFavoriteId() {

@@ -12,7 +12,6 @@ public class Constant {
     public static final String LOGIN_API = "app/login.php";
     public static final String UPDATE_PROFILE_API = "app/update_profile.php";
     public static final String UPDATE_PROFILE_IMAGE_API = "app/update_profile_image.php";
-    public static final String SELECT_QUETION_API = "app/select_question.php";
     public static final String NEWPOST_API = "app/insert_daily_post.php";
     public static final String TIMELINE_API = "app/timeline.php";
     public static final String POST_DETAIL_API = "app/post_details.php";
@@ -51,7 +50,6 @@ public class Constant {
     public static final String FIRST_CONVERSATION = "FIRST_CONVERSATION";
 
     /* Fragment tag */
-    public static final String PostAnswerFragment = "PostAnswerFragment";
     public static final String PostQuestionFragment = "PostQuestionActivity";
     public static final String NotificationFragment = "NotificationFragment";
     public static final String SettingFragment = "SettingFragment";

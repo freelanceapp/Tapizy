@@ -2,18 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/blueB">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tvCityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/blueB"
+        android:background="@color/white"
         android:ellipsize="end"
         android:lines="1"
         android:paddingStart="8dp"
         android:paddingTop="6dp"
         android:paddingEnd="8dp"
         android:paddingBottom="6dp"
-        android:textColor="@color/white" />
+        android:textColor="@color/black" />
 </RelativeLayout>
