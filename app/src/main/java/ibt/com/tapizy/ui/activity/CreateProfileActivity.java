@@ -66,20 +66,18 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     private static final int LOAD_IMAGE_GALLERY = 123;
     private static int PICK_IMAGE_CAMERA = 124;
     private static int PERMISSION_REQUEST_CODE = 456;
+    private File finalFile = null;
 
-    private String imgPath = null, imgPath1, imagePath2;
     private EditText etName, etMail, username;
-    private CheckBox cbChatbot, cbBot;
     private RadioGroup radioGroupGender;
-    private RadioButton radioButton;
-    private String strPhone, strUserId, strFrom, strGender, strBot, strBotCategory = "", strBotCategoryId = "", strBotSubCategoryId = "0", strIsBot = "";
+    private String strPhone, strUserId, strFrom, strGender, strBot,
+            strBotCategoryId = "", strBotSubCategoryId = "0", strIsBot = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_profile);
         init();
-
         if (checkPermission()) {
             Alerts.show(mContext, "Permission granted");
         } else {
@@ -100,7 +98,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
         strUserId = intent.getStringExtra("uid");
         strPhone = intent.getStringExtra("phone");
         username.setText(strPhone);
-        cbBot = findViewById(R.id.cb_chatbox_confirm);
+        CheckBox cbBot = findViewById(R.id.cb_chatbox_confirm);
 
         strBot = User.getUser().getUser().getIsBot();
         strIsBot = User.getUser().getUser().getIsBot();
@@ -200,7 +198,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
 
     private void selectGender() {
         int selectedId = radioGroupGender.getCheckedRadioButtonId();
-        radioButton = findViewById(selectedId);
+        RadioButton radioButton = findViewById(selectedId);
         strGender = String.valueOf(radioButton.getText());
     }
 
@@ -290,7 +288,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 ((CircleImageView) findViewById(R.id.iv_user_profile)).setImageBitmap(photo);
                 Uri tempUri = getImageUri(getApplicationContext(), photo);
-                File finalFile = new File(getRealPathFromURI(tempUri));
+                finalFile = new File(getRealPathFromURI(tempUri));
 
                 //api hit
                 updateProfileImageApi(finalFile);
@@ -306,9 +304,9 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                 final Bitmap imageMap = BitmapFactory.decodeStream(inputStream);
                 ((CircleImageView) findViewById(R.id.iv_user_profile)).setImageBitmap(imageMap);
 
-                imagePath2 = getPath(uriImage);
+                String imagePath2 = getPath(uriImage);
                 File imageFile = new File(imagePath2);
-
+                finalFile = imageFile;
                 //api hit
                 updateProfileImageApi(imageFile);
             } catch (FileNotFoundException e) {
@@ -368,22 +366,26 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.btn_create_profile:
-                if (strIsBot.equalsIgnoreCase("1")) {
-                    selectGender();
-                    updateApi();
+                if (finalFile == null) {
+                    Alerts.show(mContext, "Please select profile image");
                 } else {
-                    if (strBot.equalsIgnoreCase("1")) {
-                        if (strBotCategoryId.equalsIgnoreCase("0")) {
-                            Alerts.show(mContext, "Please select category");
-                        } else if (strBotSubCategoryId.equalsIgnoreCase("0")) {
-                            Alerts.show(mContext, "Please select sub category");
+                    if (strIsBot.equalsIgnoreCase("1")) {
+                        selectGender();
+                        updateApi();
+                    } else {
+                        if (strBot.equalsIgnoreCase("1")) {
+                            if (strBotCategoryId.equalsIgnoreCase("0")) {
+                                Alerts.show(mContext, "Please select category");
+                            } else if (strBotSubCategoryId.equalsIgnoreCase("0")) {
+                                Alerts.show(mContext, "Please select sub category");
+                            } else {
+                                selectGender();
+                                updateApi();
+                            }
                         } else {
                             selectGender();
                             updateApi();
                         }
-                    } else {
-                        selectGender();
-                        updateApi();
                     }
                 }
                 break;
@@ -433,7 +435,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
         spinnerList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                strBotCategory = items.get(position).getName();
+                /*strBotCategory = items.get(position).getName();*/
                 strBotCategoryId = String.valueOf(position);
 
                 if (strBotCategoryId.equalsIgnoreCase("0")) {

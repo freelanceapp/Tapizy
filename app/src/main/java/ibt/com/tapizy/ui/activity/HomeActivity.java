@@ -3,6 +3,7 @@ package ibt.com.tapizy.ui.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.GravityCompat;
@@ -25,11 +26,13 @@ import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.TapizyListAdapter;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.User;
+import ibt.com.tapizy.model.api_bot_list.BotList;
 import ibt.com.tapizy.model.favourite_bot.FavoriteBot;
 import ibt.com.tapizy.model.favourite_bot.FavouriteBotMainModal;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
+import ibt.com.tapizy.ui.activity.chatbot_activity.ChatActivity;
 import ibt.com.tapizy.ui.activity.chatbot_activity.CreateConversationActivity;
 import ibt.com.tapizy.ui.activity.community_module.CommunityActivity;
 import ibt.com.tapizy.ui.activity.explore.ExploreActivity;
@@ -75,6 +78,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
         ((TextView) findViewById(R.id.tvUserName)).setText(User.getUser().getUser().getUName());
         ((TextView) findViewById(R.id.tvEmail)).setText(User.getUser().getUser().getUEmail());
+
+        handleNavItem();
     }
 
     private void init() {
@@ -111,7 +116,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private void navigationItem() {
         RecyclerView rv_tapizy_list = findViewById(R.id.rv_tapizy_list);
 
-        adapter = new TapizyListAdapter(mContext, favoriteBotList);
+        adapter = new TapizyListAdapter(mContext, favoriteBotList, this);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext, 4);
         rv_tapizy_list.setLayoutManager(mLayoutManager);
         rv_tapizy_list.setItemAnimator(new DefaultItemAnimator());
@@ -189,6 +194,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             case R.id.llSettings:
                 startActivity(new Intent(mContext, SettingActivity.class));
                 break;
+            case R.id.llayout:
+                int pos = Integer.parseInt(v.getTag().toString());
+                BotList botData = new BotList();
+                botData.setAvtar(favoriteBotList.get(pos).getAvtar());
+                botData.setBotName(favoriteBotList.get(pos).getBotName());
+                botData.setUid(favoriteBotList.get(pos).getBotId());
+                Intent intentA = new Intent(mContext, ChatActivity.class);
+                intentA.putExtra("bot_data", (Parcelable) botData);
+                startActivity(intentA);
+                break;
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -213,5 +228,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         User.setUser(loginUserModel);
         AppPreference.setBooleanPreference(mContext, "update", false);
         setUserData();
+    }
+
+    private void handleNavItem() {
+        if (User.getUser().getUser().getIsBot().equalsIgnoreCase("1")) {
+            findViewById(R.id.viewCreateConversation).setVisibility(View.VISIBLE);
+            findViewById(R.id.llCreateConversation).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.viewCreateConversation).setVisibility(View.GONE);
+            findViewById(R.id.llCreateConversation).setVisibility(View.GONE);
+        }
     }
 }

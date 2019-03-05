@@ -19,13 +19,14 @@ import ibt.com.tapizy.model.favourite_bot.FavoriteBot;
 
 public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.ViewHolder> {
 
-    ArrayList<FavoriteBot> tapizyListModels;
-    Context context;
+    private ArrayList<FavoriteBot> tapizyListModels;
+    private Context context;
+    private View.OnClickListener onClickListener;
 
-    public TapizyListAdapter(Context context, ArrayList<FavoriteBot> tapizyListModels) {
-
+    public TapizyListAdapter(Context context, ArrayList<FavoriteBot> tapizyListModels, View.OnClickListener onClickListener) {
         this.tapizyListModels = tapizyListModels;
         this.context = context;
+        this.onClickListener = onClickListener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,6 +55,8 @@ public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.Vi
         Glide.with(context)
                 .load(Constant.PROFILE_IMAGE_BASE_URL + tapizyListModels.get(position).getAvtar())
                 .into(Vholder.iv_tapizy_logo);
+        Vholder.llayout.setTag(position);
+        Vholder.llayout.setOnClickListener(onClickListener);
     }
 
     @Override

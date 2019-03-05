@@ -84,7 +84,9 @@ public class RecentChatActivity extends BaseActivity implements View.OnClickList
                     ChatListMainModal chatListMainModal = (ChatListMainModal) result.body();
                     recentChatList.clear();
                     if (chatListMainModal != null) {
-                        recentChatList.addAll(chatListMainModal.getConversationBotList());
+                        if (chatListMainModal.getConversationBotList() != null) {
+                            recentChatList.addAll(chatListMainModal.getConversationBotList());
+                        }
                     }
                     recentChatAdapter.notifyDataSetChanged();
                 }

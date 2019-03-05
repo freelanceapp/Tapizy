@@ -23,6 +23,7 @@ import ibt.com.tapizy.adapter.QuestionListAdapter;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.ChatQuestionList;
 import ibt.com.tapizy.model.ChatSubItems;
+import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.api_bot_list.BotList;
 import ibt.com.tapizy.model.api_conversation_modal.ApiConversationList;
 import ibt.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
@@ -59,7 +60,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     private void init() {
         findViewById(R.id.imgAddFav).setOnClickListener(this);
         findViewById(R.id.imgSend).setOnClickListener(this);
-        strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
+        strUserId = User.getUser().getUser().getUid();
         BotList botData = getIntent().getParcelableExtra("bot_data");
         strBotId = botData.getUid();
 
