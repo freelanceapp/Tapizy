@@ -34,7 +34,7 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void setUserData() {
-        strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
+        strId = User.getUser().getUser().getUid();
         strPhone = User.getUser().getUser().getUContact();
         Glide.with(mContext)
                 .load(Constant.PROFILE_IMAGE_BASE_URL + User.getUser().getUser().getUProfile())

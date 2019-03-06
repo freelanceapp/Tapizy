@@ -100,7 +100,7 @@ public class BottomsheetFragment extends BottomSheetDialogFragment implements Vi
     private void selectAccountB() {
         AppPreference.setMultiStringPreference(mContext, Constant.USER_ID_B, strId_A);
         AppPreference.setMultiStringPreference(mContext, Constant.USER_NAME_B, strName_A);
-        AppPreference.setMultiStringPreference(mContext, Constant.USER_AVATAR_B,strAvatar_A);
+        AppPreference.setMultiStringPreference(mContext, Constant.USER_AVATAR_B, strAvatar_A);
         getUserDetailApi();
     }
 
@@ -120,7 +120,12 @@ public class BottomsheetFragment extends BottomSheetDialogFragment implements Vi
                     AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);
                     User.setUser(mainModal);
 
-                    startActivity(new Intent(mContext, HomeActivity.class));
+                    Intent intent = new Intent(mContext, HomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
                     dismiss();
                     getActivity().finish();
                 }

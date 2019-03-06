@@ -143,7 +143,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         final Dialog dialog = new Dialog(mContext);
         AppProgressDialog.show(dialog);
         if (cd.isNetworkAvailable()) {
-            RetrofitService.conversationListResponse(retrofitApiClient.selectConversation(strUserId), new WebResponse() {
+            RetrofitService.conversationListResponse(retrofitApiClient.selectConversation(strBotId), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     AppProgressDialog.hide(dialog);

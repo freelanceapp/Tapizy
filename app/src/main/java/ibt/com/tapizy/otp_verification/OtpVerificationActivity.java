@@ -33,6 +33,7 @@ import ibt.com.tapizy.ui.activity.SettingActivity;
 import ibt.com.tapizy.utils.Alerts;
 import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
+import ibt.com.tapizy.utils.pinview.Pinview;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
@@ -41,6 +42,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     private String strPhone = "";
     private boolean isAdding = false;
+    private Pinview pinview1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
         Button submitotp = findViewById(R.id.submit_otp);
         submitotp.setOnClickListener(this);
         findViewById(R.id.tvResend).setOnClickListener(this);
-
+        pinview1 = (Pinview) findViewById(R.id.pinview1);
         isAdding = AppPreference.getBooleanPreference(mContext, Constant.MULTI_ACCOUNT);
         /*if (checkAndRequestPermissions()) {
 
@@ -72,7 +74,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
             //  String  number = extras.getString("mobilenumber");
             String message = extras.getString("message");
             //  ((TextView)findViewById(R.id.mobile)).setText(number);
-            int a1 = Integer.parseInt(String.valueOf(message.charAt(0)));
+            /*int a1 = Integer.parseInt(String.valueOf(message.charAt(0)));
             ((EditText) findViewById(R.id.et_otp_a)).setText(a1 + "");
             int a2 = message.charAt(1);
             ((EditText) findViewById(R.id.et_otp_b)).setText(a2 + "");
@@ -83,7 +85,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
             int a5 = Integer.parseInt(String.valueOf(message.charAt(4)));
             ((EditText) findViewById(R.id.et_otp_e)).setText(a5 + "");
             int a6 = Integer.parseInt(String.valueOf(message.charAt(5)));
-            ((EditText) findViewById(R.id.et_otp_f)).setText(a6 + "");
+            ((EditText) findViewById(R.id.et_otp_f)).setText(a6 + "");*/
         }
     }
 
@@ -111,7 +113,8 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
     }
 
     private void otpVerificationApi() {
-        String strOtp = ((EditText) findViewById(R.id.etOtp)).getText().toString();
+        String strOtp = pinview1.getValue();
+        //String strOtp = ((EditText) findViewById(R.id.etOtp)).getText().toString();
         /*String strA = ((EditText) findViewById(R.id.et_otp_a)).getText().toString();
         String strB = ((EditText) findViewById(R.id.et_otp_b)).getText().toString();
         String strC = ((EditText) findViewById(R.id.et_otp_c)).getText().toString();
@@ -183,13 +186,13 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
     }
 
     private void otpResendApi() {
-        ((EditText) findViewById(R.id.etOtp)).setText("");
-        ((EditText) findViewById(R.id.et_otp_a)).setText("");
+        pinview1.setValue("");
+        /*((EditText) findViewById(R.id.et_otp_a)).setText("");
         ((EditText) findViewById(R.id.et_otp_b)).setText("");
         ((EditText) findViewById(R.id.et_otp_c)).setText("");
         ((EditText) findViewById(R.id.et_otp_d)).setText("");
         ((EditText) findViewById(R.id.et_otp_e)).setText("");
-        ((EditText) findViewById(R.id.et_otp_f)).setText("");
+        ((EditText) findViewById(R.id.et_otp_f)).setText("");*/
 
         if (strPhone.isEmpty()) {
             Alerts.show(mContext, "Please enter mobile number " + getString(R.string.emoji));

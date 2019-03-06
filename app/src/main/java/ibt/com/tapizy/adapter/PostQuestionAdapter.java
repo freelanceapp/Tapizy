@@ -19,7 +19,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.User;
@@ -38,11 +37,7 @@ import static ibt.com.tapizy.ui.activity.community_module.CommunityActivity.comm
 
 public class PostQuestionAdapter extends RecyclerView.Adapter<PostQuestionAdapter.ViewHolder> {
 
-    private PostAnswerAdapter postAnswerAdapter;
-    private ArrayList<AnswerList> postAnswerList;
-
     private ArrayList<QuestionList> questionList;
-    private View rootview;
     private Context mContext;
     private RetrofitApiClient retrofitApiClient;
 
@@ -56,7 +51,7 @@ public class PostQuestionAdapter extends RecyclerView.Adapter<PostQuestionAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        rootview = layoutInflater.inflate(R.layout.row_recylerview_post_question_adapter, null);
+        View rootview = layoutInflater.inflate(R.layout.row_recylerview_post_question_adapter, null);
 
         return new ViewHolder(rootview);
     }
@@ -68,10 +63,10 @@ public class PostQuestionAdapter extends RecyclerView.Adapter<PostQuestionAdapte
 
         viewHolder.rclvAnswer.setHasFixedSize(true);
         viewHolder.rclvAnswer.setLayoutManager(new LinearLayoutManager(mContext));
-        postAnswerList = new ArrayList<>();
+        ArrayList<AnswerList> postAnswerList = new ArrayList<>();
         postAnswerList.addAll(questionList1.getAnswerList());
 
-        postAnswerAdapter = new PostAnswerAdapter(mContext, postAnswerList);
+        PostAnswerAdapter postAnswerAdapter = new PostAnswerAdapter(mContext, postAnswerList);
         viewHolder.rclvAnswer.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         viewHolder.rclvAnswer.setItemAnimator(new DefaultItemAnimator());
         viewHolder.rclvAnswer.setAdapter(postAnswerAdapter);
@@ -104,7 +99,7 @@ public class PostQuestionAdapter extends RecyclerView.Adapter<PostQuestionAdapte
                 ResponseBody responseBody = (ResponseBody) result.body();
                 try {
                     JSONObject jsonObject = new JSONObject(responseBody.string());
-                    Alerts.show(mContext, jsonObject + "");
+                    //Alerts.show(mContext, jsonObject + "");
                     String strCityId = AppPreference.getStringPreference(mContext, Constant.CITY_ID);
                     communityActivity.selectQuestionApi(strCityId);
                 } catch (JSONException e) {

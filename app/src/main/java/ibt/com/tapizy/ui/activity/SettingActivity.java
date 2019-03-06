@@ -75,7 +75,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     logout();
                 }
                 break;
-
         }
     }
 
@@ -89,13 +88,20 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             public void onResponseSuccess(Response<?> result) {
                 UserDataMainModal mainModal = (UserDataMainModal) result.body();
                 if (mainModal != null) {
+                    AppPreference.setMultiBoolean(mContext, Constant.USER_B, false);
                     AppPreference.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
                     AppPreference.setBooleanPreference(mContext, "update", true);
                     Gson gson = new GsonBuilder().setLenient().create();
                     String data = gson.toJson(mainModal);
                     AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);
                     User.setUser(mainModal);
-                    startActivity(new Intent(mContext, HomeActivity.class));
+
+                    Intent intent = new Intent(mContext, HomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
                     finish();
                 }
             }

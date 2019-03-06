@@ -272,6 +272,8 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                                     getUserDetailApi();
                                     finish();
                                 }
+                            } else {
+                                getUserDetailApi();
                             }
                         } else {
                             Alerts.show(mContext, responseBody.getMessage());
@@ -388,29 +390,40 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.btn_create_profile:
-                if (finalFile == null) {
+                String strImage = User.getUser().getUser().getUProfile();
+
+                if (strImage == null) {
                     Alerts.show(mContext, "Please select profile image");
                 } else {
-                    if (strIsBot.equalsIgnoreCase("1")) {
-                        selectGender();
-                        updateApi();
-                    } else {
-                        if (strBot.equalsIgnoreCase("1")) {
-                            if (strBotCategoryId.equalsIgnoreCase("0")) {
-                                Alerts.show(mContext, "Please select category");
-                            } else if (strBotSubCategoryId.equalsIgnoreCase("0")) {
-                                Alerts.show(mContext, "Please select sub category");
-                            } else {
-                                selectGender();
-                                updateApi();
-                            }
-                        } else {
-                            selectGender();
-                            updateApi();
-                        }
-                    }
+                    onUpdateClick();
                 }
+                /*if (finalFile == null) {
+                    Alerts.show(mContext, "Please select profile image");
+                } else {
+                    onUpdateClick();
+                }*/
                 break;
+        }
+    }
+
+    private void onUpdateClick() {
+        if (strIsBot.equalsIgnoreCase("1")) {
+            selectGender();
+            updateApi();
+        } else {
+            if (strBot.equalsIgnoreCase("1")) {
+                if (strBotCategoryId.equalsIgnoreCase("0")) {
+                    Alerts.show(mContext, "Please select category");
+                } else if (strBotSubCategoryId.equalsIgnoreCase("0")) {
+                    Alerts.show(mContext, "Please select sub category");
+                } else {
+                    selectGender();
+                    updateApi();
+                }
+            } else {
+                selectGender();
+                updateApi();
+            }
         }
     }
 
