@@ -29,6 +29,7 @@ import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
 import ibt.com.tapizy.ui.activity.CreateProfileActivity;
 import ibt.com.tapizy.ui.activity.HomeActivity;
+import ibt.com.tapizy.ui.activity.SettingActivity;
 import ibt.com.tapizy.utils.Alerts;
 import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
@@ -39,6 +40,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
 
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     private String strPhone = "";
+    private boolean isAdding = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
         submitotp.setOnClickListener(this);
         findViewById(R.id.tvResend).setOnClickListener(this);
 
+        isAdding = AppPreference.getBooleanPreference(mContext, Constant.MULTI_ACCOUNT);
         /*if (checkAndRequestPermissions()) {
 
         }
@@ -126,30 +129,34 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
                         UserDataMainModal mainModal = (UserDataMainModal) result.body();
                         if (!mainModal.getError()) {
                             if (mainModal.getUserType().equalsIgnoreCase("new user")) {
-                                Gson gson = new GsonBuilder().setLenient().create();
-                                String data = gson.toJson(mainModal);
-                                AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);
-                                User.setUser(mainModal);
-                                Alerts.show(mContext, mainModal.getMessage());
+                                if (!isAdding) {
+                                    saveUserData(mainModal);
+                                }
                                 Intent intent = new Intent(mContext, CreateProfileActivity.class);
                                 intent.putExtra("phone", mainModal.getUser().getUContact());
                                 intent.putExtra("uid", mainModal.getUser().getUid());
+                                intent.putExtra("isBot", mainModal.getUser().getIsBot());
                                 intent.putExtra("from", "otp");
                                 startActivity(intent);
                                 finish();
-                            } else {
-                                Alerts.show(mContext, mainModal.getMessage());
-                                Gson gson = new GsonBuilder().setLenient().create();
-                                String data = gson.toJson(mainModal);
-                                AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);
-                                User.setUser(mainModal);
 
-                                AppPreference.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
-                                AppPreference.setStringPreference(mContext, Constant.USER_ID, mainModal.getUser().getUid());
-                                AppPreference.setStringPreference(mContext, Constant.USER_NAME, mainModal.getUser().getUName());
-                                Intent intent = new Intent(mContext, HomeActivity.class);
-                                startActivity(intent);
-                                finish();
+                            } else {
+                                if (!isAdding) {
+                                    saveUserData(mainModal);
+                                    AppPreference.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
+                                    AppPreference.setStringPreference(mContext, Constant.USER_ID, mainModal.getUser().getUid());
+                                    AppPreference.setStringPreference(mContext, Constant.USER_NAME, mainModal.getUser().getUName());
+                                    Intent intent = new Intent(mContext, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Intent intent = new Intent(mContext, SettingActivity.class);
+                                    intent.putExtra("u_name", mainModal.getUser().getUName());
+                                    intent.putExtra("uid", mainModal.getUser().getUid());
+                                    intent.putExtra("avatar", mainModal.getUser().getUProfile());
+                                    startActivity(intent);
+                                    finish();
+                                }
                             }
                         } else {
                             Alerts.show(mContext, mainModal.getMessage());
@@ -165,6 +172,14 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
                 cd.show(mContext);
             }
         }
+    }
+
+    private void saveUserData(UserDataMainModal mainModal) {
+        Alerts.show(mContext, mainModal.getMessage());
+        Gson gson = new GsonBuilder().setLenient().create();
+        String data = gson.toJson(mainModal);
+        AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);
+        User.setUser(mainModal);
     }
 
     private void otpResendApi() {

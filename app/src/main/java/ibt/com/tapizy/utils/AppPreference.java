@@ -15,7 +15,33 @@ import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 public class AppPreference {
 
     public static final String APP_PREFENCE = "Tapizy_preference";
+    public static final String MULTI_PREFENCE = "MULTI_PREFENCE";
 
+    public static void setMultiStringPreference(Context context, String key, String value) {
+        SharedPreferences preferences = context.getSharedPreferences(MULTI_PREFENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    public static String getMultiStringPreference(Context context, String key) {
+        SharedPreferences preferences = context.getSharedPreferences(MULTI_PREFENCE, Context.MODE_PRIVATE);
+        return preferences.getString(key, "");
+    }
+
+    public static void setMultiBoolean(Context context, String key, boolean value) {
+        SharedPreferences preferences = context.getSharedPreferences(MULTI_PREFENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    public static boolean getMultiBoolean(Context context, String key) {
+        SharedPreferences preferences = context.getSharedPreferences(MULTI_PREFENCE, Context.MODE_PRIVATE);
+        return preferences.getBoolean(key, false);
+    }
+
+    /*******************************************/
     public static void setUserDataPreferences(Context context, String key, UserDataMainModal responseBody) {
         Gson gson = new GsonBuilder().setLenient().create();
         String data = gson.toJson(responseBody);

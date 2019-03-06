@@ -35,7 +35,6 @@ public class Constant {
 
     /*Preference*/
     public static final String CITY_ID = "CITY_ID";
-    public static final String CHATBOT_NAME = "CHATBOT_NAME";
     public static final String IS_LOGIN = "IS_LOGIN";
     public static final String USER_DATA = "USER_DATA";
     public static final String USER_ID = "USER_ID";
@@ -45,7 +44,16 @@ public class Constant {
     public static final String TIMELINE_DATA = "TIMELINE_DATA";
     public static final String IS_DATA_UPDATE = "IS_DATA_UPDATE";
     public static final String TOKEN = "TOKEN";
-    public static final String QUESTIONlIST = "QUESTIONlIST";
+
+    public static final String MULTI_ACCOUNT = "MULTI_ACCOUNT";
+    public static final String USER_A = "USER_A";
+    public static final String USER_B = "USER_B";
+    public static final String USER_ID_A = "USER_ID_A";
+    public static final String USER_ID_B = "USER_ID_B";
+    public static final String USER_NAME_A = "USER_NAME_A";
+    public static final String USER_NAME_B = "USER_NAME_B";
+    public static final String USER_AVATAR_A = "USER_AVATAR_A";
+    public static final String USER_AVATAR_B = "USER_AVATAR_B";
 
     public static final String FIRST_CONVERSATION = "FIRST_CONVERSATION";
 

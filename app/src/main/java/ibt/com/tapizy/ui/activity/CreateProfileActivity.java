@@ -72,6 +72,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     private RadioGroup radioGroupGender;
     private String strPhone, strUserId, strFrom, strGender, strBot,
             strBotCategoryId = "", strBotSubCategoryId = "0", strIsBot = "";
+    private boolean isAdding = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,8 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     }
 
     private void init() {
+        isAdding = AppPreference.getBooleanPreference(mContext, Constant.MULTI_ACCOUNT);
+
         findViewById(R.id.iv_user_profile).setOnClickListener(this);
         findViewById(R.id.btn_create_profile).setOnClickListener(this);
         radioGroupGender = findViewById(R.id.radioGroupGender);
@@ -100,8 +103,13 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
         username.setText(strPhone);
         CheckBox cbBot = findViewById(R.id.cb_chatbox_confirm);
 
-        strBot = User.getUser().getUser().getIsBot();
-        strIsBot = User.getUser().getUser().getIsBot();
+        if (isAdding) {
+            strBot = intent.getStringExtra("isBot");
+            strIsBot = intent.getStringExtra("isBot");
+        } else {
+            strBot = User.getUser().getUser().getIsBot();
+            strIsBot = User.getUser().getUser().getIsBot();
+        }
         cbBot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -203,7 +211,12 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     }
 
     private void updateProfileImageApi(File imageFile) {
-        RequestBody _id = RequestBody.create(MediaType.parse("text/plain"), User.getUser().getUser().getUid());
+        RequestBody _id = null;
+        if (isAdding) {
+            _id = RequestBody.create(MediaType.parse("text/plain"), strUserId);
+        } else {
+            _id = RequestBody.create(MediaType.parse("text/plain"), User.getUser().getUser().getUid());
+        }
         RequestBody imageBodyFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
         MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("u_profile", imageFile.getName(), imageBodyFile);
 
@@ -211,7 +224,9 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onResponseSuccess(Response<?> result) {
                 Alerts.show(mContext, "Profile updated");
-                getUserDetailApi();
+                if (!isAdding) {
+                    getUserDetailApi();
+                }
             }
 
             @Override
@@ -223,7 +238,6 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
 
     private void updateApi() {
         String strName = etName.getText().toString();
-        String strUserName = username.getText().toString();
         String strMail = etMail.getText().toString();
 
         if (etName.getText().toString().length() == 0) {
@@ -241,16 +255,24 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                         if (!responseBody.getError()) {
                             Alerts.show(mContext, "Update success!!!");
                             if (strFrom.equalsIgnoreCase("otp")) {
-                                AppPreference.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
-                                Gson gson = new GsonBuilder().setLenient().create();
-                                String data = gson.toJson(responseBody);
-                                AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);
-
-                                User.setUser(responseBody);
-                                startActivity(new Intent(mContext, HomeActivity.class));
-                                finish();
+                                if (isAdding) {
+                                    Intent intent = new Intent(mContext, SettingActivity.class);
+                                    intent.putExtra("u_name", responseBody.getUser().getUName());
+                                    intent.putExtra("uid", responseBody.getUser().getUid());
+                                    intent.putExtra("avatar", responseBody.getUser().getUProfile());
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    AppPreference.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
+                                    Gson gson = new GsonBuilder().setLenient().create();
+                                    String data = gson.toJson(responseBody);
+                                    AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);
+                                    User.setUser(responseBody);
+                                    startActivity(new Intent(mContext, HomeActivity.class));
+                                    getUserDetailApi();
+                                    finish();
+                                }
                             }
-                            getUserDetailApi();
                         } else {
                             Alerts.show(mContext, responseBody.getMessage());
                         }
