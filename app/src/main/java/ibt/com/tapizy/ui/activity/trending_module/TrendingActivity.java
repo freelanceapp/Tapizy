@@ -18,6 +18,7 @@ import java.util.List;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.TimelineListAdapter;
 import ibt.com.tapizy.constant.Constant;
+import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import ibt.com.tapizy.model.timeline_modal.UserFeed;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
@@ -50,7 +51,7 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void init() {
-        strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
+        strId = User.getUser().getUser().getUid();
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
         recyclerViewFeed = findViewById(R.id.recyclerViewFeed);

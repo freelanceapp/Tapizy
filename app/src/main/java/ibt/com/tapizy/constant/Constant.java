@@ -46,21 +46,14 @@ public class Constant {
     public static final String TOKEN = "TOKEN";
 
     public static final String MULTI_ACCOUNT = "MULTI_ACCOUNT";
-    public static final String USER_A = "USER_A";
     public static final String USER_B = "USER_B";
-    public static final String USER_ID_A = "USER_ID_A";
     public static final String USER_ID_B = "USER_ID_B";
-    public static final String USER_NAME_A = "USER_NAME_A";
     public static final String USER_NAME_B = "USER_NAME_B";
-    public static final String USER_AVATAR_A = "USER_AVATAR_A";
     public static final String USER_AVATAR_B = "USER_AVATAR_B";
 
     public static final String FIRST_CONVERSATION = "FIRST_CONVERSATION";
 
     /* Fragment tag */
-    public static final String PostQuestionFragment = "PostQuestionActivity";
-    public static final String NotificationFragment = "NotificationFragment";
-    public static final String SettingFragment = "SettingFragment";
     public static final String VideoGalleryFragment = "VideoGalleryFragment";
     public static final String VideoTrimmerFragment = "VideoTrimmerFragment";
 

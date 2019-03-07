@@ -93,8 +93,7 @@
                         android:layout_height="350dp"
                         android:layout_centerHorizontal="true"
                         android:adjustViewBounds="true"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/nature1" />
+                        android:scaleType="centerCrop" />
 
                     <RelativeLayout
                         android:id="@+id/rlVideoView"

@@ -9,7 +9,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -147,8 +146,6 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
                                 if (!isAdding) {
                                     saveUserData(mainModal);
                                     AppPreference.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
-                                    AppPreference.setStringPreference(mContext, Constant.USER_ID, mainModal.getUser().getUid());
-                                    AppPreference.setStringPreference(mContext, Constant.USER_NAME, mainModal.getUser().getUName());
                                     Intent intent = new Intent(mContext, HomeActivity.class);
                                     startActivity(intent);
                                     finish();

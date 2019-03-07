@@ -20,6 +20,7 @@ import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.ConversationListAdapter;
 import ibt.com.tapizy.adapter.SubQuestionListAdapter;
 import ibt.com.tapizy.constant.Constant;
+import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.api_conversation_modal.ApiConversationList;
 import ibt.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
 import ibt.com.tapizy.model.api_conversation_modal.ApiSubResponseList;
@@ -53,7 +54,7 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
     }
 
     private void init() {
-        strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
+        strUserId = User.getUser().getUser().getUid();
 
         (findViewById(R.id.floatingCreateChatbot)).setOnClickListener(this);
         (findViewById(R.id.imgBack)).setOnClickListener(this);
@@ -93,7 +94,7 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
                 }
                 break;
             case R.id.imgBack:
-               finish();
+                finish();
                 break;
         }
     }

@@ -15,6 +15,7 @@ import java.util.List;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.ChatbotListAdapter;
 import ibt.com.tapizy.constant.Constant;
+import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.api_bot_list.BotList;
 import ibt.com.tapizy.model.api_bot_list.BotListMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
@@ -49,7 +50,7 @@ public class BotListActivity extends BaseActivity implements View.OnClickListene
         recyclerViewBotList.setItemAnimator(new DefaultItemAnimator());
         recyclerViewBotList.setAdapter(chatbotListAdapter);
 
-        String strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
+        String strUserId = User.getUser().getUser().getUid();
         String strCatId = getIntent().getStringExtra("cat_id");
         botListApi(strUserId, strCatId);
     }

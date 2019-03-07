@@ -58,6 +58,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.CommentListAdapter;
 import ibt.com.tapizy.constant.Constant;
+import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.comment_list_modal.CommentMainModal;
 import ibt.com.tapizy.model.timeline_modal.Comment;
 import ibt.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
@@ -107,7 +108,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void init() {
-        strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
+        strId = User.getUser().getUser().getUid();
         mProgressBar = findViewById(R.id.mProgressBar);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
