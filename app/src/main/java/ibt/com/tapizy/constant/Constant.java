@@ -58,6 +58,7 @@ public class Constant {
     public static final String VideoTrimmerFragment = "VideoTrimmerFragment";
 
     /**/
+    public static final String EmailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     public static final String IMAGE_BASE_URL = BASE_URL + "/image/trending/image/";
     public static final String VIDEO_BASE_URL = BASE_URL + "/image/trending/video/";
     public static final String PROFILE_IMAGE_BASE_URL = BASE_URL + "/image/user_profile/";

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,11 +34,13 @@ public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.Vi
 
         public LinearLayout llayout;
         public CircleImageView iv_tapizy_logo;
+        public ImageView imgRemove;
         public TextView tv_tapizy_title;
 
         public ViewHolder(View v) {
             super(v);
             tv_tapizy_title = v.findViewById(R.id.tv_tapizy_title);
+            imgRemove = v.findViewById(R.id.imgRemove);
             iv_tapizy_logo = v.findViewById(R.id.iv_tapizy_logo);
             llayout = v.findViewById(R.id.llayout);
         }
@@ -57,6 +60,8 @@ public class TapizyListAdapter extends RecyclerView.Adapter<TapizyListAdapter.Vi
                 .into(Vholder.iv_tapizy_logo);
         Vholder.llayout.setTag(position);
         Vholder.llayout.setOnClickListener(onClickListener);
+        Vholder.imgRemove.setTag(position);
+        Vholder.imgRemove.setOnClickListener(onClickListener);
     }
 
     @Override

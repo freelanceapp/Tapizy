@@ -19,6 +19,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -41,6 +45,7 @@ import ibt.com.tapizy.ui.activity.trending_module.TrendingActivity;
 import ibt.com.tapizy.utils.Alerts;
 import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
@@ -166,6 +171,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.imgRemove:
+                int position = Integer.parseInt(v.getTag().toString());
+                String strId = favoriteBotList.get(position).getBotId();
+                removeFav(strId);
+                break;
             case R.id.llexplore:
                 startActivity(new Intent(mContext, ExploreActivity.class));
                 break;
@@ -207,6 +217,39 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    private void removeFav(String strBotId) {
+        String strUserId = User.getUser().getUser().getUid();
+        if (cd.isNetworkAvailable()) {
+            RetrofitService.getloginData(new Dialog(mContext), retrofitApiClient.addToFav(strUserId, strBotId, "0"), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    ResponseBody responseBody = (ResponseBody) result.body();
+                    AppPreference.setBooleanPreference(mContext, Constant.ADD_TO_FAV, true);
+                    try {
+                        JSONObject jsonObject = new JSONObject(responseBody.string());
+                        if (!jsonObject.getBoolean("error")) {
+                            Alerts.show(mContext, "Remove from favourite");
+                            favouriteBotListApi();
+                        } else {
+                            Alerts.show(mContext, jsonObject.getString("message"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onResponseFailed(String error) {
+                    Alerts.show(mContext, error);
+                }
+            });
+        } else {
+            cd.show(mContext);
+        }
     }
 
     @Override

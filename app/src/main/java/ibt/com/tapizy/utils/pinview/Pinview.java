@@ -20,6 +20,7 @@ SOFTWARE.
 
 package ibt.com.tapizy.utils.pinview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
@@ -44,7 +45,6 @@ import java.util.List;
 import ibt.com.tapizy.R;
 
 import static android.text.InputType.TYPE_CLASS_NUMBER;
-import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD;
 
 
@@ -80,15 +80,18 @@ public class Pinview extends LinearLayout implements TextWatcher, View.OnFocusCh
     private int mPinBackground = R.drawable.sample_background;
     private boolean mPassword = false;
     private String mHint = "";
-    private InputType inputType = InputType.TEXT;
+    private InputType inputType = InputType.NUMBER;
     private boolean finalNumberPin = false;
     private PinViewEventListener mListener;
     private boolean fromSetValue = false;
     private boolean mForceKeyboard = true;
 
-    public enum InputType {
-        TEXT, NUMBER
-    }
+        public enum InputType {
+            TEXT, NUMBER
+        }
+    /*public enum InputType {
+        NUMBER
+    }*/
 
     /**
      * Interface for onDataEntered event.
@@ -220,6 +223,7 @@ public class Pinview extends LinearLayout implements TextWatcher, View.OnFocusCh
      * @param styleEditText
      * @param tag
      */
+    @SuppressLint("ClickableViewAccessibility")
     private void generateOneEditText(EditText styleEditText, String tag) {
         params.setMargins(mSplitWidth / 2, mSplitWidth / 2, mSplitWidth / 2, mSplitWidth / 2);
         filters[0] = new InputFilter.LengthFilter(1);
@@ -256,11 +260,11 @@ public class Pinview extends LinearLayout implements TextWatcher, View.OnFocusCh
             case NUMBER:
                 it = TYPE_CLASS_NUMBER | TYPE_NUMBER_VARIATION_PASSWORD;
                 break;
-            case TEXT:
+            /*case TEXT:
                 it = TYPE_CLASS_TEXT;
-                break;
+                break;*/
             default:
-                it = TYPE_CLASS_TEXT;
+                it = TYPE_CLASS_NUMBER | TYPE_NUMBER_VARIATION_PASSWORD;
         }
         return it;
     }

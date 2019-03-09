@@ -14,15 +14,28 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_tapizy_logo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:background="@drawable/circle_background_b"
-            android:padding="1dp"
-            android:src="@drawable/ic_list"
-            android:tint="@color/blueB" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_tapizy_logo"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circle_background_b"
+                android:padding="1dp"
+                android:src="@drawable/ic_list"
+                android:tint="@color/blueB" />
+
+            <ImageView
+                android:id="@+id/imgRemove"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="-4dp"
+                android:layout_toEndOf="@+id/iv_tapizy_logo"
+                android:src="@drawable/ic_remove" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_tapizy_title"

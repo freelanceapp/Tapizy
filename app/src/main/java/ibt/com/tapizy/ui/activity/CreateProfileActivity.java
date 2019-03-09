@@ -182,7 +182,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                     public void onClick(DialogInterface dialog, int which) {
                         if (choose[which].equals("Pick From Camera")) {
                             dialog.dismiss();
-                            Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             startActivityForResult(intent, PICK_IMAGE_CAMERA);
                         } else if (choose[which].equals("Choose From Gallery")) {
                             dialog.dismiss();
@@ -243,7 +243,9 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
         if (etName.getText().toString().length() == 0) {
             etName.setError("Name Required");
         } else if (etMail.getText().toString().length() == 0) {
-            etMail.setError("Number Required");
+            etMail.setError("Email Required");
+        } else if (!strMail.matches(Constant.EmailPattern)) {
+            etMail.setError("Enter valid email");
         } else {
             if (cd.isNetworkAvailable()) {
                 RetrofitService.updateData(new Dialog(mContext), retrofitApiClient.updateProfile(strPhone, "", strGender,

@@ -75,6 +75,7 @@ public class PostQuestionAdapter extends RecyclerView.Adapter<PostQuestionAdapte
             @Override
             public void onClick(View v) {
                 String strAns = viewHolder.et_enter_answer.getText().toString();
+                viewHolder.et_enter_answer.setText("");
                 if (strAns.isEmpty()) {
                     Alerts.show(mContext, "Please enter text");
                 } else {

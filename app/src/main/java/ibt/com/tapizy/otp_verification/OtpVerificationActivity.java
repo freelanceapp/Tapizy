@@ -5,10 +5,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -57,7 +59,24 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
 
         }
         readOtp();*/
+        otptime();
         getIntentData();
+    }
+
+    private void otptime() {
+        ((TextView) findViewById(R.id.tvResend)).setClickable(false);
+        ((TextView) findViewById(R.id.tvResend)).setTextColor(getResources().getColor(R.color.gray_e));
+        new CountDownTimer(60000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                ((TextView) findViewById(R.id.tvRemaining)).setText("Remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                ((TextView) findViewById(R.id.tvResend)).setTextColor(getResources().getColor(R.color.blueB));
+                ((TextView) findViewById(R.id.tvResend)).setClickable(true);
+                ((TextView) findViewById(R.id.tvRemaining)).setText("Didn't get The OTP ?");
+            }
+        }.start();
     }
 
     private void getIntentData() {
@@ -70,21 +89,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
     private void readOtp() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            //  String  number = extras.getString("mobilenumber");
             String message = extras.getString("message");
-            //  ((TextView)findViewById(R.id.mobile)).setText(number);
-            /*int a1 = Integer.parseInt(String.valueOf(message.charAt(0)));
-            ((EditText) findViewById(R.id.et_otp_a)).setText(a1 + "");
-            int a2 = message.charAt(1);
-            ((EditText) findViewById(R.id.et_otp_b)).setText(a2 + "");
-            int a3 = Integer.parseInt(String.valueOf(message.charAt(2)));
-            ((EditText) findViewById(R.id.et_otp_c)).setText(a3 + "");
-            int a4 = Integer.parseInt(String.valueOf(message.charAt(3)));
-            ((EditText) findViewById(R.id.et_otp_d)).setText(a4 + "");
-            int a5 = Integer.parseInt(String.valueOf(message.charAt(4)));
-            ((EditText) findViewById(R.id.et_otp_e)).setText(a5 + "");
-            int a6 = Integer.parseInt(String.valueOf(message.charAt(5)));
-            ((EditText) findViewById(R.id.et_otp_f)).setText(a6 + "");*/
         }
     }
 
@@ -113,13 +118,6 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
 
     private void otpVerificationApi() {
         String strOtp = pinview1.getValue();
-        //String strOtp = ((EditText) findViewById(R.id.etOtp)).getText().toString();
-        /*String strA = ((EditText) findViewById(R.id.et_otp_a)).getText().toString();
-        String strB = ((EditText) findViewById(R.id.et_otp_b)).getText().toString();
-        String strC = ((EditText) findViewById(R.id.et_otp_c)).getText().toString();
-        String strD = ((EditText) findViewById(R.id.et_otp_d)).getText().toString();
-        String strE = ((EditText) findViewById(R.id.et_otp_e)).getText().toString();
-        String strF = ((EditText) findViewById(R.id.et_otp_f)).getText().toString();*/
 
         if (strOtp.isEmpty()) {
             Alerts.show(mContext, "Enter otp " + getString(R.string.emoji));
@@ -184,12 +182,6 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
 
     private void otpResendApi() {
         pinview1.setValue("");
-        /*((EditText) findViewById(R.id.et_otp_a)).setText("");
-        ((EditText) findViewById(R.id.et_otp_b)).setText("");
-        ((EditText) findViewById(R.id.et_otp_c)).setText("");
-        ((EditText) findViewById(R.id.et_otp_d)).setText("");
-        ((EditText) findViewById(R.id.et_otp_e)).setText("");
-        ((EditText) findViewById(R.id.et_otp_f)).setText("");*/
 
         if (strPhone.isEmpty()) {
             Alerts.show(mContext, "Please enter mobile number " + getString(R.string.emoji));
@@ -201,6 +193,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
                     public void onResponseSuccess(Response<?> result) {
                         ResponseBody responseBody = (ResponseBody) result.body();
                         try {
+                            otptime();
                             JSONObject jsonObject = new JSONObject(responseBody.string());
                             if (!jsonObject.getBoolean("error")) {
                                 Alerts.show(mContext, jsonObject.getString("message"));

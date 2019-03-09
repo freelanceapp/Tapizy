@@ -311,7 +311,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                     try {
                         JSONObject jsonObject = new JSONObject(responseBody.string());
                         if (!jsonObject.getBoolean("error")) {
-                            //Alerts.show(mContext, jsonObject.getString("message"));
+                            Alerts.show(mContext, "Added to favourite " + getString(R.string.emoji));
                         } else {
                             Alerts.show(mContext, jsonObject.getString("message"));
                         }
