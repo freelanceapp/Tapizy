@@ -17,4 +17,10 @@
     <string name="quila_name">Quila</string>
     <string name="quila_tagline">I love bones and slippers</string>
     <string name="quila_name2">Quila!</string>
+
+    <string name="show_settings">Initial Settings</string>
+    <string name="permission_denied">Overlay permission not granted.</string>
+    <string name="mail_address">example@example.com</string>
+    <string name="mail_title">Title</string>
+    <string name="mail_content">Message</string>
 </resources>

@@ -53,6 +53,17 @@ public class Constant {
 
     public static final String FIRST_CONVERSATION = "FIRST_CONVERSATION";
 
+    /*Image url*/
+    public static final String FbImage = "https://www.tkdtricities.com/wp-content/uploads/2018/06/facebook-icon-preview-200x200.png";
+    public static final String TwitterImage = "https://images.vexels.com/media/users/3/137419/isolated/preview/b1a3fab214230557053ed1c4bf17b46c-twitter-icon-logo-by-vexels.png";
+    public static final String FlipkartImage = "https://img1a.flixcart.com/www/linchpin/batman-returns/amp//cbb3574d.png";
+    public static final String InstaImage = "https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-instagram-new-circle-512.png";
+
+    public static final String FbUrl = "https://www.facebook.com/";
+    public static final String TwitterUrl = "https://twitter.com/Twitter";
+    public static final String FlipkartUrl = "https://www.flipkart.com/";
+    public static final String InstaUrl = "https://www.instagram.com/?hl=en";
+
     /* Fragment tag */
     public static final String VideoGalleryFragment = "VideoGalleryFragment";
     public static final String VideoTrimmerFragment = "VideoTrimmerFragment";

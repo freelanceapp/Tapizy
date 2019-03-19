@@ -307,10 +307,8 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == PICK_IMAGE_CAMERA) {
             try {
-
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 ((CircleImageView) findViewById(R.id.iv_user_profile)).setImageBitmap(photo);
                 Uri tempUri = getImageUri(getApplicationContext(), photo);

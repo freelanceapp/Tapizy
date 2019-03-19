@@ -35,6 +35,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void init() {
         findViewById(R.id.loginBtn).setOnClickListener(this);
+        findViewById(R.id.imgLogin).setOnClickListener(this);
     }
 
     private void loginApi() {

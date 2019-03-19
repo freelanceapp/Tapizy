@@ -1,9 +1,13 @@
 package ibt.com.tapizy.ui.activity;
 
 import android.app.Dialog;
+import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +17,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,7 +32,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import ibt.com.tapizy.R;
-import ibt.com.tapizy.adapter.TapizyListAdapter;
+import ibt.com.tapizy.adapter.FavouriteBotListAdapter;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.api_bot_list.BotList;
@@ -36,6 +41,7 @@ import ibt.com.tapizy.model.favourite_bot.FavouriteBotMainModal;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
+import ibt.com.tapizy.services.CustomFloatingViewService;
 import ibt.com.tapizy.ui.activity.chatbot_activity.ChatActivity;
 import ibt.com.tapizy.ui.activity.chatbot_activity.CreateConversationActivity;
 import ibt.com.tapizy.ui.activity.community_module.CommunityActivity;
@@ -45,18 +51,34 @@ import ibt.com.tapizy.ui.activity.trending_module.TrendingActivity;
 import ibt.com.tapizy.utils.Alerts;
 import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
+import ibt.com.tapizy.utils.drag_and_remove.OnStartDragListener;
+import ibt.com.tapizy.utils.drag_and_remove.SimpleItemTouchHelperCallback;
+import ibt.com.tapizy.utils.floating_view.FloatingViewListener;
+import ibt.com.tapizy.utils.floating_view.FloatingViewManager;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-public class HomeActivity extends BaseActivity implements View.OnClickListener {
+public class HomeActivity extends BaseActivity implements View.OnClickListener, OnStartDragListener, FloatingViewListener {
+
+    private ItemTouchHelper mItemTouchHelper;
 
     private ArrayList<FavoriteBot> favoriteBotList = new ArrayList<>();
-    private TapizyListAdapter adapter;
+    private FavouriteBotListAdapter adapter;
+    private String[] imageUrl = {Constant.FbImage, Constant.FlipkartImage, Constant.TwitterImage, Constant.InstaImage};
+    private String[] siteUrl = {Constant.FbUrl, Constant.FlipkartUrl, Constant.TwitterUrl, Constant.InstaUrl};
+
+    /*******************************************************/
+    private static final int CHATHEAD_OVERLAY_PERMISSION_REQUEST_CODE = 100;
+    private static final int CUSTOM_OVERLAY_PERMISSION_REQUEST_CODE = 101;
+    private FavoriteBot favoriteBotData;
+    public static HomeActivity homeActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        homeActivity = this;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -121,11 +143,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private void navigationItem() {
         RecyclerView rv_tapizy_list = findViewById(R.id.rv_tapizy_list);
 
-        adapter = new TapizyListAdapter(mContext, favoriteBotList, this);
+        adapter = new FavouriteBotListAdapter(mContext, favoriteBotList, this, this);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext, 4);
         rv_tapizy_list.setLayoutManager(mLayoutManager);
         rv_tapizy_list.setItemAnimator(new DefaultItemAnimator());
         rv_tapizy_list.setAdapter(adapter);
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(rv_tapizy_list);
+
         favouriteBotListApi();
     }
 
@@ -145,6 +172,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                             }
                         }
                     }
+
+                    /*for (int i = 0; i < imageUrl.length; i++) {
+                        FavoriteBot favoriteBot = new FavoriteBot();
+                        favoriteBot.setAvtar(imageUrl[i]);
+                        favoriteBot.setBotName(siteUrl[i]);
+                        favoriteBotList.add(favoriteBot);
+                        favoriteBotList.set(i, favoriteBot);
+                    }*/
+
                     adapter.notifyDataSetChanged();
                 }
 
@@ -206,20 +242,59 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.llayout:
                 int pos = Integer.parseInt(v.getTag().toString());
-                BotList botData = new BotList();
-                botData.setAvtar(favoriteBotList.get(pos).getAvtar());
-                botData.setBotName(favoriteBotList.get(pos).getBotName());
-                botData.setUid(favoriteBotList.get(pos).getBotId());
-                Intent intentA = new Intent(mContext, ChatActivity.class);
-                intentA.putExtra("bot_data", (Parcelable) botData);
-                startActivity(intentA);
+                if (pos > 4) {
+                    BotList botData = new BotList();
+                    botData.setAvtar(favoriteBotList.get(pos).getAvtar());
+                    botData.setBotName(favoriteBotList.get(pos).getBotName());
+                    botData.setUid(favoriteBotList.get(pos).getBotId());
+                    Intent intentA = new Intent(mContext, ChatActivity.class);
+                    intentA.putExtra("bot_data", botData);
+                    startActivity(intentA);
+                } else {
+
+                }
                 break;
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
 
-    private void removeFav(String strBotId) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (AppPreference.getBooleanPreference(mContext, "update")) {
+            getPreferenceData();
+        }
+
+        if (AppPreference.getBooleanPreference(mContext, Constant.ADD_TO_FAV)) {
+            favouriteBotListApi();
+        }
+    }
+
+    private void getPreferenceData() {
+        Gson gson = new Gson();
+        String json = AppPreference.getStringPreference(mContext, Constant.USER_DATA);
+        UserDataMainModal loginUserModel = gson.fromJson(json, UserDataMainModal.class);
+        User.setUser(loginUserModel);
+        AppPreference.setBooleanPreference(mContext, "update", false);
+        setUserData();
+    }
+
+    private void handleNavItem() {
+        if (User.getUser().getUser().getIsBot().equalsIgnoreCase("1")) {
+            findViewById(R.id.viewCreateConversation).setVisibility(View.VISIBLE);
+            findViewById(R.id.llCreateConversation).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.viewCreateConversation).setVisibility(View.GONE);
+            findViewById(R.id.llCreateConversation).setVisibility(View.GONE);
+        }
+    }
+
+    /***************************************************************/
+    /*
+     * Drag and remove item
+     * */
+    public void removeFav(String strBotId) {
         String strUserId = User.getUser().getUser().getUid();
         if (cd.isNetworkAvailable()) {
             RetrofitService.getloginData(new Dialog(mContext), retrofitApiClient.addToFav(strUserId, strBotId, "0"), new WebResponse() {
@@ -253,33 +328,63 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (AppPreference.getBooleanPreference(mContext, "update")) {
-            getPreferenceData();
-        }
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
 
-        if (AppPreference.getBooleanPreference(mContext, Constant.ADD_TO_FAV)) {
-            favouriteBotListApi();
+    }
+
+    @Override
+    public void onStartDragData(FavoriteBot favoriteBot) {
+        favoriteBotData = favoriteBot;
+        showFloatingView(mContext, true, false);
+    }
+
+    @Override
+    public void onFinishFloatingView() {
+        Alerts.show(mContext, "finished");
+    }
+
+    @Override
+    public void onTouchFinished(boolean isFinishing, int x, int y) {
+        Alerts.show(mContext, "finished new");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CHATHEAD_OVERLAY_PERMISSION_REQUEST_CODE) {
+            showFloatingView(mContext, false, false);
+        } else if (requestCode == CUSTOM_OVERLAY_PERMISSION_REQUEST_CODE) {
+            showFloatingView(mContext, false, true);
         }
     }
 
-    private void getPreferenceData() {
-        Gson gson = new Gson();
-        String json = AppPreference.getStringPreference(mContext, Constant.USER_DATA);
-        UserDataMainModal loginUserModel = gson.fromJson(json, UserDataMainModal.class);
-        User.setUser(loginUserModel);
-        AppPreference.setBooleanPreference(mContext, "update", false);
-        setUserData();
+    private void showFloatingView(Context context, boolean isShowOverlayPermission, boolean isCustomFloatingView) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            startFloatingViewService();
+            return;
+        }
+
+        if (Settings.canDrawOverlays(context)) {
+            startFloatingViewService();
+            return;
+        }
+
+        if (isShowOverlayPermission) {
+            final Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + context.getPackageName()));
+            startActivityForResult(intent, isCustomFloatingView ? CUSTOM_OVERLAY_PERMISSION_REQUEST_CODE : CHATHEAD_OVERLAY_PERMISSION_REQUEST_CODE);
+        }
     }
 
-    private void handleNavItem() {
-        if (User.getUser().getUser().getIsBot().equalsIgnoreCase("1")) {
-            findViewById(R.id.viewCreateConversation).setVisibility(View.VISIBLE);
-            findViewById(R.id.llCreateConversation).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.viewCreateConversation).setVisibility(View.GONE);
-            findViewById(R.id.llCreateConversation).setVisibility(View.GONE);
-        }
+    private void startFloatingViewService() {
+        String strImgUrl = Constant.PROFILE_IMAGE_BASE_URL + favoriteBotData.getAvtar();
+        String strBotId = favoriteBotData.getBotId();
+
+        final Class<? extends Service> service = CustomFloatingViewService.class;
+        String key = CustomFloatingViewService.EXTRA_CUTOUT_SAFE_AREA;
+
+        final Intent intent = new Intent(HomeActivity.this, service);
+        intent.putExtra(key, FloatingViewManager.findCutoutSafeArea(this));
+        intent.putExtra("image_url", strImgUrl);
+        intent.putExtra("bot_id", strBotId);
+        startService(intent);
     }
 }

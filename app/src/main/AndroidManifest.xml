@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ibt.com.tapizy">
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-sdk tools:overrideLibrary="android.support.dynamicanimation" />
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -65,16 +70,16 @@
             android:name="ibt.com.tapizy.ui.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
+        <!--<activity
             android:name="ibt.com.tapizy.ui.activity.TapizyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <!--<intent-filter>
+            <intent-filter>
                <action android:name="android.intent.action.MAIN" />
 
                <category android:name="android.intent.category.LAUNCHER" />
-           </intent-filter>-->
-        </activity>
+           </intent-filter>
+        </activity>-->
         <activity
             android:name="ibt.com.tapizy.ui.activity.chatbot_activity.CreateConversationActivity"
             android:screenOrientation="portrait" />
@@ -118,5 +123,8 @@
             </intent-filter>
         </receiver>
 
+        <service
+            android:name=".services.CustomFloatingViewService"
+            android:exported="false" />
     </application>
 </manifest>

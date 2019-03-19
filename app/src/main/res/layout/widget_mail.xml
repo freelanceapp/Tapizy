@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 情報表示 -->
+<de.hdodenhof.circleimageview.CircleImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/imgBot"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:background="@drawable/circle_background_c"
+    android:padding="1dp"
+    android:scaleType="centerCrop"
+    android:src="@drawable/image" />
