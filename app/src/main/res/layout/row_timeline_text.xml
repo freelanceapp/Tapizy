@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="3">
+            android:weightSum="2">
 
             <LinearLayout
                 android:id="@+id/llLikePost"
@@ -99,8 +99,7 @@
                         android:id="@+id/imgLike"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_hot"
-                         />
+                        android:src="@drawable/ic_hot" />
 
                     <TextView
                         android:layout_width="91dp"
@@ -124,6 +123,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/llUnlikePost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -142,8 +142,7 @@
                         android:id="@+id/imgUnlike"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_cold"
-                         />
+                        android:src="@drawable/ic_cold" />
 
                     <TextView
                         android:layout_width="match_parent"

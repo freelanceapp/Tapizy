@@ -9,6 +9,9 @@
     <color name="blueC">#00BCD4</color>
     <color name="blueD">#D37AC6CF</color>
 
+    <color name="blueE">#1B66A8</color>
+    <color name="blueF">#133B7B</color>
+
     <color name="colorListDivider">#e6e6e6</color>
     <color name="headGradientStart">#00ffffff</color>
     <color name="headGradientCenter">#00ffffff</color>

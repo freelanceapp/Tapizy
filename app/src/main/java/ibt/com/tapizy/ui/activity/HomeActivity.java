@@ -115,6 +115,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         findViewById(R.id.llCommunity).setOnClickListener(this);
         findViewById(R.id.llchat).setOnClickListener(this);
 
+        findViewById(R.id.llFb).setOnClickListener(this);
+        findViewById(R.id.llTwitter).setOnClickListener(this);
+        findViewById(R.id.llInsta).setOnClickListener(this);
+        findViewById(R.id.llFlipkart).setOnClickListener(this);
+
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("");
         AppBarLayout appBarLayout = findViewById(R.id.appbar);
@@ -254,9 +259,28 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
                 }
                 break;
+            case R.id.llFb:
+                sendSocialUrl(Constant.FbUrl, "Facebook");
+                break;
+            case R.id.llTwitter:
+                sendSocialUrl(Constant.TwitterUrl, "Twitter");
+                break;
+            case R.id.llInsta:
+                sendSocialUrl(Constant.InstaUrl, "Instagram");
+                break;
+            case R.id.llFlipkart:
+                sendSocialUrl(Constant.FlipkartUrl, "Flipkart");
+                break;
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    private void sendSocialUrl(String url, String title) {
+        Intent intent = new Intent(mContext, WebviewActivity.class);
+        intent.putExtra("url", url);
+        intent.putExtra("title", title);
+        startActivity(intent);
     }
 
     @Override

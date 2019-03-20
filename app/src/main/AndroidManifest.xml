@@ -116,6 +116,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.community_module.CityListActivity" />
         <activity android:name=".ui.activity.community_module.PostQuestionActivity" />
+        <activity android:name=".ui.activity.WebviewActivity" />
 
         <receiver android:name="ibt.com.tapizy.otp_verification.MySMSBroadCastReceiver">
             <intent-filter android:priority="999">
@@ -126,5 +127,8 @@
         <service
             android:name=".services.CustomFloatingViewService"
             android:exported="false" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="4f92de69364db81c0b98762d88b4025811aba6e8" />
     </application>
 </manifest>
