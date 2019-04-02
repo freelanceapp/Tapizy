@@ -28,14 +28,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_b);
 
         init();
     }
 
     private void init() {
         findViewById(R.id.loginBtn).setOnClickListener(this);
-        findViewById(R.id.imgLogin).setOnClickListener(this);
     }
 
     private void loginApi() {
@@ -90,7 +89,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 Alerts.show(mContext, error);
             }
         });
-
     }
 
     @Override

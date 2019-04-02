@@ -43,7 +43,6 @@ import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
 import ibt.com.tapizy.services.CustomFloatingViewService;
 import ibt.com.tapizy.ui.activity.chatbot_activity.ChatActivity;
-import ibt.com.tapizy.ui.activity.chatbot_activity.CreateConversationActivity;
 import ibt.com.tapizy.ui.activity.community_module.CommunityActivity;
 import ibt.com.tapizy.ui.activity.explore.ExploreActivity;
 import ibt.com.tapizy.ui.activity.recent_chat.RecentChatActivity;
@@ -55,10 +54,13 @@ import ibt.com.tapizy.utils.drag_and_remove.OnStartDragListener;
 import ibt.com.tapizy.utils.drag_and_remove.SimpleItemTouchHelperCallback;
 import ibt.com.tapizy.utils.floating_view.FloatingViewListener;
 import ibt.com.tapizy.utils.floating_view.FloatingViewManager;
+import ibt.com.tapizy.utils.move_listener.MultiTouchListener;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener, OnStartDragListener, FloatingViewListener {
+
+    private TextView txtSwipe;
 
     private ItemTouchHelper mItemTouchHelper;
 
@@ -94,8 +96,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     private void setUserData() {
         //View header = navigationView.getHeaderView(0);
+        txtSwipe = findViewById(R.id.txtSwipe);
+        MultiTouchListener touchListener = new MultiTouchListener(this);
+        txtSwipe.setOnTouchListener(touchListener);
+
         findViewById(R.id.llProfile).setOnClickListener(this);
-        findViewById(R.id.llCreateConversation).setOnClickListener(this);
+        findViewById(R.id.llCreateBot).setOnClickListener(this);
         findViewById(R.id.ll24_7).setOnClickListener(this);
         findViewById(R.id.llRewards).setOnClickListener(this);
         findViewById(R.id.llSettings).setOnClickListener(this);
@@ -105,8 +111,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
         ((TextView) findViewById(R.id.tvUserName)).setText(User.getUser().getUser().getUName());
         ((TextView) findViewById(R.id.tvEmail)).setText(User.getUser().getUser().getUEmail());
-
-        handleNavItem();
     }
 
     private void init() {
@@ -124,6 +128,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         collapsingToolbar.setTitle("");
         AppBarLayout appBarLayout = findViewById(R.id.appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+
             boolean isShow = true;
             int scrollRange = -1;
 
@@ -232,8 +237,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.llProfile:
                 startActivity(new Intent(mContext, MyProfileActivity.class));
                 break;
-            case R.id.llCreateConversation:
-                Intent intent = new Intent(mContext, CreateConversationActivity.class);
+            case R.id.llCreateBot:
+                Intent intent = new Intent(mContext, CreateBotActivity.class);
                 startActivity(intent);
                 break;
             case R.id.ll24_7:
@@ -302,16 +307,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         User.setUser(loginUserModel);
         AppPreference.setBooleanPreference(mContext, "update", false);
         setUserData();
-    }
-
-    private void handleNavItem() {
-        if (User.getUser().getUser().getIsBot().equalsIgnoreCase("1")) {
-            findViewById(R.id.viewCreateConversation).setVisibility(View.VISIBLE);
-            findViewById(R.id.llCreateConversation).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.viewCreateConversation).setVisibility(View.GONE);
-            findViewById(R.id.llCreateConversation).setVisibility(View.GONE);
-        }
     }
 
     /***************************************************************/

@@ -69,7 +69,7 @@
                     android:background="@color/gray_g" />
 
                 <LinearLayout
-                    android:id="@+id/llCreateConversation"
+                    android:id="@+id/llCreateBot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -87,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:padding="8dp"
-                        android:text="Create conversation"
+                        android:text="Create Bot"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>

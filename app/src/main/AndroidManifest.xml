@@ -69,7 +69,8 @@
         <activity
             android:name="ibt.com.tapizy.ui.activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateVisible" />
         <!--<activity
             android:name="ibt.com.tapizy.ui.activity.TapizyActivity"
             android:screenOrientation="portrait"
@@ -117,6 +118,9 @@
         <activity android:name=".ui.activity.community_module.CityListActivity" />
         <activity android:name=".ui.activity.community_module.PostQuestionActivity" />
         <activity android:name=".ui.activity.WebviewActivity" />
+        <activity
+            android:name=".ui.activity.CreateBotActivity"
+            android:windowSoftInputMode="stateHidden" />
 
         <receiver android:name="ibt.com.tapizy.otp_verification.MySMSBroadCastReceiver">
             <intent-filter android:priority="999">
