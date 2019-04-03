@@ -19,6 +19,9 @@
     <color name="blueB">#03A9F4</color>
     <color name="blueC">#00BCD4</color>
     <color name="blueD">#D37AC6CF</color>
+    <color name="blueEe">#F000BCD4</color>
+    <color name="blueFf">#FD33B7C4</color>
+    <color name="blueG">#F7CEEFFA</color>
 
     <color name="blueE">#1B66A8</color>
     <color name="blueF">#133B7B</color>
@@ -32,6 +35,7 @@
 
     <color name="dark_white">#f8f8f8</color>
     <color name="white">#FFFFFF</color>
+    <color name="transparent_white">#95FFFFFF</color>
     <color name="white1">#D6D6D6</color>
     <color name="ivory">#FFFFF0</color>
     <color name="light_yellow">#FFFFE0</color>

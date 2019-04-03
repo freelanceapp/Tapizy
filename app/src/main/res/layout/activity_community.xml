@@ -81,9 +81,20 @@
     </RelativeLayout>
 
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <LinearLayout
+            android:background="@drawable/layout_bg_gradient_2"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"/>
+        <ImageView
+            android:tint="@color/blueA"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/wave_cv"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvQuestionPost"
             android:layout_width="match_parent"
@@ -110,15 +121,16 @@
             android:textColor="@color/gray_f"
             android:textSize="12sp" />
 
-        <android.support.design.widget.FloatingActionButton
+        <Button
             android:id="@+id/fabQuestion"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_margin="8dp"
-            android:background="@drawable/ripple_oval"
-            android:src="@drawable/ic_add" />
+            android:background="@drawable/layout_bg_gradient_2"
+            android:text="Ask a Question"
+            android:textSize="18sp" />
+
+
     </RelativeLayout>
 
 </LinearLayout>

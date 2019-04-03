@@ -91,6 +91,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
 
         findViewById(R.id.iv_user_profile).setOnClickListener(this);
         findViewById(R.id.btn_create_profile).setOnClickListener(this);
+        findViewById(R.id.ic_back_profile).setOnClickListener(this);
         radioGroupGender = findViewById(R.id.radioGroupGender);
         etName = findViewById(R.id.tv_user_name);
         etMail = findViewById(R.id.tv_user_email);
@@ -376,6 +377,11 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ic_back_profile:
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                break;
             case R.id.iv_user_profile:
                 try {
                     if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
