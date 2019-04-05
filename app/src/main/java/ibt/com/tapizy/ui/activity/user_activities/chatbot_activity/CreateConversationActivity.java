@@ -1,4 +1,4 @@
-package ibt.com.tapizy.ui.activity.chatbot_activity;
+package ibt.com.tapizy.ui.activity.user_activities.chatbot_activity;
 
 import android.app.Dialog;
 import android.os.Bundle;

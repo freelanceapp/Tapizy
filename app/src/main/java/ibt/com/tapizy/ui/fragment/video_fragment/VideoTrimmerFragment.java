@@ -16,7 +16,7 @@ import ibt.com.tapizy.utils.BaseFragment;
 import life.knowledge4.videotrimmer.K4LVideoTrimmer;
 import life.knowledge4.videotrimmer.interfaces.OnTrimVideoListener;
 
-import static ibt.com.tapizy.ui.activity.trending_module.VideoActivity.videoFragmentManager;
+import static ibt.com.tapizy.ui.activity.user_activities.trending_module.VideoActivity.videoFragmentManager;
 
 public class VideoTrimmerFragment extends BaseFragment implements OnTrimVideoListener {
 

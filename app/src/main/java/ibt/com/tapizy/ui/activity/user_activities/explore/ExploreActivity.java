@@ -1,4 +1,4 @@
-package ibt.com.tapizy.ui.activity.explore;
+package ibt.com.tapizy.ui.activity.user_activities.explore;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.TapiziLinearListAdapter;
 import ibt.com.tapizy.model.TapizyLinearListModel;
-import ibt.com.tapizy.ui.activity.HomeActivity;
+import ibt.com.tapizy.ui.activity.user_activities.HomeActivity;
 import ibt.com.tapizy.utils.BaseActivity;
 
 public class ExploreActivity extends BaseActivity implements View.OnClickListener {

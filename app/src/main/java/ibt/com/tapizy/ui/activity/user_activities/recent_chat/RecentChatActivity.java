@@ -1,4 +1,4 @@
-package ibt.com.tapizy.ui.activity.recent_chat;
+package ibt.com.tapizy.ui.activity.user_activities.recent_chat;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -21,7 +21,7 @@ import ibt.com.tapizy.model.api_chat_list.ChatList;
 import ibt.com.tapizy.model.api_chat_list.ChatListMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
-import ibt.com.tapizy.ui.activity.chatbot_activity.ChatActivity;
+import ibt.com.tapizy.ui.activity.user_activities.chatbot_activity.ChatActivity;
 import ibt.com.tapizy.utils.Alerts;
 import ibt.com.tapizy.utils.BaseActivity;
 import retrofit2.Response;

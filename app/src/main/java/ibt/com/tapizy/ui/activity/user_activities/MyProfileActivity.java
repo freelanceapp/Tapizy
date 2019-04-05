@@ -1,4 +1,4 @@
-package ibt.com.tapizy.ui.activity;
+package ibt.com.tapizy.ui.activity.user_activities;
 
 import android.content.Intent;
 import android.os.Bundle;

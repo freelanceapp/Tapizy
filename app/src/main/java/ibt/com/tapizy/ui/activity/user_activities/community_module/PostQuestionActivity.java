@@ -1,4 +1,4 @@
-package ibt.com.tapizy.ui.activity.community_module;
+package ibt.com.tapizy.ui.activity.user_activities.community_module;
 
 import android.app.Dialog;
 import android.content.Intent;

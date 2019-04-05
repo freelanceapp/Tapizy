@@ -1,4 +1,4 @@
-package ibt.com.tapizy.ui.activity;
+package ibt.com.tapizy.ui.activity.user_activities;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;

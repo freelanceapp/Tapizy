@@ -1,4 +1,4 @@
-package ibt.com.tapizy.ui.activity;
+package ibt.com.tapizy.ui.activity.user_activities;
 
 import android.app.Dialog;
 import android.app.Service;
@@ -42,11 +42,11 @@ import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
 import ibt.com.tapizy.services.CustomFloatingViewService;
-import ibt.com.tapizy.ui.activity.chatbot_activity.ChatActivity;
-import ibt.com.tapizy.ui.activity.community_module.CommunityActivity;
-import ibt.com.tapizy.ui.activity.explore.ExploreActivity;
-import ibt.com.tapizy.ui.activity.recent_chat.RecentChatActivity;
-import ibt.com.tapizy.ui.activity.trending_module.TrendingActivity;
+import ibt.com.tapizy.ui.activity.user_activities.chatbot_activity.ChatActivity;
+import ibt.com.tapizy.ui.activity.user_activities.community_module.CommunityActivity;
+import ibt.com.tapizy.ui.activity.user_activities.explore.ExploreActivity;
+import ibt.com.tapizy.ui.activity.user_activities.recent_chat.RecentChatActivity;
+import ibt.com.tapizy.ui.activity.user_activities.trending_module.TrendingActivity;
 import ibt.com.tapizy.utils.Alerts;
 import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;

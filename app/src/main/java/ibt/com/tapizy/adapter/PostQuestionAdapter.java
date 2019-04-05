@@ -32,7 +32,7 @@ import ibt.com.tapizy.utils.AppPreference;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-import static ibt.com.tapizy.ui.activity.community_module.CommunityActivity.communityActivity;
+import static ibt.com.tapizy.ui.activity.user_activities.community_module.CommunityActivity.communityActivity;
 
 
 public class PostQuestionAdapter extends RecyclerView.Adapter<PostQuestionAdapter.ViewHolder> {

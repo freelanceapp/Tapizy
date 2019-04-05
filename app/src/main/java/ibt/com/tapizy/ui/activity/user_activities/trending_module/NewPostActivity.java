@@ -1,4 +1,4 @@
-package ibt.com.tapizy.ui.activity.trending_module;
+package ibt.com.tapizy.ui.activity.user_activities.trending_module;
 
 import android.Manifest;
 import android.app.Dialog;

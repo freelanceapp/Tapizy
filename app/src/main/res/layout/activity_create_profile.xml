@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/gray_i"
     android:orientation="vertical"
-    tools:context=".ui.activity.CreateProfileActivity">
+    tools:context=".ui.activity.user_activities.CreateProfileActivity">
 
     <ScrollView
         android:layout_width="match_parent"

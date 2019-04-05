@@ -13,7 +13,7 @@ import java.util.List;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.model.api_conversation_modal.ApiConversationList;
 
-import static ibt.com.tapizy.ui.activity.chatbot_activity.CreateConversationActivity.createConversationActivity;
+import static ibt.com.tapizy.ui.activity.user_activities.chatbot_activity.CreateConversationActivity.createConversationActivity;
 
 public class ConversationListAdapter extends RecyclerView.Adapter<ConversationListAdapter.ViewHolder> {
 

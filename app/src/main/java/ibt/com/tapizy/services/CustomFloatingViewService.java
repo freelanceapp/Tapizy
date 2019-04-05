@@ -21,7 +21,7 @@ import ibt.com.tapizy.R;
 import ibt.com.tapizy.utils.floating_view.FloatingViewListener;
 import ibt.com.tapizy.utils.floating_view.FloatingViewManager;
 
-import static ibt.com.tapizy.ui.activity.HomeActivity.homeActivity;
+import static ibt.com.tapizy.ui.activity.user_activities.HomeActivity.homeActivity;
 
 /**
  * FloatingViewのカスタマイズを行います。

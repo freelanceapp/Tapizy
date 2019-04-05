@@ -24,7 +24,7 @@ import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.video_list.VideoListModel;
 import ibt.com.tapizy.utils.BaseFragment;
 
-import static ibt.com.tapizy.ui.activity.trending_module.VideoActivity.videoFragmentManager;
+import static ibt.com.tapizy.ui.activity.user_activities.trending_module.VideoActivity.videoFragmentManager;
 
 public class VideoGalleryFragment extends BaseFragment implements View.OnClickListener {
 

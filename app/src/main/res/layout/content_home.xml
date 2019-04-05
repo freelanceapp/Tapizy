@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.HomeActivity">
+    tools:context=".ui.activity.user_activities.HomeActivity">
 
     <!--<include layout="@layout/action_tapizy_contant" />-->
 
