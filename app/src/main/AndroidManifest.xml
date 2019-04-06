@@ -38,17 +38,17 @@
             android:name="ibt.com.tapizy.ui.activity.user_activities.MyProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.user_activities.recent_chat.RecentChatActivity"
+            android:name="ibt.com.tapizy.ui.activity.user_activities.recent_chat.RecentChatActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.CreateProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".ui.activity.user_activities.explore.ExploreActivity"
+            android:name="ibt.com.tapizy.ui.activity.user_activities.explore.ExploreActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.user_activities.chatbot_activity.ChatActivity"
+            android:name="ibt.com.tapizy.ui.activity.user_activities.chatbot_activity.ChatActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
@@ -82,7 +82,7 @@
            </intent-filter>
         </activity>-->
         <activity
-            android:name=".ui.activity.user_activities.chatbot_activity.CreateConversationActivity"
+            android:name="ibt.com.tapizy.ui.activity.user_activities.chatbot_activity.CreateConversationActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="ibt.com.tapizy.otp_verification.OtpVerificationActivity"
@@ -92,38 +92,48 @@
             android:name="ibt.com.tapizy.utils.BaseActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.user_activities.community_module.CommunityActivity"
+            android:name="ibt.com.tapizy.ui.activity.user_activities.community_module.CommunityActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.user_activities.trending_module.TrendingActivity"
+            android:name="ibt.com.tapizy.ui.activity.user_activities.trending_module.TrendingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.user_activities.trending_module.NewPostActivity"
+            android:name="ibt.com.tapizy.ui.activity.user_activities.trending_module.NewPostActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.user_activities.trending_module.VideoActivity"
+            android:name="ibt.com.tapizy.ui.activity.user_activities.trending_module.VideoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.user_activities.trending_module.VideoGalleryActivity"
+            android:name="ibt.com.tapizy.ui.activity.user_activities.trending_module.VideoGalleryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.user_activities.trending_module.VideoTrimerActivity"
+            android:name="ibt.com.tapizy.ui.activity.user_activities.trending_module.VideoTrimerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.user_activities.trending_module.PostDetailActivity"
+            android:name="ibt.com.tapizy.ui.activity.user_activities.trending_module.PostDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.user_activities.explore.BotListActivity"
+            android:name="ibt.com.tapizy.ui.activity.user_activities.explore.BotListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.user_activities.community_module.CityListActivity" />
-        <activity android:name=".ui.activity.user_activities.community_module.PostQuestionActivity" />
-        <activity android:name=".ui.activity.user_activities.WebviewActivity" />
+        <activity android:name="ibt.com.tapizy.ui.activity.user_activities.community_module.CityListActivity" />
+        <activity android:name="ibt.com.tapizy.ui.activity.user_activities.community_module.PostQuestionActivity" />
+        <activity android:name="ibt.com.tapizy.ui.activity.user_activities.WebviewActivity" />
         <activity
-            android:name=".ui.activity.user_activities.CreateBotActivity"
+            android:name="ibt.com.tapizy.ui.activity.user_activities.CreateBotActivity"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".ui.activity.bot_activities.BotHomeActivity"
+            android:name="ibt.com.tapizy.ui.activity.bot_activities.BotHomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".ui.activity.user_activities.MyBotListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".ui.activity.bot_activities.BotChatConversationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
@@ -135,7 +145,7 @@
         </receiver>
 
         <service
-            android:name=".services.CustomFloatingViewService"
+            android:name="ibt.com.tapizy.services.CustomFloatingViewService"
             android:exported="false" />
         <meta-data
             android:name="io.fabric.ApiKey"

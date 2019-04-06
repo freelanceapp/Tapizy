@@ -8,7 +8,7 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_home"
+        layout="@layout/bot_app_bar_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -38,8 +38,8 @@
                     android:id="@+id/llProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -53,9 +53,9 @@
                         android:id="@+id/tvItemName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:padding="8dp"
-                        android:text="Profile"
+                        android:text="Bot Profile"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -72,8 +72,8 @@
                     android:id="@+id/llCreateBot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -85,9 +85,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:padding="8dp"
-                        android:text="Create Bot"
+                        android:text="Chat list"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -99,105 +99,7 @@
                     android:layout_marginBottom="8dp"
                     android:background="@color/gray_g" />
 
-                <LinearLayout
-                    android:id="@+id/ll24_7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_nav_24" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:padding="8dp"
-                        android:text="24 * 7"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/gray_g" />
-
-                <LinearLayout
-                    android:id="@+id/llRewards"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_nav_reward" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:padding="8dp"
-                        android:text="Rewards"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/gray_g" />
-
-                <LinearLayout
-                    android:id="@+id/llSettings"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_nav_settings" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:padding="8dp"
-                        android:text="Settings"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/gray_g" />
             </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewNavigationItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
         </LinearLayout>
     </android.support.design.widget.NavigationView>
 
