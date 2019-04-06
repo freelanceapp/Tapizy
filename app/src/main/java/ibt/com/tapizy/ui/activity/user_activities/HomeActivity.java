@@ -101,6 +101,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         txtSwipe.setOnTouchListener(touchListener);
 
         findViewById(R.id.llProfile).setOnClickListener(this);
+        findViewById(R.id.llMyBot).setOnClickListener(this);
         findViewById(R.id.llCreateBot).setOnClickListener(this);
         findViewById(R.id.ll24_7).setOnClickListener(this);
         findViewById(R.id.llRewards).setOnClickListener(this);
@@ -240,6 +241,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.llCreateBot:
                 Intent intent = new Intent(mContext, CreateBotActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.llMyBot:
+                Intent intentB = new Intent(mContext, MyBotListActivity.class);
+                startActivity(intentB);
                 break;
             case R.id.ll24_7:
                 Alerts.show(mContext, "Under development !!!");

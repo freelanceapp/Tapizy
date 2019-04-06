@@ -35,7 +35,7 @@ public class RecentChatAdapter extends RecyclerView.Adapter<RecentChatAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        rootview = layoutInflater.inflate(R.layout.custom_recent_chat_list, null);
+        rootview = layoutInflater.inflate(R.layout.row_recent_chat_list, null);
         return new ViewHolder(rootview);
     }
 

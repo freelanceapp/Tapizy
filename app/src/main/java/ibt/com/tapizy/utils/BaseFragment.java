@@ -20,10 +20,6 @@ public class BaseFragment extends Fragment {
     public Context mContext;
     public Activity activity;
 
-    public BaseFragment() {
-
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -422,9 +422,9 @@
 
             </RelativeLayout>
 
-            <include layout="@layout/custom_product_detail" />
+            <include layout="@layout/row_product_detail" />
 
-            <include layout="@layout/custom_product_detail" />
+            <include layout="@layout/row_product_detail" />
 
         </LinearLayout>
 

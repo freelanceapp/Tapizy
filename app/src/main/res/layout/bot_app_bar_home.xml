@@ -264,61 +264,94 @@
             android:weightSum="4">
 
             <LinearLayout
+                android:id="@+id/llChatA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Amardeep"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
-                    android:src="@drawable/icf_facebook" />
+                    android:src="@drawable/ic_avatar_profile" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llChatB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sumit"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
-                    android:src="@drawable/icf_twitter" />
+                    android:src="@drawable/ic_avatar_profile" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llChatC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sanju"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
-                    android:src="@drawable/ic_instagram" />
+                    android:src="@drawable/ic_avatar_profile" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llChatD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rahul"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
-                    android:src="@drawable/ic_flipkart" />
+                    android:src="@drawable/ic_avatar_profile" />
             </LinearLayout>
         </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_tapizy_list"
             android:layout_width="match_parent"

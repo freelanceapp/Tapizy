@@ -76,6 +76,7 @@ public class Constant {
 
     public static final String[] CATEGORY_LIST = {"Select Category", "My Travel", "Daily News", "My Money", "My Health", "My Shopping",
             "Near By Plans", "A to Z Home Services", "My Property"};
+    public static final String BotHomeFragment = "BotHomeFragment";
 }
 /*<uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />

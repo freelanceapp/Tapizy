@@ -14,7 +14,7 @@ import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
-import ibt.com.tapizy.ui.fragment.BottomsheetFragment;
+import ibt.com.tapizy.ui.fragment.video_fragment.BottomsheetFragment;
 import ibt.com.tapizy.utils.Alerts;
 import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;

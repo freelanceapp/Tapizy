@@ -1,4 +1,4 @@
-package ibt.com.tapizy.ui.fragment;
+package ibt.com.tapizy.ui.fragment.video_fragment;
 
 import android.app.Dialog;
 import android.content.Context;
