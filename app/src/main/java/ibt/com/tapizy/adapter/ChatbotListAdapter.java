@@ -43,6 +43,7 @@ public class ChatbotListAdapter extends RecyclerView.Adapter<ChatbotListAdapter.
         if (chatbotLists.get(position).getAvtar() != null) {
             Glide.with(context)
                     .load(Constant.PROFILE_IMAGE_BASE_URL + chatbotLists.get(position).getAvtar())
+                    .placeholder(R.drawable.img_chatbot)
                     .into(holder.imgBot);
         }
         holder.llChatbot.setTag(position);

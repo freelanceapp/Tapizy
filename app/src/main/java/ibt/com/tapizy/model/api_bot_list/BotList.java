@@ -12,14 +12,16 @@ public class BotList implements Parcelable
     @SerializedName("bot_name")
     @Expose
     private String botName;
-    @SerializedName("uid")
+    @SerializedName("bot_id")
     @Expose
     private String uid;
-    @SerializedName("avtar")
+    @SerializedName("bot_avtar")
     @Expose
     private String avtar;
+    @SerializedName("bot_color")
+    @Expose
+    private String botColor;
     public final static Parcelable.Creator<BotList> CREATOR = new Creator<BotList>() {
-
 
         @SuppressWarnings({
                 "unchecked"
@@ -39,6 +41,7 @@ public class BotList implements Parcelable
         this.botName = ((String) in.readValue((String.class.getClassLoader())));
         this.uid = ((String) in.readValue((String.class.getClassLoader())));
         this.avtar = ((String) in.readValue((String.class.getClassLoader())));
+        this.botColor = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public BotList() {
@@ -68,10 +71,19 @@ public class BotList implements Parcelable
         this.avtar = avtar;
     }
 
+    public String getBotColor() {
+        return botColor;
+    }
+
+    public void setBotColor(String botColor) {
+        this.botColor = botColor;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(botName);
         dest.writeValue(uid);
         dest.writeValue(avtar);
+        dest.writeValue(botColor);
     }
 
     public int describeContents() {

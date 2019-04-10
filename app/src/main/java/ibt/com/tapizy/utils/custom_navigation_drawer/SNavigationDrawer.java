@@ -184,7 +184,7 @@ public class SNavigationDrawer extends RelativeLayout {
                         currentPos = Integer.valueOf(view.getTag().toString());
                         menuItemClicked(currentPos);
 
-                        appbarTitleTV.setText(menuItemList.get(currentPos).getTitle());
+                        //appbarTitleTV.setText(menuItemList.get(currentPos).getTitle());
 
                         final CardView backCV = menuLL.findViewWithTag("cv" + currentPos);
                         final TextView title = menuLL.findViewWithTag("tv" + currentPos);

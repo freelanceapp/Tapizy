@@ -19,7 +19,7 @@
                 android:id="@+id/viewA"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:background="@drawable/layout_bg_gradient_2" />
+                android:background="@color/bot_blue" />
 
             <ImageView
                 android:id="@+id/imgBack"
@@ -42,8 +42,10 @@
                 android:layout_height="90dp"
                 android:layout_above="@+id/cardviewA"
                 android:layout_centerHorizontal="true"
+                app:cardBackgroundColor="@color/bot_green"
                 app:cardCornerRadius="45dp"
-                app:cardElevation="10dp">
+                app:cardElevation="10dp"
+                app:contentPadding="1dp">
 
                 <ImageView
                     android:id="@+id/imgBotProfile"
@@ -74,6 +76,7 @@
                     android:paddingTop="16dp">
 
                     <EditText
+                        android:id="@+id/edtBotName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -109,6 +112,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:paddingStart="8dp"
+                            android:text="Blue"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -134,8 +138,7 @@
                                     android:id="@+id/rlC_Blue"
                                     android:layout_width="62dp"
                                     android:layout_height="62dp"
-                                    android:background="@drawable/circle_background_f"
-                                    android:visibility="gone" />
+                                    android:background="@drawable/circle_background_f" />
 
                                 <android.support.v7.widget.CardView
                                     android:layout_width="60dp"
@@ -333,7 +336,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -381,6 +384,7 @@
             </RelativeLayout>
 
             <EditText
+                android:id="@+id/edtWeblink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -392,6 +396,7 @@
                 android:textColorHint="@color/gray_d" />
 
             <EditText
+                android:id="@+id/edtBotDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -403,6 +408,15 @@
                 android:padding="12dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray_d" />
+
+            <Button
+                android:id="@+id/btnCreateBot"
+                android:layout_width="150dp"
+                android:background="@color/bot_blue"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:text="Create" />
         </LinearLayout>
     </LinearLayout>
 

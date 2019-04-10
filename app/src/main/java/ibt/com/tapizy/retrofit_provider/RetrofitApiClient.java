@@ -39,24 +39,36 @@ public interface RetrofitApiClient {
 
     @FormUrlEncoded
     @POST(Constant.UPDATE_PROFILE_API)
-    Call<UserDataMainModal> updateProfile(@Field("u_contact") String user_contact, @Field("u_username") String user_username,
-                                          @Field("u_gender") String user_gender, @Field("u_website") String user_website,
-                                          @Field("u_bio") String user_bio, @Field("is_bot") String user_bot,
-                                          @Field("uid") String uid, @Field("u_name") String u_name,
-                                          @Field("u_email") String u_email, @Field("bot_color") String bot_color,
-                                          @Field("bot_type") String bot_type, @Field("bot_sub_type") String bot_sub_type);
+    Call<UserDataMainModal> updateProfile(@Field("u_name") String u_name, @Field("u_email") String u_email,
+                                          @Field("u_gender") String u_gender, @Field("uid") String uid,
+                                          @Field("dob") String dob, @Field("city") String city,
+                                          @Field("state") String state, @Field("county") String county);
 
     @Multipart
     @POST(Constant.UPDATE_PROFILE_IMAGE_API)
     Call<ResponseBody> updateProfileImage(@Part("uid") RequestBody user_id, @Part MultipartBody.Part aimage);
 
+    @FormUrlEncoded
+    @POST(Constant.BOT_CATEGORY_TYPE)
+    Call<ResponseBody> subCategory(@Field("bot_type") String bot_type);
+
+    @FormUrlEncoded
+    @POST(Constant.MY_BOT)
+    Call<BotListMainModal> myBotList(@Field("uid") String uid);
+
+    @Multipart
+    @POST(Constant.BOT_CREATE)
+    Call<ResponseBody> botCreate(@Part("uid") RequestBody uid, @Part("bot_name") RequestBody bot_name,
+                                 @Part("bot_color") RequestBody bot_color,
+                                 @Part("bot_type") RequestBody bot_type, @Part("bot_sub_type") RequestBody bot_sub_type,
+                                 @Part("website") RequestBody website, @Part("description") RequestBody description,
+                                 @Part MultipartBody.Part image);
 
     @Multipart
     @POST(Constant.NEWPOST_API)
     Call<ResponseBody> newPostFeed(@Part("uid") RequestBody user_id, @Part("headline") RequestBody headline,
                                    @Part("status") RequestBody post_description, @Part MultipartBody.Part video,
                                    @Part MultipartBody.Part aimage);
-
 
     @FormUrlEncoded
     @POST(Constant.TIMELINE_API)
@@ -105,15 +117,6 @@ public interface RetrofitApiClient {
     @POST(Constant.SEND_MSG)
     Call<CommunicationMainModal> sendMsg(@Field("user_bot_id") String user_bot_id, @Field("uid") String uid,
                                          @Field("relate_id") String relate_id, @Field("response_relate_id") String response_relate_id);
-
-    @FormUrlEncoded
-    @POST(Constant.BOT_DETAIL_ENTRY)
-    Call<ResponseBody> botDetailInsert(@Field("uid") String uid, @Field("bot_color") String bot_color,
-                                       @Field("bot_type") String bot_type, @Field("bot_sub_type") String bot_sub_type);
-
-    @FormUrlEncoded
-    @POST(Constant.BOT_CATEGORY_TYPE)
-    Call<ResponseBody> subCategory(@Field("bot_type") String bot_type);
 
     @FormUrlEncoded
     @POST(Constant.QUESTION_LIST_API)

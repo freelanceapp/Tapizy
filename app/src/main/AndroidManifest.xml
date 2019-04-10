@@ -35,9 +35,6 @@
             android:name="ibt.com.tapizy.ui.activity.user_activities.SettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ibt.com.tapizy.ui.activity.user_activities.MyProfileActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.recent_chat.RecentChatActivity"
             android:screenOrientation="portrait" />
         <activity

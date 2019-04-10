@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ import ibt.com.tapizy.utils.FragmentUtils;
 import ibt.com.tapizy.utils.custom_navigation_drawer.MenuItem;
 import ibt.com.tapizy.utils.custom_navigation_drawer.SNavigationDrawer;
 
-public class HomeActivity extends BaseActivity implements View.OnClickListener, SNavigationDrawer.OnMenuItemClickListener, SNavigationDrawer.DrawerListener {
+public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMenuItemClickListener, SNavigationDrawer.DrawerListener {
 
     public static HomeActivity homeActivity;
     private SNavigationDrawer sNavigationDrawer;
@@ -31,6 +30,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private Class fragmentClass;
     private Fragment fragment;
     private String fragmentTag = Constant.HomeFragment;
+    private String strTitle = "Home";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,60 +63,51 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         sNavigationDrawer.setMenuItemList(menuItems);
         sNavigationDrawer.setOnMenuItemClickListener(this);
         sNavigationDrawer.setDrawerListener(this);
-    }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            /*case R.id.llProfile:
-                startActivity(new Intent(mContext, MyProfileActivity.class));
-                break;
-            case R.id.llCreateBot:
-                Intent intent = new Intent(mContext, CreateBotActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.llMyBot:
-                Intent intentB = new Intent(mContext, MyBotListFragment.class);
-                startActivity(intentB);
-                break;
-            case R.id.ll24_7:
-                Alerts.show(mContext, "Under development !!!");
-                break;
-            case R.id.llRewards:
-                Alerts.show(mContext, "Under development !!!");
-                break;
-            case R.id.llSettings:
-                startActivity(new Intent(mContext, SettingActivity.class));
-                break;*/
-        }
     }
 
     @Override
     public void onMenuItemClicked(int position) {
         switch (position) {
             case 0:
+                strTitle = "Home";
                 fragmentTag = Constant.HomeFragment;
                 fragmentClass = HomeFragment.class;
+                sNavigationDrawer.setAppbarTitleTV(strTitle);
                 break;
             case 1:
+                strTitle = "Profile";
                 fragmentTag = Constant.MyProfileFragment;
                 fragmentClass = MyProfileFragment.class;
+                sNavigationDrawer.setAppbarTitleTV(strTitle);
                 break;
             case 2:
+                strTitle = "Bot List";
                 fragmentTag = Constant.MyBotListFragment;
                 fragmentClass = MyBotListFragment.class;
+                sNavigationDrawer.setAppbarTitleTV(strTitle);
                 break;
             case 3:
+                sNavigationDrawer.setAppbarTitleTV(strTitle);
                 Intent intent = new Intent(mContext, CreateBotActivity.class);
                 startActivity(intent);
                 break;
             case 4:
+                strTitle = "24*7";
                 fragmentTag = Constant.AvailabilityFragment;
                 fragmentClass = AvailabilityFragment.class;
+                sNavigationDrawer.setAppbarTitleTV(strTitle);
                 break;
             case 5:
+                strTitle = "Rewards";
                 fragmentTag = Constant.RewardsFragment;
                 fragmentClass = RewardsFragment.class;
+                sNavigationDrawer.setAppbarTitleTV(strTitle);
+                break;
+            case 6:
+                sNavigationDrawer.setAppbarTitleTV(strTitle);
+                Intent intentS = new Intent(mContext, SettingActivity.class);
+                startActivity(intentS);
                 break;
         }
     }

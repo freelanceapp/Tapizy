@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -22,7 +21,6 @@ import ibt.com.tapizy.utils.BaseFragment;
 public class MyProfileFragment extends BaseFragment implements View.OnClickListener {
 
     private View rootView;
-    private ImageView icEditProfile;
     private String strId = "", strPhone = "";
 
     @Nullable
@@ -37,9 +35,7 @@ public class MyProfileFragment extends BaseFragment implements View.OnClickListe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        icEditProfile = rootView.findViewById(R.id.ic_edit_profile);
-        icEditProfile.setOnClickListener(this);
-        rootView.findViewById(R.id.imgBack).setOnClickListener(this);
+        rootView.findViewById(R.id.ic_edit_profile).setOnClickListener(this);
         setUserData();
     }
 
@@ -49,10 +45,12 @@ public class MyProfileFragment extends BaseFragment implements View.OnClickListe
         Glide.with(mContext)
                 .load(Constant.PROFILE_IMAGE_BASE_URL + User.getUser().getUser().getUProfile())
                 .into((CircleImageView) rootView.findViewById(R.id.img_user_profile));
-        ((TextView) rootView.findViewById(R.id.tv_username)).setText(User.getUser().getUser().getUUsername());
         ((TextView) rootView.findViewById(R.id.tv_name)).setText(User.getUser().getUser().getUName());
         ((TextView) rootView.findViewById(R.id.tv_emaiaddress)).setText(User.getUser().getUser().getUEmail());
         ((TextView) rootView.findViewById(R.id.tv_gender)).setText(User.getUser().getUser().getUGender());
+        ((TextView) rootView.findViewById(R.id.tvCity)).setText(User.getUser().getUser().getCity());
+        ((TextView) rootView.findViewById(R.id.tvState)).setText(User.getUser().getUser().getState());
+        ((TextView) rootView.findViewById(R.id.tvCountry)).setText(User.getUser().getUser().getCountry());
     }
 
     @Override

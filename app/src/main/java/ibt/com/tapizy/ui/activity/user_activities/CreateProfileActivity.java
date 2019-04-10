@@ -1,6 +1,7 @@
 package ibt.com.tapizy.ui.activity.user_activities;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,37 +18,25 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import ibt.com.tapizy.R;
-import ibt.com.tapizy.adapter.SpinnerBotCategoryAdapter;
 import ibt.com.tapizy.constant.Constant;
-import ibt.com.tapizy.model.SubCatList;
 import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
@@ -58,21 +47,21 @@ import ibt.com.tapizy.utils.BaseActivity;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 public class CreateProfileActivity extends BaseActivity implements View.OnClickListener {
+
+    private int mYear = 0, mMonth = 0, mDay = 0;
+    private String strDob = "";
 
     private static final int LOAD_IMAGE_GALLERY = 123;
     private static int PICK_IMAGE_CAMERA = 124;
     private static int PERMISSION_REQUEST_CODE = 456;
     private File finalFile = null;
 
-    private EditText etName, etMail, username;
+    private EditText edtName, edtEmail, edtPhone, edtDob, edtCity, edtState, edtCountry;
     private RadioGroup radioGroupGender;
-    private String strPhone, strUserId, strFrom, strGender, strBot,
-            strBotCategoryId = "", strBotSubCategoryId = "0", strIsBot = "";
-    private boolean isAdding = false;
+    private String strPhone, strUserId, strFrom, strGender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,42 +76,24 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     }
 
     private void init() {
-        isAdding = AppPreference.getBooleanPreference(mContext, Constant.MULTI_ACCOUNT);
+        radioGroupGender = findViewById(R.id.radioGroupGender);
+        edtName = findViewById(R.id.edtName);
+        edtEmail = findViewById(R.id.edtEmail);
+        edtPhone = findViewById(R.id.edtPhone);
+        edtDob = findViewById(R.id.edtDob);
+        edtCity = findViewById(R.id.edtCity);
+        edtState = findViewById(R.id.edtState);
+        edtCountry = findViewById(R.id.edtCountry);
 
         findViewById(R.id.iv_user_profile).setOnClickListener(this);
         findViewById(R.id.btn_create_profile).setOnClickListener(this);
         findViewById(R.id.ic_back_profile).setOnClickListener(this);
-        radioGroupGender = findViewById(R.id.radioGroupGender);
-        etName = findViewById(R.id.tv_user_name);
-        etMail = findViewById(R.id.tv_user_email);
-        username = findViewById(R.id.tv_user_username);
 
         Intent intent = getIntent();
         strFrom = intent.getStringExtra("from");
         strUserId = intent.getStringExtra("uid");
         strPhone = intent.getStringExtra("phone");
-        username.setText(strPhone);
-        CheckBox cbBot = findViewById(R.id.cb_chatbox_confirm);
-
-        if (isAdding) {
-            strBot = intent.getStringExtra("isBot");
-            strIsBot = intent.getStringExtra("isBot");
-        } else {
-            strBot = User.getUser().getUser().getIsBot();
-            strIsBot = User.getUser().getUser().getIsBot();
-        }
-        cbBot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    findViewById(R.id.llBotDetail).setVisibility(View.VISIBLE);
-                    strBot = "1";
-                } else {
-                    findViewById(R.id.llBotDetail).setVisibility(View.GONE);
-                    strBot = "0";
-                }
-            }
-        });
+        edtPhone.setText(strPhone);
 
         /*
          * User detail
@@ -133,9 +104,13 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                         .load(Constant.PROFILE_IMAGE_BASE_URL + User.getUser().getUser().getUProfile())
                         .into((CircleImageView) findViewById(R.id.iv_user_profile));
             }
-            ((EditText) findViewById(R.id.tv_user_username)).setText(User.getUser().getUser().getUContact());
-            ((TextView) findViewById(R.id.tv_user_name)).setText(User.getUser().getUser().getUName());
-            ((TextView) findViewById(R.id.tv_user_email)).setText(User.getUser().getUser().getUEmail());
+            edtPhone.setText(User.getUser().getUser().getUContact());
+            edtName.setText(User.getUser().getUser().getUName());
+            edtEmail.setText(User.getUser().getUser().getUEmail());
+            edtDob.setText(User.getUser().getUser().getDob());
+            edtCity.setText(User.getUser().getUser().getCity());
+            edtState.setText(User.getUser().getUser().getState());
+            edtCountry.setText(User.getUser().getUser().getCountry());
 
             if (User.getUser().getUser().getUGender().equalsIgnoreCase("male")) {
                 ((RadioButton) findViewById(R.id.rb_male)).setChecked(true);
@@ -144,17 +119,10 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                 ((RadioButton) findViewById(R.id.rb_male)).setChecked(false);
                 ((RadioButton) findViewById(R.id.rb_female)).setChecked(true);
             }
-
-            if (User.getUser().getUser().getIsBot().equalsIgnoreCase("1")) {
-                ((TextView) findViewById(R.id.tvIsBot)).setText("You are a Bot now !");
-                findViewById(R.id.cb_chatbox_confirm).setVisibility(View.GONE);
-            } else {
-                ((TextView) findViewById(R.id.tvIsBot)).setText("Check it if you register for Bot.");
-                findViewById(R.id.cb_chatbox_confirm).setVisibility(View.VISIBLE);
-            }
+        } else {
+            edtDob.setOnClickListener(this);
         }
         selectGender();
-        botCategorySpinner();
     }
 
     private boolean checkPermission() {
@@ -212,22 +180,14 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     }
 
     private void updateProfileImageApi(File imageFile) {
-        RequestBody _id = null;
-        if (isAdding) {
-            _id = RequestBody.create(MediaType.parse("text/plain"), strUserId);
-        } else {
-            _id = RequestBody.create(MediaType.parse("text/plain"), User.getUser().getUser().getUid());
-        }
+        RequestBody _id = RequestBody.create(MediaType.parse("text/plain"), User.getUser().getUser().getUid());
         RequestBody imageBodyFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
         MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("u_profile", imageFile.getName(), imageBodyFile);
 
         RetrofitService.updateUserProfile(new Dialog(mContext), retrofitApiClient.updateProfileImage(_id, fileToUpload), new WebResponse() {
             @Override
             public void onResponseSuccess(Response<?> result) {
-                Alerts.show(mContext, "Profile updated");
-                if (!isAdding) {
-                    getUserDetailApi();
-                }
+                getUserDetailApi();
             }
 
             @Override
@@ -238,43 +198,45 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     }
 
     private void updateApi() {
-        String strName = etName.getText().toString();
-        String strMail = etMail.getText().toString();
+        String strName = edtName.getText().toString();
+        String strMail = edtEmail.getText().toString();
+        String strDob = edtDob.getText().toString();
+        String strCity = edtCity.getText().toString();
+        String strState = edtState.getText().toString();
+        String strCountry = edtCountry.getText().toString();
 
-        if (etName.getText().toString().length() == 0) {
-            etName.setError("Name Required");
-        } else if (etMail.getText().toString().length() == 0) {
-            etMail.setError("Email Required");
+        if (strName.isEmpty()) {
+            edtName.setError("Name Required");
+        } else if (strMail.isEmpty()) {
+            edtEmail.setError("Email Required");
         } else if (!strMail.matches(Constant.EmailPattern)) {
-            etMail.setError("Enter valid email");
+            edtEmail.setError("Enter valid email");
+        } else if (strDob.isEmpty()) {
+            Alerts.show(mContext, "Select Date of Birth...!!!");
+        } else if (strCity.isEmpty()) {
+            Alerts.show(mContext, "Enter city...!!!");
+        } else if (strState.isEmpty()) {
+            Alerts.show(mContext, "Enter state...!!!");
+        } else if (strCountry.isEmpty()) {
+            Alerts.show(mContext, "Enter Country...!!!");
         } else {
             if (cd.isNetworkAvailable()) {
-                RetrofitService.updateData(new Dialog(mContext), retrofitApiClient.updateProfile(strPhone, "", strGender,
-                        "", "", strBot, strUserId, strName, strMail, "red",
-                        strBotCategoryId, strBotSubCategoryId), new WebResponse() {
+
+                RetrofitService.updateData(new Dialog(mContext), retrofitApiClient.updateProfile(strName,
+                        strMail, strGender, strUserId, strDob, strCity, strState, strCountry), new WebResponse() {
                     @Override
                     public void onResponseSuccess(Response<?> result) {
                         UserDataMainModal responseBody = (UserDataMainModal) result.body();
                         if (!responseBody.getError()) {
                             Alerts.show(mContext, "Update success!!!");
                             if (strFrom.equalsIgnoreCase("otp")) {
-                                if (isAdding) {
-                                    Intent intent = new Intent(mContext, SettingActivity.class);
-                                    intent.putExtra("u_name", responseBody.getUser().getUName());
-                                    intent.putExtra("uid", responseBody.getUser().getUid());
-                                    intent.putExtra("avatar", responseBody.getUser().getUProfile());
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    AppPreference.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
-                                    Gson gson = new GsonBuilder().setLenient().create();
-                                    String data = gson.toJson(responseBody);
-                                    AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);
-                                    User.setUser(responseBody);
-                                    startActivity(new Intent(mContext, HomeActivity.class));
-                                    getUserDetailApi();
-                                    finish();
-                                }
+                                AppPreference.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
+                                Gson gson = new GsonBuilder().setLenient().create();
+                                String data = gson.toJson(responseBody);
+                                AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);
+                                User.setUser(responseBody);
+                                startActivity(new Intent(mContext, HomeActivity.class));
+                                finish();
                             } else {
                                 getUserDetailApi();
                             }
@@ -378,9 +340,10 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ic_back_profile:
-                Intent intent = new Intent(mContext, LoginActivity.class);
-                startActivity(intent);
                 finish();
+                break;
+            case R.id.edtDob:
+                dateDialogue();
                 break;
             case R.id.iv_user_profile:
                 try {
@@ -397,40 +360,35 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.btn_create_profile:
                 String strImage = User.getUser().getUser().getUProfile();
-
                 if (strImage == null) {
                     Alerts.show(mContext, "Please select profile image");
-                } else {
-                    onUpdateClick();
-                }
-                /*if (finalFile == null) {
-                    Alerts.show(mContext, "Please select profile image");
-                } else {
-                    onUpdateClick();
-                }*/
-                break;
-        }
-    }
-
-    private void onUpdateClick() {
-        if (strIsBot.equalsIgnoreCase("1")) {
-            selectGender();
-            updateApi();
-        } else {
-            if (strBot.equalsIgnoreCase("1")) {
-                if (strBotCategoryId.equalsIgnoreCase("0")) {
-                    Alerts.show(mContext, "Please select category");
-                } else if (strBotSubCategoryId.equalsIgnoreCase("0")) {
-                    Alerts.show(mContext, "Please select sub category");
                 } else {
                     selectGender();
                     updateApi();
                 }
-            } else {
-                selectGender();
-                updateApi();
-            }
+                break;
         }
+    }
+
+    private void dateDialogue() {
+        Calendar calendar = Calendar.getInstance();
+        if (mYear == 0 || mMonth == 0 || mDay == 0) {
+            mYear = calendar.get(Calendar.YEAR);
+            mMonth = calendar.get(Calendar.MONTH);
+            mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        }
+        DatePickerDialog dialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                mYear = year;
+                mMonth = month;
+                mDay = dayOfMonth;
+                strDob = dayOfMonth + "-" + (month + 1) + "-" + year;
+                edtDob.setText(strDob);
+            }
+        }, mYear, mMonth, mDay);
+        dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        dialog.show();
     }
 
     /****************************************************************************************************/
@@ -454,101 +412,6 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onResponseFailed(String error) {
                 Alerts.show(mContext, error);
-            }
-        });
-    }
-
-    /****************************************************************************************************/
-    /*
-     * Category and sub category spinner
-     * */
-    private void botCategorySpinner() {
-        final List<SubCatList> items = new ArrayList<>();
-        for (int i = 0; i < Constant.CATEGORY_LIST.length; i++) {
-            String strName = Constant.CATEGORY_LIST[i];
-            SubCatList subCatList = new SubCatList(String.valueOf(i), strName);
-            items.add(subCatList);
-        }
-
-        SpinnerBotCategoryAdapter botCategoryAdapter = new SpinnerBotCategoryAdapter(mContext, R.layout.spinner_category_layout, items);
-        Spinner spinnerList = findViewById(R.id.spinnerCategory);
-        spinnerList.setAdapter(botCategoryAdapter);
-        spinnerList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                /*strBotCategory = items.get(position).getName();*/
-                strBotCategoryId = String.valueOf(position);
-
-                if (strBotCategoryId.equalsIgnoreCase("0")) {
-                    //Alerts.show(mContext, "Select category");
-                } else {
-                    botSubCategoryApi(strBotCategoryId);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
-
-    private void botSubCategoryApi(String strId) {
-        if (cd.isNetworkAvailable()) {
-            RetrofitService.subCatList(new Dialog(mContext), retrofitApiClient.subCategory(strId), new WebResponse() {
-                @Override
-                public void onResponseSuccess(Response<?> result) {
-                    ResponseBody responseBody = (ResponseBody) result.body();
-                    try {
-                        JSONObject jsonObject = new JSONObject(responseBody.string());
-                        if (!jsonObject.getBoolean("error")) {
-                            JSONArray jsonArray = jsonObject.getJSONArray("bot_sub_cat");
-                            if (jsonArray != null) {
-                                List<SubCatList> items = new ArrayList<>();
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jsonObj = jsonArray.getJSONObject(i);
-                                    String name = jsonObj.getString("name");
-                                    String id = jsonObj.getString("id");
-                                    SubCatList subCatList = new SubCatList(id, name);
-                                    items.add(subCatList);
-                                }
-                                botSubCategorySpinner(items);
-                            }
-                        } else {
-                            Alerts.show(mContext, "No data");
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onResponseFailed(String error) {
-                    Alerts.show(mContext, error);
-                }
-            });
-        } else {
-            cd.show(mContext);
-        }
-    }
-
-    private void botSubCategorySpinner(final List<SubCatList> items) {
-        SpinnerBotCategoryAdapter botCategoryAdapter = new SpinnerBotCategoryAdapter(mContext, R.layout.spinner_category_layout, items);
-        Spinner spinnerList = findViewById(R.id.spinnerSubCategory);
-        spinnerList.setAdapter(botCategoryAdapter);
-        spinnerList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //strBotCategory = items.get(position).getName();
-                strBotSubCategoryId = items.get(position).getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
     }

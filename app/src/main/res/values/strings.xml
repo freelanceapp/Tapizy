@@ -23,4 +23,6 @@
     <string name="mail_address">example@example.com</string>
     <string name="mail_title">Title</string>
     <string name="mail_content">Message</string>
+
+    <item name="ewq" type="id"/>
 </resources>

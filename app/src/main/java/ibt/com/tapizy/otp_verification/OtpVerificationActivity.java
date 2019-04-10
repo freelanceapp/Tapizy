@@ -135,7 +135,6 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnClic
                                 Intent intent = new Intent(mContext, CreateProfileActivity.class);
                                 intent.putExtra("phone", mainModal.getUser().getUContact());
                                 intent.putExtra("uid", mainModal.getUser().getUid());
-                                intent.putExtra("isBot", mainModal.getUser().getIsBot());
                                 intent.putExtra("from", "otp");
                                 startActivity(intent);
                                 finish();
