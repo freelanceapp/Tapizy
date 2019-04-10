@@ -20,7 +20,8 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:padding="4dp"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="match_parent"

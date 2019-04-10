@@ -3,25 +3,16 @@ package ibt.com.tapizy.ui.activity.bot_activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import ibt.com.tapizy.R;
-import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.ui.activity.user_activities.CreateBotActivity;
 import ibt.com.tapizy.ui.activity.user_activities.community_module.CommunityActivity;
 import ibt.com.tapizy.ui.activity.user_activities.trending_module.TrendingActivity;
-import ibt.com.tapizy.ui.fragment.bot_fragment.BotHomeFragment;
 import ibt.com.tapizy.utils.BaseActivity;
-import ibt.com.tapizy.utils.FragmentUtils;
 
 public class BotHomeActivity extends BaseActivity implements View.OnClickListener {
-
-    public static FragmentUtils fragmentUtilsHome;
-    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +22,7 @@ public class BotHomeActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void init() {
-        findViewById(R.id.llProfile).setOnClickListener(this);
+        findViewById(R.id.llBotProfile).setOnClickListener(this);
         findViewById(R.id.llTrending).setOnClickListener(this);
         findViewById(R.id.llCommunity).setOnClickListener(this);
         findViewById(R.id.llChatA).setOnClickListener(this);
@@ -65,19 +56,12 @@ public class BotHomeActivity extends BaseActivity implements View.OnClickListene
                 }
             }
         });
-
-        initFragment();
-    }
-
-    private void initFragment() {
-        fragmentUtilsHome = new FragmentUtils(fragmentManager);
-        fragmentUtilsHome.replaceFragment(new BotHomeFragment(), Constant.BotHomeFragment, R.id.home_frame);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.llProfile:
+            case R.id.llBotProfile:
                 startActivity(new Intent(mContext, CreateBotActivity.class));
                 break;
             case R.id.llTrending:

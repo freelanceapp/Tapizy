@@ -26,6 +26,7 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void init() {
+        findViewById(R.id.imgBack).setOnClickListener(this);
         findViewById(R.id.rlBlue).setOnClickListener(this);
         findViewById(R.id.rlGreen).setOnClickListener(this);
         findViewById(R.id.rlMaroon).setOnClickListener(this);
@@ -63,6 +64,7 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
             }
         });
     }
+
     private void botSubCategorySpinner() {
         final List<SubCatList> items = new ArrayList<>();
         for (int i = 0; i < Constant.CATEGORY_LIST.length; i++) {
@@ -90,6 +92,9 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.imgBack:
+                finish();
+                break;
             case R.id.rlBlue:
                 Alerts.show(mContext, "Blue");
                 ((TextView) findViewById(R.id.txtSelectedColor)).setText("Blue");

@@ -25,7 +25,7 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_profile);
+        setContentView(R.layout.fragment_my_profile);
 
         icEditProfile = findViewById(R.id.ic_edit_profile);
         icEditProfile.setOnClickListener(this);

@@ -14,14 +14,14 @@ public class FragmentUtils {
     public void replaceFragment(Fragment fragment, String tag, int frameId) {
         fragmentManager
                 .beginTransaction()
-                //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                 .replace(frameId, fragment, tag).commit();
     }
 
     public void replaceBackFragment(Fragment fragment, String tag, int frameId) {
         fragmentManager
                 .beginTransaction()
-                //.setCustomAnimations(R.anim.right_out, R.anim.left_enter)
+                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                 .replace(frameId, fragment, tag).commit();
     }
 }

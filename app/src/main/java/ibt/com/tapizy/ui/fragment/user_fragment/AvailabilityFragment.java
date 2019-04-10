@@ -1,5 +1,6 @@
-package ibt.com.tapizy.ui.fragment.bot_fragment;
+package ibt.com.tapizy.ui.fragment.user_fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ibt.com.tapizy.R;
+import ibt.com.tapizy.ui.activity.bot_activities.BotHomeActivity;
 import ibt.com.tapizy.utils.BaseFragment;
 
-public class BotHomeFragment extends BaseFragment {
+public class AvailabilityFragment extends BaseFragment implements View.OnClickListener {
 
     private View rootView;
 
@@ -18,12 +20,22 @@ public class BotHomeFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        rootView = inflater.inflate(R.layout.bot_fragment_home, container, false);
+        rootView = inflater.inflate(R.layout.fragment_availability, container, false);
         return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        init();
+    }
+
+    private void init() {
+        //rootView.findViewById(R.id.llChatbot).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        startActivity(new Intent(mContext, BotHomeActivity.class));
     }
 }

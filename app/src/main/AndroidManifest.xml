@@ -54,7 +54,7 @@
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.Base"
             android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.SplashScreen"
@@ -124,11 +124,6 @@
 
         <activity
             android:name="ibt.com.tapizy.ui.activity.bot_activities.BotHomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustNothing" />
-        <activity
-            android:name=".ui.activity.user_activities.MyBotListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />

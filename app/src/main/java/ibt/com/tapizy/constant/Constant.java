@@ -65,6 +65,11 @@ public class Constant {
     public static final String InstaUrl = "https://www.instagram.com/?hl=en";
 
     /* Fragment tag */
+    public static final String HomeFragment = "HomeFragment";
+    public static final String MyProfileFragment = "MyProfileFragment";
+    public static final String MyBotListFragment = "MyBotListFragment";
+    public static final String AvailabilityFragment = "AvailabilityFragment";
+    public static final String RewardsFragment = "RewardsFragment";
     public static final String VideoGalleryFragment = "VideoGalleryFragment";
     public static final String VideoTrimmerFragment = "VideoTrimmerFragment";
 
@@ -76,7 +81,7 @@ public class Constant {
 
     public static final String[] CATEGORY_LIST = {"Select Category", "My Travel", "Daily News", "My Money", "My Health", "My Shopping",
             "Near By Plans", "A to Z Home Services", "My Property"};
-    public static final String BotHomeFragment = "BotHomeFragment";
+    public static final String BotHomeFragment = "BotProfileFragment";
 }
 /*<uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />

@@ -16,15 +16,21 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import ibt.com.tapizy.R;
+import ibt.com.tapizy.constant.Constant;
+import ibt.com.tapizy.model.User;
 
 public class SNavigationDrawer extends RelativeLayout {
 
+    private View rootView;
 
     //Context
     protected Context mContext;
@@ -37,7 +43,7 @@ public class SNavigationDrawer extends RelativeLayout {
     protected TextView appbarTitleTV;
     protected ImageView menuIV;
     protected ScrollView menuSV;
-    protected LinearLayout menuLL;
+    protected LinearLayout menuLL, llHeader;
     protected LinearLayout containerLL;
 
     //Customization Variables
@@ -46,7 +52,7 @@ public class SNavigationDrawer extends RelativeLayout {
     private int menuItemSemiTransparentColor = getResources().getColor(R.color.transparent_black_percent_60);
     private int navigationDrawerBackgroundColor = getResources().getColor(R.color.white);
     private int primaryMenuItemTextColor = getResources().getColor(R.color.white);
-    private int secondaryMenuItemTextColor = getResources().getColor(R.color.black);
+    private int secondaryMenuItemTextColor = getResources().getColor(R.color.white);
     private int menuIconTintColor = getResources().getColor(R.color.black);
     private float menuIconSize = 30;
     private float appbarTitleTextSize = 20;
@@ -114,7 +120,7 @@ public class SNavigationDrawer extends RelativeLayout {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         //Load RootView from xml
-        View rootView = mLayoutInflater.inflate(R.layout.custom_widget_navigation_drawer, this, true);
+        rootView = mLayoutInflater.inflate(R.layout.custom_widget_navigation_drawer, this, true);
         rootLayout = rootView.findViewById(R.id.rootLayout);
         appbarRL = rootView.findViewById(R.id.appBarRL);
         containerCV = rootView.findViewById(R.id.containerCV);
@@ -122,10 +128,11 @@ public class SNavigationDrawer extends RelativeLayout {
         menuIV = rootView.findViewById(R.id.menuIV);
         menuSV = rootView.findViewById(R.id.menuSV);
         menuLL = rootView.findViewById(R.id.menuLL);
+        llHeader = rootView.findViewById(R.id.llHeader);
         containerLL = rootView.findViewById(R.id.containerLL);
 
         menuItemList = new ArrayList<>();
-
+        setHeaderData();
 
         menuIV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +145,6 @@ public class SNavigationDrawer extends RelativeLayout {
                 }
             }
         });
-
     }
 
     protected void initMenu() {
@@ -149,7 +155,7 @@ public class SNavigationDrawer extends RelativeLayout {
             TextView titleTV1 = view.findViewById(R.id.titleTV1);
             ImageView backgroundIV = view.findViewById(R.id.backgroundIV);
             CardView backgroundCV = view.findViewById(R.id.backgroundCV);
-            View tintView = (View) view.findViewById(R.id.tintView);
+            View tintView = view.findViewById(R.id.tintView);
             tintView.setBackgroundColor(menuItemSemiTransparentColor);
             titleTV.setTextColor(secondaryMenuItemTextColor);
             titleTV1.setTextColor(primaryMenuItemTextColor);
@@ -170,8 +176,8 @@ public class SNavigationDrawer extends RelativeLayout {
                 public void onClick(View view) {
                     if (currentPos != Integer.valueOf(view.getTag().toString())) {
 
-                        final CardView backCV1 = (CardView) menuLL.findViewWithTag("cv" + currentPos);
-                        final TextView title1 = (TextView) menuLL.findViewWithTag("tv" + currentPos);
+                        final CardView backCV1 = menuLL.findViewWithTag("cv" + currentPos);
+                        final TextView title1 = menuLL.findViewWithTag("tv" + currentPos);
 
                         backCV1.animate().translationX(rootRL.getX() - backCV1.getWidth()).setDuration(300).start();
 
@@ -180,8 +186,8 @@ public class SNavigationDrawer extends RelativeLayout {
 
                         appbarTitleTV.setText(menuItemList.get(currentPos).getTitle());
 
-                        final CardView backCV = (CardView) menuLL.findViewWithTag("cv" + currentPos);
-                        final TextView title = (TextView) menuLL.findViewWithTag("tv" + currentPos);
+                        final CardView backCV = menuLL.findViewWithTag("cv" + currentPos);
+                        final TextView title = menuLL.findViewWithTag("tv" + currentPos);
                         backCV.setVisibility(View.INVISIBLE);
                         System.out.println("Drawer Testing " + backCV.getTag());
                         backCV.animate().translationX(rootRL.getX() - backCV.getWidth()).setDuration(1).start();
@@ -216,14 +222,14 @@ public class SNavigationDrawer extends RelativeLayout {
     //Hamburger button Click Listener
     public interface OnHamMenuClickListener {
 
-        public void onHamMenuClicked();
+        void onHamMenuClicked();
 
     }
 
     //Listener for menu item click
     public interface OnMenuItemClickListener {
 
-        public void onMenuItemClicked(int position);
+        void onMenuItemClicked(int position);
 
     }
 
@@ -396,6 +402,15 @@ public class SNavigationDrawer extends RelativeLayout {
     public void setMenuItemList(List<MenuItem> menuItemList) {
         this.menuItemList = menuItemList;
         initMenu();
+    }
+
+    public void setHeaderData() {
+        Glide.with(mContext)
+                .load(Constant.PROFILE_IMAGE_BASE_URL + User.getUser().getUser().getUProfile())
+                .into(((CircleImageView) rootView.findViewById(R.id.profile_image)));
+
+        ((TextView) rootView.findViewById(R.id.tvUserName)).setText(User.getUser().getUser().getUName());
+        ((TextView) rootView.findViewById(R.id.tvEmail)).setText(User.getUser().getUser().getUEmail());
     }
 
     /*

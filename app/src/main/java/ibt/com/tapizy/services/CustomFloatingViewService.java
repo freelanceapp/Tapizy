@@ -18,10 +18,12 @@ import com.bumptech.glide.Glide;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import ibt.com.tapizy.R;
+import ibt.com.tapizy.ui.fragment.user_fragment.HomeFragment;
 import ibt.com.tapizy.utils.floating_view.FloatingViewListener;
 import ibt.com.tapizy.utils.floating_view.FloatingViewManager;
 
 import static ibt.com.tapizy.ui.activity.user_activities.HomeActivity.homeActivity;
+import static ibt.com.tapizy.ui.fragment.user_fragment.HomeFragment.homeFragment;
 
 /**
  * FloatingViewのカスタマイズを行います。
@@ -120,7 +122,7 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
     @Override
     public void onFinishFloatingView() {
         stopSelf();
-        homeActivity.removeFav(strBotId);
+        homeFragment.removeFav(strBotId);
     }
 
     /**

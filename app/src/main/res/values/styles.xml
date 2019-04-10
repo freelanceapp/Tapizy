@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/comforta_regular</item>
     </style>
 
     <style name="menu_labels_style">
@@ -16,6 +17,7 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:fontFamily">@font/now_alt_regular</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -26,6 +28,9 @@
         <item name="colorPrimary">@color/blueB</item>
         <item name="colorPrimaryDark">@color/blueA</item>
         <item name="colorAccent">@color/blueB</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:fontFamily">@font/now_alt_regular</item>
     </style>
 
     <style name="positionIndicator">

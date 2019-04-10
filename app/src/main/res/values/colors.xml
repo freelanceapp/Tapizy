@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimaryDark">#003399</color>
-    <color name="colorPrimary">#0d99ed</color>
+    <color name="colorPrimaryDark">#0c77c9</color>
+    <color name="colorPrimary">#2F9EF5</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="bot_maroon">#D30202</color>
@@ -36,7 +36,9 @@
 
     <color name="dark_white">#f8f8f8</color>
     <color name="white">#FFFFFF</color>
+
     <color name="transparent_white">#95FFFFFF</color>
+
     <color name="white1">#D6D6D6</color>
     <color name="ivory">#FFFFF0</color>
     <color name="light_yellow">#FFFFE0</color>
@@ -189,4 +191,17 @@
     <color name="gray_g">#dadada</color>
     <color name="gray_h">#e6e5e5</color>
     <color name="gray_i">#f2f0f0</color>
+
+    <!--Explore-->
+    <color name="explore_a">#4ce722</color>
+    <color name="explore_b">#10b05f</color>
+    <!--Community-->
+    <color name="community_a">#4cd9f3</color>
+    <color name="community_b">#2196f3</color>
+    <!--Trending-->
+    <color name="trending_a">#ffaa57</color>
+    <color name="trending_b">#fe5c76</color>
+    <!--Chat-->
+    <color name="chat_a">#9d5bfe</color>
+    <color name="chat_b">#3890fe</color>
 </resources>
