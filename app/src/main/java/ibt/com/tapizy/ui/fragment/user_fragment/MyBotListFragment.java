@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +35,7 @@ public class MyBotListFragment extends BaseFragment implements View.OnClickListe
 
     private List<BotList> chatbotLists = new ArrayList<>();
     private ChatbotListAdapter chatbotListAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -54,6 +56,8 @@ public class MyBotListFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void init() {
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout);
+
         //rootView.findViewById(R.id.llChatbot).setOnClickListener(this);
         RecyclerView recyclerViewBotList = rootView.findViewById(R.id.recyclerViewBotList);
 
@@ -63,6 +67,14 @@ public class MyBotListFragment extends BaseFragment implements View.OnClickListe
         recyclerViewBotList.setItemAnimator(new DefaultItemAnimator());
         recyclerViewBotList.setAdapter(chatbotListAdapter);
         botListApi();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                botListApi();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void botListApi() {

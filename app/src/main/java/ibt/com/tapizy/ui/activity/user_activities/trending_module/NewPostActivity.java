@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import ibt.com.tapizy.R;
+import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
@@ -161,6 +162,7 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void newPostFeedApi() {
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
         String strId = User.getUser().getUser().getUid();
         String strHeadline = ((EditText) findViewById(R.id.etHeadlines)).getText().toString();
         String strPostDescription = ((EditText) findViewById(R.id.edtPostDescription)).getText().toString();
@@ -169,7 +171,7 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
             RequestBody _id = RequestBody.create(MediaType.parse("text/plain"), strId);
             RequestBody _Headline = RequestBody.create(MediaType.parse("text/plain"), strHeadline);
             RequestBody _PostDescription = RequestBody.create(MediaType.parse("text/plain"), strPostDescription);
-            RequestBody user_type = RequestBody.create(MediaType.parse("text/plain"), "user");
+            RequestBody user_type = RequestBody.create(MediaType.parse("text/plain"), userType);
 
             MultipartBody.Part fileToUpload = null;
             MultipartBody.Part videoFileUpload = null;

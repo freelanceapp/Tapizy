@@ -133,7 +133,7 @@
             android:name=".ui.activity.bot_activities.BotProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustPan" />
 
         <receiver android:name="ibt.com.tapizy.otp_verification.MySMSBroadCastReceiver">
             <intent-filter android:priority="999">

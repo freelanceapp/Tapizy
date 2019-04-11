@@ -341,8 +341,9 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      * */
     private void likeApi(final UserFeed feed, final TextView textView, String strLike, String strUnlike, final TextView tvUnlike) {
         final String strId = User.getUser().getUser().getUid();
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
         RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getPostId(), strId, strLike, strUnlike,
-                "user"), new WebResponse() {
+                userType), new WebResponse() {
             @Override
             public void onResponseSuccess(Response<?> result) {
                 ResponseBody responseBody = (ResponseBody) result.body();
@@ -370,7 +371,8 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private void refreshTimelineApi(String strId) {
-        RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(strId,"user"), new WebResponse() {
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
+        RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(strId, userType), new WebResponse() {
             @Override
             public void onResponseSuccess(Response<?> result) {
                 DailyNewsFeedMainModal dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();

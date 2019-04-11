@@ -172,8 +172,9 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
     /* Post detail api */
     private void postDetailApi() {
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
         if (cd.isNetworkAvailable()) {
-            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.postDetail(postId, "user", strId), new WebResponse() {
+            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.postDetail(postId, userType, strId), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     DailyNewsFeedMainModal dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
@@ -423,8 +424,9 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void timelineApi() {
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
         if (cd.isNetworkAvailable()) {
-            RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(strId,"user"), new WebResponse() {
+            RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(strId, userType), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     DailyNewsFeedMainModal dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
@@ -450,10 +452,10 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
      * Like/Unlike function
      * */
     private void likeApi(final UserFeed feed, final TextView textView, String strLike, String strUnlike) {
-
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
         if (cd.isNetworkAvailable()) {
             RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getPostId(), strId, strLike, strUnlike,
-                    "user"), new WebResponse() {
+                    userType), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     ResponseBody responseBody = (ResponseBody) result.body();

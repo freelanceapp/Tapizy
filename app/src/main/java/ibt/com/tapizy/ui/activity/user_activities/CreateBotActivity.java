@@ -245,18 +245,6 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
 
             }
         });
-
-       /* if (strFrom.equals("bot")) {
-            String mainCategory = User.getBotDetail().getType();
-            for (int i = 0; i < items.size(); i++) {
-                if (mainCategory.equals(items.get(i).getName())) {
-                    spinnerList.setSelection(i);
-                    subCategoryApi(String.valueOf(i));
-                }
-            }
-            spinnerList.setEnabled(false);
-            spinnerList.setClickable(false);
-        }*/
     }
 
     private void subCategoryApi(String strCategoryId) {
@@ -318,17 +306,6 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
 
             }
         });
-
-       /* if (strFrom.equals("bot")) {
-            String subType = User.getBotDetail().getBotSubType();
-            for (int i = 0; i < items.size(); i++) {
-                if (subType.equals(items.get(i).getName())) {
-                    spinnerList.setSelection(i);
-                }
-            }
-            spinnerList.setEnabled(false);
-            spinnerList.setClickable(false);
-        }*/
     }
 
     /******/

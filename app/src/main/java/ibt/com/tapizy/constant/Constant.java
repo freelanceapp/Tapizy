@@ -19,12 +19,12 @@ public class Constant {
     public static final String BOT_DETAIL = "bot/bot_detail.php";
 
     public static final String RESEND_OTP = "app/resend-otp.php";
-    public static final String PostLike = "app/trending_post_like.php";
-    public static final String NEWPOST_API = "app/insert_daily_post.php";
-    public static final String TIMELINE_API = "app/timeline.php";
-    public static final String POST_DETAIL_API = "app/post_details.php";
-    public static final String COMMENT_API = "app/trending_comment.php";
-    public static final String USER_DETAIL_API = "app/user_details.php";
+    public static final String PostLike = "trending/trending_post_like.php";
+    public static final String NEWPOST_API = "trending/insert_daily_post.php";
+    public static final String TIMELINE_API = "trending/timeline.php";
+    public static final String POST_DETAIL_API = "trending/post_details.php";
+    public static final String COMMENT_API = "trending/trending_comment.php";
+    public static final String USER_DETAIL_API = "user/user_details.php";
     public static final String CREATE_CONVERSATION_API = "app/create_conversation.php";
     public static final String SELECT_CONVERSATION_API = "app/select_conversation_list.php";
     public static final String BOT_LIST_API = "app/bot_list.php";

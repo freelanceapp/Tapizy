@@ -4,7 +4,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.constant.Constant;
@@ -22,6 +27,7 @@ import retrofit2.Response;
 public class BotHomeActivity extends BaseActivity implements View.OnClickListener {
 
     private String strBotId = "";
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,8 @@ public class BotHomeActivity extends BaseActivity implements View.OnClickListene
 
         strBotId = getIntent().getStringExtra("bot_id");
 
+        collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
+        findViewById(R.id.imgBack).setOnClickListener(this);
         findViewById(R.id.llBotProfile).setOnClickListener(this);
         findViewById(R.id.llTrending).setOnClickListener(this);
         findViewById(R.id.llCommunity).setOnClickListener(this);
@@ -42,6 +50,10 @@ public class BotHomeActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.llChatB).setOnClickListener(this);
         findViewById(R.id.llChatC).setOnClickListener(this);
         findViewById(R.id.llChatD).setOnClickListener(this);
+        findViewById(R.id.llChatE).setOnClickListener(this);
+        findViewById(R.id.llChatF).setOnClickListener(this);
+        findViewById(R.id.llChatG).setOnClickListener(this);
+        findViewById(R.id.llChatH).setOnClickListener(this);
 
         AppBarLayout appBarLayout = findViewById(R.id.appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -76,6 +88,32 @@ public class BotHomeActivity extends BaseActivity implements View.OnClickListene
 
                     if (!detailMainModal.getError()) {
                         User.setBotDetail(detailMainModal.getBot());
+
+                        ((TextView) findViewById(R.id.txtBotName)).setText(User.getBotDetail().getBotName());
+                        Glide.with(mContext)
+                                .load(Constant.BOT_PROFILE_IMAGE + User.getBotDetail().getBotAvtar())
+                                .placeholder(R.drawable.img_chatbot)
+                                .into((ImageView) findViewById(R.id.imgBotProfile));
+
+                        if (User.getBotDetail().getBotColor().equalsIgnoreCase("Blue")) {
+                            collapsingToolbarLayout.setBackgroundColor(getResources().getColor(R.color.bot_blue));
+                            collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.bot_blue));
+                        } else if (User.getBotDetail().getBotColor().equalsIgnoreCase("Green")) {
+                            collapsingToolbarLayout.setBackgroundColor(getResources().getColor(R.color.bot_green));
+                            collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.bot_green));
+                        } else if (User.getBotDetail().getBotColor().equalsIgnoreCase("Teal")) {
+                            collapsingToolbarLayout.setBackgroundColor(getResources().getColor(R.color.bot_teal));
+                            collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.bot_teal));
+                        } else if (User.getBotDetail().getBotColor().equalsIgnoreCase("Purple")) {
+                            collapsingToolbarLayout.setBackgroundColor(getResources().getColor(R.color.bot_purple));
+                            collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.bot_purple));
+                        } else if (User.getBotDetail().getBotColor().equalsIgnoreCase("Olive")) {
+                            collapsingToolbarLayout.setBackgroundColor(getResources().getColor(R.color.bot_olive));
+                            collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.bot_olive));
+                        } else if (User.getBotDetail().getBotColor().equalsIgnoreCase("Maroon")) {
+                            collapsingToolbarLayout.setBackgroundColor(getResources().getColor(R.color.bot_maroon));
+                            collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.bot_maroon));
+                        }
                     } else {
                         Alerts.show(mContext, detailMainModal.getMessage());
                     }
@@ -104,10 +142,17 @@ public class BotHomeActivity extends BaseActivity implements View.OnClickListene
             case R.id.llCommunity:
                 startActivity(new Intent(mContext, CommunityActivity.class));
                 break;
+            case R.id.imgBack:
+                finish();
+                break;
             case R.id.llChatA:
             case R.id.llChatB:
             case R.id.llChatC:
             case R.id.llChatD:
+            case R.id.llChatE:
+            case R.id.llChatF:
+            case R.id.llChatG:
+            case R.id.llChatH:
                 startActivity(new Intent(mContext, BotChatConversationActivity.class));
                 break;
         }

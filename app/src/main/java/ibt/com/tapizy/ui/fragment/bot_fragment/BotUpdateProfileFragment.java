@@ -291,7 +291,7 @@ public class BotUpdateProfileFragment extends BaseFragment implements View.OnCli
         }
 
         SpinnerBotCategoryAdapter botCategoryAdapter = new SpinnerBotCategoryAdapter(mContext, R.layout.spinner_category_layout, items);
-        Spinner spinnerList = rootView.findViewById(R.id.spinnerCategory);
+        final Spinner spinnerList = rootView.findViewById(R.id.spinnerCategory);
         spinnerList.setAdapter(botCategoryAdapter);
         spinnerList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -308,10 +308,16 @@ public class BotUpdateProfileFragment extends BaseFragment implements View.OnCli
             }
         });
 
-        String mainCategory = User.getBotDetail().getType();
+        String mainCategory = User.getBotDetail().getBotType();
         for (int i = 0; i < items.size(); i++) {
             if (mainCategory.equals(items.get(i).getName())) {
-                spinnerList.setSelection(i);
+                final int finalI = i;
+                spinnerList.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        spinnerList.setSelection(finalI);
+                    }
+                });
                 subCategoryApi(String.valueOf(i));
             }
         }
@@ -496,8 +502,6 @@ public class BotUpdateProfileFragment extends BaseFragment implements View.OnCli
             Alerts.show(mContext, "Select color...!!!");
         } else if (strDescription.isEmpty()) {
             Alerts.show(mContext, "Enter description...!!!");
-        } else if (finalFile == null) {
-            Alerts.show(mContext, "Select image...!!!");
         } else {
             if (cd.isNetworkAvailable()) {
                 RetrofitService.getBotDetail(new Dialog(mContext), retrofitApiClient.botUpdateProfile(strId, strBotName,

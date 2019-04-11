@@ -75,8 +75,9 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
     }
 
     public void timelineApi() {
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
         if (cd.isNetworkAvailable()) {
-            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.showPostTimeLine(strId,"user"), new WebResponse() {
+            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.showPostTimeLine(strId, userType), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();

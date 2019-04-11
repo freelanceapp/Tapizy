@@ -76,7 +76,7 @@ public interface RetrofitApiClient {
 
     @FormUrlEncoded
     @POST(Constant.BOT_UPDATE_PROFILE_DATA)
-    Call<BotDetailMainModal> botUpdateProfile(@Field("uid") String uid, @Field("bot_name") String bot_name,
+    Call<BotDetailMainModal> botUpdateProfile(@Field("bot_id") String uid, @Field("bot_name") String bot_name,
                                               @Field("bot_color") String bot_color,
                                               @Field("bot_type") String bot_type, @Field("bot_sub_type") String bot_sub_type,
                                               @Field("website") String website, @Field("description") String description);
