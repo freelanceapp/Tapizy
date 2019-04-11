@@ -64,30 +64,6 @@
                         android:text="Redeem"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp" />
-
-                    <ibt.com.tapizy.utils.custom_seekbar.TickSeekBar
-                        android:id="@+id/seekbarSwipe"
-                        android:layout_width="250dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:padding="45dp"
-                        android:visibility="gone"
-                        app:tsb_max="3"
-                        app:tsb_progress="1"
-                        app:tsb_seek_smoothly="true"
-                        app:tsb_show_tick_marks_type="divider"
-                        app:tsb_thumb_drawable="@drawable/thumb_image"
-                        app:tsb_thumb_size="1dp"
-                        app:tsb_tick_marks_color="@color/transparent"
-                        app:tsb_ticks_count="3"
-                        app:tsb_track_background_color="@color/transparent"
-                        app:tsb_track_background_size="30dp"
-                        app:tsb_track_progress_color="@color/transparent"
-                        app:tsb_track_progress_size="30dp" />
-
                 </RelativeLayout>
             </LinearLayout>
 

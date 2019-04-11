@@ -4,6 +4,7 @@ import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.api_bot_list.BotListMainModal;
 import ibt.com.tapizy.model.api_chat_list.ChatListMainModal;
 import ibt.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
+import ibt.com.tapizy.model.bot_profile_data.BotDetailMainModal;
 import ibt.com.tapizy.model.chat_history.ChatHistoryMainModal;
 import ibt.com.tapizy.model.city_list_modal.ApiCityListMainModal;
 import ibt.com.tapizy.model.comment_list_modal.CommentMainModal;
@@ -56,37 +57,57 @@ public interface RetrofitApiClient {
     @POST(Constant.MY_BOT)
     Call<BotListMainModal> myBotList(@Field("uid") String uid);
 
+    @FormUrlEncoded
+    @POST(Constant.BOT_DETAIL)
+    Call<BotDetailMainModal> botDetail(@Field("bot_id") String bot_id);
+
     @Multipart
     @POST(Constant.BOT_CREATE)
-    Call<ResponseBody> botCreate(@Part("uid") RequestBody uid, @Part("bot_name") RequestBody bot_name,
-                                 @Part("bot_color") RequestBody bot_color,
-                                 @Part("bot_type") RequestBody bot_type, @Part("bot_sub_type") RequestBody bot_sub_type,
-                                 @Part("website") RequestBody website, @Part("description") RequestBody description,
-                                 @Part MultipartBody.Part image);
+    Call<BotDetailMainModal> botCreate(@Part("uid") RequestBody uid, @Part("bot_name") RequestBody bot_name,
+                                       @Part("bot_color") RequestBody bot_color,
+                                       @Part("bot_type") RequestBody bot_type, @Part("bot_sub_type") RequestBody bot_sub_type,
+                                       @Part("website") RequestBody website, @Part("description") RequestBody description,
+                                       @Part MultipartBody.Part image);
+
+    @Multipart
+    @POST(Constant.BOT_UPDATE_PROFILE_IMAGE)
+    Call<BotDetailMainModal> botUpdateProfileImage(@Part("bot_id") RequestBody bot_id,
+                                                   @Part MultipartBody.Part image);
+
+    @FormUrlEncoded
+    @POST(Constant.BOT_UPDATE_PROFILE_DATA)
+    Call<BotDetailMainModal> botUpdateProfile(@Field("uid") String uid, @Field("bot_name") String bot_name,
+                                              @Field("bot_color") String bot_color,
+                                              @Field("bot_type") String bot_type, @Field("bot_sub_type") String bot_sub_type,
+                                              @Field("website") String website, @Field("description") String description);
 
     @Multipart
     @POST(Constant.NEWPOST_API)
     Call<ResponseBody> newPostFeed(@Part("uid") RequestBody user_id, @Part("headline") RequestBody headline,
-                                   @Part("status") RequestBody post_description, @Part MultipartBody.Part video,
+                                   @Part("status") RequestBody post_description,
+                                   @Part("user_type") RequestBody user_type,
+                                   @Part MultipartBody.Part video,
                                    @Part MultipartBody.Part aimage);
 
     @FormUrlEncoded
     @POST(Constant.TIMELINE_API)
-    Call<DailyNewsFeedMainModal> showPostTimeLine(@Field("uid") String useId);
+    Call<DailyNewsFeedMainModal> showPostTimeLine(@Field("uid") String useId, @Field("user_type") String user_type);
 
     @FormUrlEncoded
     @POST(Constant.PostLike)
     Call<ResponseBody> postLike(@Field("post_id") String postId, @Field("uid") String useId,
-                                @Field("like") String like, @Field("unlike") String unlike);
+                                @Field("like") String like, @Field("unlike") String unlike,
+                                @Field("user_type") String user_type);
 
     @FormUrlEncoded
     @POST(Constant.POST_DETAIL_API)
-    Call<DailyNewsFeedMainModal> postDetail(@Field("post_id") String post_id, @Field("uid") String uid);
+    Call<DailyNewsFeedMainModal> postDetail(@Field("post_id") String post_id, @Field("user_type") String user_type,
+                                            @Field("uid") String uid);
 
     @FormUrlEncoded
     @POST(Constant.COMMENT_API)
     Call<CommentMainModal> newPostComment(@Field("post_id") String postId, @Field("uid") String useId,
-                                          @Field("comment") String comment);
+                                          @Field("comment") String comment, @Field("user_type") String user_type);
 
     @FormUrlEncoded
     @POST(Constant.USER_DETAIL_API)

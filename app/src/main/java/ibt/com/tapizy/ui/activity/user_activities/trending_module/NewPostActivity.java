@@ -169,6 +169,7 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
             RequestBody _id = RequestBody.create(MediaType.parse("text/plain"), strId);
             RequestBody _Headline = RequestBody.create(MediaType.parse("text/plain"), strHeadline);
             RequestBody _PostDescription = RequestBody.create(MediaType.parse("text/plain"), strPostDescription);
+            RequestBody user_type = RequestBody.create(MediaType.parse("text/plain"), "user");
 
             MultipartBody.Part fileToUpload = null;
             MultipartBody.Part videoFileUpload = null;
@@ -183,7 +184,7 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
             }
 
             RetrofitService.getNewPostData(new Dialog(mContext), retrofitApiClient.newPostFeed(_id, _Headline,
-                    _PostDescription, videoFileUpload, fileToUpload), new WebResponse() {
+                    _PostDescription, user_type, videoFileUpload, fileToUpload), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     ResponseBody responseBody = (ResponseBody) result.body();

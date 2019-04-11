@@ -42,9 +42,23 @@ public class ChatbotListAdapter extends RecyclerView.Adapter<ChatbotListAdapter.
 
         if (chatbotLists.get(position).getAvtar() != null) {
             Glide.with(context)
-                    .load(Constant.PROFILE_IMAGE_BASE_URL + chatbotLists.get(position).getAvtar())
+                    .load(Constant.BOT_PROFILE_IMAGE + chatbotLists.get(position).getAvtar())
                     .placeholder(R.drawable.img_chatbot)
                     .into(holder.imgBot);
+        }
+
+        if (chatbotLists.get(position).getBotColor().equalsIgnoreCase("Blue")) {
+            holder.llChatbot.setBackgroundColor(context.getResources().getColor(R.color.bot_blue));
+        } else if (chatbotLists.get(position).getBotColor().equalsIgnoreCase("Green")) {
+            holder.llChatbot.setBackgroundColor(context.getResources().getColor(R.color.bot_green));
+        } else if (chatbotLists.get(position).getBotColor().equalsIgnoreCase("Maroon")) {
+            holder.llChatbot.setBackgroundColor(context.getResources().getColor(R.color.bot_maroon));
+        } else if (chatbotLists.get(position).getBotColor().equalsIgnoreCase("Olive")) {
+            holder.llChatbot.setBackgroundColor(context.getResources().getColor(R.color.bot_olive));
+        } else if (chatbotLists.get(position).getBotColor().equalsIgnoreCase("Purple")) {
+            holder.llChatbot.setBackgroundColor(context.getResources().getColor(R.color.bot_purple));
+        } else if (chatbotLists.get(position).getBotColor().equalsIgnoreCase("Teal")) {
+            holder.llChatbot.setBackgroundColor(context.getResources().getColor(R.color.bot_teal));
         }
         holder.llChatbot.setTag(position);
         holder.llChatbot.setOnClickListener(onClickListener);

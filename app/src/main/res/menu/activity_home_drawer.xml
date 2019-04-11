@@ -7,11 +7,11 @@
      <!--   <item
             android:id="@+id/create_bot"
             android:icon="@drawable/img_chatbot"
-            android:title="Create Bot" />
+            android:title="Create BotDetail" />
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/icon1"
-            android:title="My Bot" /> -->
+            android:title="My BotDetail" /> -->
         <item
             android:id="@+id/my_profile"
             android:icon="@drawable/ic_profile_img"

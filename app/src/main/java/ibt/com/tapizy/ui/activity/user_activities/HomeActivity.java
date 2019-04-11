@@ -15,6 +15,7 @@ import ibt.com.tapizy.ui.fragment.user_fragment.HomeFragment;
 import ibt.com.tapizy.ui.fragment.user_fragment.MyBotListFragment;
 import ibt.com.tapizy.ui.fragment.user_fragment.MyProfileFragment;
 import ibt.com.tapizy.ui.fragment.user_fragment.RewardsFragment;
+import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
 import ibt.com.tapizy.utils.FragmentUtils;
 import ibt.com.tapizy.utils.custom_navigation_drawer.MenuItem;
@@ -37,6 +38,7 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         homeActivity = this;
+        AppPreference.setStringPreference(mContext, Constant.USER_TYPE, "user");
 
         fragmentManager = getSupportFragmentManager();
         fragmentUtilsHome = new FragmentUtils(fragmentManager);
@@ -90,6 +92,7 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
             case 3:
                 sNavigationDrawer.setAppbarTitleTV(strTitle);
                 Intent intent = new Intent(mContext, CreateBotActivity.class);
+                intent.putExtra("from", "user");
                 startActivity(intent);
                 break;
             case 4:
@@ -143,6 +146,12 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
     @Override
     public void onDrawerStateChanged(int newState) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppPreference.setStringPreference(mContext, Constant.USER_TYPE, "user");
     }
 }
 

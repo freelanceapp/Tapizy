@@ -2,7 +2,6 @@ package ibt.com.tapizy.constant;
 
 public class Constant {
 
-    /*http://tapizy.infobitetechnology.in/app/insert_daily_post.php*/
     //public static final String BASE_URL = "http://tapizy.infobitetechnology.in/";
     public static final String BASE_URL_IMAGE = "http://infobitetechnology.tech/tapizy/";
     public static final String BASE_URL = "http://infobitetechnology.tech/tapizy/api/";
@@ -13,9 +12,11 @@ public class Constant {
     public static final String UPDATE_PROFILE_API = "user/update_profile.php";
 
     public static final String BOT_CATEGORY_TYPE = "bot/bot_type.php";
-    public static final String BOT_PROFILE = "bot/update_bot_profile_image.php";
+    public static final String BOT_UPDATE_PROFILE_IMAGE = "bot/update_bot_profile_image.php";
+    public static final String BOT_UPDATE_PROFILE_DATA = "bot/update_bot_profile.php";
     public static final String BOT_CREATE = "bot/create_bot.php";
     public static final String MY_BOT = "bot/my_bot.php";
+    public static final String BOT_DETAIL = "bot/bot_detail.php";
 
     public static final String RESEND_OTP = "app/resend-otp.php";
     public static final String PostLike = "app/trending_post_like.php";
@@ -29,7 +30,6 @@ public class Constant {
     public static final String BOT_LIST_API = "app/bot_list.php";
     public static final String COMMUNICATION_API = "app/communition.php";
     public static final String SEND_MSG = "app/send_msg.php";
-    public static final String BOT_DETAIL_ENTRY = "app/bot_details.php";
     public static final String QUESTION_LIST_API = "app/select_question.php";
     public static final String CITY_LIST_API = "app/city_list.php";
     public static final String INSERT_ANSWER_API = "app/insert_answer.php";
@@ -43,13 +43,13 @@ public class Constant {
     public static final String CITY_ID = "CITY_ID";
     public static final String IS_LOGIN = "IS_LOGIN";
     public static final String USER_DATA = "USER_DATA";
-    public static final String USER_ID = "USER_ID";
-    public static final String USER_NAME = "USER_NAME";
     public static final String USER_IMAGE = "USER_IMAGE";
     public static final String POST_DETAIL = "POST_DETAIL";
     public static final String TIMELINE_DATA = "TIMELINE_DATA";
     public static final String IS_DATA_UPDATE = "IS_DATA_UPDATE";
     public static final String TOKEN = "TOKEN";
+
+    public static final String USER_TYPE = "TOKEN";
 
     public static final String MULTI_ACCOUNT = "MULTI_ACCOUNT";
     public static final String USER_B = "USER_B";
@@ -79,15 +79,18 @@ public class Constant {
     public static final String VideoGalleryFragment = "VideoGalleryFragment";
     public static final String VideoTrimmerFragment = "VideoTrimmerFragment";
 
+    public static final String BotProfileFragment = "BotProfileFragment";
+    public static final String BotUpdateProfileFragment = "BotUpdateProfileFragment";
+
     /**/
     public static final String EmailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     public static final String IMAGE_BASE_URL = BASE_URL_IMAGE + "image/trending/image/";
     public static final String VIDEO_BASE_URL = BASE_URL_IMAGE + "image/trending/video/";
     public static final String PROFILE_IMAGE_BASE_URL = BASE_URL_IMAGE + "image/user_profile/";
+    public static final String BOT_PROFILE_IMAGE = BASE_URL_IMAGE + "image/bot/";
 
     public static final String[] CATEGORY_LIST = {"Select Category", "My Travel", "Daily News", "My Money", "My Health", "My Shopping",
             "Near By Plans", "A to Z Home Services", "My Property"};
-    public static final String BotHomeFragment = "BotProfileFragment";
 }
 /*<uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />

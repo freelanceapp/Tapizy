@@ -1,4 +1,4 @@
-package ibt.com.tapizy.ui.activity.user_activities;
+package ibt.com.tapizy.ui.fragment.bot_fragment;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -16,13 +16,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,26 +49,39 @@ import ibt.com.tapizy.model.bot_profile_data.BotDetailMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
 import ibt.com.tapizy.utils.Alerts;
-import ibt.com.tapizy.utils.BaseActivity;
+import ibt.com.tapizy.utils.BaseFragment;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-public class CreateBotActivity extends BaseActivity implements View.OnClickListener {
+import static android.app.Activity.RESULT_OK;
+import static ibt.com.tapizy.ui.activity.bot_activities.BotProfileActivity.fragmentUtilsBot;
 
+public class BotUpdateProfileFragment extends BaseFragment implements View.OnClickListener {
+
+    private View rootView;
     private static final int LOAD_IMAGE_GALLERY = 123;
     private static int PICK_IMAGE_CAMERA = 124;
     private static int PERMISSION_REQUEST_CODE = 456;
     private File finalFile = null;
 
-    private String strCategory = "", strSubCategory = "", strFrom = "";
+    private String strCategory = "", strSubCategory = "";
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        rootView = inflater.inflate(R.layout.bot_fragment_profile_update, container, false);
+        return rootView;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_bot);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        setData();
         init();
         if (checkPermission()) {
             Alerts.show(mContext, "Permission granted");
@@ -73,19 +90,29 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
+    private void setData() {
+        ((TextView) rootView.findViewById(R.id.edtBotName)).setText(User.getBotDetail().getBotName());
+        ((TextView) rootView.findViewById(R.id.txtSelectedColor)).setText(User.getBotDetail().getBotColor());
+        ((EditText) rootView.findViewById(R.id.edtWeblink)).setText(User.getBotDetail().getWebisite());
+        ((EditText) rootView.findViewById(R.id.edtBotDescription)).setText(User.getBotDetail().getDescription());
+
+        Glide.with(mContext)
+                .load(Constant.BOT_PROFILE_IMAGE + User.getBotDetail().getBotAvtar())
+                .placeholder(R.drawable.img_chatbot)
+                .into((ImageView) rootView.findViewById(R.id.imgBotProfile));
+    }
+
     private void init() {
-        findViewById(R.id.btnCreateBot).setOnClickListener(this);
-        findViewById(R.id.imgBotProfile).setOnClickListener(this);
+        rootView.findViewById(R.id.btnCreateBot).setOnClickListener(this);
+        rootView.findViewById(R.id.imgBotProfile).setOnClickListener(this);
 
-        findViewById(R.id.imgBack).setOnClickListener(this);
-        findViewById(R.id.rlBlue).setOnClickListener(this);
-        findViewById(R.id.rlGreen).setOnClickListener(this);
-        findViewById(R.id.rlMaroon).setOnClickListener(this);
-        findViewById(R.id.rlOlive).setOnClickListener(this);
-        findViewById(R.id.rlPurple).setOnClickListener(this);
-        findViewById(R.id.rlTeal).setOnClickListener(this);
-
-        strFrom = getIntent().getStringExtra("from");
+        rootView.findViewById(R.id.imgBack).setOnClickListener(this);
+        rootView.findViewById(R.id.rlBlue).setOnClickListener(this);
+        rootView.findViewById(R.id.rlGreen).setOnClickListener(this);
+        rootView.findViewById(R.id.rlMaroon).setOnClickListener(this);
+        rootView.findViewById(R.id.rlOlive).setOnClickListener(this);
+        rootView.findViewById(R.id.rlPurple).setOnClickListener(this);
+        rootView.findViewById(R.id.rlTeal).setOnClickListener(this);
 
         botCategorySpinner();
     }
@@ -94,7 +121,7 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
      * BotDetail profile select and upload
      * */
     private boolean checkPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             Alerts.show(mContext, "Permission not granted");
             return false;
@@ -103,13 +130,13 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
     }
 
     private void selectImage() {
         try {
-            PackageManager pm = getPackageManager();
-            int permission = pm.checkPermission(Manifest.permission.CAMERA, getPackageName());
+            PackageManager pm = mContext.getPackageManager();
+            int permission = pm.checkPermission(Manifest.permission.CAMERA, mContext.getPackageName());
             if (permission == PackageManager.PERMISSION_GRANTED) {
                 final CharSequence[] choose = {"Pick From Camera", "Choose From Gallery", "Cancel"};
                 android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);
@@ -120,13 +147,13 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
                         if (choose[which].equals("Pick From Camera")) {
                             dialog.dismiss();
                             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            startActivityForResult(intent, PICK_IMAGE_CAMERA);
+                            activity.startActivityForResult(intent, PICK_IMAGE_CAMERA);
                         } else if (choose[which].equals("Choose From Gallery")) {
                             dialog.dismiss();
                             Intent i = new Intent(
                                     Intent.ACTION_PICK,
                                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            startActivityForResult(i, LOAD_IMAGE_GALLERY);
+                            activity.startActivityForResult(i, LOAD_IMAGE_GALLERY);
                         } else if (choose[which].equals("Cancel")) {
                             dialog.dismiss();
                         }
@@ -134,9 +161,9 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
                 });
                 builder.show();
             } else
-                Toast.makeText(this, "Camera Permission error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Camera Permission error", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(this, "Camera Permission error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Camera Permission error", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -155,15 +182,16 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_CAMERA) {
             try {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
-                ((ImageView) findViewById(R.id.imgBotProfile)).setImageBitmap(photo);
-                Uri tempUri = getImageUri(getApplicationContext(), photo);
+                ((ImageView) rootView.findViewById(R.id.imgBotProfile)).setImageBitmap(photo);
+                Uri tempUri = getImageUri(mContext, photo);
                 finalFile = new File(getRealPathFromURI(tempUri));
                 //api hit
+                updateBotProfileImage();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -173,16 +201,17 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
             try {
                 inputStream = mContext.getContentResolver().openInputStream(uriImage);
                 final Bitmap imageMap = BitmapFactory.decodeStream(inputStream);
-                ((ImageView) findViewById(R.id.imgBotProfile)).setImageBitmap(imageMap);
+                ((ImageView) rootView.findViewById(R.id.imgBotProfile)).setImageBitmap(imageMap);
                 String imagePath2 = getPath(uriImage);
                 finalFile = new File(imagePath2);
                 //api hit
+                updateBotProfileImage();
             } catch (FileNotFoundException e) {
                 Toast.makeText(mContext, "Image not found", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         } else {
-            ((ImageView) findViewById(R.id.imgBotProfile)).setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_img));
+            ((ImageView) rootView.findViewById(R.id.imgBotProfile)).setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_img));
         }
     }
 
@@ -195,8 +224,8 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
 
     public String getRealPathFromURI(Uri uri) {
         String path = "";
-        if (getContentResolver() != null) {
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        if (mContext.getContentResolver() != null) {
+            Cursor cursor = mContext.getContentResolver().query(uri, null, null, null, null);
             if (cursor != null) {
                 cursor.moveToFirst();
                 int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
@@ -218,6 +247,39 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
     }
 
     /*
+     * Bot profile image update
+     * */
+    private void updateBotProfileImage() {
+        String botId = User.getBotDetail().getId();
+        if (cd.isNetworkAvailable()) {
+            RequestBody id = RequestBody.create(MediaType.parse("text/plain"), botId);
+            RequestBody imageBodyFile = RequestBody.create(MediaType.parse("image/*"), finalFile);
+            MultipartBody.Part imagePart = MultipartBody.Part.createFormData("u_avtar", finalFile.getName(),
+                    imageBodyFile);
+
+            RetrofitService.getBotDetail(new Dialog(mContext), retrofitApiClient.botUpdateProfileImage(id, imagePart), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    BotDetailMainModal mainModal = (BotDetailMainModal) result.body();
+                    if (!mainModal.getError()) {
+                        User.setBotDetail(mainModal.getBot());
+                        Alerts.show(mContext, mainModal.getMessage());
+                    } else {
+                        Alerts.show(mContext, mainModal.getMessage());
+                    }
+                }
+
+                @Override
+                public void onResponseFailed(String error) {
+                    Alerts.show(mContext, error);
+                }
+            });
+        } else {
+            cd.show(mContext);
+        }
+    }
+
+    /*
      * Category and sub category spinner
      * */
     private void botCategorySpinner() {
@@ -229,7 +291,7 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
         }
 
         SpinnerBotCategoryAdapter botCategoryAdapter = new SpinnerBotCategoryAdapter(mContext, R.layout.spinner_category_layout, items);
-        Spinner spinnerList = findViewById(R.id.spinnerCategory);
+        Spinner spinnerList = rootView.findViewById(R.id.spinnerCategory);
         spinnerList.setAdapter(botCategoryAdapter);
         spinnerList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -246,17 +308,13 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
             }
         });
 
-       /* if (strFrom.equals("bot")) {
-            String mainCategory = User.getBotDetail().getType();
-            for (int i = 0; i < items.size(); i++) {
-                if (mainCategory.equals(items.get(i).getName())) {
-                    spinnerList.setSelection(i);
-                    subCategoryApi(String.valueOf(i));
-                }
+        String mainCategory = User.getBotDetail().getType();
+        for (int i = 0; i < items.size(); i++) {
+            if (mainCategory.equals(items.get(i).getName())) {
+                spinnerList.setSelection(i);
+                subCategoryApi(String.valueOf(i));
             }
-            spinnerList.setEnabled(false);
-            spinnerList.setClickable(false);
-        }*/
+        }
     }
 
     private void subCategoryApi(String strCategoryId) {
@@ -305,7 +363,7 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
 
     private void botSubCategorySpinner(final List<SubCatList> items) {
         SpinnerBotCategoryAdapter botCategoryAdapter = new SpinnerBotCategoryAdapter(mContext, R.layout.spinner_category_layout, items);
-        Spinner spinnerList = findViewById(R.id.spinnerSubCategory);
+        Spinner spinnerList = rootView.findViewById(R.id.spinnerSubCategory);
         spinnerList.setAdapter(botCategoryAdapter);
         spinnerList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -319,16 +377,12 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
             }
         });
 
-       /* if (strFrom.equals("bot")) {
-            String subType = User.getBotDetail().getBotSubType();
-            for (int i = 0; i < items.size(); i++) {
-                if (subType.equals(items.get(i).getName())) {
-                    spinnerList.setSelection(i);
-                }
+        String subType = User.getBotDetail().getBotSubType();
+        for (int i = 0; i < items.size(); i++) {
+            if (subType.equals(items.get(i).getName())) {
+                spinnerList.setSelection(i);
             }
-            spinnerList.setEnabled(false);
-            spinnerList.setClickable(false);
-        }*/
+        }
     }
 
     /******/
@@ -341,7 +395,7 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
             case R.id.imgBotProfile:
                 try {
                     if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(this,
+                        ActivityCompat.requestPermissions(activity,
                                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                                         Manifest.permission.WRITE_EXTERNAL_STORAGE}, LOAD_IMAGE_GALLERY);
                     } else {
@@ -352,54 +406,51 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnCreateBot:
-                createBotApi();
-                break;
-            case R.id.imgBack:
-                finish();
+                updateBotApi();
                 break;
             case R.id.rlBlue: {
-                findViewById(R.id.btnCreateBot).setBackgroundColor(getResources().getColor(R.color.bot_blue));
-                findViewById(R.id.viewA).setBackgroundColor(getResources().getColor(R.color.bot_blue));
+                rootView.findViewById(R.id.btnCreateBot).setBackgroundColor(getResources().getColor(R.color.bot_blue));
+                rootView.findViewById(R.id.viewA).setBackgroundColor(getResources().getColor(R.color.bot_blue));
                 int[] a = {R.id.txtBlue, R.id.txtGreen, R.id.txtMaroon, R.id.txtOlive, R.id.txtPurple, R.id.txtTeal};
                 int[] b = {R.id.rlC_Blue, R.id.rlC_Green, R.id.rlC_Maroon, R.id.rlC_Olive, R.id.rlC_Purple, R.id.rlC_Teal};
                 setColorClick("Blue", a, b);
                 break;
             }
             case R.id.rlGreen: {
-                findViewById(R.id.btnCreateBot).setBackgroundColor(getResources().getColor(R.color.bot_green));
-                findViewById(R.id.viewA).setBackgroundColor(getResources().getColor(R.color.bot_green));
+                rootView.findViewById(R.id.btnCreateBot).setBackgroundColor(getResources().getColor(R.color.bot_green));
+                rootView.findViewById(R.id.viewA).setBackgroundColor(getResources().getColor(R.color.bot_green));
                 int[] a = {R.id.txtGreen, R.id.txtMaroon, R.id.txtOlive, R.id.txtPurple, R.id.txtTeal, R.id.txtBlue};
                 int[] b = {R.id.rlC_Green, R.id.rlC_Maroon, R.id.rlC_Olive, R.id.rlC_Purple, R.id.rlC_Teal, R.id.rlC_Blue};
                 setColorClick("Green", a, b);
                 break;
             }
             case R.id.rlMaroon: {
-                findViewById(R.id.btnCreateBot).setBackgroundColor(getResources().getColor(R.color.bot_maroon));
-                findViewById(R.id.viewA).setBackgroundColor(getResources().getColor(R.color.bot_maroon));
+                rootView.findViewById(R.id.btnCreateBot).setBackgroundColor(getResources().getColor(R.color.bot_maroon));
+                rootView.findViewById(R.id.viewA).setBackgroundColor(getResources().getColor(R.color.bot_maroon));
                 int[] a = {R.id.txtMaroon, R.id.txtOlive, R.id.txtPurple, R.id.txtTeal, R.id.txtBlue, R.id.txtGreen};
                 int[] b = {R.id.rlC_Maroon, R.id.rlC_Olive, R.id.rlC_Purple, R.id.rlC_Teal, R.id.rlC_Green, R.id.rlC_Blue};
                 setColorClick("Maroon", a, b);
                 break;
             }
             case R.id.rlOlive: {
-                findViewById(R.id.btnCreateBot).setBackgroundColor(getResources().getColor(R.color.bot_olive));
-                findViewById(R.id.viewA).setBackgroundColor(getResources().getColor(R.color.bot_olive));
+                rootView.findViewById(R.id.btnCreateBot).setBackgroundColor(getResources().getColor(R.color.bot_olive));
+                rootView.findViewById(R.id.viewA).setBackgroundColor(getResources().getColor(R.color.bot_olive));
                 int[] a = {R.id.txtOlive, R.id.txtPurple, R.id.txtTeal, R.id.txtBlue, R.id.txtGreen, R.id.txtMaroon};
                 int[] b = {R.id.rlC_Olive, R.id.rlC_Purple, R.id.rlC_Teal, R.id.rlC_Green, R.id.rlC_Blue, R.id.rlC_Maroon};
                 setColorClick("Olive", a, b);
                 break;
             }
             case R.id.rlPurple: {
-                findViewById(R.id.btnCreateBot).setBackgroundColor(getResources().getColor(R.color.bot_purple));
-                findViewById(R.id.viewA).setBackgroundColor(getResources().getColor(R.color.bot_purple));
+                rootView.findViewById(R.id.btnCreateBot).setBackgroundColor(getResources().getColor(R.color.bot_purple));
+                rootView.findViewById(R.id.viewA).setBackgroundColor(getResources().getColor(R.color.bot_purple));
                 int[] a = {R.id.txtPurple, R.id.txtTeal, R.id.txtBlue, R.id.txtGreen, R.id.txtMaroon, R.id.txtOlive};
                 int[] b = {R.id.rlC_Purple, R.id.rlC_Teal, R.id.rlC_Green, R.id.rlC_Blue, R.id.rlC_Maroon, R.id.rlC_Olive};
                 setColorClick("Purple", a, b);
                 break;
             }
             case R.id.rlTeal: {
-                findViewById(R.id.btnCreateBot).setBackgroundColor(getResources().getColor(R.color.bot_teal));
-                findViewById(R.id.viewA).setBackgroundColor(getResources().getColor(R.color.bot_teal));
+                rootView.findViewById(R.id.btnCreateBot).setBackgroundColor(getResources().getColor(R.color.bot_teal));
+                rootView.findViewById(R.id.viewA).setBackgroundColor(getResources().getColor(R.color.bot_teal));
                 int[] a = {R.id.txtTeal, R.id.txtBlue, R.id.txtGreen, R.id.txtMaroon, R.id.txtOlive, R.id.txtPurple};
                 int[] b = {R.id.rlC_Teal, R.id.rlC_Green, R.id.rlC_Blue, R.id.rlC_Maroon, R.id.rlC_Olive, R.id.rlC_Purple};
                 setColorClick("Teal", a, b);
@@ -410,21 +461,21 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
 
     private void setColorClick(String color, int[] a, int[] b) {
         Alerts.show(mContext, color);
-        ((TextView) findViewById(R.id.txtSelectedColor)).setText(color);
+        ((TextView) rootView.findViewById(R.id.txtSelectedColor)).setText(color);
 
         for (int i = 0; i < a.length; i++) {
             if (i == 0) {
-                ((TextView) findViewById(a[i])).setTextColor(getResources().getColor(R.color.white));
+                ((TextView) rootView.findViewById(a[i])).setTextColor(getResources().getColor(R.color.white));
             } else {
-                ((TextView) findViewById(a[i])).setTextColor(getResources().getColor(R.color.gray_h));
+                ((TextView) rootView.findViewById(a[i])).setTextColor(getResources().getColor(R.color.gray_h));
             }
         }
 
         for (int i = 0; i < b.length; i++) {
             if (i == 0) {
-                (findViewById(b[i])).setVisibility(View.VISIBLE);
+                (rootView.findViewById(b[i])).setVisibility(View.VISIBLE);
             } else {
-                (findViewById(b[i])).setVisibility(View.GONE);
+                (rootView.findViewById(b[i])).setVisibility(View.GONE);
             }
         }
     }
@@ -432,12 +483,12 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
     /*
      * Create bot api
      * */
-    private void createBotApi() {
-        String strId = User.getUser().getUser().getUid();
-        String strBotName = ((EditText) findViewById(R.id.edtBotName)).getText().toString();
-        String strBotColor = ((TextView) findViewById(R.id.txtSelectedColor)).getText().toString();
-        String strWeblink = ((EditText) findViewById(R.id.edtWeblink)).getText().toString();
-        String strDescription = ((EditText) findViewById(R.id.edtBotDescription)).getText().toString();
+    private void updateBotApi() {
+        String strId = User.getBotDetail().getId();
+        String strBotName = ((EditText) rootView.findViewById(R.id.edtBotName)).getText().toString();
+        String strBotColor = ((TextView) rootView.findViewById(R.id.txtSelectedColor)).getText().toString();
+        String strWeblink = ((EditText) rootView.findViewById(R.id.edtWeblink)).getText().toString();
+        String strDescription = ((EditText) rootView.findViewById(R.id.edtBotDescription)).getText().toString();
 
         if (strBotName.isEmpty()) {
             Alerts.show(mContext, "Enter name...!!!");
@@ -449,26 +500,15 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
             Alerts.show(mContext, "Select image...!!!");
         } else {
             if (cd.isNetworkAvailable()) {
-                RequestBody id = RequestBody.create(MediaType.parse("text/plain"), strId);
-                RequestBody botName = RequestBody.create(MediaType.parse("text/plain"), strBotName);
-                RequestBody botColor = RequestBody.create(MediaType.parse("text/plain"), strBotColor);
-                RequestBody mainCategory = RequestBody.create(MediaType.parse("text/plain"), strCategory);
-                RequestBody subCategory = RequestBody.create(MediaType.parse("text/plain"), strSubCategory);
-                RequestBody webLink = RequestBody.create(MediaType.parse("text/plain"), strWeblink);
-                RequestBody description = RequestBody.create(MediaType.parse("text/plain"), strDescription);
-
-                RequestBody imageBodyFile = RequestBody.create(MediaType.parse("image/*"), finalFile);
-                MultipartBody.Part imagePart = MultipartBody.Part.createFormData("bot_avtar", finalFile.getName(),
-                        imageBodyFile);
-
-                RetrofitService.getBotDetail(new Dialog(mContext), retrofitApiClient.botCreate(id, botName,
-                        botColor, mainCategory, subCategory, webLink, description, imagePart), new WebResponse() {
+                RetrofitService.getBotDetail(new Dialog(mContext), retrofitApiClient.botUpdateProfile(strId, strBotName,
+                        strBotColor, strCategory, strSubCategory, strWeblink, strDescription), new WebResponse() {
                     @Override
                     public void onResponseSuccess(Response<?> result) {
                         BotDetailMainModal mainModal = (BotDetailMainModal) result.body();
                         if (!mainModal.getError()) {
+                            User.setBotDetail(mainModal.getBot());
                             Alerts.show(mContext, mainModal.getMessage());
-                            finish();
+                            fragmentUtilsBot.replaceFragment(new BotProfileFragment(), Constant.BotProfileFragment, R.id.frameLayout);
                         } else {
                             Alerts.show(mContext, mainModal.getMessage());
                         }

@@ -180,15 +180,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                             }
                         }
                     }
-
-                    /*for (int i = 0; i < imageUrl.length; i++) {
-                        FavoriteBot favoriteBot = new FavoriteBot();
-                        favoriteBot.setAvtar(imageUrl[i]);
-                        favoriteBot.setBotName(siteUrl[i]);
-                        favoriteBotList.add(favoriteBot);
-                        favoriteBotList.set(i, favoriteBot);
-                    }*/
-
                     adapter.notifyDataSetChanged();
                 }
 

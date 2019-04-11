@@ -173,7 +173,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     /* Post detail api */
     private void postDetailApi() {
         if (cd.isNetworkAvailable()) {
-            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.postDetail(postId, strId), new WebResponse() {
+            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.postDetail(postId, "user", strId), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     DailyNewsFeedMainModal dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
@@ -392,30 +392,31 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         String strComments = ((EditText) findViewById(R.id.edit_post_comment)).getText().toString();
 
         if (!strComments.isEmpty()) {
-            RetrofitService.postCommentResponse(retrofitApiClient.newPostComment(strPostId, strId, strComments), new WebResponse() {
-                @Override
-                public void onResponseSuccess(Response<?> result) {
-                    CommentMainModal commentResponseModal = (CommentMainModal) result.body();
-                    commentList.clear();
-                    if (strFrom.equals("user")) {
-                        AppPreference.setBooleanPreference(mContext, Constant.IS_DATA_UPDATE, false);
-                    } else {
-                        AppPreference.setBooleanPreference(mContext, Constant.IS_DATA_UPDATE, true);
-                    }
-                    //timelineApi();
-                    if (commentResponseModal == null)
-                        return;
-                    commentList.addAll(commentResponseModal.getComment());
-                    commentListAdapter.notifyDataSetChanged();
-                    ((EditText) findViewById(R.id.edit_post_comment)).setText("");
-                }
+            RetrofitService.postCommentResponse(retrofitApiClient.newPostComment(strPostId, strId, strComments, "user"),
+                    new WebResponse() {
+                        @Override
+                        public void onResponseSuccess(Response<?> result) {
+                            CommentMainModal commentResponseModal = (CommentMainModal) result.body();
+                            commentList.clear();
+                            if (strFrom.equals("user")) {
+                                AppPreference.setBooleanPreference(mContext, Constant.IS_DATA_UPDATE, false);
+                            } else {
+                                AppPreference.setBooleanPreference(mContext, Constant.IS_DATA_UPDATE, true);
+                            }
+                            //timelineApi();
+                            if (commentResponseModal == null)
+                                return;
+                            commentList.addAll(commentResponseModal.getComment());
+                            commentListAdapter.notifyDataSetChanged();
+                            ((EditText) findViewById(R.id.edit_post_comment)).setText("");
+                        }
 
-                @Override
-                public void onResponseFailed(String error) {
-                    AppPreference.setBooleanPreference(mContext, Constant.IS_DATA_UPDATE, false);
-                    Alerts.show(mContext, error);
-                }
-            });
+                        @Override
+                        public void onResponseFailed(String error) {
+                            AppPreference.setBooleanPreference(mContext, Constant.IS_DATA_UPDATE, false);
+                            Alerts.show(mContext, error);
+                        }
+                    });
         } else {
             Alerts.show(mContext, "Enter some comments!!!");
         }
@@ -423,7 +424,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
     private void timelineApi() {
         if (cd.isNetworkAvailable()) {
-            RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(strId), new WebResponse() {
+            RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(strId,"user"), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     DailyNewsFeedMainModal dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
@@ -451,7 +452,8 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private void likeApi(final UserFeed feed, final TextView textView, String strLike, String strUnlike) {
 
         if (cd.isNetworkAvailable()) {
-            RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getPostId(), strId, strLike, strUnlike), new WebResponse() {
+            RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getPostId(), strId, strLike, strUnlike,
+                    "user"), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     ResponseBody responseBody = (ResponseBody) result.body();

@@ -55,7 +55,6 @@ public class MyBotListFragment extends BaseFragment implements View.OnClickListe
 
     private void init() {
         //rootView.findViewById(R.id.llChatbot).setOnClickListener(this);
-
         RecyclerView recyclerViewBotList = rootView.findViewById(R.id.recyclerViewBotList);
 
         chatbotListAdapter = new ChatbotListAdapter(mContext, chatbotLists, this);
@@ -94,6 +93,13 @@ public class MyBotListFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(mContext, BotHomeActivity.class));
+        switch (v.getId()) {
+            case R.id.llChatbot:
+                int pos = Integer.parseInt(v.getTag().toString());
+                Intent intent = new Intent(mContext, BotHomeActivity.class);
+                intent.putExtra("bot_id", chatbotLists.get(pos).getUid());
+                startActivity(intent);
+                break;
+        }
     }
 }

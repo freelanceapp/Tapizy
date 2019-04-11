@@ -359,7 +359,7 @@
                                                 <TextView
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:text="Is Bot"
+                                                    android:text="Is BotDetail"
                                                     android:textColor="@color/black"
                                                     android:textSize="12dp" />
 

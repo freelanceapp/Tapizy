@@ -2,8 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -16,14 +15,16 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"
+            app:contentScrim="@color/colorPrimaryDark"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <LinearLayout
-                android:background="@drawable/switch_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/switch_background"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:layout_collapseMode="parallax">
@@ -107,7 +108,8 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="8dp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/tapizy_final" />
+                        android:src="@drawable/tapizy_final"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
