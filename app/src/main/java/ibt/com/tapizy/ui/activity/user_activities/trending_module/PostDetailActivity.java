@@ -58,7 +58,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.CommentListAdapter;
 import ibt.com.tapizy.constant.Constant;
-import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.comment_list_modal.CommentMainModal;
 import ibt.com.tapizy.model.timeline_modal.Comment;
 import ibt.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
@@ -108,7 +107,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void init() {
-        strId = User.getUser().getUser().getUid();
+        strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
         mProgressBar = findViewById(R.id.mProgressBar);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
@@ -389,11 +388,12 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void postCommentApi() {
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
         String strPostId = newPostModel.getPostId();
         String strComments = ((EditText) findViewById(R.id.edit_post_comment)).getText().toString();
 
         if (!strComments.isEmpty()) {
-            RetrofitService.postCommentResponse(retrofitApiClient.newPostComment(strPostId, strId, strComments, "user"),
+            RetrofitService.postCommentResponse(retrofitApiClient.newPostComment(strPostId, strId, strComments, userType),
                     new WebResponse() {
                         @Override
                         public void onResponseSuccess(Response<?> result) {

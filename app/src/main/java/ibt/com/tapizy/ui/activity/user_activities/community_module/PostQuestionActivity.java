@@ -60,7 +60,7 @@ public class PostQuestionActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void postAnswerApi(String strQuestion) {
-        String strUserId = User.getUser().getUser().getUid();
+        String strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
         String strCityId = AppPreference.getStringPreference(mContext, Constant.CITY_ID);
         RetrofitService.getloginData(new Dialog(mContext), retrofitApiClient.insertQuestionApi(strUserId,
                 strCityId, strQuestion), new WebResponse() {

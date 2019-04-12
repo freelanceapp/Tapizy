@@ -10,6 +10,7 @@ import java.util.List;
 
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.constant.Constant;
+import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.ui.fragment.user_fragment.AvailabilityFragment;
 import ibt.com.tapizy.ui.fragment.user_fragment.HomeFragment;
 import ibt.com.tapizy.ui.fragment.user_fragment.MyBotListFragment;
@@ -39,6 +40,7 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
         setContentView(R.layout.activity_home);
         homeActivity = this;
         AppPreference.setStringPreference(mContext, Constant.USER_TYPE, "user");
+        AppPreference.setStringPreference(mContext, Constant.USER_ID, User.getUser().getUser().getUid());
 
         fragmentManager = getSupportFragmentManager();
         fragmentUtilsHome = new FragmentUtils(fragmentManager);
@@ -151,6 +153,7 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
     @Override
     protected void onResume() {
         super.onResume();
+        AppPreference.setStringPreference(mContext, Constant.USER_ID, User.getUser().getUser().getUid());
         AppPreference.setStringPreference(mContext, Constant.USER_TYPE, "user");
     }
 }

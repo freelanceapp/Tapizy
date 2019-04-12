@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.constant.Constant;
-import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.community_post_modal.AnswerList;
 import ibt.com.tapizy.model.community_post_modal.QuestionList;
 import ibt.com.tapizy.retrofit_provider.RetrofitApiClient;
@@ -92,7 +91,7 @@ public class PostQuestionAdapter extends RecyclerView.Adapter<PostQuestionAdapte
     }
 
     private void postAnswerApi(String strQuesId, String strAnswer) {
-        String strUserId = User.getUser().getUser().getUid();
+        String strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
         RetrofitService.getloginData(new Dialog(mContext), retrofitApiClient.insertAnswerApi(strUserId,
                 strQuesId, strAnswer), new WebResponse() {
             @Override

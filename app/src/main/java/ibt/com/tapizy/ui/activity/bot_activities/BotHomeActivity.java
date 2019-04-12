@@ -37,9 +37,9 @@ public class BotHomeActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void init() {
-        AppPreference.setStringPreference(mContext, Constant.USER_TYPE, "bot");
-
         strBotId = getIntent().getStringExtra("bot_id");
+        AppPreference.setStringPreference(mContext, Constant.USER_TYPE, "bot");
+        AppPreference.setStringPreference(mContext, Constant.USER_ID, strBotId);
 
         collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
         findViewById(R.id.imgBack).setOnClickListener(this);

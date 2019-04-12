@@ -1,5 +1,6 @@
 package ibt.com.tapizy.ui.fragment.user_fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.Service;
 import android.content.Context;
@@ -10,18 +11,19 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +31,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.FavouriteBotListAdapter;
 import ibt.com.tapizy.constant.Constant;
@@ -63,6 +64,8 @@ import static ibt.com.tapizy.ui.activity.user_activities.HomeActivity.homeActivi
 public class HomeFragment extends BaseFragment implements View.OnClickListener, OnStartDragListener,
         FloatingViewListener {
 
+    private BottomSheetBehavior sheetBehavior;
+    private LinearLayout llBottom;
     public static HomeFragment homeFragment;
 
     private View rootView;
@@ -75,6 +78,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private static final int CHATHEAD_OVERLAY_PERMISSION_REQUEST_CODE = 100;
     private static final int CUSTOM_OVERLAY_PERMISSION_REQUEST_CODE = 101;
     private FavoriteBot favoriteBotData;
+    /********************************************************/
+
+    private RelativeLayout rlMain;
+    private int xDelta;
+    private int yDelta;
 
     @Nullable
     @Override
@@ -97,21 +105,48 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         favouriteBotRecyclerView();
     }
 
-    private void setUserData() {
-        //View header = navigationView.getHeaderView(0);
-
-        Glide.with(mContext)
-                .load(Constant.PROFILE_IMAGE_BASE_URL + User.getUser().getUser().getUProfile())
-                .into(((CircleImageView) rootView.findViewById(R.id.profile_image)));
-
-        ((TextView) rootView.findViewById(R.id.tvUserName)).setText(User.getUser().getUser().getUName());
-        ((TextView) rootView.findViewById(R.id.tvEmail)).setText(User.getUser().getUser().getUEmail());
-    }
-
+    @SuppressLint("ClickableViewAccessibility")
     private void init() {
+        llBottom = rootView.findViewById(R.id.llBottom);
+        sheetBehavior = BottomSheetBehavior.from(llBottom);
+        rlMain = rootView.findViewById(R.id.rlMain);
         txtSwipe = rootView.findViewById(R.id.txtSwipe);
         MultiTouchListener touchListener = new MultiTouchListener(homeActivity);
-        txtSwipe.setOnTouchListener(touchListener);
+        //txtSwipe.setOnTouchListener(touchListener);
+        txtSwipe.setOnTouchListener(new View.OnTouchListener() {
+            float lastX;
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                final int x = (int) event.getRawX();
+                final int y = (int) event.getRawY();
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_DOWN:
+                        RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams)
+                                view.getLayoutParams();
+
+                        xDelta = x - lParams.leftMargin;
+                        yDelta = y - lParams.topMargin;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        //Toast.makeText(mContext, "thanks for new location!", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+                        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view
+                                .getLayoutParams();
+                        layoutParams.leftMargin = x - xDelta;
+                        layoutParams.topMargin = y - yDelta;
+                        layoutParams.rightMargin = 0;
+                        layoutParams.bottomMargin = 0;
+                        view.setLayoutParams(layoutParams);
+                        break;
+                }
+                rlMain.invalidate();
+                return true;
+            }
+        });
+
         rootView.findViewById(R.id.llexplore).setOnClickListener(this);
         rootView.findViewById(R.id.llTrending).setOnClickListener(this);
         rootView.findViewById(R.id.llCommunity).setOnClickListener(this);
@@ -122,28 +157,39 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         rootView.findViewById(R.id.llInsta).setOnClickListener(this);
         rootView.findViewById(R.id.llFlipkart).setOnClickListener(this);
 
-        /*CollapsingToolbarLayout collapsingToolbar = rootView.findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle("");*/
-        AppBarLayout appBarLayout = rootView.findViewById(R.id.appbar);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
 
-            boolean isShow = true;
-            int scrollRange = -1;
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        TranslateAnimation animate = new TranslateAnimation(0, 0, 0, 0);
+                        animate.setDuration(500);
+                        animate.setFillAfter(true);
+                        rlMain.startAnimation(animate);
+                        rlMain.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        TranslateAnimation animate = new TranslateAnimation(0, rlMain.getWidth(), 0, 0);
+                        animate.setDuration(500);
+                        animate.setFillAfter(true);
+                        rlMain.startAnimation(animate);
+                        rlMain.setVisibility(View.GONE);
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
 
             @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    //rootView.findViewById(R.id.imgAppLogo).setVisibility(View.VISIBLE);
-                    //rootView.findViewById(R.id.backdrop).setVisibility(View.GONE);
-                    isShow = true;
-                } else if (isShow) {
-                    //rootView.findViewById(R.id.imgAppLogo).setVisibility(View.GONE);
-                    //rootView.findViewById(R.id.backdrop).setVisibility(View.VISIBLE);
-                    isShow = false;
-                }
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
             }
         });
     }

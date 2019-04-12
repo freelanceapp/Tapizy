@@ -163,7 +163,7 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
 
     private void newPostFeedApi() {
         String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
-        String strId = User.getUser().getUser().getUid();
+        String strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
         String strHeadline = ((EditText) findViewById(R.id.etHeadlines)).getText().toString();
         String strPostDescription = ((EditText) findViewById(R.id.edtPostDescription)).getText().toString();
 

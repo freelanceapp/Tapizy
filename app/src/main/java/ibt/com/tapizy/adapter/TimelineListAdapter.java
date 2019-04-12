@@ -33,7 +33,6 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.constant.Constant;
-import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import ibt.com.tapizy.model.timeline_modal.UserFeed;
 import ibt.com.tapizy.retrofit_provider.RetrofitApiClient;
@@ -340,7 +339,7 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      * Like/Unlike api
      * */
     private void likeApi(final UserFeed feed, final TextView textView, String strLike, String strUnlike, final TextView tvUnlike) {
-        final String strId = User.getUser().getUser().getUid();
+        final String strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
         String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
         RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getPostId(), strId, strLike, strUnlike,
                 userType), new WebResponse() {
