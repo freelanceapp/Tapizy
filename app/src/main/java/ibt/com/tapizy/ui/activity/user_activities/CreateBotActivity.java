@@ -24,6 +24,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +47,7 @@ import ibt.com.tapizy.model.bot_profile_data.BotDetailMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
 import ibt.com.tapizy.utils.Alerts;
+import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -70,6 +73,33 @@ public class CreateBotActivity extends BaseActivity implements View.OnClickListe
             Alerts.show(mContext, "Permission granted");
         } else {
             requestPermission();
+        }
+
+        setCoins();
+    }
+
+    private void setCoins() {
+        Glide.with(mContext)
+                .load(Constant.COIN_GIF)
+                .useAnimationPool(true)
+                .placeholder(R.drawable.coin_gif)
+                .into(((ImageView) findViewById(R.id.imgToolbarCoinGif)));
+
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
+        myCoinsApi();
+
+        if (userType.equalsIgnoreCase("user")) {
+            String coins = User.getCoins();
+            if (coins.isEmpty()) {
+                coins = "0";
+            }
+            ((TextView) findViewById(R.id.txtCoinsCount)).setText(coins);
+        } else {
+            String coins = User.getCoins();
+            if (coins.isEmpty()) {
+                coins = "0";
+            }
+            ((TextView) findViewById(R.id.txtCoinsCount)).setText(coins);
         }
     }
 

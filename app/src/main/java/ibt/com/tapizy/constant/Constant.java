@@ -37,20 +37,31 @@ public class Constant {
     public static final String INSERT_ANSWER_API = "community/insert_answer.php";
     public static final String INSERT_QUESTION_API = "community/insert_question.php";
 
+    /*Explore*/
+    public static final String BOT_LIST_API = "explore/bot_list.php";
+
+    /*Coins*/
+    public static final String MY_COINS = "coin/my_coins.php";
+    public static final String PAY_COINS = "coin/paycoins.php";
+
+    /*General*/
+    public static final String SOCIAL_LINKS = "general/social_link.php";
+
     public static final String CREATE_CONVERSATION_API = "app/create_conversation.php";
     public static final String SELECT_CONVERSATION_API = "app/select_conversation_list.php";
-    public static final String BOT_LIST_API = "app/bot_list.php";
     public static final String COMMUNICATION_API = "app/communition.php";
     public static final String SEND_MSG = "app/send_msg.php";
     public static final String CHAT_LIST = "app/conversation_bot_list.php";
     public static final String CHAT_HISTORY = "app/my_chat_history.php";
 
     /*Preference*/
+    public static final String COIN_UPDATE = "COIN_UPDATE";
     public static final String CITY_ID = "CITY_ID";
     public static final String IS_LOGIN = "IS_LOGIN";
     public static final String USER_DATA = "USER_DATA";
     public static final String USER_IMAGE = "USER_IMAGE";
     public static final String POST_DETAIL = "POST_DETAIL";
+    public static final String POST_CLICK = "POST_CLICK";
     public static final String TIMELINE_DATA = "TIMELINE_DATA";
     public static final String IS_DATA_UPDATE = "IS_DATA_UPDATE";
     public static final String TOKEN = "TOKEN";
@@ -92,17 +103,19 @@ public class Constant {
     /**/
     public static final String EmailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-    public static final String IMAGE_BASE_URL = BASE_URL_IMAGE + "image/trending/image/";
+    /*public static final String IMAGE_BASE_URL = BASE_URL_IMAGE + "image/trending/image/";
     public static final String VIDEO_BASE_URL = BASE_URL_IMAGE + "image/trending/video/";
     public static final String PROFILE_IMAGE_BASE_URL = BASE_URL_IMAGE + "image/user_profile/";
-    public static final String BOT_PROFILE_IMAGE = BASE_URL_IMAGE + "image/bot/";
-    /*public static final String IMAGE_BASE_URL = "";
+    public static final String BOT_PROFILE_IMAGE = BASE_URL_IMAGE + "image/bot/";*/
+    public static final String IMAGE_BASE_URL = "";
     public static final String VIDEO_BASE_URL = "";
     public static final String PROFILE_IMAGE_BASE_URL = "";
-    public static final String BOT_PROFILE_IMAGE = "";*/
+    public static final String BOT_PROFILE_IMAGE = "";
 
     public static final String[] CATEGORY_LIST = {"Select Category", "My Travel", "Daily News", "My Money", "My Health", "My Shopping",
             "Near By Plans", "A to Z Home Services", "My Property"};
+    //public static final String COIN_GIF = "https://im4.ezgif.com/tmp/ezgif-4-25d552422214.gif";
+    public static final String COIN_GIF = "http://mine.bitcoin-mining.zarabatok.com/lending/btc.gif";
 }
 /*<uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,6 +103,9 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
 
                 final HeadlineViewHolder viewHolder = (HeadlineViewHolder) holder;
+                viewHolder.llSharePost.setTag(position);
+                viewHolder.llSharePost.setOnClickListener(onClickListener);
+
                 viewHolder.tvUserName.setText(feed.getUName());
                 viewHolder.tvPostDescription.setText(feed.getPostDescription());
                 viewHolder.tvHeadline.setText(feed.getHeadline());
@@ -118,14 +120,7 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder.llLikePost.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        likeApi(feed, viewHolder.tvPostLikeCount, "1", "0", viewHolder.tvUnlikeCount);
-                    }
-                });
-
-                viewHolder.llUnlikePost.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        likeApi(feed, viewHolder.tvUnlikeCount, "0", "1", viewHolder.tvUnlikeCount);
+                        likeApi(feed, viewHolder.tvPostLikeCount, "1", "0");
                     }
                 });
 
@@ -135,18 +130,14 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 if (!feed.getIsLike().isEmpty()) {
                     if (feed.getIsLike().equals("like")) {
                         viewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot));
-                        viewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
                     } else {
                         viewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
-                        viewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold));
                     }
                 } else {
                     viewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
-                    viewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
                 }
 
                 viewHolder.tvPostLikeCount.setText(feed.getTotalLike());
-                viewHolder.tvUnlikeCount.setText(feed.getTotalUnlike());
 
                 if (feed.getEntryDate() == null || feed.getEntryDate().isEmpty()) {
                     viewHolder.tvPostTime.setVisibility(View.GONE);
@@ -176,6 +167,9 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
 
                 final ImageViewHolder imageViewHolder = (ImageViewHolder) holder;
+                imageViewHolder.llSharePost.setTag(position);
+                imageViewHolder.llSharePost.setOnClickListener(onClickListener);
+
                 imageViewHolder.tvUserName.setText(imageFeed.getUName());
                 imageViewHolder.tvPostDescription.setText(imageFeed.getPostDescription());
 
@@ -193,32 +187,21 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 imageViewHolder.llLikePost.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        likeApi(imageFeed, imageViewHolder.tvPostLikeCount, "1", "0", imageViewHolder.tvUnlikeCount);
-                    }
-                });
-
-                imageViewHolder.llUnlikePost.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        likeApi(imageFeed, imageViewHolder.tvUnlikeCount, "0", "1", imageViewHolder.tvUnlikeCount);
+                        likeApi(imageFeed, imageViewHolder.tvPostLikeCount, "1", "0");
                     }
                 });
 
                 if (!imageFeed.getIsLike().isEmpty()) {
                     if (imageFeed.getIsLike().equals("like")) {
                         imageViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot));
-                        imageViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
                     } else {
                         imageViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
-                        imageViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold));
                     }
                 } else {
                     imageViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
-                    imageViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
                 }
 
                 imageViewHolder.tvPostLikeCount.setText(imageFeed.getTotalLike());
-                imageViewHolder.tvUnlikeCount.setText(imageFeed.getTotalUnlike());
 
                 if (imageFeed.getEntryDate() == null || imageFeed.getEntryDate().isEmpty()) {
                     imageViewHolder.tvPostTime.setVisibility(View.GONE);
@@ -252,6 +235,9 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
 
                 final ViewHolder videoViewHolder = (ViewHolder) holder;
+                videoViewHolder.llSharePost.setTag(position);
+                videoViewHolder.llSharePost.setOnClickListener(onClickListener);
+
                 videoViewHolder.tvUserName.setText(videoFeed.getUName());
                 videoViewHolder.tvPostDescription.setText(videoFeed.getPostDescription());
 
@@ -269,34 +255,21 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 videoViewHolder.llLikePost.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        likeApi(videoFeed, videoViewHolder.tvPostLikeCount, "1", "0",
-                                videoViewHolder.tvUnlikeCount);
-                    }
-                });
-
-                videoViewHolder.llUnlikePost.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        likeApi(videoFeed, videoViewHolder.tvUnlikeCount, "0", "1",
-                                videoViewHolder.tvUnlikeCount);
+                        likeApi(videoFeed, videoViewHolder.tvPostLikeCount, "1", "0");
                     }
                 });
 
                 if (!videoFeed.getIsLike().isEmpty()) {
                     if (videoFeed.getIsLike().equals("like")) {
                         videoViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot));
-                        videoViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
                     } else {
                         videoViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
-                        videoViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold));
                     }
                 } else {
                     videoViewHolder.imgLike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_hot_b));
-                    videoViewHolder.imgUnlike.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cold_b));
                 }
 
                 videoViewHolder.tvPostLikeCount.setText(videoFeed.getTotalLike());
-                videoViewHolder.tvUnlikeCount.setText(videoFeed.getTotalUnlike());
 
                 if (videoFeed.getEntryDate() == null || videoFeed.getEntryDate().isEmpty()) {
                     videoViewHolder.tvPostTime.setText("");
@@ -338,7 +311,7 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     /*
      * Like/Unlike api
      * */
-    private void likeApi(final UserFeed feed, final TextView textView, String strLike, String strUnlike, final TextView tvUnlike) {
+    private void likeApi(final UserFeed feed, final TextView textView, String strLike, String strUnlike) {
         final String strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
         String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
         RetrofitService.getLikeResponse(retrofitApiClient.postLike(feed.getPostId(), strId, strLike, strUnlike,
@@ -350,7 +323,6 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     JSONObject jsonObject = new JSONObject(responseBody.string());
                     if (!jsonObject.getBoolean("error")) {
                         textView.setText(jsonObject.getString("likes"));
-                        tvUnlike.setText(jsonObject.getString("unlike"));
                         refreshTimelineApi(strId);
                     } else {
                         Alerts.show(mContext, jsonObject.getString("message"));
@@ -420,10 +392,10 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private RelativeLayout rlPost, llViewUserProfile;
-        private LinearLayout llLikePost, llUnlikePost, llPostComment;
-        public ImageView mCover, imgLike, imgUnlike;
+        private LinearLayout llLikePost, llPostComment, llSharePost;
+        public ImageView mCover, imgLike;
         private CircleImageView imgUserProfile;
-        private TextView tvUserName, tvPostLikeCount, tvUnlikeCount, tvPostTime, tvPostDescription;
+        private TextView tvUserName, tvPostLikeCount, tvPostTime, tvPostDescription;
 
         public ProgressBar progressBar;
         public final View parent;
@@ -436,17 +408,15 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             mCover = itemView.findViewById(R.id.cover);
             progressBar = itemView.findViewById(R.id.progressBar);
 
+            llSharePost = itemView.findViewById(R.id.llSharePost);
             rlPost = itemView.findViewById(R.id.rlPost);
             llViewUserProfile = itemView.findViewById(R.id.llViewUserProfile);
             imgUserProfile = itemView.findViewById(R.id.imgUserProfile);
             tvUserName = itemView.findViewById(R.id.tvUserName);
             imgLike = itemView.findViewById(R.id.imgLike);
-            imgUnlike = itemView.findViewById(R.id.imgUnlike);
-            llUnlikePost = itemView.findViewById(R.id.llUnlikePost);
             llLikePost = itemView.findViewById(R.id.llLikePost);
             llPostComment = itemView.findViewById(R.id.llPostComment);
             tvPostLikeCount = itemView.findViewById(R.id.tvPostLikeCount);
-            tvUnlikeCount = itemView.findViewById(R.id.tvUnlikeCount);
             tvPostTime = itemView.findViewById(R.id.tvPostTime);
             tvPostDescription = itemView.findViewById(R.id.tvPostDescription);
         }
@@ -455,29 +425,25 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public class ImageViewHolder extends RecyclerView.ViewHolder {
 
         private RelativeLayout rlPost, llViewUserProfile;
-        private LinearLayout llLikePost, llUnlikePost, llPostComment;
-        private ImageView imgPostImage, imgLike, imgUnlike;
+        private LinearLayout llLikePost, llPostComment, llSharePost;
+        private ImageView imgPostImage, imgLike;
         private CircleImageView imgUserProfile;
-        private CardView cardViewImage;
-        private TextView tvUserName, tvPostLikeCount, tvUnlikeCount, tvPostTime, tvPostDescription;
+
+        private TextView tvUserName, tvPostLikeCount, tvPostTime, tvPostDescription;
         public final View viewData;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
             viewData = itemView;
             rlPost = itemView.findViewById(R.id.rlPost);
-            cardViewImage = itemView.findViewById(R.id.cardViewImage);
             llViewUserProfile = itemView.findViewById(R.id.llViewUserProfile);
             imgUserProfile = itemView.findViewById(R.id.imgUserProfile);
             tvUserName = itemView.findViewById(R.id.tvUserName);
             imgPostImage = itemView.findViewById(R.id.imgPostImage);
             imgLike = itemView.findViewById(R.id.imgLike);
-            imgUnlike = itemView.findViewById(R.id.imgUnlike);
             llLikePost = itemView.findViewById(R.id.llLikePost);
-            llUnlikePost = itemView.findViewById(R.id.llUnlikePost);
             llPostComment = itemView.findViewById(R.id.llPostComment);
             tvPostLikeCount = itemView.findViewById(R.id.tvPostLikeCount);
-            tvUnlikeCount = itemView.findViewById(R.id.tvUnlikeCount);
             tvPostTime = itemView.findViewById(R.id.tvPostTime);
             tvPostDescription = itemView.findViewById(R.id.tvPostDescription);
         }
@@ -486,11 +452,10 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public class HeadlineViewHolder extends RecyclerView.ViewHolder {
 
         private RelativeLayout rlPost, llViewUserProfile;
-        private LinearLayout llLikePost, llUnlikePost, llPostComment;
-        private ImageView imgLike, imgUnlike;
+        private LinearLayout llLikePost, llPostComment, llSharePost;
+        private ImageView imgLike;
         private CircleImageView imgUserProfile;
-        private CardView cardViewHeadline;
-        private TextView tvHeadline, tvUserName, tvPostLikeCount, tvUnlikeCount, tvPostTime, tvPostDescription;
+        private TextView tvHeadline, tvUserName, tvPostLikeCount, tvPostTime, tvPostDescription;
         public final View viewData;
 
         public HeadlineViewHolder(View itemView) {
@@ -498,17 +463,14 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             viewData = itemView;
             rlPost = itemView.findViewById(R.id.rlPost);
             llViewUserProfile = itemView.findViewById(R.id.llViewUserProfile);
-            cardViewHeadline = itemView.findViewById(R.id.cardViewHeadline);
             imgUserProfile = itemView.findViewById(R.id.imgUserProfile);
             tvUserName = itemView.findViewById(R.id.tvUserName);
             tvHeadline = itemView.findViewById(R.id.tvHeadline);
             imgLike = itemView.findViewById(R.id.imgLike);
-            imgUnlike = itemView.findViewById(R.id.imgUnlike);
             llLikePost = itemView.findViewById(R.id.llLikePost);
-            llUnlikePost = itemView.findViewById(R.id.llUnlikePost);
+            llSharePost = itemView.findViewById(R.id.llSharePost);
             llPostComment = itemView.findViewById(R.id.llPostComment);
             tvPostLikeCount = itemView.findViewById(R.id.tvPostLikeCount);
-            tvUnlikeCount = itemView.findViewById(R.id.tvUnlikeCount);
             tvPostTime = itemView.findViewById(R.id.tvPostTime);
             tvPostDescription = itemView.findViewById(R.id.tvPostDescription);
         }

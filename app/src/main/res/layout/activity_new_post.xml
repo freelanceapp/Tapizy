@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:text="New post"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -67,9 +67,9 @@
                 android:layout_marginRight="16dp"
                 android:background="@color/transparent"
                 android:gravity="top"
-                android:textColor="@color/black"
                 android:hint="Post description"
                 android:padding="16dp"
+                android:textColor="@color/black"
                 android:textColorHint="@color/gray_d"
                 android:textStyle="normal"
                 android:visibility="gone" />

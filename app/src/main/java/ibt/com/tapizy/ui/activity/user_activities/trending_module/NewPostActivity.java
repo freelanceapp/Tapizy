@@ -64,6 +64,8 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.tv_select_image).setOnClickListener(this);
         findViewById(R.id.tv_select_video).setOnClickListener(this);
         findViewById(R.id.imgBack).setOnClickListener(this);
+
+        myCoinsApi();
     }
 
     @Override

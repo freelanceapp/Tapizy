@@ -12,6 +12,7 @@ import ibt.com.tapizy.model.communication.CommunicationMainModal;
 import ibt.com.tapizy.model.community_post_modal.QuestionAnswerListMainModal;
 import ibt.com.tapizy.model.favourite_bot.FavouriteBotMainModal;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
+import ibt.com.tapizy.model.social_link.SocialLinkMainModal;
 import ibt.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -154,6 +155,17 @@ public interface RetrofitApiClient {
                                          @Field("question") String question);
 
     @FormUrlEncoded
+    @POST(Constant.MY_COINS)
+    Call<ResponseBody> myCoinsCount(@Field("user_type") String user_type, @Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST(Constant.PAY_COINS)
+    Call<ResponseBody> payCoins(@Field("coins") String coins, @Field("user_id") String user_id,
+                                @Field("purpose_id") String purpose_id, @Field("purpose_type") String purpose_type,
+                                @Field("purpose") String purpose, @Field("bot_id") String bot_id,
+                                @Field("bot_name") String bot_name);
+
+    @FormUrlEncoded
     @POST(Constant.CHAT_LIST)
     Call<ChatListMainModal> chatList(@Field("uid") String uid);
 
@@ -172,4 +184,7 @@ public interface RetrofitApiClient {
 
     @GET(Constant.CITY_LIST_API)
     Call<ApiCityListMainModal> cityList();
+
+    @GET(Constant.SOCIAL_LINKS)
+    Call<SocialLinkMainModal> socialLinksApi();
 }

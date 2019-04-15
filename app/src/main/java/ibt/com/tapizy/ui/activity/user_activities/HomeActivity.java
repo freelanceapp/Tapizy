@@ -2,6 +2,7 @@ package ibt.com.tapizy.ui.activity.user_activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
@@ -25,7 +26,7 @@ import ibt.com.tapizy.utils.custom_navigation_drawer.SNavigationDrawer;
 public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMenuItemClickListener, SNavigationDrawer.DrawerListener {
 
     public static HomeActivity homeActivity;
-    private SNavigationDrawer sNavigationDrawer;
+    public static SNavigationDrawer sNavigationDrawer;
 
     public static FragmentUtils fragmentUtilsHome;
     private FragmentManager fragmentManager;
@@ -55,6 +56,8 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
             fragmentUtilsHome.replaceFragment(fragment, fragmentTag, R.id.frameLayout);
         }
 
+        myCoinsApi();
+
         sNavigationDrawer = findViewById(R.id.navigationDrawer);
         List<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(new MenuItem("Home", R.drawable.nav_music_bg));
@@ -68,6 +71,12 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
         sNavigationDrawer.setOnMenuItemClickListener(this);
         sNavigationDrawer.setDrawerListener(this);
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                sNavigationDrawer.setHeaderData();
+            }
+        }, 1000);
     }
 
     @Override
@@ -155,6 +164,13 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
         super.onResume();
         AppPreference.setStringPreference(mContext, Constant.USER_ID, User.getUser().getUser().getUid());
         AppPreference.setStringPreference(mContext, Constant.USER_TYPE, "user");
+        myCoinsApi();
+       /* new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                sNavigationDrawer.setHeaderData();
+            }
+        }, 200);*/
     }
 }
 

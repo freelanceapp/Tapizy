@@ -20,6 +20,7 @@ import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.PostQuestionAdapter;
 import ibt.com.tapizy.adapter.SpinnerCityListAdapter;
 import ibt.com.tapizy.constant.Constant;
+import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.city_list_modal.ApiCityListMainModal;
 import ibt.com.tapizy.model.city_list_modal.CityList;
 import ibt.com.tapizy.model.community_post_modal.QuestionAnswerListMainModal;
@@ -53,8 +54,29 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community);
         communityActivity = this;
+       // setTitle();
         initFragment();
     }
+
+    private void setTitle() {
+        ((TextView) findViewById(R.id.txtTitle)).setText("Community");
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
+        if (userType.equalsIgnoreCase("user")) {
+            String coins = User.getUser().getUser().getUserCoins();
+            if (coins.isEmpty()) {
+                coins = "0";
+            }
+            ((TextView) findViewById(R.id.txtCoinsCount)).setText(coins);
+        } else {
+            String coins = User.getBotDetail().getCoins();
+            if (coins.isEmpty()) {
+                coins = "0";
+            }
+            ((TextView) findViewById(R.id.txtCoinsCount)).setText(coins);
+        }
+
+    }
+
 
     private void initFragment() {
         spinnerCity = findViewById(R.id.spinnerCity);
@@ -79,6 +101,7 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
 
         initCitySpinner();
         cityListApi();
+        myCoinsApi();
     }
 
     @Override

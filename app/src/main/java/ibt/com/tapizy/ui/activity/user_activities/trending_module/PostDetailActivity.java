@@ -140,11 +140,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         });
         postDetailApi();
         initPlayer();
-
-        /*Gson gson = new Gson();
-        String strPostDetail = AppPreference.getStringPreference(mContext, Constant.POST_DETAIL);
-        newPostModel = gson.fromJson(strPostDetail, UserFeed.class);
-        setDataInModal();*/
+        myCoinsApi();
     }
 
     /*
@@ -217,6 +213,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
         setData();
         setCommentList();
+        myCoinsApiTrending("");
     }
 
     private void setData() {

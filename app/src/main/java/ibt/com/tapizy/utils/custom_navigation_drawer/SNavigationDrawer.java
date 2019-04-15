@@ -27,6 +27,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.User;
+import ibt.com.tapizy.utils.AppPreference;
 
 public class SNavigationDrawer extends RelativeLayout {
 
@@ -132,7 +133,7 @@ public class SNavigationDrawer extends RelativeLayout {
         containerLL = rootView.findViewById(R.id.containerLL);
 
         menuItemList = new ArrayList<>();
-        setHeaderData();
+        //setHeaderData();
 
         menuIV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -406,11 +407,40 @@ public class SNavigationDrawer extends RelativeLayout {
 
     public void setHeaderData() {
         Glide.with(mContext)
-                .load(Constant.PROFILE_IMAGE_BASE_URL + User.getUser().getUser().getUProfile())
-                .into(((CircleImageView) rootView.findViewById(R.id.profile_image)));
+                .asGif()
+                .load(Constant.COIN_GIF)
+                .placeholder(R.drawable.coin_gif)
+                .into(((ImageView) rootView.findViewById(R.id.imgCoinGif)));
 
+        Glide.with(mContext)
+                .asGif()
+                .load(Constant.COIN_GIF)
+                .placeholder(R.drawable.coin_gif)
+                .into(((ImageView) rootView.findViewById(R.id.imgToolbarCoinGif)));
+
+        Glide.with(mContext)
+                .load(Constant.PROFILE_IMAGE_BASE_URL + User.getUser().getUser().getUProfile())
+                .placeholder(R.drawable.ic_default_profile)
+                .into(((CircleImageView) rootView.findViewById(R.id.profile_image)));
         ((TextView) rootView.findViewById(R.id.tvUserName)).setText(User.getUser().getUser().getUName());
         ((TextView) rootView.findViewById(R.id.tvEmail)).setText(User.getUser().getUser().getUEmail());
+
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
+        if (userType.equalsIgnoreCase("user")) {
+            String coins = User.getCoins();
+            if (coins == null || coins.isEmpty()) {
+                coins = "0";
+            }
+            ((TextView) findViewById(R.id.txtCoinsCount)).setText(coins);
+            ((TextView) findViewById(R.id.txtCoinsCountNav)).setText(coins);
+        } else {
+            String coins = User.getCoins();
+            if (coins == null || coins.isEmpty()) {
+                coins = "0";
+            }
+            ((TextView) findViewById(R.id.txtCoinsCount)).setText(coins);
+            ((TextView) findViewById(R.id.txtCoinsCountNav)).setText(coins);
+        }
     }
 
     /*

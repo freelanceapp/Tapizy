@@ -30,18 +30,21 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.FavouriteBotListAdapter;
+import ibt.com.tapizy.adapter.SocialLinksListAdapter;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.api_bot_list.BotList;
 import ibt.com.tapizy.model.favourite_bot.FavoriteBot;
 import ibt.com.tapizy.model.favourite_bot.FavouriteBotMainModal;
+import ibt.com.tapizy.model.social_link.SocialLinkList;
+import ibt.com.tapizy.model.social_link.SocialLinkMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
 import ibt.com.tapizy.services.CustomFloatingViewService;
-import ibt.com.tapizy.ui.activity.user_activities.WebviewActivity;
 import ibt.com.tapizy.ui.activity.user_activities.chatbot_activity.ChatActivity;
 import ibt.com.tapizy.ui.activity.user_activities.community_module.CommunityActivity;
 import ibt.com.tapizy.ui.activity.user_activities.explore.ExploreActivity;
@@ -79,10 +82,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private static final int CUSTOM_OVERLAY_PERMISSION_REQUEST_CODE = 101;
     private FavoriteBot favoriteBotData;
     /********************************************************/
-
     private RelativeLayout rlMain;
     private int xDelta;
     private int yDelta;
+    /*****************************************************/
+    private List<SocialLinkList> socialLinkLists = new ArrayList<>();
+    private SocialLinksListAdapter linksListAdapter;
 
     @Nullable
     @Override
@@ -103,6 +108,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
         init();
         favouriteBotRecyclerView();
+        socialLinksRecyclerView();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -151,11 +157,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         rootView.findViewById(R.id.llTrending).setOnClickListener(this);
         rootView.findViewById(R.id.llCommunity).setOnClickListener(this);
         rootView.findViewById(R.id.llchat).setOnClickListener(this);
-
-        rootView.findViewById(R.id.llFb).setOnClickListener(this);
-        rootView.findViewById(R.id.llTwitter).setOnClickListener(this);
-        rootView.findViewById(R.id.llInsta).setOnClickListener(this);
-        rootView.findViewById(R.id.llFlipkart).setOnClickListener(this);
 
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -239,6 +240,48 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         }
     }
 
+    /*Social links api and recyclerview*/
+    private void socialLinksRecyclerView() {
+        RecyclerView recyclerViewSocialLinks = rootView.findViewById(R.id.recyclerViewSocialLinks);
+
+        linksListAdapter = new SocialLinksListAdapter(mContext, socialLinkLists);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext, 4);
+        recyclerViewSocialLinks.setLayoutManager(mLayoutManager);
+        recyclerViewSocialLinks.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewSocialLinks.setAdapter(linksListAdapter);
+
+        socialLinksApi();
+    }
+
+    private void socialLinksApi() {
+        if (cd.isNetworkAvailable()) {
+            RetrofitService.getSocialLinks(new Dialog(mContext), retrofitApiClient.socialLinksApi(), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    SocialLinkMainModal socialLinkMainModal = (SocialLinkMainModal) result.body();
+                    socialLinkLists.clear();
+                    if (socialLinkMainModal != null) {
+                        if (!socialLinkMainModal.getError()) {
+                            if (socialLinkMainModal.getSocialLink().size() > 0) {
+                                socialLinkLists.addAll(socialLinkMainModal.getSocialLink());
+                            }
+                        } else {
+                            Alerts.show(mContext, socialLinkMainModal.getMessage());
+                        }
+                    }
+                    linksListAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onResponseFailed(String error) {
+                    Alerts.show(mContext, error);
+                }
+            });
+        } else {
+            cd.show(mContext);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -273,26 +316,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
                 }
                 break;
-            case R.id.llFb:
-                sendSocialUrl(Constant.FbUrl, "Facebook");
-                break;
-            case R.id.llTwitter:
-                sendSocialUrl(Constant.TwitterUrl, "Twitter");
-                break;
-            case R.id.llInsta:
-                sendSocialUrl(Constant.InstaUrl, "Instagram");
-                break;
-            case R.id.llFlipkart:
-                sendSocialUrl(Constant.FlipkartUrl, "Flipkart");
-                break;
         }
-    }
-
-    private void sendSocialUrl(String url, String title) {
-        Intent intent = new Intent(mContext, WebviewActivity.class);
-        intent.putExtra("url", url);
-        intent.putExtra("title", title);
-        startActivity(intent);
     }
 
     /***************************************************************/

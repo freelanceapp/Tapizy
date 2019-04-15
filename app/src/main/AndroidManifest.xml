@@ -52,7 +52,18 @@
             android:name="ibt.com.tapizy.ui.activity.user_activities.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Base"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="screen"
+                    android:scheme="tapizy" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.SplashScreen"
             android:screenOrientation="portrait"

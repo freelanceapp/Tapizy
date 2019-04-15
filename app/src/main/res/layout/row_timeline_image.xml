@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="3">
 
             <LinearLayout
                 android:id="@+id/llLikePost"
@@ -123,50 +123,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/llUnlikePost"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imgUnlike"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_cold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="6dp"
-                        android:text="Cold"
-                        android:textColor="@color/black"
-                        android:textStyle="normal" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvUnlikeCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingLeft="30dp"
-                    android:text="24k"
-                    android:textColor="@color/gray_a"
-                    android:textStyle="normal" />
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/llPostComment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -191,6 +147,51 @@
                     android:textColor="@color/black"
                     android:textStyle="normal" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llSharePost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imgShare"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_share" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="6dp"
+                        android:text="Share"
+                        android:textColor="@color/black"
+                        android:textStyle="normal" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvUnlikeCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="30dp"
+                    android:text="24k"
+                    android:textColor="@color/gray_a"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout

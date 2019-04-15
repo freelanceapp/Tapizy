@@ -41,12 +41,13 @@ public class BotDetail implements Parcelable {
     @SerializedName("entry_date")
     @Expose
     private String entryDate;
+    @SerializedName("coins")
+    @Expose
+    private String coins;
     @SerializedName("update_entry_date")
     @Expose
     private String updateEntryDate;
     public final static Parcelable.Creator<BotDetail> CREATOR = new Creator<BotDetail>() {
-
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -73,6 +74,7 @@ public class BotDetail implements Parcelable {
         this.type = ((String) in.readValue((String.class.getClassLoader())));
         this.entryDate = ((String) in.readValue((String.class.getClassLoader())));
         this.updateEntryDate = ((String) in.readValue((String.class.getClassLoader())));
+        this.coins = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public BotDetail() {
@@ -174,6 +176,14 @@ public class BotDetail implements Parcelable {
         this.updateEntryDate = updateEntryDate;
     }
 
+    public String getCoins() {
+        return coins;
+    }
+
+    public void setCoins(String coins) {
+        this.coins = coins;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(id);
         dest.writeValue(botName);
@@ -187,6 +197,7 @@ public class BotDetail implements Parcelable {
         dest.writeValue(type);
         dest.writeValue(entryDate);
         dest.writeValue(updateEntryDate);
+        dest.writeValue(coins);
     }
 
     public int describeContents() {

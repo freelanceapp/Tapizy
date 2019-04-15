@@ -38,6 +38,9 @@ public class UserData implements Parcelable {
     @SerializedName("country")
     @Expose
     private String country;
+    @SerializedName("user_coins")
+    @Expose
+    private String userCoins;
     @SerializedName("u_referral_code")
     @Expose
     private String uReferralCode;
@@ -68,6 +71,7 @@ public class UserData implements Parcelable {
         this.state = ((String) in.readValue((String.class.getClassLoader())));
         this.country = ((String) in.readValue((String.class.getClassLoader())));
         this.uProfile = ((String) in.readValue((String.class.getClassLoader())));
+        this.userCoins = ((String) in.readValue((String.class.getClassLoader())));
         this.uReferralCode = ((String) in.readValue((String.class.getClassLoader())));
     }
 
@@ -162,6 +166,14 @@ public class UserData implements Parcelable {
         this.uReferralCode = uReferralCode;
     }
 
+    public String getUserCoins() {
+        return userCoins;
+    }
+
+    public void setUserCoins(String userCoins) {
+        this.userCoins = userCoins;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(uid);
         dest.writeValue(uName);
@@ -173,6 +185,7 @@ public class UserData implements Parcelable {
         dest.writeValue(state);
         dest.writeValue(country);
         dest.writeValue(uProfile);
+        dest.writeValue(userCoins);
         dest.writeValue(uReferralCode);
     }
 

@@ -11,6 +11,8 @@ public class User {
     public static UserDataMainModal user;
     public static BotDetail botDetail;
 
+    public static String coins;
+
     public static UserDataMainModal getUser() {
         return user;
     }
@@ -25,5 +27,13 @@ public class User {
 
     public static void setBotDetail(BotDetail botDetail) {
         User.botDetail = botDetail;
+    }
+
+    public static String getCoins() {
+        return coins;
+    }
+
+    public static void setCoins(String coins) {
+        User.coins = coins;
     }
 }

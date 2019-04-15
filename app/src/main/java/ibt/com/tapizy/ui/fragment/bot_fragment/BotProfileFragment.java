@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.User;
+import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseFragment;
 
 import static ibt.com.tapizy.ui.activity.bot_activities.BotProfileActivity.fragmentUtilsBot;

@@ -8,6 +8,8 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar_layout" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
@@ -44,17 +46,15 @@
                         android:id="@+id/imgUserProfile"
                         android:layout_width="44dp"
                         android:layout_height="44dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/app_icon" />
+                        android:layout_centerVertical="true" />
 
                     <TextView
                         android:id="@+id/tvUserName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
-                        android:layout_toRightOf="@+id/imgUserProfile"
-                        android:text="David Beckham"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/imgUserProfile"
                         android:textColor="@color/black"
                         android:textStyle="normal" />
 
@@ -63,14 +63,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tvUserName"
-                        android:layout_marginLeft="16dp"
-                        android:layout_toRightOf="@+id/imgUserProfile"
-                        android:text="2 HOURS AGO"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/imgUserProfile"
                         android:textSize="12sp"
                         android:textStyle="normal"
                         tools:ignore="RtlCompat" />
 
                 </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_h" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -177,7 +181,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
                         android:id="@+id/llUnlikePost"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -185,7 +188,8 @@
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="match_parent"

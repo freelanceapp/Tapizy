@@ -49,7 +49,7 @@ public class BotListActivity extends BaseActivity implements View.OnClickListene
         recyclerViewBotList.setAdapter(chatbotListAdapter);
 
         String strUserId = User.getUser().getUser().getUid();
-        String strCatId = getIntent().getStringExtra("cat_id");
+        String strCatId = getIntent().getStringExtra("cat_name");
         botListApi(strUserId, strCatId);
     }
 

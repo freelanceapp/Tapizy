@@ -3,6 +3,7 @@ package ibt.com.tapizy.ui.activity.bot_activities;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.view.View;
@@ -114,6 +115,15 @@ public class BotHomeActivity extends BaseActivity implements View.OnClickListene
                             collapsingToolbarLayout.setBackgroundColor(getResources().getColor(R.color.bot_maroon));
                             collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.bot_maroon));
                         }
+
+                        myCoinsApi();
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                setCoins();
+                            }
+                        }, 500);
                     } else {
                         Alerts.show(mContext, detailMainModal.getMessage());
                     }
@@ -126,6 +136,29 @@ public class BotHomeActivity extends BaseActivity implements View.OnClickListene
             });
         } else {
             cd.show(mContext);
+        }
+    }
+
+    private void setCoins() {
+        Glide.with(mContext)
+                .load(Constant.COIN_GIF)
+                .useAnimationPool(true)
+                .placeholder(R.drawable.coin_gif)
+                .into(((ImageView) findViewById(R.id.imgToolbarCoinGif)));
+
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
+        if (userType.equalsIgnoreCase("user")) {
+            String coins = User.getCoins();
+            if (coins.isEmpty()) {
+                coins = "0";
+            }
+            ((TextView) findViewById(R.id.txtCoinsCount)).setText(coins);
+        } else {
+            String coins = User.getCoins();
+            if (coins.isEmpty()) {
+                coins = "0";
+            }
+            ((TextView) findViewById(R.id.txtCoinsCount)).setText(coins);
         }
     }
 
@@ -156,5 +189,11 @@ public class BotHomeActivity extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(mContext, BotChatConversationActivity.class));
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setCoins();
     }
 }

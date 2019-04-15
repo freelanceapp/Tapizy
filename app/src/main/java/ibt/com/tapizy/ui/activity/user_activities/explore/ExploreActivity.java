@@ -7,20 +7,24 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.TapiziLinearListAdapter;
+import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.TapizyLinearListModel;
-import ibt.com.tapizy.ui.activity.user_activities.HomeActivity;
+import ibt.com.tapizy.model.User;
+import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
 
 public class ExploreActivity extends BaseActivity implements View.OnClickListener {
 
     private TapiziLinearListAdapter adapter;
     private ArrayList<TapizyLinearListModel> tapizyListModels = new ArrayList<>();
-    private ImageView ivback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +32,7 @@ public class ExploreActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.activity_explore);
 
         RecyclerView rclvll = findViewById(R.id.rv_lllayout);
-        ivback = findViewById(R.id.ic_back_newactivity);
-
-        ivback.setOnClickListener(this);
+        findViewById(R.id.imgBack).setOnClickListener(this);
 
         TapizyLinearListModel tapizyListModel4 = new TapizyLinearListModel(R.drawable.my_travel, "My Travel", "Best fight, Cab,Hotel guide");
         tapizyListModels.add(tapizyListModel4);
@@ -54,20 +56,48 @@ public class ExploreActivity extends BaseActivity implements View.OnClickListene
         rclvll.setLayoutManager(mLayoutManager);
         rclvll.setItemAnimator(new DefaultItemAnimator());
         rclvll.setAdapter(adapter);
+
+        setTitle();
+    }
+
+    private void setTitle() {
+        ((TextView) findViewById(R.id.txtTitle)).setText("Explore");
+
+        Glide.with(mContext)
+                .load(Constant.COIN_GIF)
+                .useAnimationPool(true)
+                .placeholder(R.drawable.coin_gif)
+                .into(((ImageView) findViewById(R.id.imgToolbarCoinGif)));
+
+        myCoinsApi();
+
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
+        if (userType.equalsIgnoreCase("user")) {
+            String coins = User.getCoins();
+            if (coins.isEmpty()) {
+                coins = "0";
+            }
+            ((TextView) findViewById(R.id.txtCoinsCount)).setText(coins);
+        } else {
+            String coins = User.getCoins();
+            if (coins.isEmpty()) {
+                coins = "0";
+            }
+            ((TextView) findViewById(R.id.txtCoinsCount)).setText(coins);
+        }
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ic_back_newactivity:
-                Intent intent = new Intent(this, HomeActivity.class);
-                startActivity(intent);
+            case R.id.imgBack:
+                finish();
                 break;
             case R.id.lllayout:
                 int pos = Integer.parseInt(v.getTag().toString());
-                int CatId = pos + 1;
                 Intent intentA = new Intent(this, BotListActivity.class);
-                intentA.putExtra("cat_id", CatId + "");
+                intentA.putExtra("cat_name", tapizyListModels.get(pos).getTitle());
                 startActivity(intentA);
                 break;
         }

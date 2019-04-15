@@ -14,6 +14,7 @@ import ibt.com.tapizy.model.communication.CommunicationMainModal;
 import ibt.com.tapizy.model.community_post_modal.QuestionAnswerListMainModal;
 import ibt.com.tapizy.model.favourite_bot.FavouriteBotMainModal;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
+import ibt.com.tapizy.model.social_link.SocialLinkMainModal;
 import ibt.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import ibt.com.tapizy.utils.AppProgressDialog;
 import okhttp3.ResponseBody;
@@ -452,6 +453,27 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<BotDetailMainModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getSocialLinks(final Dialog dialog, final Call<SocialLinkMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<SocialLinkMainModal>() {
+            @Override
+            public void onResponse(Call<SocialLinkMainModal> call, Response<SocialLinkMainModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<SocialLinkMainModal> call, Throwable throwable) {
                 if (dialog != null)
                     AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());

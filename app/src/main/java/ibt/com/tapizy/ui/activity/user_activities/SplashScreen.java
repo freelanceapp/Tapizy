@@ -1,8 +1,10 @@
 package ibt.com.tapizy.ui.activity.user_activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
@@ -15,14 +17,16 @@ import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
 import io.fabric.sdk.android.Fabric;
 
-public class SplashScreen extends BaseActivity {
+public class SplashScreen extends AppCompatActivity {
+
+    public Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_splash_screen);
-
+        mContext = this;
         //firebaseAnalytics();
         new Handler().postDelayed(new Runnable() {
             @Override

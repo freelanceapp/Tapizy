@@ -3,6 +3,7 @@ package ibt.com.tapizy.ui.activity.user_activities.trending_module;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +19,6 @@ import java.util.List;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.TimelineListAdapter;
 import ibt.com.tapizy.constant.Constant;
-import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import ibt.com.tapizy.model.timeline_modal.UserFeed;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
@@ -48,6 +48,8 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_trending);
 
         init();
+
+        myCoinsApiTrending("Trending");
     }
 
     private void init() {
@@ -119,6 +121,7 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
                 int position = Integer.parseInt(v.getTag().toString());
                 Gson gson = new GsonBuilder().setLenient().create();
                 String data = gson.toJson(feedList.get(position));
+                AppPreference.setBooleanPreference(mContext, Constant.POST_CLICK, true);
                 AppPreference.setStringPreference(mContext, Constant.POST_DETAIL, data);
                 Intent intent = new Intent(mContext, PostDetailActivity.class);
                 intent.putExtra("get_from", "timeline");
@@ -131,7 +134,24 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
             case R.id.imgBack:
                 finish();
                 break;
+            case R.id.llSharePost:
+                int post = Integer.parseInt(v.getTag().toString());
+                String postId = feedList.get(post).getPostId();
+                ShareCompat.IntentBuilder.from(this)
+                        .setType("text/plain")
+                        .setChooserTitle("Share Tapizy post")
+                        .setText("market://details?id=ibt.com.tapizy" + "\n" + postId)
+                        .startChooser();
+                break;
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (AppPreference.getBooleanPreference(mContext, Constant.POST_CLICK)) {
+            myCoinsApiTrending("Trending");
+            AppPreference.setBooleanPreference(mContext, Constant.POST_CLICK, false);
+        }
+    }
 }
