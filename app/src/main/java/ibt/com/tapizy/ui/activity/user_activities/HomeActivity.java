@@ -15,8 +15,8 @@ import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.ui.fragment.user_fragment.AvailabilityFragment;
 import ibt.com.tapizy.ui.fragment.user_fragment.HomeFragment;
 import ibt.com.tapizy.ui.fragment.user_fragment.MyBotListFragment;
-import ibt.com.tapizy.ui.fragment.user_fragment.MyProfileFragment;
 import ibt.com.tapizy.ui.fragment.user_fragment.RewardsFragment;
+import ibt.com.tapizy.ui.fragment.user_fragment.profile_account.MyProfileFragment;
 import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
 import ibt.com.tapizy.utils.FragmentUtils;
@@ -89,10 +89,11 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
                 sNavigationDrawer.setAppbarTitleTV(strTitle);
                 break;
             case 1:
-                strTitle = "Profile";
-                fragmentTag = Constant.MyProfileFragment;
+                //strTitle = "Profile";
+                /*fragmentTag = Constant.MyProfileFragment;
                 fragmentClass = MyProfileFragment.class;
-                sNavigationDrawer.setAppbarTitleTV(strTitle);
+                sNavigationDrawer.setAppbarTitleTV(strTitle);*/
+                startActivity(new Intent(mContext, UserProfileAccountActivity.class));
                 break;
             case 2:
                 strTitle = "Bot List";
@@ -165,20 +166,5 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
         AppPreference.setStringPreference(mContext, Constant.USER_ID, User.getUser().getUser().getUid());
         AppPreference.setStringPreference(mContext, Constant.USER_TYPE, "user");
         myCoinsApi();
-       /* new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                sNavigationDrawer.setHeaderData();
-            }
-        }, 200);*/
     }
 }
-
-/*  private void getPreferenceData() {
-        Gson gson = new Gson();
-        String json = AppPreference.getStringPreference(mContext, Constant.USER_DATA);
-        UserDataMainModal loginUserModel = gson.fromJson(json, UserDataMainModal.class);
-        User.setUser(loginUserModel);
-        AppPreference.setBooleanPreference(mContext, "update", false);
-        setUserData();
-    }*/

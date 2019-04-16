@@ -102,6 +102,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
             if (User.getUser().getUser().getUProfile() != null) {
                 Glide.with(mContext)
                         .load(Constant.PROFILE_IMAGE_BASE_URL + User.getUser().getUser().getUProfile())
+                        .placeholder(R.drawable.ic_default_profile)
                         .into((CircleImageView) findViewById(R.id.iv_user_profile));
             }
             edtPhone.setText(User.getUser().getUser().getUContact());
@@ -401,7 +402,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
             public void onResponseSuccess(Response<?> result) {
                 UserDataMainModal mainModal = (UserDataMainModal) result.body();
                 if (mainModal != null) {
-                    AppPreference.setBooleanPreference(mContext, "update", true);
+                    AppPreference.setBooleanPreference(mContext, Constant.IS_PROFILE_UPDATE, true);
                     Gson gson = new GsonBuilder().setLenient().create();
                     String data = gson.toJson(mainModal);
                     AppPreference.setStringPreference(mContext, Constant.USER_DATA, data);

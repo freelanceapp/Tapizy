@@ -166,7 +166,6 @@ public class BaseActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(responseBody.string());
                         if (!jsonObject.getBoolean("error")) {
                             User.setCoins(jsonObject.getString("mycoin"));
-
                             setTitle(title);
                         } else {
                             Alerts.show(mContext, jsonObject.getString("message"));

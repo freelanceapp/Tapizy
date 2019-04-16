@@ -39,7 +39,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/layout_bg_whie_card"
+                android:background="@drawable/layout_bg_white_card"
                 android:orientation="vertical">
 
                 <LinearLayout

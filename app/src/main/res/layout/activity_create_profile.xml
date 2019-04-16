@@ -54,9 +54,7 @@
                         android:layout_width="110dp"
                         android:layout_height="110dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/user_profile1"
-                        app:civ_border_color="@color/gray_i"
-                        app:civ_border_width="1dp" />
+                        android:src="@drawable/ic_default_profile" />
 
                     <ImageView
                         android:layout_width="44dp"

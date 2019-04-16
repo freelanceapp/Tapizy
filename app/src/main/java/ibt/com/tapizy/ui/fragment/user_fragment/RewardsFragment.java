@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ibt.com.tapizy.R;
@@ -20,7 +19,7 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        rootView = inflater.inflate(R.layout.fragment_availability, container, false);
+        rootView = inflater.inflate(R.layout.fragment_rewards, container, false);
         return rootView;
     }
 
@@ -31,9 +30,7 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
     }
 
     private void init() {
-        LinearLayout llRoot = rootView.findViewById(R.id.llRoot);
-        llRoot.setBackgroundColor(getResources().getColor(R.color.sienna));
-        ((TextView) rootView.findViewById(R.id.txtTitle)).setText("Rewards");
+        ((TextView) rootView.findViewById(R.id.txtTitle)).setText("Under development...!!!");
     }
 
     @Override

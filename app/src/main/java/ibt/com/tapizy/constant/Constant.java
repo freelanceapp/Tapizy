@@ -65,6 +65,7 @@ public class Constant {
     public static final String TIMELINE_DATA = "TIMELINE_DATA";
     public static final String IS_DATA_UPDATE = "IS_DATA_UPDATE";
     public static final String TOKEN = "TOKEN";
+    public static final String IS_PROFILE_UPDATE = "IS_PROFILE_UPDATE";
 
     public static final String USER_ID = "USER_ID";
     public static final String USER_TYPE = "USER_TYPE";
@@ -96,6 +97,7 @@ public class Constant {
     public static final String RewardsFragment = "RewardsFragment";
     public static final String VideoGalleryFragment = "VideoGalleryFragment";
     public static final String VideoTrimmerFragment = "VideoTrimmerFragment";
+    public static final String UserAccountFragment = "UserAccountFragment";
 
     public static final String BotProfileFragment = "BotProfileFragment";
     public static final String BotUpdateProfileFragment = "BotUpdateProfileFragment";
@@ -116,6 +118,7 @@ public class Constant {
             "Near By Plans", "A to Z Home Services", "My Property"};
     //public static final String COIN_GIF = "https://im4.ezgif.com/tmp/ezgif-4-25d552422214.gif";
     public static final String COIN_GIF = "http://mine.bitcoin-mining.zarabatok.com/lending/btc.gif";
+    public static final String COIN_GIF_B = "https://im4.ezgif.com/tmp/ezgif-4-2ac37b17a9fa.gif";
 }
 /*<uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />

@@ -1,4 +1,4 @@
-package ibt.com.tapizy.ui.fragment.user_fragment;
+package ibt.com.tapizy.ui.fragment.user_fragment.profile_account;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,6 +44,7 @@ public class MyProfileFragment extends BaseFragment implements View.OnClickListe
         strPhone = User.getUser().getUser().getUContact();
         Glide.with(mContext)
                 .load(Constant.PROFILE_IMAGE_BASE_URL + User.getUser().getUser().getUProfile())
+                .placeholder(R.drawable.ic_default_profile)
                 .into((CircleImageView) rootView.findViewById(R.id.img_user_profile));
         ((TextView) rootView.findViewById(R.id.tv_name)).setText(User.getUser().getUser().getUName());
         ((TextView) rootView.findViewById(R.id.tv_emaiaddress)).setText(User.getUser().getUser().getUEmail());
