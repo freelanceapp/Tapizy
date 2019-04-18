@@ -15,8 +15,7 @@ import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.ui.fragment.user_fragment.AvailabilityFragment;
 import ibt.com.tapizy.ui.fragment.user_fragment.HomeFragment;
 import ibt.com.tapizy.ui.fragment.user_fragment.MyBotListFragment;
-import ibt.com.tapizy.ui.fragment.user_fragment.RewardsFragment;
-import ibt.com.tapizy.ui.fragment.user_fragment.profile_account.MyProfileFragment;
+import ibt.com.tapizy.ui.fragment.user_fragment.ShareAppFragment;
 import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
 import ibt.com.tapizy.utils.FragmentUtils;
@@ -65,7 +64,7 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
         menuItems.add(new MenuItem("My Bot", R.drawable.nav_feed_bg));
         menuItems.add(new MenuItem("Create Bot", R.drawable.nav_message_bg));
         menuItems.add(new MenuItem("24*7", R.drawable.nav_music_bg));
-        menuItems.add(new MenuItem("Rewards", R.drawable.nav_news_bg));
+        menuItems.add(new MenuItem("Share App", R.drawable.nav_news_bg));
         menuItems.add(new MenuItem("Setting", R.drawable.nav_message_bg));
         sNavigationDrawer.setMenuItemList(menuItems);
         sNavigationDrawer.setOnMenuItemClickListener(this);
@@ -116,7 +115,7 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
             case 5:
                 strTitle = "Rewards";
                 fragmentTag = Constant.RewardsFragment;
-                fragmentClass = RewardsFragment.class;
+                fragmentClass = ShareAppFragment.class;
                 sNavigationDrawer.setAppbarTitleTV(strTitle);
                 break;
             case 6:

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 
@@ -14,7 +16,6 @@ import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 import ibt.com.tapizy.utils.AppPreference;
-import ibt.com.tapizy.utils.BaseActivity;
 import io.fabric.sdk.android.Fabric;
 
 public class SplashScreen extends AppCompatActivity {
@@ -27,6 +28,12 @@ public class SplashScreen extends AppCompatActivity {
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_splash_screen);
         mContext = this;
+
+        Glide.with(mContext)
+                .load(R.drawable.splash_image)
+                .placeholder(R.drawable.splash_image)
+                .into((ImageView) findViewById(R.id.imgSplash));
+
         //firebaseAnalytics();
         new Handler().postDelayed(new Runnable() {
             @Override

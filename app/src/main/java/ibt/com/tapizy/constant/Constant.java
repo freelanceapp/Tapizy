@@ -15,7 +15,6 @@ public class Constant {
     public static final String ADD_TO_FAV = "user/favorite.php";
     public static final String RESEND_OTP = "user/resend-otp.php";
     public static final String USER_DETAIL_API = "user/user_details.php";
-
     /*Bot*/
     public static final String BOT_CATEGORY_TYPE = "bot/bot_type.php";
     public static final String BOT_UPDATE_PROFILE_IMAGE = "bot/update_bot_profile_image.php";
@@ -23,29 +22,27 @@ public class Constant {
     public static final String BOT_CREATE = "bot/create_bot.php";
     public static final String MY_BOT = "bot/my_bot.php";
     public static final String BOT_DETAIL = "bot/bot_detail.php";
-
     /*Trending*/
     public static final String PostLike = "trending/trending_post_like.php";
     public static final String NEWPOST_API = "trending/insert_daily_post.php";
     public static final String TIMELINE_API = "trending/timeline.php";
     public static final String POST_DETAIL_API = "trending/post_details.php";
     public static final String COMMENT_API = "trending/trending_comment.php";
-
     /*Community*/
     public static final String QUESTION_LIST_API = "community/select_question.php";
     public static final String CITY_LIST_API = "community/city_list.php";
     public static final String INSERT_ANSWER_API = "community/insert_answer.php";
     public static final String INSERT_QUESTION_API = "community/insert_question.php";
-
     /*Explore*/
     public static final String BOT_LIST_API = "explore/bot_list.php";
-
     /*Coins*/
     public static final String MY_COINS = "coin/my_coins.php";
     public static final String PAY_COINS = "coin/paycoins.php";
-
     /*General*/
     public static final String SOCIAL_LINKS = "general/social_link.php";
+    /*Support*/
+    public static final String SUPPORT = "support/support.php";
+    public static final String FAQ_LIST = "support/select_query.php";
 
     public static final String CREATE_CONVERSATION_API = "app/create_conversation.php";
     public static final String SELECT_CONVERSATION_API = "app/select_conversation_list.php";
@@ -94,7 +91,7 @@ public class Constant {
     public static final String MyProfileFragment = "MyProfileFragment";
     public static final String MyBotListFragment = "MyBotListFragment";
     public static final String AvailabilityFragment = "AvailabilityFragment";
-    public static final String RewardsFragment = "RewardsFragment";
+    public static final String RewardsFragment = "ShareAppFragment";
     public static final String VideoGalleryFragment = "VideoGalleryFragment";
     public static final String VideoTrimmerFragment = "VideoTrimmerFragment";
     public static final String UserAccountFragment = "UserAccountFragment";

@@ -17,13 +17,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,24 +55,24 @@ import ibt.com.tapizy.utils.BaseFragment;
 import ibt.com.tapizy.utils.ConnectionDetector;
 import ibt.com.tapizy.utils.drag_and_remove.OnStartDragListener;
 import ibt.com.tapizy.utils.drag_and_remove.SimpleItemTouchHelperCallback;
+import ibt.com.tapizy.utils.expandable_layout.ExpandableLayout;
 import ibt.com.tapizy.utils.floating_view.FloatingViewListener;
 import ibt.com.tapizy.utils.floating_view.FloatingViewManager;
-import ibt.com.tapizy.utils.move_listener.MultiTouchListener;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 import static ibt.com.tapizy.ui.activity.user_activities.HomeActivity.homeActivity;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener, OnStartDragListener,
-        FloatingViewListener {
+        FloatingViewListener, ExpandableLayout.OnExpansionUpdateListener {
+
+    private ExpandableLayout expandableLayoutLeft, expandableLayoutRight;
 
     private BottomSheetBehavior sheetBehavior;
     private LinearLayout llBottom;
     public static HomeFragment homeFragment;
 
     private View rootView;
-    private TextView txtSwipe;
-    private ItemTouchHelper mItemTouchHelper;
     private ArrayList<FavoriteBot> favoriteBotList = new ArrayList<>();
     private FavouriteBotListAdapter adapter;
 
@@ -82,9 +81,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private static final int CUSTOM_OVERLAY_PERMISSION_REQUEST_CODE = 101;
     private FavoriteBot favoriteBotData;
     /********************************************************/
-    private RelativeLayout rlMain;
-    private int xDelta;
-    private int yDelta;
+    private LinearLayout rlMain;
+    private boolean isBlink = true;
+
     /*****************************************************/
     private List<SocialLinkList> socialLinkLists = new ArrayList<>();
     private SocialLinksListAdapter linksListAdapter;
@@ -113,46 +112,22 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
+        Glide.with(mContext)
+                .load(R.drawable.tapizy_animate_home)
+                .placeholder(R.drawable.tapizy_animate_home)
+                .into((ImageView) rootView.findViewById(R.id.imgTapizy));
+        expandableLayoutLeft = rootView.findViewById(R.id.expandableLayoutLeft);
+        expandableLayoutRight = rootView.findViewById(R.id.expandableLayoutRight);
+        expandableLayoutLeft.setOnExpansionUpdateListener(this);
+        expandableLayoutRight.setOnExpansionUpdateListener(this);
+
         llBottom = rootView.findViewById(R.id.llBottom);
         sheetBehavior = BottomSheetBehavior.from(llBottom);
         rlMain = rootView.findViewById(R.id.rlMain);
-        txtSwipe = rootView.findViewById(R.id.txtSwipe);
-        MultiTouchListener touchListener = new MultiTouchListener(homeActivity);
-        //txtSwipe.setOnTouchListener(touchListener);
-        txtSwipe.setOnTouchListener(new View.OnTouchListener() {
-            float lastX;
 
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                final int x = (int) event.getRawX();
-                final int y = (int) event.getRawY();
-                switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_DOWN:
-                        RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams)
-                                view.getLayoutParams();
-
-                        xDelta = x - lParams.leftMargin;
-                        yDelta = y - lParams.topMargin;
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        //Toast.makeText(mContext, "thanks for new location!", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view
-                                .getLayoutParams();
-                        layoutParams.leftMargin = x - xDelta;
-                        layoutParams.topMargin = y - yDelta;
-                        layoutParams.rightMargin = 0;
-                        layoutParams.bottomMargin = 0;
-                        view.setLayoutParams(layoutParams);
-                        break;
-                }
-                rlMain.invalidate();
-                return true;
-            }
-        });
-
+        rootView.findViewById(R.id.txtEarn).setOnClickListener(this);
+        rootView.findViewById(R.id.txtRedeem).setOnClickListener(this);
+        rootView.findViewById(R.id.llCenter).setOnClickListener(this);
         rootView.findViewById(R.id.llexplore).setOnClickListener(this);
         rootView.findViewById(R.id.llTrending).setOnClickListener(this);
         rootView.findViewById(R.id.llCommunity).setOnClickListener(this);
@@ -169,18 +144,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     }
                     break;
                     case BottomSheetBehavior.STATE_COLLAPSED: {
-                        TranslateAnimation animate = new TranslateAnimation(0, 0, 0, 0);
-                        animate.setDuration(500);
-                        animate.setFillAfter(true);
-                        rlMain.startAnimation(animate);
                         rlMain.setVisibility(View.VISIBLE);
                     }
                     break;
                     case BottomSheetBehavior.STATE_DRAGGING:
-                        TranslateAnimation animate = new TranslateAnimation(0, rlMain.getWidth(), 0, 0);
-                        animate.setDuration(500);
-                        animate.setFillAfter(true);
-                        rlMain.startAnimation(animate);
                         rlMain.setVisibility(View.GONE);
                         break;
                     case BottomSheetBehavior.STATE_SETTLING:
@@ -195,6 +162,66 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         });
     }
 
+    @Override
+    public void onExpansionUpdate(float expansionFraction, int state) {
+       /* rootView.findViewById(R.id.imgArrowLeft).setRotation(expansionFraction * 180);
+        rootView.findViewById(R.id.imgArrowRight).setRotation(expansionFraction * 180);*/
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.llCenter:
+                if (isBlink) {
+                    rootView.findViewById(R.id.spin_kit).setVisibility(View.GONE);
+                    isBlink = false;
+                } else {
+                    rootView.findViewById(R.id.spin_kit).setVisibility(View.VISIBLE);
+                    isBlink = true;
+                }
+                expandableLayoutRight.toggle();
+                expandableLayoutLeft.toggle();
+                break;
+            case R.id.txtEarn:
+                Alerts.show(mContext, "Earn");
+                break;
+            case R.id.txtRedeem:
+                Alerts.show(mContext, "Redeem");
+                break;
+            case R.id.imgRemove:
+                int position = Integer.parseInt(v.getTag().toString());
+                String strId = favoriteBotList.get(position).getBotId();
+                removeFav(strId);
+                break;
+            case R.id.llexplore:
+                startActivity(new Intent(mContext, ExploreActivity.class));
+                break;
+            case R.id.llCommunity:
+                startActivity(new Intent(mContext, CommunityActivity.class));
+                break;
+            case R.id.llTrending:
+                startActivity(new Intent(mContext, TrendingActivity.class));
+                break;
+            case R.id.llchat:
+                startActivity(new Intent(mContext, RecentChatActivity.class));
+                break;
+            case R.id.llayout:
+                int pos = Integer.parseInt(v.getTag().toString());
+                if (pos > 4) {
+                    BotList botData = new BotList();
+                    botData.setAvtar(favoriteBotList.get(pos).getAvtar());
+                    botData.setBotName(favoriteBotList.get(pos).getBotName());
+                    botData.setUid(favoriteBotList.get(pos).getBotId());
+                    Intent intentA = new Intent(mContext, ChatActivity.class);
+                    intentA.putExtra("bot_data", botData);
+                    startActivity(intentA);
+                } else {
+
+                }
+                break;
+        }
+    }
+
     private void favouriteBotRecyclerView() {
         RecyclerView rv_tapizy_list = rootView.findViewById(R.id.rv_tapizy_list);
 
@@ -205,7 +232,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         rv_tapizy_list.setAdapter(adapter);
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
-        mItemTouchHelper = new ItemTouchHelper(callback);
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(rv_tapizy_list);
 
         favouriteBotListApi();
@@ -279,43 +306,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             });
         } else {
             cd.show(mContext);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.imgRemove:
-                int position = Integer.parseInt(v.getTag().toString());
-                String strId = favoriteBotList.get(position).getBotId();
-                removeFav(strId);
-                break;
-            case R.id.llexplore:
-                startActivity(new Intent(mContext, ExploreActivity.class));
-                break;
-            case R.id.llCommunity:
-                startActivity(new Intent(mContext, CommunityActivity.class));
-                break;
-            case R.id.llTrending:
-                startActivity(new Intent(mContext, TrendingActivity.class));
-                break;
-            case R.id.llchat:
-                startActivity(new Intent(mContext, RecentChatActivity.class));
-                break;
-            case R.id.llayout:
-                int pos = Integer.parseInt(v.getTag().toString());
-                if (pos > 4) {
-                    BotList botData = new BotList();
-                    botData.setAvtar(favoriteBotList.get(pos).getAvtar());
-                    botData.setBotName(favoriteBotList.get(pos).getBotName());
-                    botData.setUid(favoriteBotList.get(pos).getBotId());
-                    Intent intentA = new Intent(mContext, ChatActivity.class);
-                    intentA.putExtra("bot_data", botData);
-                    startActivity(intentA);
-                } else {
-
-                }
-                break;
         }
     }
 
@@ -416,4 +406,5 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         intent.putExtra("bot_id", strBotId);
         mContext.startService(intent);
     }
+
 }

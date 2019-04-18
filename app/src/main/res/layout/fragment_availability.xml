@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/layout_bg_gradient_1"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:visibility="gone">
 
         <Spinner
             android:id="@+id/spinnerFaq"
@@ -38,17 +39,37 @@
             android:id="@+id/edtQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:gravity="center"
+            android:gravity="start"
+            android:hint="Question"
             android:inputType="textMultiLine"
-            android:lines="6"
+            android:lines="1"
             android:padding="16dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray_d" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/layout_bg2">
+
+        <EditText
+            android:id="@+id/edtComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:hint="Comment"
+            android:inputType="textMultiLine"
+            android:lines="1"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray_d" />
     </RelativeLayout>
 
     <Button
         android:id="@+id/btnSubmit"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -57,4 +78,14 @@
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
         android:text="Submit" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_i" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewFaq"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

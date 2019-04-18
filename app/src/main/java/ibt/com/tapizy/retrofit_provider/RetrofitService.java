@@ -12,6 +12,7 @@ import ibt.com.tapizy.model.city_list_modal.ApiCityListMainModal;
 import ibt.com.tapizy.model.comment_list_modal.CommentMainModal;
 import ibt.com.tapizy.model.communication.CommunicationMainModal;
 import ibt.com.tapizy.model.community_post_modal.QuestionAnswerListMainModal;
+import ibt.com.tapizy.model.faq_data.FaqMainModal;
 import ibt.com.tapizy.model.favourite_bot.FavouriteBotMainModal;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 import ibt.com.tapizy.model.social_link.SocialLinkMainModal;
@@ -474,6 +475,27 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<SocialLinkMainModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getFaqList(final Dialog dialog, final Call<FaqMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<FaqMainModal>() {
+            @Override
+            public void onResponse(Call<FaqMainModal> call, Response<FaqMainModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<FaqMainModal> call, Throwable throwable) {
                 if (dialog != null)
                     AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());

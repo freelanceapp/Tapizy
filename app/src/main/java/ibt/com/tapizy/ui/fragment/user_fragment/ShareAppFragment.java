@@ -6,12 +6,15 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.utils.BaseFragment;
 
-public class RewardsFragment extends BaseFragment implements View.OnClickListener {
+public class ShareAppFragment extends BaseFragment implements View.OnClickListener {
 
     private View rootView;
 
@@ -19,7 +22,7 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        rootView = inflater.inflate(R.layout.fragment_rewards, container, false);
+        rootView = inflater.inflate(R.layout.fragment_share_app, container, false);
         return rootView;
     }
 
@@ -30,7 +33,11 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
     }
 
     private void init() {
-        ((TextView) rootView.findViewById(R.id.txtTitle)).setText("Under development...!!!");
+        Glide.with(mContext)
+                .load(R.drawable.splash_image)
+                .placeholder(R.drawable.splash_image)
+                .into((ImageView) rootView.findViewById(R.id.imgSplash));
+
     }
 
     @Override

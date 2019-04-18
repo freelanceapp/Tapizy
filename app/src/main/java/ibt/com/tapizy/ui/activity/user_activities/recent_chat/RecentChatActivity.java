@@ -59,7 +59,7 @@ public class RecentChatActivity extends BaseActivity implements View.OnClickList
         String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
         if (userType.equalsIgnoreCase("user")) {
             String coins = User.getCoins();
-            if (coins.isEmpty()) {
+            if (coins == null || coins.isEmpty()) {
                 coins = "0";
             }
             ((TextView) findViewById(R.id.txtCoinsCount)).setText(coins);

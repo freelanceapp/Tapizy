@@ -10,6 +10,7 @@ import ibt.com.tapizy.model.city_list_modal.ApiCityListMainModal;
 import ibt.com.tapizy.model.comment_list_modal.CommentMainModal;
 import ibt.com.tapizy.model.communication.CommunicationMainModal;
 import ibt.com.tapizy.model.community_post_modal.QuestionAnswerListMainModal;
+import ibt.com.tapizy.model.faq_data.FaqMainModal;
 import ibt.com.tapizy.model.favourite_bot.FavouriteBotMainModal;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 import ibt.com.tapizy.model.social_link.SocialLinkMainModal;
@@ -181,6 +182,15 @@ public interface RetrofitApiClient {
     @POST(Constant.ADD_TO_FAV)
     Call<ResponseBody> addToFav(@Field("uid") String uid, @Field("user_bot_id") String user_bot_id,
                                 @Field("status") String status);
+
+    @FormUrlEncoded
+    @POST(Constant.SUPPORT)
+    Call<ResponseBody> support(@Field("user_id") String user_id, @Field("question") String question,
+                               @Field("response") String response, @Field("comment") String comment);
+
+    @FormUrlEncoded
+    @POST(Constant.FAQ_LIST)
+    Call<FaqMainModal> faqList(@Field("user_id") String user_id);
 
     @GET(Constant.CITY_LIST_API)
     Call<ApiCityListMainModal> cityList();

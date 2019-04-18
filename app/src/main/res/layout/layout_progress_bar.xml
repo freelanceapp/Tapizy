@@ -9,8 +9,8 @@
         android:id="@+id/progresssBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
-        />
+        android:indeterminate="true" />
+
 </LinearLayout>
 
     <!--android:indeterminateTint="@color/colorPrimary"
