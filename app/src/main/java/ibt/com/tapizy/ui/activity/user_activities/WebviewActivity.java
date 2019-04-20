@@ -4,26 +4,27 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.User;
+import ibt.com.tapizy.model.coins_list_modal.CoinTimeList;
+import ibt.com.tapizy.model.coins_list_modal.CoinsTimeModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
 import ibt.com.tapizy.utils.Alerts;
@@ -36,12 +37,13 @@ public class WebviewActivity extends BaseActivity implements View.OnClickListene
 
     private WebView mWebView;
     private ProgressBar mProgressBar;
+    private String strTitle;
 
-    private CountDownTimer timer;
-    private long millisInFuture = 10000; //30 seconds
-    private long countDownInterval = 1000;
-    private String strTitle, strCoins;
-    private boolean isTimerCancel = false;
+    private List<CoinTimeList> timeLists = new ArrayList<>();
+    private int counting = 0;
+    private String updatecoins = "";
+    private Handler handler = new Handler();
+    private Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +58,14 @@ public class WebviewActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.imgBack).setOnClickListener(this);
         String strUrl = getIntent().getStringExtra("url");
         strTitle = getIntent().getStringExtra("title");
-        strCoins = getIntent().getStringExtra("coins");
 
         ((TextView) findViewById(R.id.txtTitle)).setText(strTitle);
 
         mWebView = findViewById(R.id.webView);
         mProgressBar = findViewById(R.id.pb);
         renderWebPage(strUrl);
-        countDownTimerForCoins();
+        coinsTimeApi();
+        updateWebViewCoins();
     }
 
     protected void renderWebPage(String urlToRender) {
@@ -94,26 +96,23 @@ public class WebviewActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        isTimerCancel = true;
-        timer.cancel();
-        finish();
+        handler.removeCallbacks(runnable);
+        payCoinApi(updatecoins);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        isTimerCancel = true;
-        timer.cancel();
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             switch (keyCode) {
                 case KeyEvent.KEYCODE_BACK:
                     if (mWebView.canGoBack()) {
                         mWebView.goBack();
                     } else {
-                        finish();
+                        handler.removeCallbacks(runnable);
+                        payCoinApi(updatecoins);
                     }
                     return true;
             }
-
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -121,22 +120,7 @@ public class WebviewActivity extends BaseActivity implements View.OnClickListene
     /*
      * Count down timer for coins
      * */
-    private void countDownTimerForCoins() {
-        timer = new CountDownTimer(millisInFuture, countDownInterval) {
-            public void onTick(long millisUntilFinished) {
-                ((TextView) findViewById(R.id.txtTimer)).setText("" + millisUntilFinished / 1000);
-            }
-
-            public void onFinish() {
-                ((TextView) findViewById(R.id.txtTimer)).setText("Finished");
-                if (!isTimerCancel) {
-                    payCoinApi();
-                }
-            }
-        }.start();
-    }
-
-    private void payCoinApi() {
+    private void payCoinApi(String strCoins) {
         String userId = User.getUser().getUser().getUid();
         if (cd.isNetworkAvailable()) {
             RetrofitService.getResponseData(new Dialog(mContext), retrofitApiClient.payCoins(
@@ -168,5 +152,53 @@ public class WebviewActivity extends BaseActivity implements View.OnClickListene
         } else {
             cd.show(mContext);
         }
+    }
+
+    /*
+     * Coins timer list api
+     * */
+    private void coinsTimeApi() {
+        if (cd.isNetworkAvailable()) {
+            RetrofitService.getCoinTimeData(new Dialog(mContext), retrofitApiClient.coinsTime(), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    CoinsTimeModal coinsTimeModal = (CoinsTimeModal) result.body();
+                    timeLists.clear();
+                    if (!coinsTimeModal.getError()) {
+                        timeLists.addAll(coinsTimeModal.getCoins());
+                        if (timeLists.size() > 0) {
+                            startTimer();
+                        }
+                    }
+                }
+
+                @Override
+                public void onResponseFailed(String error) {
+                    Alerts.show(mContext, error);
+                }
+            });
+        } else {
+            cd.show(mContext);
+        }
+    }
+
+    private void startTimer() {
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                counting++;
+                String time = String.valueOf(counting);
+                if (timeLists.size() > 0) {
+                    for (CoinTimeList coinTime : timeLists) {
+                        if (time.equals(coinTime.getTime())) {
+                            updatecoins = coinTime.getCoins();
+                            //((TextView) findViewById(R.id.txtTimer)).setText(time + " coins:-" + coinTime.getCoins());
+                        }
+                    }
+                }
+                startTimer();
+            }
+        };
+        handler.postDelayed(runnable, 60000);
     }
 }

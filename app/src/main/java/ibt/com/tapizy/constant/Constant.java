@@ -36,16 +36,20 @@ public class Constant {
     /*Explore*/
     public static final String BOT_LIST_API = "explore/bot_list.php";
     /*Coins*/
+    public static final String COINS_TIME = "coin/web_view_coins.php";
     public static final String MY_COINS = "coin/my_coins.php";
     public static final String PAY_COINS = "coin/paycoins.php";
     /*General*/
     public static final String SOCIAL_LINKS = "general/social_link.php";
+    public static final String APP_CONTENT = "general/app_content.php";
+    public static final String FAQ = "general/faq.php";
     /*Support*/
     public static final String SUPPORT = "support/support.php";
     public static final String FAQ_LIST = "support/select_query.php";
+    /*Chat api*/
+    public static final String CONVERSATION_API = "chat/chat_question.php";
 
     public static final String CREATE_CONVERSATION_API = "app/create_conversation.php";
-    public static final String SELECT_CONVERSATION_API = "app/select_conversation_list.php";
     public static final String COMMUNICATION_API = "app/communition.php";
     public static final String SEND_MSG = "app/send_msg.php";
     public static final String CHAT_LIST = "app/conversation_bot_list.php";
@@ -106,6 +110,7 @@ public class Constant {
     public static final String VIDEO_BASE_URL = BASE_URL_IMAGE + "image/trending/video/";
     public static final String PROFILE_IMAGE_BASE_URL = BASE_URL_IMAGE + "image/user_profile/";
     public static final String BOT_PROFILE_IMAGE = BASE_URL_IMAGE + "image/bot/";*/
+
     public static final String IMAGE_BASE_URL = "";
     public static final String VIDEO_BASE_URL = "";
     public static final String PROFILE_IMAGE_BASE_URL = "";
@@ -116,6 +121,8 @@ public class Constant {
     //public static final String COIN_GIF = "https://im4.ezgif.com/tmp/ezgif-4-25d552422214.gif";
     public static final String COIN_GIF = "http://mine.bitcoin-mining.zarabatok.com/lending/btc.gif";
     public static final String COIN_GIF_B = "https://im4.ezgif.com/tmp/ezgif-4-2ac37b17a9fa.gif";
+
+    public static final String SHARE_APP = "https://play.google.com/store/apps/details?id=ibt.com.tapizy";
 }
 /*<uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />

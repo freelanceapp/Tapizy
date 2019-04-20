@@ -102,6 +102,7 @@ public class BaseActivity extends AppCompatActivity {
                         if (!jsonObject.getBoolean("error")) {
                             User.setCoins(jsonObject.getString("mycoin"));
                             setCoins();
+                            finish();
                         } else {
                             Alerts.show(mContext, jsonObject.getString("message"));
                         }
@@ -120,6 +121,10 @@ public class BaseActivity extends AppCompatActivity {
         } else {
             cd.show(mContext);
         }
+    }
+
+    public void updateWebViewCoins() {
+        setCoins();
     }
 
     private void setCoins() {
@@ -144,7 +149,6 @@ public class BaseActivity extends AppCompatActivity {
             }
             ((TextView) findViewById(R.id.txtCoinsCount)).setText(coins);
         }
-
     }
 
     public void myCoinsApiTrending(final String title) {

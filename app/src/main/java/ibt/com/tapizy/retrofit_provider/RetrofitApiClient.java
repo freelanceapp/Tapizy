@@ -4,12 +4,15 @@ import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.api_bot_list.BotListMainModal;
 import ibt.com.tapizy.model.api_chat_list.ChatListMainModal;
 import ibt.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
+import ibt.com.tapizy.model.app_content.AppContentModal;
 import ibt.com.tapizy.model.bot_profile_data.BotDetailMainModal;
 import ibt.com.tapizy.model.chat_history.ChatHistoryMainModal;
 import ibt.com.tapizy.model.city_list_modal.ApiCityListMainModal;
+import ibt.com.tapizy.model.coins_list_modal.CoinsTimeModal;
 import ibt.com.tapizy.model.comment_list_modal.CommentMainModal;
 import ibt.com.tapizy.model.communication.CommunicationMainModal;
 import ibt.com.tapizy.model.community_post_modal.QuestionAnswerListMainModal;
+import ibt.com.tapizy.model.conversation_modal.NewConversationMainModal;
 import ibt.com.tapizy.model.faq_data.FaqMainModal;
 import ibt.com.tapizy.model.favourite_bot.FavouriteBotMainModal;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
@@ -123,10 +126,12 @@ public interface RetrofitApiClient {
                                                       @Field("type") String type,
                                                       @Field("response_related_id") String response_related_id,
                                                       @Field("sub_question") String sub_question);
-
+    
     @FormUrlEncoded
-    @POST(Constant.SELECT_CONVERSATION_API)
-    Call<ApiConversationMainModal> selectConversation(@Field("uid") String userId);
+    @POST(Constant.CONVERSATION_API)
+    Call<NewConversationMainModal> conversationApi(@Field("uid") String userId, @Field("bot_id") String bot_id,
+                                                   @Field("relate_id") String relate_id, @Field("option_relate_id") String option_relate_id,
+                                                   @Field("msg_sequence") String msg_sequence);
 
     @FormUrlEncoded
     @POST(Constant.BOT_LIST_API)
@@ -154,6 +159,9 @@ public interface RetrofitApiClient {
     @POST(Constant.INSERT_QUESTION_API)
     Call<ResponseBody> insertQuestionApi(@Field("uid") String uid, @Field("city_bot_id") String city_bot_id,
                                          @Field("question") String question);
+
+    @GET(Constant.COINS_TIME)
+    Call<CoinsTimeModal> coinsTime();
 
     @FormUrlEncoded
     @POST(Constant.MY_COINS)
@@ -197,4 +205,7 @@ public interface RetrofitApiClient {
 
     @GET(Constant.SOCIAL_LINKS)
     Call<SocialLinkMainModal> socialLinksApi();
+
+    @GET(Constant.APP_CONTENT)
+    Call<AppContentModal> appContent();
 }

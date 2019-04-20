@@ -66,7 +66,7 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
         recyclerViewChatbot.setAdapter(conversationListAdapter);
 
         findViewById(R.id.btnWelcomeText).setOnClickListener(this);
-        getConversationList();
+
     }
 
     @Override
@@ -216,40 +216,4 @@ public class CreateConversationActivity extends BaseActivity implements View.OnC
         dialogChatbot.show();
     }
 
-    private void getConversationList() {
-        final Dialog dialog = new Dialog(mContext);
-        AppProgressDialog.show(dialog);
-        if (cd.isNetworkAvailable()) {
-            RetrofitService.conversationListResponse(retrofitApiClient.selectConversation(strUserId), new WebResponse() {
-                @Override
-                public void onResponseSuccess(Response<?> result) {
-                    AppProgressDialog.hide(dialog);
-                    ApiConversationMainModal apiConversationMainModal = (ApiConversationMainModal) result.body();
-                    conversationLists.clear();
-                    if (apiConversationMainModal.getConversation() != null) {
-                        conversationLists.addAll(apiConversationMainModal.getConversation());
-                    }
-                    conversationListAdapter.notifyDataSetChanged();
-
-                    if (conversationLists.size() > 0) {
-                        findViewById(R.id.llWelcome).setVisibility(View.GONE);
-                    } else {
-                        if (AppPreference.getFirstBooleanPref(mContext, Constant.FIRST_CONVERSATION)) {
-                            findViewById(R.id.llWelcome).setVisibility(View.VISIBLE);
-                        } else {
-                            findViewById(R.id.llWelcome).setVisibility(View.GONE);
-                        }
-                    }
-                }
-
-                @Override
-                public void onResponseFailed(String error) {
-                    AppProgressDialog.hide(dialog);
-                    Alerts.show(mContext, error);
-                }
-            });
-        } else {
-            cd.show(mContext);
-        }
-    }
 }

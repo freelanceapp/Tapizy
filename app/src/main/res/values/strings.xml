@@ -41,4 +41,5 @@
     <string name="qr_code_camera_not_found">Could not detect camera</string>
     <string name="qr_help">Open profile and then click on Account tab after that click on QR code image and then you can scan QR code. Thank you</string>
     <string name="share_earn"><![CDATA[Share & Earn]]></string>
+    <string name="terms_condition"><![CDATA[Terms & Condition]]></string>
 </resources>

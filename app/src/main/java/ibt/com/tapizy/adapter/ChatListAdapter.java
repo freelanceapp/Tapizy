@@ -1,33 +1,30 @@
 package ibt.com.tapizy.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.eyalbira.loadingdots.LoadingDots;
-
 import java.util.List;
 
 import ibt.com.tapizy.R;
-import ibt.com.tapizy.model.ChatSubItems;
+import ibt.com.tapizy.model.conversation_modal.NewConversationQuestionsData;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
 
-    private List<ChatSubItems> chatList;
-    private Context context;
+    private List<NewConversationQuestionsData> chatList;
+    private Context mContext;
     private View.OnClickListener onClickListener;
-    private String strFrom;
 
-    public ChatListAdapter(Context context, List<ChatSubItems> chatList, View.OnClickListener onClickListener, String strFrom) {
+    public ChatListAdapter(Context mContext, List<NewConversationQuestionsData> chatList, View.OnClickListener onClickListener) {
         this.chatList = chatList;
-        this.context = context;
+        this.mContext = mContext;
         this.onClickListener = onClickListener;
-        this.strFrom = strFrom;
     }
 
     @Override
@@ -39,30 +36,23 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        String strText = chatList.get(position).getMsg();
-        if (strText.isEmpty()) {
-            holder.tvQuestion.setText("Our executive will call you later.");
-        } else {
-            holder.tvQuestion.setText(chatList.get(position).getMsg());
-        }
 
-        //String strUserType = AppPreference.getStringPreference(context, Constant.TOKEN);
         String strUserType = chatList.get(position).getFrom();
         if (strUserType.equalsIgnoreCase("bot")) {
-            holder.rlMainView.setGravity(Gravity.LEFT);
+            holder.cardChat.setVisibility(View.VISIBLE);
+            holder.cardChatUser.setVisibility(View.GONE);
+            holder.tvQuestion.setText(chatList.get(position).getResponse());
         } else {
-            holder.rlMainView.setGravity(Gravity.RIGHT);
+            holder.cardChat.setVisibility(View.GONE);
+            holder.cardChatUser.setVisibility(View.VISIBLE);
+            holder.tvUser.setText(chatList.get(position).getResponse());
         }
-        /*if (chatList.size() > 0) {
-            int pos = chatList.size() - 1;
-            if (position == pos) {
-                if (strUserType.equalsIgnoreCase("bot")) {
-                    holder.rlMainView.setGravity(Gravity.LEFT);
-                } else {
-                    holder.rlMainView.setGravity(Gravity.RIGHT);
-                }
-            }
-        }*/
+
+        ChipsListAdapter chipsListAdapter = new ChipsListAdapter(mContext, chatList.get(position).getSubResponse(), onClickListener);
+        holder.recyclerViewChips.setHasFixedSize(true);
+        holder.recyclerViewChips.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        holder.recyclerViewChips.setAdapter(chipsListAdapter);
+        chipsListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -77,15 +67,19 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public static LoadingDots loadingDots;
+        private RecyclerView recyclerViewChips;
         private RelativeLayout rlMainView;
-        public TextView tvQuestion;
+        private TextView tvQuestion, tvUser;
+        private CardView cardChatUser, cardChat;
 
         public ViewHolder(View v) {
             super(v);
-            loadingDots = v.findViewById(R.id.loadingDots);
+            cardChat = v.findViewById(R.id.cardChat);
+            cardChatUser = v.findViewById(R.id.cardChatUser);
+            recyclerViewChips = v.findViewById(R.id.recyclerViewChips);
             rlMainView = v.findViewById(R.id.rlMainView);
             tvQuestion = v.findViewById(R.id.tvQuestion);
+            tvUser = v.findViewById(R.id.tvUser);
         }
     }
 }

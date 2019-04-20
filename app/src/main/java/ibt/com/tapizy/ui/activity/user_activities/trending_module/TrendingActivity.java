@@ -140,7 +140,7 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
                 ShareCompat.IntentBuilder.from(this)
                         .setType("text/plain")
                         .setChooserTitle("Share Tapizy post")
-                        .setText("market://details?id=ibt.com.tapizy" + "\n" + postId)
+                        .setText(Constant.SHARE_APP)
                         .startChooser();
                 break;
         }

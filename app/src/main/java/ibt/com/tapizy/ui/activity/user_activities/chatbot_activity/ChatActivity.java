@@ -1,53 +1,43 @@
 package ibt.com.tapizy.ui.activity.user_activities.chatbot_activity;
 
-import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.eyalbira.loadingdots.LoadingDots;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.ChatListAdapter;
-import ibt.com.tapizy.adapter.QuestionListAdapter;
 import ibt.com.tapizy.constant.Constant;
-import ibt.com.tapizy.model.ChatQuestionList;
-import ibt.com.tapizy.model.ChatSubItems;
 import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.api_bot_list.BotList;
-import ibt.com.tapizy.model.api_conversation_modal.ApiConversationList;
-import ibt.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
-import ibt.com.tapizy.model.chat_history.ChatHistoryMainModal;
-import ibt.com.tapizy.model.communication.CommunicationMainModal;
+import ibt.com.tapizy.model.conversation_modal.NewConversationMainModal;
+import ibt.com.tapizy.model.conversation_modal.NewConversationQuestionsData;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
 import ibt.com.tapizy.utils.Alerts;
-import ibt.com.tapizy.utils.AppPreference;
-import ibt.com.tapizy.utils.AppProgressDialog;
 import ibt.com.tapizy.utils.BaseActivity;
-import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
-    private QuestionListAdapter questionListAdapter;
-    private String strBotId, strUserId, strMainQuesId, strSubQuesId, strFrom;
+    private BotList botData;
+
+    private String strUserId;
 
     private ChatListAdapter chatListAdapter;
+    private List<NewConversationQuestionsData> chatList = new ArrayList<>();
 
-    private List<ChatQuestionList> questionArrayLists = new ArrayList<>();
-    private List<ChatSubItems> chatList = new ArrayList<>();
-    private List<ApiConversationList> conversationLists = new ArrayList<>();
+    private NewConversationMainModal apiConversationMainModal;
+    private LoadingDots loadingDots;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,171 +48,81 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void init() {
+        loadingDots = findViewById(R.id.loadingDots);
+        loadingDots.setVisibility(View.VISIBLE);
+        botData = getIntent().getParcelableExtra("bot_data");
+
+        Glide.with(mContext)
+                .load(Constant.BOT_PROFILE_IMAGE + botData.getAvtar())
+                .placeholder(R.drawable.img_chatbot)
+                .into((CircleImageView) findViewById(R.id.imgBot));
+        ((TextView) findViewById(R.id.tvChatbotName)).setText(botData.getBotName());
+
         findViewById(R.id.imgAddFav).setOnClickListener(this);
         findViewById(R.id.imgSend).setOnClickListener(this);
         strUserId = User.getUser().getUser().getUid();
-        BotList botData = getIntent().getParcelableExtra("bot_data");
-        strBotId = botData.getUid();
 
-        if (botData.getAvtar() != null) {
-            Glide.with(mContext)
-                    .load(Constant.PROFILE_IMAGE_BASE_URL + botData.getAvtar())
-                    .into((CircleImageView) findViewById(R.id.imgBot));
-        }
-
-        ((TextView) findViewById(R.id.tvChatbotName)).setText(botData.getBotName());
         findViewById(R.id.ivBack).setOnClickListener(this);
 
-        questionListAdapter = new QuestionListAdapter(mContext, questionArrayLists, this);
-        chatListAdapter = new ChatListAdapter(mContext, chatList, this, strFrom);
-
-        RecyclerView recyclerViewQuestion = findViewById(R.id.recyclerViewQuestion);
-        recyclerViewQuestion.setHasFixedSize(true);
-        recyclerViewQuestion.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        recyclerViewQuestion.setAdapter(questionListAdapter);
+        chatListAdapter = new ChatListAdapter(mContext, chatList, this);
 
         RecyclerView recyclerViewChatList = findViewById(R.id.recyclerViewChatList);
         recyclerViewChatList.setHasFixedSize(true);
         recyclerViewChatList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         recyclerViewChatList.setAdapter(chatListAdapter);
 
-        questionListAdapter.notifyDataSetChanged();
         chatListAdapter.notifyDataSetChanged();
 
-        chatHistoryApi();
+        getConversationList("0", "0", "0");
     }
 
-    private void chatHistoryApi() {
+    private void getConversationList(String relateId, String optionRelateId, String msgSequence) {
         if (cd.isNetworkAvailable()) {
-            RetrofitService.getChatHistoryData(new Dialog(mContext), retrofitApiClient.chatHistory(strUserId, strBotId), new WebResponse() {
+            RetrofitService.getConversationList(null, retrofitApiClient.conversationApi(
+                    "1", "1", relateId, optionRelateId, msgSequence), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
-                    ChatHistoryMainModal chatHistoryMainModal = (ChatHistoryMainModal) result.body();
-                    if (chatHistoryMainModal != null) {
-                        if (!chatHistoryMainModal.getError()) {
-                            if (chatHistoryMainModal.getChatMsg() != null) {
-                                if (chatHistoryMainModal.getChatMsg().size() > 0) {
-                                    for (int i = 0; i < chatHistoryMainModal.getChatMsg().size(); i++) {
-                                        chatList.add(new ChatSubItems(chatHistoryMainModal.getChatMsg().get(i).getMessageFrom(),
-                                                chatHistoryMainModal.getChatMsg().get(i).getMessage()));
-                                    }
-                                    int size = chatHistoryMainModal.getChatMsg().size();
-                                    int pos = size - 1;
-                                    if (chatHistoryMainModal.getChatMsg().get(pos).getMessageFrom().equalsIgnoreCase("bot")) {
-                                        String strLastMsgId = chatHistoryMainModal.getChatMsg().get(pos).getMsgId();
-                                        getConversationList(strLastMsgId);
-                                    }
-                                } else {
-                                    welcomeApi();
-                                }
-                            } else {
-                                welcomeApi();
-                            }
-                        } else {
-                            welcomeApi();
-                        }
-                    } else {
-                        welcomeApi();
-                    }
-
-                    questionListAdapter.notifyDataSetChanged();
-                    chatListAdapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onResponseFailed(String error) {
-                    Alerts.show(mContext, error);
-                }
-            });
-        } else {
-            cd.show(mContext);
-        }
-    }
-
-    private void getConversationList(final String strLastMsgId) {
-        final Dialog dialog = new Dialog(mContext);
-        AppProgressDialog.show(dialog);
-        if (cd.isNetworkAvailable()) {
-            RetrofitService.conversationListResponse(retrofitApiClient.selectConversation(strBotId), new WebResponse() {
-                @Override
-                public void onResponseSuccess(Response<?> result) {
-                    AppProgressDialog.hide(dialog);
-                    ApiConversationMainModal apiConversationMainModal = (ApiConversationMainModal) result.body();
-                    conversationLists.clear();
+                    apiConversationMainModal = (NewConversationMainModal) result.body();
                     if (!apiConversationMainModal.getError()) {
-                        if (apiConversationMainModal.getConversation() != null) {
-                            if (apiConversationMainModal.getConversation().size() > 0) {
-                                conversationLists.addAll(apiConversationMainModal.getConversation());
-                                for (int i = 0; i < conversationLists.size(); i++) {
-                                    if (strLastMsgId.equalsIgnoreCase(conversationLists.get(i).getId())) {
-                                        if (conversationLists.get(i).getResponseData().size() > 0) {
-                                            for (int j = 0; j < conversationLists.get(i).getResponseData().size(); j++) {
-                                                ChatQuestionList subQues = new ChatQuestionList();
-                                                subQues.setId(conversationLists.get(i).getResponseData().get(j).getSubConId());
-                                                subQues.setName(conversationLists.get(i).getResponseData().get(j).getResponseText());
-                                                questionArrayLists.add(subQues);
-                                            }
-                                        }
-                                    }
+                        NewConversationQuestionsData questionsData = new NewConversationQuestionsData();
+                        questionsData.setQuestionId(apiConversationMainModal.getQuestions().getQuestionId());
+                        questionsData.setBotId(apiConversationMainModal.getQuestions().getBotId());
+                        questionsData.setErrorMessage(apiConversationMainModal.getQuestions().getErrorMessage());
+                        questionsData.setFrom("bot");
+                        questionsData.setMsgSequence(apiConversationMainModal.getQuestions().getMsgSequence());
+                        questionsData.setOptionRelateId(apiConversationMainModal.getQuestions().getOptionRelateId());
+                        questionsData.setRelateId(apiConversationMainModal.getQuestions().getRelateId());
+                        questionsData.setResponse(apiConversationMainModal.getQuestions().getResponse());
+                        questionsData.setType(apiConversationMainModal.getQuestions().getType());
+                        questionsData.setSubResponse(apiConversationMainModal.getQuestions().getSubResponse());
+                        chatList.add(questionsData);
+
+                        if (apiConversationMainModal.getQuestions().getSubResponse().size() == 0) {
+                            loadingDots.setVisibility(View.VISIBLE);
+                            String msgSequence = apiConversationMainModal.getQuestions().getMsgSequence();
+                            int msgSeq = Integer.parseInt(msgSequence);
+                            msgSeq += 1;
+                            final int finalMsgSeq = msgSeq;
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getConversationList("0", "0", "" + finalMsgSeq);
                                 }
-                            } else {
-                                Alerts.show(mContext, "No conversation found");
-                            }
+                            }, 2000);
+                        } else {
+                            loadingDots.setVisibility(View.GONE);
                         }
                     } else {
-                        Alerts.show(mContext, "No conversation found");
+                        Alerts.show(mContext, apiConversationMainModal.getMessage());
                     }
-                    questionListAdapter.notifyDataSetChanged();
-                    chatListAdapter.notifyDataSetChanged();
-                }
 
-                @Override
-                public void onResponseFailed(String error) {
-                    AppProgressDialog.hide(dialog);
-                    Alerts.show(mContext, error);
-                }
-            });
-        } else {
-            cd.show(mContext);
-        }
-    }
-
-    private void welcomeApi() {
-        if (cd.isNetworkAvailable()) {
-            RetrofitService.getCommunicationWelcomeData(new Dialog(mContext), retrofitApiClient.communicationWelcomeData(
-                    strBotId, strUserId), new WebResponse() {
-                @Override
-                public void onResponseSuccess(Response<?> result) {
-                    AppPreference.setStringPreference(mContext, Constant.TOKEN, "bot");
-                    final CommunicationMainModal mainModal = (CommunicationMainModal) result.body();
-                    if (!mainModal.getError()) {
-                        if (mainModal != null) {
-                            strMainQuesId = mainModal.getConversation().getId();
-
-                            chatList.add(new ChatSubItems("bot", mainModal.getWelcomeMessage()));
-                            chatList.add(new ChatSubItems("bot", mainModal.getConversation().getText()));
-
-                            if (mainModal.getConversation().getResponseData() != null) {
-                                for (int i = 0; i < mainModal.getConversation().getResponseData().size(); i++) {
-                                    ChatQuestionList subQues = new ChatQuestionList();
-                                    subQues.setId(mainModal.getConversation().getResponseData().get(i).getResponseOptionId());
-                                    subQues.setName(mainModal.getConversation().getResponseData().get(i).getResponseOptionMsg());
-                                    questionArrayLists.add(subQues);
-                                }
-                            } else {
-                                chatList.add(new ChatSubItems("bot", "Our executive will contact you !!!"));
-                            }
-                        }
-                    } else {
-                        Alerts.show(mContext, "No conversation found");
-                    }
-                    questionListAdapter.notifyDataSetChanged();
                     chatListAdapter.notifyDataSetChanged();
                 }
 
                 @Override
                 public void onResponseFailed(String error) {
                     Alerts.show(mContext, error);
+                    loadingDots.setVisibility(View.GONE);
                 }
             });
         } else {
@@ -236,72 +136,58 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
             case R.id.ivBack:
                 finish();
                 break;
-            case R.id.tvQuestion:
+            case R.id.tvChips:
                 onChipsClick(v);
                 break;
             case R.id.imgSend:
                 Alerts.show(mContext, "Under Development!!!");
                 break;
             case R.id.imgAddFav:
-                addToFavApi();
+                //addToFavApi();
                 break;
         }
     }
 
     private void onChipsClick(View view) {
+        loadingDots.setVisibility(View.VISIBLE);
         int pos = Integer.parseInt(view.getTag().toString());
-        strSubQuesId = questionArrayLists.get(pos).getId();
-        chatList.add(new ChatSubItems("user", questionArrayLists.get(pos).getName()));
-        questionArrayLists.clear();
 
-        AppPreference.setStringPreference(mContext, Constant.TOKEN, "user");
+        int chatPos = chatList.size() - 1;
 
-        questionListAdapter.notifyDataSetChanged();
+        final String relateId = chatList.get(chatPos).getQuestionId();
+        String msgSequence = chatList.get(chatPos).getMsgSequence();
+        int msgSeq = Integer.parseInt(msgSequence);
+        msgSeq += 1;
+
+        final String optionId = chatList.get(chatPos).getSubResponse().get(pos).getOptionId();
+        String response = chatList.get(chatPos).getSubResponse().get(pos).getMultichoiceOption();
+
+        final int finalMsgSeq = msgSeq;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getConversationList(relateId, optionId, finalMsgSeq + "");
+            }
+        }, 2000);
+
+        NewConversationQuestionsData questionsData = new NewConversationQuestionsData();
+        questionsData.setQuestionId("");
+        questionsData.setBotId("");
+        questionsData.setErrorMessage("");
+        questionsData.setFrom("user");
+        questionsData.setMsgSequence("");
+        questionsData.setOptionRelateId("");
+        questionsData.setRelateId("");
+        questionsData.setResponse(response);
+        questionsData.setType("");
+
+        chatList.add(questionsData);
+
         chatListAdapter.notifyDataSetChanged();
-        sendMsgApi();
+
     }
 
-    private void sendMsgApi() {
-        if (cd.isNetworkAvailable()) {
-            RetrofitService.getCommunicationWelcomeData(new Dialog(mContext), retrofitApiClient.sendMsg(
-                    strBotId, strUserId, strMainQuesId, strSubQuesId), new WebResponse() {
-                @Override
-                public void onResponseSuccess(Response<?> result) {
-                    AppPreference.setStringPreference(mContext, Constant.TOKEN, "bot");
-                    final CommunicationMainModal mainModal = (CommunicationMainModal) result.body();
-                    if (mainModal != null) {
-                        strMainQuesId = mainModal.getConversation().getId();
-                        if (mainModal.getConversation().getText() != null) {
-                            chatList.add(new ChatSubItems("bot", mainModal.getConversation().getText()));
-                        }
-
-                        if (mainModal.getConversation().getResponseData() != null) {
-                            for (int i = 0; i < mainModal.getConversation().getResponseData().size(); i++) {
-                                ChatQuestionList subQues = new ChatQuestionList();
-                                subQues.setId(mainModal.getConversation().getResponseData().get(i).getResponseOptionId());
-                                subQues.setName(mainModal.getConversation().getResponseData().get(i).getResponseOptionMsg());
-                                questionArrayLists.add(subQues);
-                            }
-                        } else {
-                            String strText = "Our executive will contact you !!!";
-                            chatList.add(new ChatSubItems("bot", strText));
-                        }
-                    }
-                    questionListAdapter.notifyDataSetChanged();
-                    chatListAdapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onResponseFailed(String error) {
-                    Alerts.show(mContext, error);
-                }
-            });
-        } else {
-            cd.show(mContext);
-        }
-    }
-
-    private void addToFavApi() {
+   /* private void addToFavApi() {
         if (cd.isNetworkAvailable()) {
             RetrofitService.getloginData(new Dialog(mContext), retrofitApiClient.addToFav(strUserId, strBotId, "1"), new WebResponse() {
                 @Override
@@ -330,5 +216,5 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         } else {
             cd.show(mContext);
         }
-    }
+    }*/
 }

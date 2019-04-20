@@ -6,12 +6,15 @@ import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.api_bot_list.BotListMainModal;
 import ibt.com.tapizy.model.api_chat_list.ChatListMainModal;
 import ibt.com.tapizy.model.api_conversation_modal.ApiConversationMainModal;
+import ibt.com.tapizy.model.app_content.AppContentModal;
 import ibt.com.tapizy.model.bot_profile_data.BotDetailMainModal;
 import ibt.com.tapizy.model.chat_history.ChatHistoryMainModal;
 import ibt.com.tapizy.model.city_list_modal.ApiCityListMainModal;
+import ibt.com.tapizy.model.coins_list_modal.CoinsTimeModal;
 import ibt.com.tapizy.model.comment_list_modal.CommentMainModal;
 import ibt.com.tapizy.model.communication.CommunicationMainModal;
 import ibt.com.tapizy.model.community_post_modal.QuestionAnswerListMainModal;
+import ibt.com.tapizy.model.conversation_modal.NewConversationMainModal;
 import ibt.com.tapizy.model.faq_data.FaqMainModal;
 import ibt.com.tapizy.model.favourite_bot.FavouriteBotMainModal;
 import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
@@ -496,6 +499,69 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<FaqMainModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getCoinTimeData(final Dialog dialog, final Call<CoinsTimeModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<CoinsTimeModal>() {
+            @Override
+            public void onResponse(Call<CoinsTimeModal> call, Response<CoinsTimeModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<CoinsTimeModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getAppContent(final Dialog dialog, final Call<AppContentModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<AppContentModal>() {
+            @Override
+            public void onResponse(Call<AppContentModal> call, Response<AppContentModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<AppContentModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getConversationList(final Dialog dialog, final Call<NewConversationMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<NewConversationMainModal>() {
+            @Override
+            public void onResponse(Call<NewConversationMainModal> call, Response<NewConversationMainModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<NewConversationMainModal> call, Throwable throwable) {
                 if (dialog != null)
                     AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());
