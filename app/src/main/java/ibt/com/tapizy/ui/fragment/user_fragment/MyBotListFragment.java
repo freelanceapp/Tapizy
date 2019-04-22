@@ -1,7 +1,6 @@
 package ibt.com.tapizy.ui.fragment.user_fragment;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,7 +22,6 @@ import ibt.com.tapizy.model.api_bot_list.BotList;
 import ibt.com.tapizy.model.api_bot_list.BotListMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
-import ibt.com.tapizy.ui.activity.bot_activities.BotHomeActivity;
 import ibt.com.tapizy.utils.Alerts;
 import ibt.com.tapizy.utils.BaseFragment;
 import ibt.com.tapizy.utils.ConnectionDetector;
@@ -107,10 +105,10 @@ public class MyBotListFragment extends BaseFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.llChatbot:
-                int pos = Integer.parseInt(v.getTag().toString());
+                /*int pos = Integer.parseInt(v.getTag().toString());
                 Intent intent = new Intent(mContext, BotHomeActivity.class);
                 intent.putExtra("bot_id", chatbotLists.get(pos).getUid());
-                startActivity(intent);
+                startActivity(intent);*/
                 break;
         }
     }
