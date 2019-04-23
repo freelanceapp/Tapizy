@@ -88,6 +88,7 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
         findViewById(R.id.iv_user_profile).setOnClickListener(this);
         findViewById(R.id.btn_create_profile).setOnClickListener(this);
         findViewById(R.id.ic_back_profile).setOnClickListener(this);
+        edtDob.setOnClickListener(this);
 
         Intent intent = getIntent();
         strFrom = intent.getStringExtra("from");
@@ -120,8 +121,6 @@ public class CreateProfileActivity extends BaseActivity implements View.OnClickL
                 ((RadioButton) findViewById(R.id.rb_male)).setChecked(false);
                 ((RadioButton) findViewById(R.id.rb_female)).setChecked(true);
             }
-        } else {
-            edtDob.setOnClickListener(this);
         }
         selectGender();
     }

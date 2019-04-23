@@ -1,5 +1,6 @@
 package ibt.com.tapizy.ui.activity.user_activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,17 +13,25 @@ import java.util.List;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.User;
+import ibt.com.tapizy.retrofit_provider.RetrofitApiClient;
+import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.ui.fragment.user_fragment.AvailabilityFragment;
 import ibt.com.tapizy.ui.fragment.user_fragment.HomeFragment;
-import ibt.com.tapizy.ui.fragment.user_fragment.MyBotListFragment;
+import ibt.com.tapizy.ui.fragment.user_fragment.MyProfileFragment;
 import ibt.com.tapizy.ui.fragment.user_fragment.ShareAppFragment;
+import ibt.com.tapizy.ui.fragment.user_fragment.UserAccountFragment;
 import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
+import ibt.com.tapizy.utils.ConnectionDetector;
 import ibt.com.tapizy.utils.FragmentUtils;
 import ibt.com.tapizy.utils.custom_navigation_drawer.MenuItem;
 import ibt.com.tapizy.utils.custom_navigation_drawer.SNavigationDrawer;
 
 public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMenuItemClickListener, SNavigationDrawer.DrawerListener {
+
+    public static RetrofitApiClient retrofitApiClient;
+    public static ConnectionDetector cd;
+    public static Context mContext;
 
     public static HomeActivity homeActivity;
     public static SNavigationDrawer sNavigationDrawer;
@@ -39,6 +48,11 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         homeActivity = this;
+
+        mContext = this;
+        cd = new ConnectionDetector(mContext);
+        retrofitApiClient = RetrofitService.getRetrofit();
+
         AppPreference.setStringPreference(mContext, Constant.USER_TYPE, "user");
         AppPreference.setStringPreference(mContext, Constant.USER_ID, User.getUser().getUser().getUid());
 
@@ -61,8 +75,8 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
         List<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(new MenuItem("Home", R.drawable.nav_music_bg));
         menuItems.add(new MenuItem("Profile", R.drawable.nav_music_bg));
-        menuItems.add(new MenuItem("My Bot", R.drawable.nav_feed_bg));
-        menuItems.add(new MenuItem("Create Bot", R.drawable.nav_message_bg));
+        /*menuItems.add(new MenuItem("My Bot", R.drawable.nav_feed_bg));*/
+        menuItems.add(new MenuItem("Account", R.drawable.nav_message_bg));
         menuItems.add(new MenuItem("24*7", R.drawable.nav_music_bg));
         menuItems.add(new MenuItem("Share App", R.drawable.nav_news_bg));
         menuItems.add(new MenuItem("Setting", R.drawable.nav_message_bg));
@@ -88,13 +102,35 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
                 sNavigationDrawer.setAppbarTitleTV(strTitle);
                 break;
             case 1:
-                //strTitle = "Profile";
-                /*fragmentTag = Constant.MyProfileFragment;
+                strTitle = "Profile";
+                fragmentTag = Constant.MyProfileFragment;
                 fragmentClass = MyProfileFragment.class;
-                sNavigationDrawer.setAppbarTitleTV(strTitle);*/
-                startActivity(new Intent(mContext, UserProfileAccountActivity.class));
+                sNavigationDrawer.setAppbarTitleTV(strTitle);
                 break;
             case 2:
+                strTitle = "Account";
+                fragmentTag = Constant.UserAccountFragment;
+                fragmentClass = UserAccountFragment.class;
+                sNavigationDrawer.setAppbarTitleTV(strTitle);
+                break;
+            case 3:
+                strTitle = "24*7";
+                fragmentTag = Constant.AvailabilityFragment;
+                fragmentClass = AvailabilityFragment.class;
+                sNavigationDrawer.setAppbarTitleTV(strTitle);
+                break;
+            case 4:
+                strTitle = "Rewards";
+                fragmentTag = Constant.RewardsFragment;
+                fragmentClass = ShareAppFragment.class;
+                sNavigationDrawer.setAppbarTitleTV(strTitle);
+                break;
+            case 5:
+                sNavigationDrawer.setAppbarTitleTV(strTitle);
+                Intent intentS = new Intent(mContext, SettingActivity.class);
+                startActivity(intentS);
+                break;
+           /*case 2:
                 strTitle = "Bot List";
                 fragmentTag = Constant.MyBotListFragment;
                 fragmentClass = MyBotListFragment.class;
@@ -105,24 +141,7 @@ public class HomeActivity extends BaseActivity implements SNavigationDrawer.OnMe
                 Intent intent = new Intent(mContext, CreateBotActivity.class);
                 intent.putExtra("from", "user");
                 startActivity(intent);
-                break;
-            case 4:
-                strTitle = "24*7";
-                fragmentTag = Constant.AvailabilityFragment;
-                fragmentClass = AvailabilityFragment.class;
-                sNavigationDrawer.setAppbarTitleTV(strTitle);
-                break;
-            case 5:
-                strTitle = "Rewards";
-                fragmentTag = Constant.RewardsFragment;
-                fragmentClass = ShareAppFragment.class;
-                sNavigationDrawer.setAppbarTitleTV(strTitle);
-                break;
-            case 6:
-                sNavigationDrawer.setAppbarTitleTV(strTitle);
-                Intent intentS = new Intent(mContext, SettingActivity.class);
-                startActivity(intentS);
-                break;
+                break;*/
         }
     }
 

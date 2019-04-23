@@ -1,5 +1,6 @@
 package ibt.com.tapizy.ui.activity.user_activities.chatbot_activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.eyalbira.loadingdots.LoadingDots;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,18 +29,17 @@ import ibt.com.tapizy.model.conversation_modal.NewConversationQuestionsData;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
 import ibt.com.tapizy.utils.Alerts;
+import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
     private BotList botData;
-
     private String strUserId;
-
     private ChatListAdapter chatListAdapter;
     private List<NewConversationQuestionsData> chatList = new ArrayList<>();
-
     private NewConversationMainModal apiConversationMainModal;
     private LoadingDots loadingDots;
 
@@ -143,7 +147,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 Alerts.show(mContext, "Under Development!!!");
                 break;
             case R.id.imgAddFav:
-                //addToFavApi();
+                addToFavApi();
                 break;
         }
     }
@@ -182,14 +186,12 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         questionsData.setType("");
 
         chatList.add(questionsData);
-
         chatListAdapter.notifyDataSetChanged();
-
     }
 
-   /* private void addToFavApi() {
+    private void addToFavApi() {
         if (cd.isNetworkAvailable()) {
-            RetrofitService.getloginData(new Dialog(mContext), retrofitApiClient.addToFav(strUserId, strBotId, "1"), new WebResponse() {
+            RetrofitService.getloginData(new Dialog(mContext), retrofitApiClient.addToFav(strUserId, botData.getUid(), "1"), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     ResponseBody responseBody = (ResponseBody) result.body();
@@ -216,5 +218,5 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         } else {
             cd.show(mContext);
         }
-    }*/
+    }
 }

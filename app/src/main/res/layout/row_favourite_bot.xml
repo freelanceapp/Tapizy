@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/iv_tapizy_logo"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
@@ -27,14 +27,6 @@
                 android:padding="1dp"
                 android:src="@drawable/ic_list"
                 android:tint="@color/blueB" />
-
-            <ImageView
-                android:id="@+id/imgRemove"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="-4dp"
-                android:layout_toEndOf="@+id/iv_tapizy_logo"
-                android:src="@drawable/ic_remove" />
         </RelativeLayout>
 
         <TextView

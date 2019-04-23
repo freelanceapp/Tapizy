@@ -56,7 +56,6 @@ public class MyBotListFragment extends BaseFragment implements View.OnClickListe
     private void init() {
         swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout);
 
-        //rootView.findViewById(R.id.llChatbot).setOnClickListener(this);
         RecyclerView recyclerViewBotList = rootView.findViewById(R.id.recyclerViewBotList);
 
         chatbotListAdapter = new ChatbotListAdapter(mContext, chatbotLists, this);

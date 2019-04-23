@@ -36,7 +36,6 @@ public class AvailabilityFragment extends BaseFragment implements View.OnClickLi
 
     private View rootView;
     private List<FaqList> faqModels = new ArrayList<>();
-    private EditText edtQuestion;
     private Button btnSubmit;
     private FaqListAdapter faqListAdapter;
 
@@ -59,39 +58,8 @@ public class AvailabilityFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void init() {
-        edtQuestion = rootView.findViewById(R.id.edtQuestion);
         btnSubmit = rootView.findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(this);
-
-       /* faqModels.add(new FaqModel("", ""));
-        faqModels.add(new FaqModel("How can I scan QR code?", getString(R.string.qr_help)));
-        faqModels.add(new FaqModel("Other!", ""));
-*/
-        /*Spinner spinnerFaq = rootView.findViewById(R.id.spinnerFaq);
-        SpinnerFaqAdapter faqAdapter = new SpinnerFaqAdapter(mContext, R.layout.spinner_custom_layout, faqModels);
-        spinnerFaq.setAdapter(faqAdapter);
-        spinnerFaq.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                edtQuestion.setText(faqModels.get(position).getAnswer());
-                edtQuestion.setHint("");
-                if (faqModels.get(position).getQuestion().equalsIgnoreCase("Other!")) {
-                    edtQuestion.setFocusableInTouchMode(true);
-                    edtQuestion.requestFocus();
-                    edtQuestion.setHintTextColor(mContext.getResources().getColor(R.color.gray_d));
-                    btnSubmit.setVisibility(View.VISIBLE);
-                    edtQuestion.setHint("Please enter your question!!!");
-                } else {
-                    btnSubmit.setVisibility(View.GONE);
-                    edtQuestion.setFocusable(false);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
 
         RecyclerView recyclerViewFaq = rootView.findViewById(R.id.recyclerViewFaq);
         recyclerViewFaq.setHasFixedSize(true);
@@ -105,7 +73,7 @@ public class AvailabilityFragment extends BaseFragment implements View.OnClickLi
     private void faqListApi() {
         String userId = User.getUser().getUser().getUid();
         if (cd.isNetworkAvailable()) {
-            RetrofitService.getFaqList(new Dialog(mContext), retrofitApiClient.faqList(userId), new WebResponse() {
+            RetrofitService.getFaqList(null, retrofitApiClient.faqList(userId), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     FaqMainModal faqMainModal = (FaqMainModal) result.body();

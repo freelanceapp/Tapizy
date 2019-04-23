@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.constant.Constant;
-import ibt.com.tapizy.ui.fragment.user_fragment.profile_account.MyProfileFragment;
-import ibt.com.tapizy.ui.fragment.user_fragment.profile_account.UserAccountFragment;
+import ibt.com.tapizy.ui.fragment.user_fragment.MyProfileFragment;
+import ibt.com.tapizy.ui.fragment.user_fragment.UserAccountFragment;
 import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
 import ibt.com.tapizy.utils.FragmentUtils;

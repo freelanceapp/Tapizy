@@ -1,4 +1,4 @@
-package ibt.com.tapizy.ui.fragment.user_fragment.profile_account;
+package ibt.com.tapizy.ui.fragment.user_fragment;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -168,9 +168,6 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name="ibt.com.tapizy.services.CustomFloatingViewService"
-            android:exported="false" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="4f92de69364db81c0b98762d88b4025811aba6e8" />
