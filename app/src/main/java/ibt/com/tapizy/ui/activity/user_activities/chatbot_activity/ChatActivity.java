@@ -36,6 +36,8 @@ import retrofit2.Response;
 
 public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
+    private int finalMsgSeq;
+
     private BotList botData;
     private String strUserId;
     private ChatListAdapter chatListAdapter;
@@ -104,9 +106,12 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                         if (apiConversationMainModal.getQuestions().getSubResponse().size() == 0) {
                             loadingDots.setVisibility(View.VISIBLE);
                             String msgSequence = apiConversationMainModal.getQuestions().getMsgSequence();
+                            if (msgSequence.isEmpty()) {
+                                msgSequence = "0";
+                            }
                             int msgSeq = Integer.parseInt(msgSequence);
                             msgSeq += 1;
-                            final int finalMsgSeq = msgSeq;
+                            finalMsgSeq = msgSeq;
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -166,7 +171,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         final String optionId = chatList.get(chatPos).getSubResponse().get(pos).getOptionId();
         String response = chatList.get(chatPos).getSubResponse().get(pos).getMultichoiceOption();
 
-        final int finalMsgSeq = msgSeq;
+        finalMsgSeq += 1;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
