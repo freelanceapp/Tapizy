@@ -10,18 +10,25 @@ import android.widget.TextView;
 import java.util.List;
 
 import ibt.com.tapizy.R;
+import ibt.com.tapizy.click_listener_interface.CustomClickListener;
+import ibt.com.tapizy.model.conversation_modal.NewConversationQuestionsData;
 import ibt.com.tapizy.model.conversation_modal.NewConversationSubResponseList;
 
 public class ChipsListAdapter extends RecyclerView.Adapter<ChipsListAdapter.ViewHolder> {
 
     private List<NewConversationSubResponseList> faqLists;
     private Context context;
-    private View.OnClickListener onClickListener;
+    private NewConversationQuestionsData questionsData;
+    private CustomClickListener customClickListener;
+    private int parentPosition;
 
-    public ChipsListAdapter(Context context, List<NewConversationSubResponseList> faqLists, View.OnClickListener onClickListener) {
+    public ChipsListAdapter(Context context, List<NewConversationSubResponseList> faqLists, NewConversationQuestionsData questionsData,
+                            CustomClickListener customClickListener, int parentPosition) {
         this.faqLists = faqLists;
         this.context = context;
-        this.onClickListener = onClickListener;
+        this.questionsData = questionsData;
+        this.customClickListener = customClickListener;
+        this.parentPosition = parentPosition;
     }
 
     @Override
@@ -33,10 +40,17 @@ public class ChipsListAdapter extends RecyclerView.Adapter<ChipsListAdapter.View
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        NewConversationSubResponseList faq = faqLists.get(position);
+        final NewConversationSubResponseList faq = faqLists.get(position);
         holder.tvChips.setText(faq.getMultichoiceOption());
-        holder.tvChips.setTag(position);
-        holder.tvChips.setOnClickListener(onClickListener);
+
+        holder.tvChips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!faq.getMsgSequence().isEmpty()) {
+                    customClickListener.getPosition(parentPosition, position, questionsData, faq);
+                }
+            }
+        });
     }
 
     @Override

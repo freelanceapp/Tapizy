@@ -21,11 +21,13 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.adapter.ChatListAdapter;
+import ibt.com.tapizy.click_listener_interface.CustomClickListener;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.User;
 import ibt.com.tapizy.model.api_bot_list.BotList;
 import ibt.com.tapizy.model.conversation_modal.NewConversationMainModal;
 import ibt.com.tapizy.model.conversation_modal.NewConversationQuestionsData;
+import ibt.com.tapizy.model.conversation_modal.NewConversationSubResponseList;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
 import ibt.com.tapizy.utils.Alerts;
@@ -34,7 +36,7 @@ import ibt.com.tapizy.utils.BaseActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-public class ChatActivity extends BaseActivity implements View.OnClickListener {
+public class ChatActivity extends BaseActivity implements View.OnClickListener, CustomClickListener {
 
     private int finalMsgSeq;
 
@@ -44,6 +46,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     private List<NewConversationQuestionsData> chatList = new ArrayList<>();
     private NewConversationMainModal apiConversationMainModal;
     private LoadingDots loadingDots;
+    private boolean chipsClick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +73,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
         findViewById(R.id.ivBack).setOnClickListener(this);
 
-        chatListAdapter = new ChatListAdapter(mContext, chatList, this);
+        chatListAdapter = new ChatListAdapter(mContext, chatList, this, this);
 
         RecyclerView recyclerViewChatList = findViewById(R.id.recyclerViewChatList);
         recyclerViewChatList.setHasFixedSize(true);
@@ -90,41 +93,44 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 public void onResponseSuccess(Response<?> result) {
                     apiConversationMainModal = (NewConversationMainModal) result.body();
                     if (!apiConversationMainModal.getError()) {
-                        NewConversationQuestionsData questionsData = new NewConversationQuestionsData();
-                        questionsData.setQuestionId(apiConversationMainModal.getQuestions().getQuestionId());
-                        questionsData.setBotId(apiConversationMainModal.getQuestions().getBotId());
-                        questionsData.setErrorMessage(apiConversationMainModal.getQuestions().getErrorMessage());
-                        questionsData.setFrom("bot");
-                        questionsData.setMsgSequence(apiConversationMainModal.getQuestions().getMsgSequence());
-                        questionsData.setOptionRelateId(apiConversationMainModal.getQuestions().getOptionRelateId());
-                        questionsData.setRelateId(apiConversationMainModal.getQuestions().getRelateId());
-                        questionsData.setResponse(apiConversationMainModal.getQuestions().getResponse());
-                        questionsData.setType(apiConversationMainModal.getQuestions().getType());
-                        questionsData.setSubResponse(apiConversationMainModal.getQuestions().getSubResponse());
-                        chatList.add(questionsData);
+                        if (!apiConversationMainModal.getQuestions().getQuestionId().isEmpty()) {
+                            NewConversationQuestionsData questionsData = new NewConversationQuestionsData();
+                            questionsData.setQuestionId(apiConversationMainModal.getQuestions().getQuestionId());
+                            questionsData.setBotId(apiConversationMainModal.getQuestions().getBotId());
+                            questionsData.setErrorMessage(apiConversationMainModal.getQuestions().getErrorMessage());
+                            questionsData.setFrom("bot");
+                            questionsData.setMsgSequence(apiConversationMainModal.getQuestions().getMsgSequence());
+                            questionsData.setOptionRelateId(apiConversationMainModal.getQuestions().getOptionRelateId());
+                            questionsData.setRelateId(apiConversationMainModal.getQuestions().getRelateId());
+                            questionsData.setResponse(apiConversationMainModal.getQuestions().getResponse());
+                            questionsData.setType(apiConversationMainModal.getQuestions().getType());
+                            questionsData.setSubResponse(apiConversationMainModal.getQuestions().getSubResponse());
+                            chatList.add(questionsData);
 
-                        if (apiConversationMainModal.getQuestions().getSubResponse().size() == 0) {
-                            loadingDots.setVisibility(View.VISIBLE);
-                            String msgSequence = apiConversationMainModal.getQuestions().getMsgSequence();
-                            if (msgSequence.isEmpty()) {
-                                msgSequence = "0";
-                            }
-                            int msgSeq = Integer.parseInt(msgSequence);
-                            msgSeq += 1;
-                            finalMsgSeq = msgSeq;
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    getConversationList("0", "0", "" + finalMsgSeq);
+                            if (apiConversationMainModal.getQuestions().getSubResponse().size() == 0) {
+                                loadingDots.setVisibility(View.VISIBLE);
+                                String msgSequence = apiConversationMainModal.getQuestions().getMsgSequence();
+                                if (msgSequence.isEmpty()) {
+                                    msgSequence = "0";
                                 }
-                            }, 2000);
+                                int msgSeq = Integer.parseInt(msgSequence);
+                                msgSeq += 1;
+                                finalMsgSeq = msgSeq;
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        getConversationList("0", "0", "" + finalMsgSeq);
+                                    }
+                                }, 2000);
+                            } else {
+                                loadingDots.setVisibility(View.GONE);
+                            }
                         } else {
-                            loadingDots.setVisibility(View.GONE);
+                            Alerts.show(mContext, "Question empty");
                         }
                     } else {
                         Alerts.show(mContext, apiConversationMainModal.getMessage());
                     }
-
                     chatListAdapter.notifyDataSetChanged();
                 }
 
@@ -145,9 +151,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
             case R.id.ivBack:
                 finish();
                 break;
-            case R.id.tvChips:
-                onChipsClick(v);
-                break;
             case R.id.imgSend:
                 Alerts.show(mContext, "Under Development!!!");
                 break;
@@ -155,43 +158,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 addToFavApi();
                 break;
         }
-    }
-
-    private void onChipsClick(View view) {
-        loadingDots.setVisibility(View.VISIBLE);
-        int pos = Integer.parseInt(view.getTag().toString());
-
-        int chatPos = chatList.size() - 1;
-
-        final String relateId = chatList.get(chatPos).getQuestionId();
-        String msgSequence = chatList.get(chatPos).getMsgSequence();
-        int msgSeq = Integer.parseInt(msgSequence);
-        msgSeq += 1;
-
-        final String optionId = chatList.get(chatPos).getSubResponse().get(pos).getOptionId();
-        String response = chatList.get(chatPos).getSubResponse().get(pos).getMultichoiceOption();
-
-        finalMsgSeq += 1;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getConversationList(relateId, optionId, finalMsgSeq + "");
-            }
-        }, 2000);
-
-        NewConversationQuestionsData questionsData = new NewConversationQuestionsData();
-        questionsData.setQuestionId("");
-        questionsData.setBotId("");
-        questionsData.setErrorMessage("");
-        questionsData.setFrom("user");
-        questionsData.setMsgSequence("");
-        questionsData.setOptionRelateId("");
-        questionsData.setRelateId("");
-        questionsData.setResponse(response);
-        questionsData.setType("");
-
-        chatList.add(questionsData);
-        chatListAdapter.notifyDataSetChanged();
     }
 
     private void addToFavApi() {
@@ -223,5 +189,36 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         } else {
             cd.show(mContext);
         }
+    }
+
+    @Override
+    public void getPosition(int parentPosition, int childPosition, final NewConversationQuestionsData questionsData,
+                            final NewConversationSubResponseList subResponseData) {
+        loadingDots.setVisibility(View.VISIBLE);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                chipsClick = true;
+                String strQuestionId = questionsData.getQuestionId();
+                String strOptionId = subResponseData.getOptionId();
+                getConversationList(strQuestionId, strOptionId, subResponseData.getMsgSequence() + "");
+            }
+        }, 2000);
+
+        NewConversationQuestionsData newQuestionsData = new NewConversationQuestionsData();
+        newQuestionsData.setQuestionId("");
+        newQuestionsData.setBotId("");
+        newQuestionsData.setErrorMessage("");
+        newQuestionsData.setFrom("user");
+        newQuestionsData.setMsgSequence("");
+        newQuestionsData.setOptionRelateId("");
+        newQuestionsData.setRelateId("");
+        newQuestionsData.setResponse(subResponseData.getMultichoiceOption());
+        newQuestionsData.setType("");
+
+        chatList.add(newQuestionsData);
+        chatListAdapter.notifyDataSetChanged();
+        chipsClick = false;
     }
 }
