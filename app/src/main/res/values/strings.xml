@@ -24,7 +24,7 @@
     <string name="mail_title">Title</string>
     <string name="mail_content">Message</string>
 
-    <item name="ewq" type="id"/>
+    <item name="ewq" type="id" />
 
     <string name="title_activity_scan_qr_code">Scan</string>
     <string name="qc_code_close">Close</string>
@@ -42,4 +42,5 @@
     <string name="qr_help">Open profile and then click on Account tab after that click on QR code image and then you can scan QR code. Thank you</string>
     <string name="share_earn"><![CDATA[Share & Earn]]></string>
     <string name="terms_condition"><![CDATA[Terms & Condition]]></string>
+    <string name="redeem_desc">\'You can cashout using Paytm. Minimum amount to cashout is 50.00 INR.\'</string>
 </resources>

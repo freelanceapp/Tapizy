@@ -1,7 +1,6 @@
 package ibt.com.tapizy.ui.fragment.user_fragment;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,6 +33,7 @@ import ibt.com.tapizy.model.social_link.SocialLinkList;
 import ibt.com.tapizy.model.social_link.SocialLinkMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
+import ibt.com.tapizy.ui.activity.user_activities.RedeemActivity;
 import ibt.com.tapizy.ui.activity.user_activities.chatbot_activity.ChatActivity;
 import ibt.com.tapizy.ui.activity.user_activities.community_module.CommunityActivity;
 import ibt.com.tapizy.ui.activity.user_activities.explore.ExploreActivity;
@@ -169,7 +169,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                 Alerts.show(mContext, "Earn");
                 break;
             case R.id.txtRedeem:
-                Alerts.show(mContext, "Redeem");
+                startActivity(new Intent(mContext, RedeemActivity.class));
                 break;
             /*case R.id.imgRemove:
                 int position = Integer.parseInt(v.getTag().toString());

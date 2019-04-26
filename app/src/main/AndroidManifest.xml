@@ -161,6 +161,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.activity.user_activities.RedeemActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
 
         <receiver android:name="ibt.com.tapizy.otp_verification.MySMSBroadCastReceiver">
             <intent-filter android:priority="999">
