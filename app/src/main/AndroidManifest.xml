@@ -34,21 +34,29 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.SettingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.recent_chat.RecentChatActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.CreateProfileActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.explore.ExploreActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.chatbot_activity.ChatActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.HomeActivity"
             android:screenOrientation="portrait"
@@ -68,7 +76,8 @@
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.SplashScreen"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -78,8 +87,8 @@
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateVisible" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <!--<activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.TapizyActivity"
             android:screenOrientation="portrait"
@@ -92,43 +101,78 @@
         </activity>-->
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.chatbot_activity.CreateConversationActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.otp_verification.OtpVerificationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.utils.BaseActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.community_module.CommunityActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.trending_module.TrendingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.trending_module.NewPostActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.trending_module.VideoActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.trending_module.VideoGalleryActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.trending_module.VideoTrimerActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.trending_module.PostDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.explore.BotListActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name="ibt.com.tapizy.ui.activity.user_activities.community_module.CityListActivity" />
-        <activity android:name="ibt.com.tapizy.ui.activity.user_activities.community_module.PostQuestionActivity" />
-        <activity android:name="ibt.com.tapizy.ui.activity.user_activities.WebviewActivity" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name="ibt.com.tapizy.ui.activity.user_activities.community_module.CityListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name="ibt.com.tapizy.ui.activity.user_activities.community_module.PostQuestionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name="ibt.com.tapizy.ui.activity.user_activities.WebviewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.CreateBotActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
