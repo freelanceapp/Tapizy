@@ -17,7 +17,7 @@ public class ChatListMainModal implements Parcelable {
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("conversation_bot_list")
+    @SerializedName("bot")
     @Expose
     private List<ChatList> conversationBotList = new ArrayList<ChatList>();
     public final static Parcelable.Creator<ChatListMainModal> CREATOR = new Creator<ChatListMainModal>() {

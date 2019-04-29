@@ -56,7 +56,7 @@
             android:name="ibt.com.tapizy.ui.activity.user_activities.chatbot_activity.ChatActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.HomeActivity"
             android:screenOrientation="portrait"
@@ -148,7 +148,18 @@
             android:name="ibt.com.tapizy.ui.activity.user_activities.trending_module.PostDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="tapizy.com"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="ibt.com.tapizy.ui.activity.user_activities.explore.BotListActivity"
             android:screenOrientation="portrait"
@@ -175,11 +186,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
 
-        <activity
-            android:name="ibt.com.tapizy.ui.activity.bot_activities.BotHomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".ui.activity.bot_activities.BotChatConversationActivity"
             android:screenOrientation="portrait"

@@ -159,9 +159,7 @@ public class UserAccountFragment extends BaseFragment implements View.OnClickLis
             dialogBuilder.setView(dialogView);
 
             Glide.with(mContext)
-                    .asGif()
                     .load(Constant.COIN_GIF)
-                    .useAnimationPool(true)
                     .placeholder(R.drawable.coin_gif)
                     .into(((ImageView) dialogView.findViewById(R.id.imgCoin)));
 

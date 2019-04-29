@@ -17,6 +17,9 @@ public class ChatList implements Parcelable {
     @SerializedName("avtar")
     @Expose
     private String avtar;
+    @SerializedName("color")
+    @Expose
+    private String color;
     public final static Parcelable.Creator<ChatList> CREATOR = new Creator<ChatList>() {
 
 
@@ -37,6 +40,7 @@ public class ChatList implements Parcelable {
         this.botId = ((String) in.readValue((String.class.getClassLoader())));
         this.botName = ((String) in.readValue((String.class.getClassLoader())));
         this.avtar = ((String) in.readValue((String.class.getClassLoader())));
+        this.color = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public ChatList() {
@@ -66,10 +70,19 @@ public class ChatList implements Parcelable {
         this.avtar = avtar;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(botId);
         dest.writeValue(botName);
         dest.writeValue(avtar);
+        dest.writeValue(color);
     }
 
     public int describeContents() {

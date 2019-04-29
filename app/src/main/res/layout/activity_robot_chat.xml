@@ -59,28 +59,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewChatList"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:layout_above="@+id/rlChat">
 
-        <com.eyalbira.loadingdots.LoadingDots xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/loadingDots"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/recyclerViewChatList"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="-10dp"
-            android:visibility="gone"
-            app:LoadingDots_auto_play="true"
-            app:LoadingDots_dots_color="@android:color/holo_blue_light"
-            app:LoadingDots_dots_count="5"
-            app:LoadingDots_dots_size="5dp"
-            app:LoadingDots_dots_space="1dp"
-            app:LoadingDots_jump_duration="200"
-            app:LoadingDots_jump_height="4dp"
-            app:LoadingDots_loop_duration="800"
-            app:LoadingDots_loop_start_delay="100" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewChatList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.eyalbira.loadingdots.LoadingDots
+                android:id="@+id/loadingDots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recyclerViewChatList"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="-10dp"
+                android:visibility="gone"
+                app:LoadingDots_auto_play="true"
+                app:LoadingDots_dots_color="@android:color/holo_blue_light"
+                app:LoadingDots_dots_count="5"
+                app:LoadingDots_dots_size="5dp"
+                app:LoadingDots_dots_space="1dp"
+                app:LoadingDots_jump_duration="200"
+                app:LoadingDots_jump_height="4dp"
+                app:LoadingDots_loop_duration="800"
+                app:LoadingDots_loop_start_delay="100" />
+
+        </RelativeLayout>
 
         <android.support.v7.widget.CardView
             android:id="@+id/rlChat"
@@ -101,31 +108,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="4dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="4dp"
                     android:layout_marginBottom="8dp"
-                    android:layout_toLeftOf="@+id/imgSend"
+                    android:layout_toStartOf="@+id/imgSend"
                     app:cardCornerRadius="22dp"
                     app:cardElevation="2dp">
 
                     <EditText
+                        android:id="@+id/edtChatValue"
                         android:layout_width="match_parent"
                         android:layout_height="44dp"
                         android:background="@color/white"
                         android:hint="Send message"
                         android:imeOptions="actionDone"
                         android:inputType="text"
-                        android:paddingLeft="16dp" />
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp" />
                 </android.support.v7.widget.CardView>
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgSend"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
                     android:background="@drawable/background_ripple"
                     android:clickable="true"

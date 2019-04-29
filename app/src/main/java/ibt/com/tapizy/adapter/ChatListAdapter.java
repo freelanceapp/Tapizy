@@ -16,7 +16,6 @@ import java.util.List;
 import ibt.com.tapizy.R;
 import ibt.com.tapizy.click_listener_interface.CustomClickListener;
 import ibt.com.tapizy.model.conversation_modal.NewConversationQuestionsData;
-import ibt.com.tapizy.utils.Alerts;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
 
@@ -36,8 +35,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat_list, parent, false);
-        ViewHolder viewHolder1 = new ViewHolder(view);
-        return viewHolder1;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -86,11 +84,17 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 final int max = Integer.parseInt(strMax);
                 final int min = Integer.parseInt(strMin);
                 holder.seekbarRange.setMax(max);
-                holder.seekbarRange.incrementProgressBy(100);
+                //holder.seekbarRange.incrementProgressBy(100);
+                final String finalStrMin = strMin;
+                holder.txtValue.setText("" + finalStrMin);
                 holder.seekbarRange.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        holder.txtValue.setText("" + progress);
+                        if (progress < 10) {
+                            holder.txtValue.setText("" + finalStrMin);
+                        } else {
+                            holder.txtValue.setText("" + progress);
+                        }
                     }
 
                     @Override
@@ -103,12 +107,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
                     }
                 });
-                holder.txtDone.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Alerts.show(mContext, holder.txtValue.getText().toString());
-                    }
-                });
+                holder.txtDone.setTag(position);
+                holder.txtDone.setOnClickListener(onClickListener);
             }
         }
     }

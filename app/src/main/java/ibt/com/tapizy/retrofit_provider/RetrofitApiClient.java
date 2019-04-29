@@ -126,12 +126,12 @@ public interface RetrofitApiClient {
                                                       @Field("type") String type,
                                                       @Field("response_related_id") String response_related_id,
                                                       @Field("sub_question") String sub_question);
-    
+
     @FormUrlEncoded
     @POST(Constant.CONVERSATION_API)
     Call<NewConversationMainModal> conversationApi(@Field("uid") String userId, @Field("bot_id") String bot_id,
                                                    @Field("relate_id") String relate_id, @Field("option_relate_id") String option_relate_id,
-                                                   @Field("msg_sequence") String msg_sequence);
+                                                   @Field("msg_sequence") String msg_sequence, @Field("data") String data);
 
     @FormUrlEncoded
     @POST(Constant.BOT_LIST_API)

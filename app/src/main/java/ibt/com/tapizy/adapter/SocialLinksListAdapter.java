@@ -54,7 +54,6 @@ public class SocialLinksListAdapter extends RecyclerView.Adapter<SocialLinksList
                 Intent intent = new Intent(context, WebviewActivity.class);
                 intent.putExtra("url", linkLists.get(position).getWebUrl());
                 intent.putExtra("title", linkLists.get(position).getTitle());
-                intent.putExtra("coins", linkLists.get(position).getCoins());
                 context.startActivity(intent);
             }
         });

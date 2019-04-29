@@ -48,11 +48,11 @@ public class Constant {
     public static final String FAQ_LIST = "support/select_query.php";
     /*Chat api*/
     public static final String CONVERSATION_API = "chat/chat_question.php";
+    public static final String CHAT_LIST = "chat/my_chat_bot_list.php";
 
     public static final String CREATE_CONVERSATION_API = "app/create_conversation.php";
     public static final String COMMUNICATION_API = "app/communition.php";
     public static final String SEND_MSG = "app/send_msg.php";
-    public static final String CHAT_LIST = "app/conversation_bot_list.php";
     public static final String CHAT_HISTORY = "app/my_chat_history.php";
 
     /*Preference*/
