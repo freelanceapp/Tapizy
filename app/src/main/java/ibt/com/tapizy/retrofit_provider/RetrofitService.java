@@ -2,6 +2,8 @@ package ibt.com.tapizy.retrofit_provider;
 
 import android.app.Dialog;
 
+import java.util.concurrent.TimeUnit;
+
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.api_bot_list.BotListMainModal;
 import ibt.com.tapizy.model.api_chat_list.ChatListMainModal;
@@ -21,6 +23,7 @@ import ibt.com.tapizy.model.login_data_modal.UserDataMainModal;
 import ibt.com.tapizy.model.social_link.SocialLinkMainModal;
 import ibt.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import ibt.com.tapizy.utils.AppProgressDialog;
+import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,10 +36,16 @@ public class RetrofitService {
 
     public static RetrofitApiClient client;
 
+    final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .readTimeout(20, TimeUnit.MINUTES)
+            .connectTimeout(20, TimeUnit.MINUTES)
+            .build();
+
     public RetrofitService() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constant.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
                 .build();
         client = retrofit.create(RetrofitApiClient.class);
     }

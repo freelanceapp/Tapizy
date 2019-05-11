@@ -125,9 +125,8 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/layout_bg_gradient_2"
             android:text="Ask a Question"
-            android:textSize="18sp" />
-
-
+            android:textSize="18sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </LinearLayout>

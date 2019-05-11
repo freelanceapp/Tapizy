@@ -19,8 +19,8 @@ import ibt.com.tapizy.model.api_bot_list.BotList;
 import ibt.com.tapizy.model.api_bot_list.BotListMainModal;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
+import ibt.com.tapizy.ui.activity.UserBotChatActivity;
 import ibt.com.tapizy.ui.activity.user_activities.HomeActivity;
-import ibt.com.tapizy.ui.activity.user_activities.chatbot_activity.ChatActivity;
 import ibt.com.tapizy.utils.Alerts;
 import ibt.com.tapizy.utils.BaseActivity;
 import retrofit2.Response;
@@ -62,7 +62,8 @@ public class BotListActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.llChatbot:
                 int pos = Integer.parseInt(v.getTag().toString());
-                Intent intentA = new Intent(mContext, ChatActivity.class);
+                //Intent intentA = new Intent(mContext, ChatActivity.class);
+                Intent intentA = new Intent(mContext, UserBotChatActivity.class);
                 intentA.putExtra("bot_data", (Parcelable) chatbotLists.get(pos));
                 startActivity(intentA);
                 break;

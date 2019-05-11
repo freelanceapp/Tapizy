@@ -21,19 +21,28 @@ import ibt.com.tapizy.adapter.TimelineListAdapter;
 import ibt.com.tapizy.constant.Constant;
 import ibt.com.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
 import ibt.com.tapizy.model.timeline_modal.UserFeed;
+import ibt.com.tapizy.pagination_listener.PaginationScrollListener;
 import ibt.com.tapizy.retrofit_provider.RetrofitService;
 import ibt.com.tapizy.retrofit_provider.WebResponse;
 import ibt.com.tapizy.utils.Alerts;
 import ibt.com.tapizy.utils.AppPreference;
 import ibt.com.tapizy.utils.BaseActivity;
+import ibt.com.tapizy.utils.TimeUtils;
 import retrofit2.Response;
 
 import static android.widget.LinearLayout.VERTICAL;
 
 public class TrendingActivity extends BaseActivity implements View.OnClickListener {
 
+    private List<UserFeed> mInfoList = new ArrayList<>();
     private TimelineListAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private LinearLayoutManager linearLayoutManager;
+    private static final int PAGE_START = 1;
+    private int currentPage = PAGE_START;
+    private static int TOTAL_PAGES;
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
 
     /***********************************************/
     //private NewsFeedAdapter newPostAdapter;
@@ -57,50 +66,114 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
         recyclerViewFeed = findViewById(R.id.recyclerViewFeed);
-        mAdapter = new TimelineListAdapter(mContext, feedList, this, retrofitApiClient);
-        recyclerViewFeed.setLayoutManager(new LinearLayoutManager(mContext, VERTICAL, false));
-
+        mAdapter = new TimelineListAdapter(mContext, this, retrofitApiClient);
+        recyclerViewFeed.setHasFixedSize(true);
+        linearLayoutManager = new LinearLayoutManager(mContext, VERTICAL, false);
+        recyclerViewFeed.setLayoutManager(linearLayoutManager);
         recyclerViewFeed.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFeed.setAdapter(mAdapter);
+        recyclerViewFeed.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                currentPage += 1;
+                loadNextPage();
+            }
+
+            @Override
+            public int getTotalPageCount() {
+                return TOTAL_PAGES;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+        });
+
         mAdapter.notifyDataSetChanged();
 
         findViewById(R.id.fabNewPost).setOnClickListener(this);
         findViewById(R.id.imgBack).setOnClickListener(this);
 
+        timelineApi();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                mAdapter.getTripList().clear();
+                mInfoList.clear();
+                mAdapter.notifyDataSetChanged();
                 timelineApi();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
-        timelineApi();
     }
 
     public void timelineApi() {
+        currentPage = PAGE_START;
         String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
         if (cd.isNetworkAvailable()) {
-            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.showPostTimeLine(strId, userType), new WebResponse() {
+            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.showPostTimeLine(strId,
+                    userType, "1", TimeUtils.getSecondDateTime()), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
                     if (dailyNewsFeedMainModal != null) {
-                        feedList.clear();
                         if (dailyNewsFeedMainModal.getError()) {
                             Alerts.show(mContext, dailyNewsFeedMainModal.getMessage());
                         } else {
-                            Gson gson = new GsonBuilder().setLenient().create();
-                            String data = gson.toJson(dailyNewsFeedMainModal);
-                            AppPreference.setStringPreference(mContext, Constant.TIMELINE_DATA, data);
-
-                            if (dailyNewsFeedMainModal.getUserFeed() != null) {
-                                if (dailyNewsFeedMainModal.getUserFeed().size() > 0) {
-                                    feedList.addAll(dailyNewsFeedMainModal.getUserFeed());
-                                }
+                            TOTAL_PAGES = dailyNewsFeedMainModal.getPageCount();
+                            mAdapter.addAll(dailyNewsFeedMainModal.getUserFeed());
+                            if (currentPage < TOTAL_PAGES) {
+                                mAdapter.addLoadingFooter();
+                            } else if (currentPage == TOTAL_PAGES) {
+                                mAdapter.removeLoadingFooter();
+                            } else {
+                                isLastPage = true;
                             }
-                            //init();
                         }
                         mAdapter.notifyDataSetChanged();
                         swipeRefreshLayout.setRefreshing(false);
+                    }
+                    mInfoList.addAll(mAdapter.getTripList());
+                }
+
+                @Override
+                public void onResponseFailed(String error) {
+                    Alerts.show(mContext, error);
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
+        }
+    }
+
+    public void loadNextPage() {
+        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
+        if (cd.isNetworkAvailable()) {
+            RetrofitService.showPostTimeLine(new Dialog(mContext), retrofitApiClient.showPostTimeLine(strId,
+                    userType, currentPage + "", TimeUtils.getSecondDateTime()), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
+                    if (dailyNewsFeedMainModal != null) {
+                        if (dailyNewsFeedMainModal.getError()) {
+                            Alerts.show(mContext, dailyNewsFeedMainModal.getMessage());
+                        } else {
+                            TOTAL_PAGES = dailyNewsFeedMainModal.getPageCount();
+                            mAdapter.removeLoadingFooter();
+                            isLoading = false;
+                            mAdapter.addAll(dailyNewsFeedMainModal.getUserFeed());
+                            if (currentPage != TOTAL_PAGES) mAdapter.addLoadingFooter();
+                            else isLastPage = true;
+                        }
+                        mAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                        mInfoList.addAll(mAdapter.getTripList());
                     }
                 }
 
@@ -129,7 +202,7 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
                 startActivity(intent);
                 break;
             case R.id.fabNewPost:
-                startActivity(new Intent(mContext, NewPostActivity.class));
+                //startActivity(new Intent(mContext, NewPostActivity.class));
                 break;
             case R.id.imgBack:
                 finish();

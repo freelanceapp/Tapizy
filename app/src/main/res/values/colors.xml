@@ -4,6 +4,9 @@
     <color name="colorPrimary">#2F9EF5</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="placeholder_grey">#AAADC4</color>
+    <color name="placeholder_grey_20">#33AAADC4</color>
+
     <color name="bot_maroon">#D30202</color>
     <color name="bot_olive">#C2C200</color>
     <color name="bot_green">#00BD00</color>
@@ -208,7 +211,7 @@
     <!--Trending-->
     <color name="trending_a">#ffaa57</color>
     <color name="trending_b">#fe5c76</color>
-    <!--Chat-->
+    <!--ChatHistoryData-->
     <color name="chat_a">#9d5bfe</color>
     <color name="chat_b">#3890fe</color>
 </resources>

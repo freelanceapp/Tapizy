@@ -420,30 +420,6 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    private void timelineApi() {
-        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
-        if (cd.isNetworkAvailable()) {
-            RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(strId, userType), new WebResponse() {
-                @Override
-                public void onResponseSuccess(Response<?> result) {
-                    DailyNewsFeedMainModal dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
-                    if (dailyNewsFeedMainModal.getError()) {
-                        Alerts.show(mContext, "No data");
-                    } else {
-                        Gson gson = new GsonBuilder().setLenient().create();
-                        String data = gson.toJson(dailyNewsFeedMainModal);
-                        AppPreference.setStringPreference(mContext, Constant.TIMELINE_DATA, data);
-                    }
-                }
-
-                @Override
-                public void onResponseFailed(String error) {
-                    Alerts.show(mContext, error);
-                }
-            });
-        }
-    }
-
     /***********************************************************************/
     /*
      * Like/Unlike function

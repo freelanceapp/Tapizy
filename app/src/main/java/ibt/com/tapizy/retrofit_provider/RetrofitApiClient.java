@@ -65,6 +65,11 @@ public interface RetrofitApiClient {
     @FormUrlEncoded
     @POST(Constant.BOT_DETAIL)
     Call<BotDetailMainModal> botDetail(@Field("bot_id") String bot_id);
+    
+    @FormUrlEncoded
+    @POST(Constant.UPDATE_FIREBASE_MSG_API)
+    Call<ResponseBody> updateFirebaseMsgApi(@Field("bot_id") String bot_id, @Field("uid") String uid,
+                                            @Field("message") String message, @Field("user_type") String user_type);
 
     @Multipart
     @POST(Constant.BOT_CREATE)
@@ -96,7 +101,8 @@ public interface RetrofitApiClient {
 
     @FormUrlEncoded
     @POST(Constant.TIMELINE_API)
-    Call<DailyNewsFeedMainModal> showPostTimeLine(@Field("uid") String useId, @Field("user_type") String user_type);
+    Call<DailyNewsFeedMainModal> showPostTimeLine(@Field("uid") String useId, @Field("user_type") String user_type,
+                                                  @Field("page_number") String page_number, @Field("list_date") String list_date);
 
     @FormUrlEncoded
     @POST(Constant.PostLike)
@@ -142,11 +148,6 @@ public interface RetrofitApiClient {
     Call<CommunicationMainModal> communicationWelcomeData(@Field("user_bot_id") String user_bot_id, @Field("uid") String uid);
 
     @FormUrlEncoded
-    @POST(Constant.SEND_MSG)
-    Call<CommunicationMainModal> sendMsg(@Field("user_bot_id") String user_bot_id, @Field("uid") String uid,
-                                         @Field("relate_id") String relate_id, @Field("response_relate_id") String response_relate_id);
-
-    @FormUrlEncoded
     @POST(Constant.QUESTION_LIST_API)
     Call<QuestionAnswerListMainModal> questionListData(@Field("city_bot_id") String city_bot_id);
 
@@ -180,7 +181,7 @@ public interface RetrofitApiClient {
 
     @FormUrlEncoded
     @POST(Constant.CHAT_HISTORY)
-    Call<ChatHistoryMainModal> chatHistory(@Field("uid") String uid, @Field("user_bot_id") String user_bot_id);
+    Call<ChatHistoryMainModal> chatHistory(@Field("uid") String uid, @Field("bot_id") String bot_id);
 
     @FormUrlEncoded
     @POST(Constant.FAV_BOT_LIST)
@@ -188,7 +189,7 @@ public interface RetrofitApiClient {
 
     @FormUrlEncoded
     @POST(Constant.ADD_TO_FAV)
-    Call<ResponseBody> addToFav(@Field("uid") String uid, @Field("user_bot_id") String user_bot_id,
+    Call<ResponseBody> addToFav(@Field("uid") String uid, @Field("bot_id") String user_bot_id,
                                 @Field("status") String status);
 
     @FormUrlEncoded

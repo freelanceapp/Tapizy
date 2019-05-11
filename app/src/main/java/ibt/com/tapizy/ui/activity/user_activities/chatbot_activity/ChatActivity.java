@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.eyalbira.loadingdots.LoadingDots;
+import com.firebase.client.Firebase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,15 +47,18 @@ import retrofit2.Response;
 
 public class ChatActivity extends BaseActivity implements View.OnClickListener, CustomClickListener {
 
-    private int finalMsgSeq;
+    private Firebase reference1, reference2;
+    private String loginUserName = "";
+    private String chatUserName = "";
 
+    /**********************************************/
+    private int finalMsgSeq;
     private BotList botData;
     private String strUserId;
     private ChatListAdapter chatListAdapter;
     private List<NewConversationQuestionsData> chatList = new ArrayList<>();
     private NewConversationMainModal apiConversationMainModal;
     private LoadingDots loadingDots;
-
     private EditText edtChatValue;
     private String strResponseType = "";
     private InputFilter filter;

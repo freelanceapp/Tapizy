@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -27,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,12 +56,20 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private View.OnClickListener onClickListener;
     private RetrofitApiClient retrofitApiClient;
 
-    public TimelineListAdapter(Context mContext, List<UserFeed> infoList, View.OnClickListener onClickListener,
-                               RetrofitApiClient retrofitApiClient) {
+    private static final int LOADING = 10;
+    private boolean isLoadingAdded = false;
+    private boolean retryPageLoad = false;
+    private String errorMsg;
+
+    public TimelineListAdapter(Context mContext, View.OnClickListener onClickListener, RetrofitApiClient retrofitApiClient) {
         this.mContext = mContext;
-        this.mInfoList = infoList;
+        mInfoList = new ArrayList<>();
         this.onClickListener = onClickListener;
         this.retrofitApiClient = retrofitApiClient;
+    }
+
+    public List<UserFeed> getTripList() {
+        return mInfoList;
     }
 
     @NonNull
@@ -78,6 +88,9 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case VIEW_TYPE_EMPTY:
                 return new EmptyViewHolder(LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.row_empty_data, parent, false));
+            case LOADING:
+                return new LoadingVH(LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_progress, parent, false));
             default:
                 return null;
         }
@@ -305,6 +318,23 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 break;
             case VIEW_TYPE_EMPTY:
                 break;
+            case LOADING:
+                LoadingVH loadingVH = (LoadingVH) holder;
+
+                if (retryPageLoad) {
+                    loadingVH.mErrorLayout.setVisibility(View.VISIBLE);
+                    loadingVH.mProgressBar.setVisibility(View.GONE);
+
+                    loadingVH.mErrorTxt.setText(
+                            errorMsg != null ?
+                                    errorMsg :
+                                    mContext.getString(R.string.error_msg_unknown));
+
+                } else {
+                    loadingVH.mErrorLayout.setVisibility(View.GONE);
+                    loadingVH.mProgressBar.setVisibility(View.VISIBLE);
+                }
+                break;
         }
     }
 
@@ -323,7 +353,7 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     JSONObject jsonObject = new JSONObject(responseBody.string());
                     if (!jsonObject.getBoolean("error")) {
                         textView.setText(jsonObject.getString("likes"));
-                        refreshTimelineApi(strId);
+                        //refreshTimelineApi(strId);
                     } else {
                         Alerts.show(mContext, jsonObject.getString("message"));
                     }
@@ -341,42 +371,22 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         });
     }
 
-    private void refreshTimelineApi(String strId) {
-        String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
-        RetrofitService.refreshTimeLine(retrofitApiClient.showPostTimeLine(strId, userType), new WebResponse() {
-            @Override
-            public void onResponseSuccess(Response<?> result) {
-                DailyNewsFeedMainModal dailyNewsFeedMainModal = (DailyNewsFeedMainModal) result.body();
-                mInfoList.clear();
-                if (dailyNewsFeedMainModal.getError()) {
-                    Alerts.show(mContext, "No data");
-                } else {
-                    Gson gson = new GsonBuilder().setLenient().create();
-                    String data = gson.toJson(dailyNewsFeedMainModal);
-                    AppPreference.setStringPreference(mContext, Constant.TIMELINE_DATA, data);
-                    AppPreference.setBooleanPreference(mContext, "likedPost", true);
-                    mInfoList.addAll(dailyNewsFeedMainModal.getUserFeed());
-                    notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onResponseFailed(String error) {
-                Alerts.show(mContext, error);
-            }
-        });
-    }
-
     @Override
     public int getItemViewType(int position) {
         if (mInfoList.size() == 0) {
             return VIEW_TYPE_EMPTY;
-        } else if (!mInfoList.get(position).getVideo().isEmpty()) {
-            return VIEW_TYPE_VIDEO;
-        } else if (!mInfoList.get(position).getImage().isEmpty()) {
-            return VIEW_TYPE_IMAGE;
         } else {
-            return VIEW_TYPE_TEXT;
+            if (position == mInfoList.size() - 1 && isLoadingAdded) {
+                return LOADING;
+            } else {
+                if (!mInfoList.get(position).getVideo().isEmpty()) {
+                    return VIEW_TYPE_VIDEO;
+                } else if (!mInfoList.get(position).getImage().isEmpty()) {
+                    return VIEW_TYPE_IMAGE;
+                } else {
+                    return VIEW_TYPE_TEXT;
+                }
+            }
         }
     }
 
@@ -485,4 +495,77 @@ public class TimelineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             viewData = itemView;
         }
     }
+
+    protected class LoadingVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private ProgressBar mProgressBar;
+        private ImageButton mRetryBtn;
+        private TextView mErrorTxt;
+        private LinearLayout mErrorLayout;
+
+        public LoadingVH(View itemView) {
+            super(itemView);
+
+            mProgressBar = itemView.findViewById(R.id.loadmore_progress);
+            mRetryBtn = itemView.findViewById(R.id.loadmore_retry);
+            mErrorTxt = itemView.findViewById(R.id.loadmore_errortxt);
+            mErrorLayout = itemView.findViewById(R.id.loadmore_errorlayout);
+
+            mRetryBtn.setOnClickListener(this);
+            mErrorLayout.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.loadmore_retry:
+                case R.id.loadmore_errorlayout:
+                    //showRetry(false, null);
+                    break;
+            }
+        }
+    }
+
+    /********************************************************************************/
+    /**
+     * Pagination headers
+     **/
+    public void add(UserFeed r) {
+        mInfoList.add(r);
+        notifyItemInserted(mInfoList.size() - 1);
+    }
+
+    public void addAll(List<UserFeed> moveResults) {
+        for (UserFeed result : moveResults) {
+            add(result);
+        }
+    }
+
+    public void addLoadingFooter() {
+        isLoadingAdded = true;
+        add(new UserFeed());
+    }
+
+    public void removeLoadingFooter() {
+        isLoadingAdded = false;
+
+        int position = mInfoList.size() - 1;
+        UserFeed result = getItem(position);
+
+        if (result != null) {
+            mInfoList.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public UserFeed getItem(int position) {
+        return mInfoList.get(position);
+    }
+
+    public void showRetry(boolean show, @Nullable String errorMsg) {
+        retryPageLoad = show;
+        notifyItemChanged(mInfoList.size() - 1);
+
+        if (errorMsg != null) this.errorMsg = errorMsg;
+    }
+
 }

@@ -17,9 +17,9 @@ public class ChatHistoryMainModal implements Parcelable
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("chat_msg")
+    @SerializedName("chat")
     @Expose
-    private List<ChatHistoryMsg> chatMsg = new ArrayList<ChatHistoryMsg>();
+    private List<ChatHistoryData> chat = new ArrayList<ChatHistoryData>();
     public final static Parcelable.Creator<ChatHistoryMainModal> CREATOR = new Creator<ChatHistoryMainModal>() {
 
 
@@ -40,7 +40,7 @@ public class ChatHistoryMainModal implements Parcelable
     protected ChatHistoryMainModal(Parcel in) {
         this.error = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
         this.message = ((String) in.readValue((String.class.getClassLoader())));
-        in.readList(this.chatMsg, (ChatHistoryMsg.class.getClassLoader()));
+        in.readList(this.chat, (ChatHistoryData.class.getClassLoader()));
     }
 
     public ChatHistoryMainModal() {
@@ -62,18 +62,18 @@ public class ChatHistoryMainModal implements Parcelable
         this.message = message;
     }
 
-    public List<ChatHistoryMsg> getChatMsg() {
-        return chatMsg;
+    public List<ChatHistoryData> getChat() {
+        return chat;
     }
 
-    public void setChatMsg(List<ChatHistoryMsg> chatMsg) {
-        this.chatMsg = chatMsg;
+    public void setChat(List<ChatHistoryData> chat) {
+        this.chat = chat;
     }
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(error);
         dest.writeValue(message);
-        dest.writeList(chatMsg);
+        dest.writeList(chat);
     }
 
     public int describeContents() {

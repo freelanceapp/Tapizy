@@ -17,6 +17,12 @@ public class DailyNewsFeedMainModal implements Parcelable {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("current_page")
+    @Expose
+    private String currentPage;
+    @SerializedName("page_count")
+    @Expose
+    private Integer pageCount = 0;
     @SerializedName("trending")
     @Expose
     private List<UserFeed> userFeed = new ArrayList<UserFeed>();
@@ -39,7 +45,9 @@ public class DailyNewsFeedMainModal implements Parcelable {
     protected DailyNewsFeedMainModal(Parcel in) {
         this.error = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
         this.message = ((String) in.readValue((String.class.getClassLoader())));
-        in.readList(this.userFeed, (ibt.com.tapizy.model.timeline_modal.UserFeed.class.getClassLoader()));
+        this.currentPage = ((String) in.readValue((String.class.getClassLoader())));
+        this.pageCount = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        in.readList(this.userFeed, (UserFeed.class.getClassLoader()));
     }
 
     public DailyNewsFeedMainModal() {
@@ -69,9 +77,27 @@ public class DailyNewsFeedMainModal implements Parcelable {
         this.userFeed = userFeed;
     }
 
+    public String getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(String currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public Integer getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(Integer pageCount) {
+        this.pageCount = pageCount;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(error);
         dest.writeValue(message);
+        dest.writeValue(currentPage);
+        dest.writeValue(pageCount);
         dest.writeList(userFeed);
     }
 

@@ -46,14 +46,14 @@ public class Constant {
     /*Support*/
     public static final String SUPPORT = "support/support.php";
     public static final String FAQ_LIST = "support/select_query.php";
-    /*Chat api*/
+    /*ChatHistoryData api*/
+    public static final String UPDATE_FIREBASE_MSG_API = "chat/send_msg.php";
     public static final String CONVERSATION_API = "chat/chat_question.php";
     public static final String CHAT_LIST = "chat/my_chat_bot_list.php";
 
     public static final String CREATE_CONVERSATION_API = "app/create_conversation.php";
     public static final String COMMUNICATION_API = "app/communition.php";
-    public static final String SEND_MSG = "app/send_msg.php";
-    public static final String CHAT_HISTORY = "app/my_chat_history.php";
+    public static final String CHAT_HISTORY = "chat/my_chat_history.php";
 
     /*Preference*/
     public static final String COIN_UPDATE = "COIN_UPDATE";

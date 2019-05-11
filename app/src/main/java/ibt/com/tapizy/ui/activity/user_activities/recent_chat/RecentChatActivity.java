@@ -53,7 +53,7 @@ public class RecentChatActivity extends BaseActivity implements View.OnClickList
                 .placeholder(R.drawable.coin_gif)
                 .into(((ImageView) findViewById(R.id.imgToolbarCoinGif)));
 
-        ((TextView) findViewById(R.id.txtTitle)).setText("Recent Chat");
+        ((TextView) findViewById(R.id.txtTitle)).setText("Recent ChatHistoryData");
 
         myCoinsApi();
         String userType = AppPreference.getStringPreference(mContext, Constant.USER_TYPE);
