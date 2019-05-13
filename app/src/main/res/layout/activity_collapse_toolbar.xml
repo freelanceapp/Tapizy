@@ -105,7 +105,7 @@
         android:src="@drawable/app_logo_b"
         app:finalHeight="@dimen/image_final_width"
         app:finalYPosition="2dp"
-        app:layout_behavior="ibt.com.tapizy.utils.AvatarImageBehavior"
+        app:layout_behavior="infobite.ibt.tapizy.utils.AvatarImageBehavior"
         app:startHeight="2dp"
         app:startToolbarPosition="2dp"
         app:startXPosition="2dp" />

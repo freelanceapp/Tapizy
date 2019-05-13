@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ibt.com.tapizy.utils.custom_navigation_drawer.SNavigationDrawer
+    <infobite.ibt.tapizy.utils.custom_navigation_drawer.SNavigationDrawer
         android:id="@+id/navigationDrawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </ibt.com.tapizy.utils.custom_navigation_drawer.SNavigationDrawer>
+    </infobite.ibt.tapizy.utils.custom_navigation_drawer.SNavigationDrawer>
 </RelativeLayout>
 
     <!--<android.support.design.widget.NavigationView

@@ -19,7 +19,7 @@ apply plugin: 'io.fabric'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "ibt.com.tapizy"
+        applicationId "infobite.ibt.tapizy"
         minSdkVersion 17
         targetSdkVersion 28
         versionCode 3

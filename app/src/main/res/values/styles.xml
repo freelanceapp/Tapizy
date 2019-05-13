@@ -284,4 +284,16 @@
     <style name="SpinKitView.Small.MultiplePulseRing">
         <item name="SpinKit_Style">MultiplePulseRing</item>
     </style>
+
+    <!--********************************************************************-->
+    <style name="BoldTextView">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="HeadLineTextView" parent="BoldTextView">
+        <item name="android:textSize">22sp</item>
+    </style>
+
 </resources>

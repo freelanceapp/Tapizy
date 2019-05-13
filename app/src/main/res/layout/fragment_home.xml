@@ -30,7 +30,7 @@
                 android:orientation="horizontal"
                 android:padding="12dp">
 
-                <ibt.com.tapizy.utils.expandable_layout.ExpandableLayout
+                <infobite.ibt.tapizy.utils.expandable_layout.ExpandableLayout
                     android:id="@+id/expandableLayoutLeft"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -45,14 +45,14 @@
                         android:id="@+id/txtEarn"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/ripple_oval"
+                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:gravity="center"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:text="Earn"
                         android:textColor="#fff" />
 
-                </ibt.com.tapizy.utils.expandable_layout.ExpandableLayout>
+                </infobite.ibt.tapizy.utils.expandable_layout.ExpandableLayout>
 
                 <LinearLayout
                     android:id="@+id/llCenter"
@@ -70,7 +70,7 @@
                         android:src="@drawable/tapizy_animate_home" />
                 </LinearLayout>
 
-                <ibt.com.tapizy.utils.expandable_layout.ExpandableLayout
+                <infobite.ibt.tapizy.utils.expandable_layout.ExpandableLayout
                     android:id="@+id/expandableLayoutRight"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -84,18 +84,18 @@
                         android:id="@+id/txtRedeem"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/ripple_oval"
+                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:gravity="center"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:text="Redeem"
                         android:textColor="#fff" />
 
-                </ibt.com.tapizy.utils.expandable_layout.ExpandableLayout>
+                </infobite.ibt.tapizy.utils.expandable_layout.ExpandableLayout>
 
             </LinearLayout>
 
-            <ibt.com.tapizy.loading_indicator.SpinKitView
+            <infobite.ibt.tapizy.loading_indicator.SpinKitView
                 android:id="@+id/spin_kit"
                 style="@style/SpinKitView.PulseRing"
                 android:layout_width="110dp"
