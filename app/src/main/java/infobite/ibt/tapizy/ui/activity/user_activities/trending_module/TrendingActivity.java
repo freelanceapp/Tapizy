@@ -46,7 +46,6 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
 
     /***********************************************/
     //private NewsFeedAdapter newPostAdapter;
-    private List<UserFeed> feedList = new ArrayList<>();
     private DailyNewsFeedMainModal dailyNewsFeedMainModal;
     private RecyclerView recyclerViewFeed;
     private String strId;
@@ -131,9 +130,9 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
                             mAdapter.addAll(dailyNewsFeedMainModal.getUserFeed());
                             if (currentPage < TOTAL_PAGES) {
                                 mAdapter.addLoadingFooter();
+                                isLastPage = false;
                             } else if (currentPage == TOTAL_PAGES) {
                                 mAdapter.removeLoadingFooter();
-                            } else {
                                 isLastPage = true;
                             }
                         }
@@ -193,12 +192,12 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
             case R.id.llPostComment:
                 int position = Integer.parseInt(v.getTag().toString());
                 Gson gson = new GsonBuilder().setLenient().create();
-                String data = gson.toJson(feedList.get(position));
+                String data = gson.toJson(mAdapter.getTripList().get(position));
                 AppPreference.setBooleanPreference(mContext, Constant.POST_CLICK, true);
                 AppPreference.setStringPreference(mContext, Constant.POST_DETAIL, data);
                 Intent intent = new Intent(mContext, PostDetailActivity.class);
                 intent.putExtra("get_from", "timeline");
-                intent.putExtra("post_id", feedList.get(position).getPostId());
+                intent.putExtra("post_id", mAdapter.getTripList().get(position).getPostId());
                 startActivity(intent);
                 break;
             case R.id.fabNewPost:
@@ -209,7 +208,7 @@ public class TrendingActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.llSharePost:
                 int post = Integer.parseInt(v.getTag().toString());
-                String postId = feedList.get(post).getPostId();
+                String postId = mAdapter.getTripList().get(post).getPostId();
                 ShareCompat.IntentBuilder.from(this)
                         .setType("text/plain")
                         .setChooserTitle("Share Tapizy post")

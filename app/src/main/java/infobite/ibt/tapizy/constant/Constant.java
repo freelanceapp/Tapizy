@@ -39,6 +39,7 @@ public class Constant {
     public static final String COINS_TIME = "coin/web_view_coins.php";
     public static final String MY_COINS = "coin/my_coins.php";
     public static final String PAY_COINS = "coin/paycoins.php";
+    public static final String TRANSACTION = "coin/transaction.php";
     /*General*/
     public static final String SOCIAL_LINKS = "general/social_link.php";
     public static final String APP_CONTENT = "general/app_content.php";

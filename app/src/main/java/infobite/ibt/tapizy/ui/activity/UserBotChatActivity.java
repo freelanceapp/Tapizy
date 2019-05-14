@@ -348,6 +348,7 @@ public class UserBotChatActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void firebaseChatApi() {
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         reference1.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -627,8 +628,9 @@ public class UserBotChatActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void addToFavApi() {
+        String botId = botData.getUid();
         if (cd.isNetworkAvailable()) {
-            RetrofitService.getloginData(new Dialog(mContext), retrofitApiClient.addToFav(strUserId, botData.getUid(), "1"), new WebResponse() {
+            RetrofitService.getloginData(new Dialog(mContext), retrofitApiClient.addToFav(strUserId, botId, "1"), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     ResponseBody responseBody = (ResponseBody) result.body();
@@ -736,27 +738,43 @@ public class UserBotChatActivity extends BaseActivity implements View.OnClickLis
     public void onBackPressed() {
         super.onBackPressed();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.removeValue();
+        try {
+            ref.removeValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.removeValue();
+        try {
+            ref.removeValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.removeValue();
+        try {
+            ref.removeValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.removeValue();
+        try {
+            ref.removeValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

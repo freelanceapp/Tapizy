@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import infobite.ibt.tapizy.R;
 import infobite.ibt.tapizy.constant.Constant;
 import infobite.ibt.tapizy.model.User;
@@ -57,7 +58,7 @@ public class FavouriteBotListAdapter extends RecyclerView.Adapter<FavouriteBotLi
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public LinearLayout llayout;
-        public ImageView iv_tapizy_logo;
+        public CircleImageView iv_tapizy_logo;
         public TextView tv_tapizy_title;
 
         public ViewHolder(View v) {

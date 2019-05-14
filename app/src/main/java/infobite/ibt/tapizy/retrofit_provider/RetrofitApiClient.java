@@ -18,6 +18,7 @@ import infobite.ibt.tapizy.model.favourite_bot.FavouriteBotMainModal;
 import infobite.ibt.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.ibt.tapizy.model.social_link.SocialLinkMainModal;
 import infobite.ibt.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
+import infobite.ibt.tapizy.model.transaction.TransactionMainModal;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -65,7 +66,7 @@ public interface RetrofitApiClient {
     @FormUrlEncoded
     @POST(Constant.BOT_DETAIL)
     Call<BotDetailMainModal> botDetail(@Field("bot_id") String bot_id);
-    
+
     @FormUrlEncoded
     @POST(Constant.UPDATE_FIREBASE_MSG_API)
     Call<ResponseBody> updateFirebaseMsgApi(@Field("bot_id") String bot_id, @Field("uid") String uid,
@@ -167,6 +168,10 @@ public interface RetrofitApiClient {
     @FormUrlEncoded
     @POST(Constant.MY_COINS)
     Call<ResponseBody> myCoinsCount(@Field("user_type") String user_type, @Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST(Constant.TRANSACTION)
+    Call<TransactionMainModal> transaction(@Field("user_type") String user_type, @Field("id") String user_id);
 
     @FormUrlEncoded
     @POST(Constant.PAY_COINS)

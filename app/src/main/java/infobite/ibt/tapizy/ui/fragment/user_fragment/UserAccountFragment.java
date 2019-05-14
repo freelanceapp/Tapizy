@@ -2,6 +2,7 @@ package infobite.ibt.tapizy.ui.fragment.user_fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +11,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +22,23 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import infobite.ibt.tapizy.R;
+import infobite.ibt.tapizy.adapter.TransactionListAdapter;
 import infobite.ibt.tapizy.constant.Constant;
 import infobite.ibt.tapizy.model.User;
+import infobite.ibt.tapizy.model.transaction.TransactionCoinList;
+import infobite.ibt.tapizy.model.transaction.TransactionMainModal;
 import infobite.ibt.tapizy.retrofit_provider.RetrofitService;
+import infobite.ibt.tapizy.retrofit_provider.WebResponse;
 import infobite.ibt.tapizy.ui.activity.user_activities.QrCodeActivity;
 import infobite.ibt.tapizy.utils.Alerts;
 import infobite.ibt.tapizy.utils.AppPreference;
 import infobite.ibt.tapizy.utils.BaseFragment;
 import infobite.ibt.tapizy.utils.ConnectionDetector;
+import retrofit2.Response;
 
 public class UserAccountFragment extends BaseFragment implements View.OnClickListener {
 
@@ -35,6 +47,9 @@ public class UserAccountFragment extends BaseFragment implements View.OnClickLis
     private static final int REQUEST_CODE_QR_SCAN = 101;
     private final String GOT_RESULT = "scan_result";
     private final String ERROR_DECODING_IMAGE = "error_decoding_image";
+
+    private TransactionListAdapter transactionListAdapter;
+    private List<TransactionCoinList> transactionCoinLists = new ArrayList<>();
 
     @Nullable
     @Override
@@ -79,18 +94,46 @@ public class UserAccountFragment extends BaseFragment implements View.OnClickLis
             ((TextView) rootView.findViewById(R.id.txtCoinsCount)).setText(coins);
         }
 
-        int[] id = {R.id.imgCoinA, R.id.imgCoinB, R.id.imgCoinC};
-        //setCoinGif(id);
+        setTransactionRecyclerView();
     }
 
-    private void setCoinGif(int[] id) {
-        for (int j = 0; j < id.length; j++) {
-            Glide.with(mContext)
-                    .asGif()
-                    .load(Constant.COIN_GIF)
-                    .useAnimationPool(true)
-                    .placeholder(R.drawable.coin_gif)
-                    .into(((ImageView) rootView.findViewById(id[j])));
+    private void setTransactionRecyclerView() {
+        RecyclerView recyclerViewTransaction = rootView.findViewById(R.id.recyclerViewTransaction);
+        transactionListAdapter = new TransactionListAdapter(mContext, transactionCoinLists, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
+        recyclerViewTransaction.setLayoutManager(mLayoutManager);
+        recyclerViewTransaction.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewTransaction.setAdapter(transactionListAdapter);
+        transactionListAdapter.notifyDataSetChanged();
+
+        transactionApi();
+    }
+
+    private void transactionApi() {
+        String userId = User.getUser().getUser().getUid();
+        if (cd.isNetworkAvailable()) {
+            RetrofitService.getTransactionList(new Dialog(mContext), retrofitApiClient.transaction("user", userId), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    TransactionMainModal mainModal = (TransactionMainModal) result.body();
+                    transactionCoinLists.clear();
+                    if (!mainModal.getError()) {
+                        if (mainModal.getCoins().size() > 0) {
+                            transactionCoinLists.addAll(mainModal.getCoins());
+                        }
+                    } else {
+                        Alerts.show(mContext, mainModal.getMessage());
+                    }
+                    transactionListAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onResponseFailed(String error) {
+                    Alerts.show(mContext, error);
+                }
+            });
+        } else {
+            cd.show(mContext);
         }
     }
 

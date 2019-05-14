@@ -206,13 +206,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name="infobite.ibt.tapizy.ui.activity.FirebaseChatActivity">
-            <!-- <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
-
-                 <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>-->
-        </activity>
         <activity
             android:name="infobite.ibt.tapizy.ui.activity.UserBotChatActivity"
             android:screenOrientation="portrait"

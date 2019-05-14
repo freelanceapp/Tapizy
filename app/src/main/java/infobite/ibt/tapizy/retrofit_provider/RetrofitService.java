@@ -22,6 +22,7 @@ import infobite.ibt.tapizy.model.favourite_bot.FavouriteBotMainModal;
 import infobite.ibt.tapizy.model.login_data_modal.UserDataMainModal;
 import infobite.ibt.tapizy.model.social_link.SocialLinkMainModal;
 import infobite.ibt.tapizy.model.timeline_modal.DailyNewsFeedMainModal;
+import infobite.ibt.tapizy.model.transaction.TransactionMainModal;
 import infobite.ibt.tapizy.utils.AppProgressDialog;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -571,6 +572,27 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<NewConversationMainModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getTransactionList(final Dialog dialog, final Call<TransactionMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<TransactionMainModal>() {
+            @Override
+            public void onResponse(Call<TransactionMainModal> call, Response<TransactionMainModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<TransactionMainModal> call, Throwable throwable) {
                 if (dialog != null)
                     AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());
