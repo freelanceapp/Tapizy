@@ -1,9 +1,11 @@
 package infobite.ibt.tapizy.ui.fragment.user_fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -11,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +46,12 @@ import infobite.ibt.tapizy.utils.Alerts;
 import infobite.ibt.tapizy.utils.AppPreference;
 import infobite.ibt.tapizy.utils.ConnectionDetector;
 import infobite.ibt.tapizy.utils.expandable_layout.ExpandableLayout;
+import infobite.ibt.tapizy.utils.slide_layout.ISlideChangeListener;
+import infobite.ibt.tapizy.utils.slide_layout.ISlideListener;
+import infobite.ibt.tapizy.utils.slide_layout.SlideLayout;
+import infobite.ibt.tapizy.utils.slide_layout.renderers.TranslateRenderer;
+import infobite.ibt.tapizy.utils.slide_layout.sliders.Direction;
+import infobite.ibt.tapizy.utils.slide_layout.sliders.HorizontalSlider;
 import retrofit2.Response;
 
 import static infobite.ibt.tapizy.ui.activity.user_activities.HomeActivity.cd;
@@ -50,7 +59,9 @@ import static infobite.ibt.tapizy.ui.activity.user_activities.HomeActivity.mCont
 import static infobite.ibt.tapizy.ui.activity.user_activities.HomeActivity.retrofitApiClient;
 
 public class HomeFragment extends Fragment implements View.OnClickListener,
-        ExpandableLayout.OnExpansionUpdateListener {
+        ExpandableLayout.OnExpansionUpdateListener, ISlideListener {
+
+    private String swipetype = "";
 
     private Activity activity;
     private ExpandableLayout expandableLayoutLeft, expandableLayoutRight;
@@ -58,11 +69,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
     private LinearLayout llBottom;
     public static HomeFragment homeFragment;
 
-    private View rootView;
+    private View rootView, sView;
     private ArrayList<FavoriteBot> favoriteBotList = new ArrayList<>();
     private FavouriteBotListAdapter adapter;
 
-    private LinearLayout rlMain;
+    private LinearLayout rlMain, llCenter;
     private boolean isBlink = true;
     private List<SocialLinkList> socialLinkLists = new ArrayList<>();
     private SocialLinksListAdapter linksListAdapter;
@@ -136,6 +147,70 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
 
+            }
+        });
+
+        initSwipeLayout();
+    }
+
+    @Override
+    public void onSlideDone(SlideLayout slider, boolean done) {
+        if (done) {
+            if (!swipetype.isEmpty() || swipetype != "") {
+                if (swipetype.contains("left")) {
+                    Alerts.show(mContext, "Payment Payed!");
+                } else if (swipetype.contains("right")) {
+                    Alerts.show(mContext, "Payment Received!");
+                }
+            }
+        }
+    }
+
+    private void initSwipeLayout() {
+        sView = rootView.findViewById(R.id.view);
+        llCenter = rootView.findViewById(R.id.llCenter);
+        SlideLayout slider = rootView.findViewById(R.id.slide3);
+        slider.setRenderer(new TranslateRenderer());
+        slider.setSlider(new HorizontalSlider(Direction.BOTH));
+        slider.setChildId(R.id.slide_child_3);
+        slider.addSlideListener(new ISlideListener() {
+            @Override
+            public void onSlideDone(SlideLayout slider, boolean done) {
+                if (done) {
+                    slider.reset();
+                }
+            }
+        });
+
+        slider.addSlideChangeListener(new ISlideChangeListener() {
+            @Override
+            public void onSlideStart(SlideLayout slider) {
+                Vibrator vibe = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+                vibe.vibrate(100);
+                sView.setBackground(getResources().getDrawable(R.drawable.stroke_circle));
+                expandableLayoutRight.setExpanded(true);
+                expandableLayoutLeft.setExpanded(true);
+                rootView.findViewById(R.id.spin_kit).setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSlideChanged(SlideLayout slider, float percentage) {
+
+            }
+
+            @Override
+            public void onSetSwipeLitner(SlideLayout slider, boolean done, String swipe) {
+                swipetype = swipe;
+                onSlideDone(slider, done);
+            }
+
+            @Override
+            public void onSlideFinished(SlideLayout slider, boolean done) {
+                expandableLayoutRight.setExpanded(false);
+                expandableLayoutLeft.setExpanded(false);
+                rootView.findViewById(R.id.spin_kit).setVisibility(View.VISIBLE);
+                sView.setBackground(getResources().getDrawable(R.drawable.circle_background_white));
+                Log.d("TAG", "x,y = " + SlideLayout.isActionUp);
             }
         });
     }
@@ -280,4 +355,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
             cd.show(mContext);
         }
     }
+
 }

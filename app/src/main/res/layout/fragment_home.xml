@@ -16,36 +16,32 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp">
 
-            <LinearLayout
-                android:id="@+id/rlMain"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/layout_bg4"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="12dp">
+                android:background="@drawable/layout_bg4">
 
                 <infobite.ibt.tapizy.utils.expandable_layout.ExpandableLayout
                     android:id="@+id/expandableLayoutLeft"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="#000000FF"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/viewB"
                     android:elevation="4dp"
                     android:orientation="horizontal"
-                    android:visibility="gone"
                     app:el_duration="500"
                     app:el_expanded="false">
 
                     <TextView
                         android:id="@+id/txtEarn"
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
@@ -54,37 +50,30 @@
 
                 </infobite.ibt.tapizy.utils.expandable_layout.ExpandableLayout>
 
-                <LinearLayout
-                    android:id="@+id/llCenter"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@drawable/circle_background_white"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imgTapizy"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:src="@drawable/tapizy_animate_home" />
-                </LinearLayout>
+                <View
+                    android:id="@+id/viewB"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginBottom="6dp" />
 
                 <infobite.ibt.tapizy.utils.expandable_layout.ExpandableLayout
                     android:id="@+id/expandableLayoutRight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="#000000FF"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/viewB"
                     android:orientation="horizontal"
-                    android:visibility="gone"
                     app:el_duration="500"
                     app:el_expanded="false">
 
                     <TextView
                         android:id="@+id/txtRedeem"
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
@@ -92,6 +81,66 @@
                         android:textColor="#fff" />
 
                 </infobite.ibt.tapizy.utils.expandable_layout.ExpandableLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/rlMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <infobite.ibt.tapizy.utils.slide_layout.SlideLayout
+                    android:id="@+id/slide3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:id="@+id/slide_child_3"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/circle_background_white">
+
+                        <View
+                            android:id="@+id/view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginBottom="6dp" />
+
+                        <ImageView
+                            android:id="@+id/imgTapizy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="16dp"
+                            android:src="@drawable/tapizy_animate_home" />
+
+                    </FrameLayout>
+                </infobite.ibt.tapizy.utils.slide_layout.SlideLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCenter"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/circle_background_white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:src="@drawable/tapizy_animate_home" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -105,7 +154,6 @@
                 android:layout_gravity="center"
                 android:padding="10dp"
                 app:SpinKit_Color="@color/white" />
-
         </RelativeLayout>
     </LinearLayout>
 
