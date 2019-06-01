@@ -21,7 +21,6 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
@@ -486,8 +485,6 @@ public class UserBotChatActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ivBack:
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                ref.removeValue();
                 finish();
                 break;
             case R.id.imgSend:
@@ -737,44 +734,21 @@ public class UserBotChatActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        try {
-            ref.removeValue();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        try {
-            ref.removeValue();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        try {
-            ref.removeValue();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        try {
-            ref.removeValue();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 }

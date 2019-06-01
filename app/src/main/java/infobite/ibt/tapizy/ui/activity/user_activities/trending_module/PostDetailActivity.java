@@ -95,6 +95,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private SimpleExoPlayer player;
     private PlayerView videoSurfaceView;
     private ProgressBar mProgressBar;
+    private FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +106,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void init() {
+        frameLayout = findViewById(R.id.video_layout);
         strId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
         mProgressBar = findViewById(R.id.mProgressBar);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
@@ -146,6 +148,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
      * */
     private void initPlayer() {
         videoSurfaceView = new PlayerView(mContext);
+        frameLayout.addView(videoSurfaceView);
         videoSurfaceView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         TrackSelection.Factory videoTrackSelectionFactory =
@@ -258,9 +261,6 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     /*Play video*/
     private void initVideoView(String strVideoUrl) {
         /****************************************/
-
-        FrameLayout frameLayout = findViewById(R.id.video_layout);
-        frameLayout.addView(videoSurfaceView);
         videoSurfaceView.requestFocus();
         videoSurfaceView.setPlayer(player);
 
